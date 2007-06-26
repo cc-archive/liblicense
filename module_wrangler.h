@@ -1,4 +1,3 @@
-#include "system_licenses.h"
 #ifndef LIBLICENSE_MODULE_WRANGLER_H
 #define LIBLICENSE_MODULE_WRANGLER_H
 
@@ -17,7 +16,7 @@
 	int ll_module_in_use(module_t);
 	
 	// IO module functions.
-	mime_type_t* ll_io_module_mime_types(module_t);
+	mime_type_t* ll_module_mime_types(module_t);
 	
 
 #endif

@@ -17,5 +17,25 @@ print "\tget_notification(verifiable):",get_notification("creativecommons.org/li
 print "\tverify_uri:", verify_uri("creativecommons.org/licenses/by/2.5/au/")
 print "\tget_attribute:", get_attribute("creativecommons.org/licenses/by/2.5/au/","permits")
 print "\tget_licenses:", get_licenses()
-print "\tget_licenses(juris):", get_licenses("ar");
+print "\tget_licenses(juris):", get_licenses("ar")
+
+print "Test write_license python bindings:"
+print "\twrite:",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/")
+print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","txt.h")
+
+print "Test read_license python bindings:"
+print "\tread:",read("license_me.txt")
+print "\tmodule_read:",read("license_me.txt","txt.h")
+
+print "Test system_default:"
+print "\tset_default:",set_default("creativecommons.org/licenses/by/2.5/au/")
+print "\tget_default:",get_default()
+print "\tdefault_engines:",default_engines()
+
+print "Test module_wrangler:"
+print "\tget_config_modules:",get_config_modules()
+print "\tget_io_modules:",get_io_modules()
+print "\tget_module_symbol: not bound"
+print "\tmodule_in_use:",module_in_use("gconf.o")
+print "\tmodule_mime_types:",module_mime_types("nautilus.o")
 sys.exit(0)
