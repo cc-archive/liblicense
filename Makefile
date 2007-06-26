@@ -5,7 +5,7 @@ lib_test: test
 	./test
 
 test: tests/test.c tests/test.h liblicense.a
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ -lraptor
 
 liblicense.a: write_license.o read_license.o system_default.o  module_wrangler.o system_licenses.o
 	ar r $@ $^

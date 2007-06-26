@@ -5,7 +5,6 @@
 	#define LIBLICENSE_IO_MODULE_DIR
 	typedef char* module_t;
 	typedef char* symbol_t;
-	typedef char* filename_t;
 	typedef char* mime_type_t;
 
 	module_t* ll_get_config_modules();

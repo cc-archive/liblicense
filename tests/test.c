@@ -5,6 +5,8 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
+  printf("Starting ll:\n");
+  ll_init();
 	printf("Test system_licenses:\n");
 	printf("\tget_jurisdiction: %s\n",ll_get_jurisdiction("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_locales: skipped\n");
@@ -15,7 +17,10 @@ int main(int argc, char** argv) {
 	printf("\tget_notification: %s\n", ll_get_notification("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_verifiable_notification: %s\n",ll_get_verifiable_notification("creativecommons.org/licenses/by/2.5/au/", "http://www.mysite.com/bleh"));
 	printf("\tverify_uri: %d\n", ll_verify_uri("creativecommons.org/licenses/by/2.5/au/"));
-	printf("\tget_all_licenses: skipped\n");
+	printf("\tget_attribute:\n");
+	ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title");
+	printf("\tget_all_licenses:\n");
+	ll_get_all_licenses();
 	printf("\tget_licenses_in_juris: skipped\n");
 	
 	printf("Test write_license:\n");
@@ -37,5 +42,7 @@ int main(int argc, char** argv) {
 	printf("\tget_module_symbol: skipped\n");
 	printf("\tmodule_in_use: %d\n",ll_module_in_use("gedit.h"));
 	printf("\tmodule_mime_types: skipped\n");
+	printf("Stopping ll:\n");
+	ll_stop();
 	return 0;
 }

@@ -15,7 +15,7 @@ print "\tget_version: "+str(v[0])+"."+str(v[1])+"."+str(v[2])
 print "\tget_notification:", get_notification("creativecommons.org/licenses/by/2.5/au/")
 print "\tget_notification(verifiable):",get_notification("creativecommons.org/licenses/by/2.5/au/", "http://www.mysite.com/bleh")
 print "\tverify_uri:", verify_uri("creativecommons.org/licenses/by/2.5/au/")
-print "\tget_attribute:", get_attribute("creativecommons.org/licenses/by/2.5/au/","permits")
+print "\tget_attribute:", get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title")
 print "\tget_licenses:", get_licenses()
 print "\tget_licenses(juris):", get_licenses("ar")
 

@@ -1,0 +1,43 @@
+<rdf:RDF
+   xmlns="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:dcq="http://purl.org/dc/terms/"
+>
+  <rdf:Description rdf:about="http://creativecommons.org/licenses/by-nd/2.0/za/">
+    <dc:title>Creative Commons Attribution No Derivatives</dc:title>
+    <dc:description>This license allows for redistribution, commercial and non-commercial,
+ as long as it is passed along unchanged and in whole, with credit to you.</dc:description>
+    <dc:coverage>
+        <dcq:ISO3166>
+            <rdf:value>za</rdf:value>
+        </dcq:ISO3166>
+    </dc:coverage>
+    <dc:language>
+        <dcq:RFC3066>
+            <rdf:value>en</rdf:value>
+        </dcq:RFC3066>
+    </dc:language>
+    <dc:hasVersion>2.0</dc:hasVersion>
+    <dc:isReplacedBy>
+        <dcq:URI>
+            <rdf:value>http://creativecommons.org/licenses/by-nd/2.5/za/</rdf:value>
+        </dcq:URI>
+    </dc:isReplacedBy>
+    <dc:isBasedOn>
+        <dcq:URI>
+            <rdf:value>http://creativecommons.org/licenses/by-nd/2.5/</rdf:value>
+        </dcq:URI>
+    </dc:isBasedOn>
+    <dc:type>License</dc:type>
+    <dc:creator>iCommons</dc:creator>
+    <dc:publisher>Creative Commons</dc:publisher>
+    <dc:identifier>http://creativecommons.org/licenses/by-nd/2.0/za/</dc:identifier>
+
+    <rdf:type rdf:resource="http://creativecommons.org/ns#License"/>
+    <permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+    <permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+    <requires rdf:resource="http://creativecommons.org/ns#Attribution"/>
+    <requires rdf:resource="http://creativecommons.org/ns#Notice"/>
+  </rdf:Description>
+</rdf:RDF>
