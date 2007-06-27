@@ -18,9 +18,15 @@ int main(int argc, char** argv) {
 	printf("\tget_verifiable_notification: %s\n",ll_get_verifiable_notification("creativecommons.org/licenses/by/2.5/au/", "http://www.mysite.com/bleh"));
 	printf("\tverify_uri: %d\n", ll_verify_uri("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_attribute:\n");
-	ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title");
+	char** result = ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/","http://purl.org/dc/elements/1.1/title");
+	int i =0;
+	while(result[i]!=NULL)
+		printf("\t\t%s\n",result[i++]);
 	printf("\tget_all_licenses:\n");
-	ll_get_all_licenses();
+	result = ll_get_all_licenses();
+	i =0;
+	while(result[i]!=NULL)
+		printf("\t\t%s\n",result[i++]);
 	printf("\tget_licenses_in_juris: skipped\n");
 	
 	printf("Test write_license:\n");

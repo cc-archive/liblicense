@@ -224,5 +224,6 @@ static PyMethodDef LicenseMethods[] = {
 };
 
 PyMODINIT_FUNC initliblicense(void) {
+  ll_init();
 	(void) Py_InitModule("liblicense",LicenseMethods);
 }

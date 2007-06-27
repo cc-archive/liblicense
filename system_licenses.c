@@ -127,7 +127,7 @@ char** ll_get_attribute(uri_t u,attribute_t a) {
   
   // create the list to return
   char** result = (char**) malloc((helper->num_values+1)*sizeof(char*));
-  result[helper->num_values+1] = NULL;
+  result[helper->num_values] = NULL;
   int i;
   for (i=0;i<helper->num_values;++i)
   	result[i] = helper->values[i];
@@ -147,7 +147,7 @@ int _ll_rdf_filter(const struct dirent * d) {
 uri_t* ll_get_all_licenses() {
   struct dirent **namelist;
   int n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
-	uri_t* result = (uri_t*) malloc(n*sizeof(uri_t));
+	uri_t* result = (uri_t*) malloc((n+1)*sizeof(uri_t));
 	result[n]=NULL;
   int i;
   for (i=0;i<n;++i) {
