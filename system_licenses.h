@@ -11,10 +11,11 @@ typedef char* filename_t;
 
 typedef struct {
 	uri_t uri;
-	attribute_t key;
+	char* subject;
+	char* predicate;
+	int type;
 	char** values;
 	int num_values;
-	char* last_value;
 } attribute_search_t;
 
 int ll_init();
