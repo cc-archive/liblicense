@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
 #include <exempi/xmp.h>
+#include <exempi/xmpconsts.h>
 
 const char *mime_types[] = {
   "image/jpeg",
@@ -24,7 +27,7 @@ void shutdown()
 	xmp_terminate();
 }
 
-void read( const char* filename )
+char* read( const char* filename )
 {
 	printf("exempi: read(%s)\n",filename);
 
@@ -33,34 +36,51 @@ void read( const char* filename )
 	f = xmp_files_open_new(filename, XMP_OPEN_OPNLYXMP);
 	XmpPtr xmp = xmp_files_get_new_xmp(f);
 
-	XmpIteratorPtr iter = xmp_iterator_new(xmp, NULL, NULL, XMP_ITER_JUSTLEAFNODES);
-	XmpStringPtr the_schema = xmp_string_new();
-	XmpStringPtr the_path = xmp_string_new();
-	XmpStringPtr the_prop = xmp_string_new();
+	char *uri_string = NULL;
 
-	while( xmp_iterator_next(iter, the_schema, the_path, the_prop, NULL) )
-	{
-		const char *schema = xmp_string_cstr(the_schema);
-		const char *name = xmp_string_cstr(the_path);
-		const char *value = xmp_string_cstr(the_prop);
-		printf("============================================\n");
-		printf("name: %s\n", name);
-		printf("value: %s\n", value);
-		printf("schema: %s\n", schema);
-		printf("============================================\n");
+	if ( xmp ) {
+		XmpStringPtr license_uri = xmp_string_new();
+		bool success = xmp_get_property(xmp, NS_CC, "license", license_uri);
+		if ( success ) {
+			uri_string = strdup(xmp_string_cstr(license_uri));
+		}
+
+		xmp_string_free(license_uri);
+	
+		xmp_free(xmp);
 	}
 
-	xmp_string_free(the_prop);
-	xmp_string_free(the_path);
-	xmp_string_free(the_schema);
-	xmp_iterator_free(iter);
+	xmp_files_close(f, XMP_CLOSE_NOOPTION);
 
-	xmp_free(xmp);
-
-	xmp_files_close(f, XMP_CLOSE_SAFEUPDATE);
+	return uri_string;
 }
 
-void write( const char* filename, const char* uri )
+int write( const char* filename, const char* uri )
 {
 	printf("exempi: write(%s,%s)\n",filename,uri);
+
+	int success = true;
+
+	XmpFilePtr f;
+	
+	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE);
+	XmpPtr xmp = xmp_files_get_new_xmp(f);
+	
+	if ( xmp == NULL ) {
+		xmp = xmp_new_empty();
+	}
+	
+	if ( xmp_files_can_put_xmp(f, xmp) ) {
+		xmp_register_namespace(NS_CC, "cc", NULL);
+		xmp_set_property(xmp, NS_CC, "license", uri);
+		xmp_files_put_xmp(f, xmp);
+	} else {
+		fprintf(stderr,"Unable to write XMP to this file type.\n");
+		success = false;
+	}
+	
+	xmp_files_close(f, XMP_CLOSE_SAFEUPDATE);
+	xmp_free(xmp);
+
+	return success;
 }
