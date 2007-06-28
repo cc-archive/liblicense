@@ -1,0 +1,1 @@
+SUBDIRS = $(PYTHON_DIR)

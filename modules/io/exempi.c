@@ -19,6 +19,7 @@ void init()
 {
 	printf("exempi: init()\n");
 	xmp_init();
+	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
 void shutdown()
@@ -40,8 +41,7 @@ char* read( const char* filename )
 
 	if ( xmp ) {
 		XmpStringPtr license_uri = xmp_string_new();
-		bool success = xmp_get_property(xmp, NS_CC, "license", license_uri);
-		if ( success ) {
+		if ( xmp_get_property(xmp, NS_CC, "license", license_uri) ) {
 			uri_string = strdup(xmp_string_cstr(license_uri));
 		}
 
@@ -63,7 +63,7 @@ int write( const char* filename, const char* uri )
 
 	XmpFilePtr f;
 	
-	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE);
+	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_OPNLYXMP);
 	XmpPtr xmp = xmp_files_get_new_xmp(f);
 	
 	if ( xmp == NULL ) {
@@ -71,11 +71,10 @@ int write( const char* filename, const char* uri )
 	}
 	
 	if ( xmp_files_can_put_xmp(f, xmp) ) {
-		xmp_register_namespace(NS_CC, "cc", NULL);
 		xmp_set_property(xmp, NS_CC, "license", uri);
 		xmp_files_put_xmp(f, xmp);
 	} else {
-		fprintf(stderr,"Unable to write XMP to this file type.\n");
+		fprintf(stderr,"Unable to write XMP to this file.\n");
 		success = false;
 	}
 	

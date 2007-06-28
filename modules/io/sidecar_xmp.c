@@ -21,7 +21,7 @@ char *sidecar_filename( const char *filename )
 	}
 	size_t len = ext_sep - filename;
 
-	char *sidecar = (char*)malloc(sizeof(char)*(len+4));
+	char *sidecar = (char*)malloc(sizeof(char)*(len+4+1));
 	strncpy(sidecar,filename,len);
 	strcpy(&sidecar[len],".xmp");
 
@@ -147,31 +147,30 @@ int write( const char* filename, const char* uri )
 		char *buffer;
 		size_t len;
 		get_contents_stdio(f,&buffer,&len);
-	
+
 		xmp = xmp_new(buffer,len);
-	} else {
+	}
+	
+	if ( !xmp ) {
 		xmp = xmp_new_empty();
 	}
 
 	xmp_set_property(xmp, NS_CC, "license", uri);
 
-	char *xmp_string;
-	xmp_to_string(xmp,&xmp_string,XMP_SERIAL_OMITPACKETWRAPPER,2);
+	XmpStringPtr xmp_string = xmp_string_new();
+	xmp_to_string(xmp,xmp_string,XMP_SERIAL_OMITPACKETWRAPPER,2);
 
-	if ( xmp_string ) {
-		f = fopen(sidecar, "w");
-		if (f) {
-			fprintf(f,xmp_string);
-			fclose(f);
-		} else {
-			fprintf(stderr, "Can't open sidecar for writing\n");
-			success = false;
-		}
-
-		free(xmp_string);
+	const char *xmp_cstr = xmp_string_cstr(xmp_string);
+	f = fopen(sidecar, "w");
+	if (f) {
+		fprintf(f,xmp_cstr);
+		fclose(f);
 	} else {
+		fprintf(stderr, "Can't open sidecar for writing\n");
 		success = false;
 	}
+
+	xmp_string_free(xmp_string);
 
 	xmp_free(xmp);
 
