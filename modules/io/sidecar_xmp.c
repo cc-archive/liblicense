@@ -141,7 +141,7 @@ int write( const char* filename, const char* uri )
 
 	char *sidecar = sidecar_filename( filename );
 
-	XmpPtr xmp;
+	XmpPtr xmp = NULL;
 	FILE *f = fopen(sidecar, "rb");
 	if ( f ) {
 		char *buffer;

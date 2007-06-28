@@ -56,7 +56,12 @@ int ll_module_init(char* directory,module_t m) {// create file to open
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
 	strcat(reg_file,m);
-	dlopen(reg_file,RTLD_LAZY);
+	void *handle = dlopen(reg_file,RTLD_LAZY);
+
+	void (*function_init)();
+	*(void**) (&function_init) = dlsym(handle,"init");
+	(*function_init)();
+
 	return 0;
 }
 
@@ -68,6 +73,11 @@ int ll_module_shutdown(char* directory,module_t m) {// create file to open
 	
 	//Get the handle without skewing the number open.
 	void* handle = dlopen(lib_file,RTLD_LAZY);
+
+	void (*function_shutdown)();
+	*(void**) (&function_shutdown) = dlsym(handle,"shutdown");
+	(*function_shutdown)();
+
 	dlclose(handle);
 	
 	//close
