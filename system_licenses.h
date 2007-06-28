@@ -13,8 +13,10 @@ typedef struct {
 	uri_t uri;
 	char* subject;
 	char* predicate;
+	char* locale;
 	int type;
 	char** values;
+	char** locales;
 	int num_values;
 } attribute_search_t;
 
@@ -28,7 +30,7 @@ version_t ll_get_version(const uri_t);
 char* ll_get_notification(const uri_t);
 char* ll_get_verifiable_notification(const uri_t, const char*);
 int ll_verify_uri(const uri_t);
-char** ll_get_attribute(uri_t,attribute_t);
+char** ll_get_attribute(uri_t,attribute_t,int);
 
 uri_t* ll_get_all_licenses();
 uri_t* ll_get_licenses(const juris_t);

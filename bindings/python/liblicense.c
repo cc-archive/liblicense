@@ -65,9 +65,10 @@ static PyObject* py_verify_uri(PyObject* self, PyObject* args) { // uri_t
 static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // uri_t,attribute_t
 	const uri_t u;
 	const attribute_t a;
-	if (!PyArg_ParseTuple(args,"ss",&u,&a))
+	int b;
+	if (!PyArg_ParseTuple(args,"ssi",&u,&a,&b))
 		return NULL;
-	char** avs = ll_get_attribute(u,a);
+	char** avs = ll_get_attribute(u,a,b);
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (avs!=NULL && avs[i]!=NULL) {
