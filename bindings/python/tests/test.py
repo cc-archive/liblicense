@@ -7,17 +7,18 @@ print "Test system_license python bindings:"
 #sys.path += (map(lambda path: os.getcwd()+"/"+base_path+"/"+path,filter(lambda path: path.startswith('tmp')==False, os.listdir(base_path))))
 
 from liblicense import *
-print "\tget_jurisdiction:",get_jurisdiction("http://creativecommonsenses/by-nd/2.0/")
-print "\tget_locales:",get_locales("creativecommons.org/licenses/by/2.5/au/")
-print "\tget_name:", get_name("creativecommons.org/licenses/by/2.5/au/")
-v = get_version("creativecommons.org/licenses/by/2.5/au/")
+license="http://creativecommons.org/licenses/by-nd/2.0/"
+print "\tget_jurisdiction:",get_jurisdiction(license)
+print "\tget_name:", get_name(license)
+v = get_version(license)
 print "\tget_version: "+str(v[0])+"."+str(v[1])+"."+str(v[2])
-print "\tget_notification:", get_notification("creativecommons.org/licenses/by/2.5/au/")
-print "\tget_notification(verifiable):",get_notification("creativecommons.org/licenses/by/2.5/au/", "http://www.mysite.com/bleh")
-print "\tverify_uri:", verify_uri("http://creativecommons.org/licenses/by-nd/2.0/")
-print "\tget_attribute:", get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title",True)
+print "\tget_permits:", get_permits(license)
+print "\tget_prohibits:", get_prohibits(license)
+print "\tget_requires:", get_requires(license)
+print "\tverify_uri:", verify_uri(license)
+print "\tget_attribute:", get_attribute(license,"http://purl.org/dc/elements/1.1/title",True)
 print "\tget_licenses:", get_licenses()
-print "\tget_licenses(juris):", get_licenses("ar")
+print "\tget_licenses(juris):", get_licenses("za")
 
 print "Test write_license python bindings:"
 print "\twrite:",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/")

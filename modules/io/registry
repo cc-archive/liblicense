@@ -1,0 +1,3 @@
+exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime
+nautilus.so
+.libs/stub.so

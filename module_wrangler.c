@@ -56,18 +56,18 @@ int ll_module_init(char* directory,module_t m) {// create file to open
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
 	strcat(reg_file,m);
-	dlopen(m,RTLD_LAZY);
+	dlopen(reg_file,RTLD_LAZY);
 	return 0;
 }
 
 int ll_module_shutdown(char* directory,module_t m) {// create file to open
-	char reg_file[strlen(directory)+strlen(m)+1];
-	reg_file[0]='\0';
-	strcat(reg_file,directory);
-	strcat(reg_file,m);
+	char lib_file[strlen(directory)+strlen(m)+1];
+	lib_file[0]='\0';
+	strcat(lib_file,directory);
+	strcat(lib_file,m);
 	
 	//Get the handle without skewing the number open.
-	void* handle = dlopen(m,RTLD_LAZY);
+	void* handle = dlopen(lib_file,RTLD_LAZY);
 	dlclose(handle);
 	
 	//close
@@ -81,19 +81,13 @@ void* ll_get_module_symbol(char* directory, module_t m, symbol_t s) {
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
 	strcat(reg_file,m);
-	void* handle = dlopen(m,RTLD_LAZY);
+	void* handle = dlopen(reg_file,RTLD_LAZY);
 	if (!handle) {
 	  fprintf(stderr, "%s\n", dlerror());
 	  exit(EXIT_FAILURE);
   }
-	printf("\tLoaded library.\n");
-	fflush(stdout);
 	void* symbol = dlsym(handle,s);
-	printf("\tLoaded symbol.\n");
-	fflush(stdout);
 	dlclose(handle);
-	printf("\tHandle closed.\n");
-	fflush(stdout);
 	return symbol;
 }
 

@@ -13,4 +13,8 @@ sidecar_xmp_la_CFLAGS = $(EXEMPI_CFLAGS)
 endif
 
 lib_LTLIBRARIES = \
-	$(EXEMPI_MODULES)
+	$(EXEMPI_MODULES) \
+	stub.la
+
+stub_la_SOURCES = stub.c
+stub_la_LDFLAGS = -no-undefined -module -avoid-version

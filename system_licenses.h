@@ -24,11 +24,11 @@ int ll_init();
 int ll_stop();
 
 juris_t ll_get_jurisdiction(const uri_t);
-locale_t* ll_get_locales(const uri_t);
 char* ll_get_name(const uri_t);
 version_t ll_get_version(const uri_t);
-char* ll_get_notification(const uri_t);
-char* ll_get_verifiable_notification(const uri_t, const char*);
+char** ll_get_prohibits(const uri_t);
+char** ll_get_permits(const uri_t);
+char** ll_get_requires(const uri_t);
 int ll_verify_uri(const uri_t);
 char** ll_get_attribute(uri_t,attribute_t,int);
 

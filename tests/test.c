@@ -12,7 +12,6 @@ int main(int argc, char** argv) {
 	char* result = ll_get_jurisdiction("http://creativecommons.org/licenses/by-nd/2.0/");
 	printf("\tget_jurisdiction: %s\n",result);
 	free(result);
-	printf("\tget_locales: skipped\n");
 	result = ll_get_name("http://creativecommons.org/licenses/by-nd/2.0/");
 	printf("\tget_name: %s\n", result);
 	free(result);
@@ -20,8 +19,6 @@ int main(int argc, char** argv) {
 	version_t v = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
 	printf("%d.%d.%d\n",v[0],v[1],v[2]);
 	free(v);
-	//printf("\tget_notification: %s\n", ll_get_notification("creativecommons.org/licenses/by/2.5/au/"));
-	//printf("\tget_verifiable_notification: %s\n",ll_get_verifiable_notification("creativecommons.org/licenses/by/2.5/au/", "http://www.mysite.com/bleh"));
 	printf("\tverify_uri: %d\n", ll_verify_uri("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_attribute:\n");
 	char** result1 = ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title",1);
@@ -37,11 +34,11 @@ int main(int argc, char** argv) {
 	
 	//printf("Test write_license:\n");
 	//printf("\twrite: %d\n",ll_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/"));
-	//printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","txt.h"));
+	printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/stub.so"));
 	
 	//printf("Test read_license:\n");
 	//printf("\tread: %s\n",ll_read("license_me.txt"));
-	//printf("\tmodule_read: %s\n",ll_module_read("license_me.txt","exempi.o"));
+	printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/stub.so"));
 	
 	//printf("Test system_default:\n");
 	//printf("\tset_default: %d\n",ll_set_default("creativecommons.org/licenses/by/2.5/au/"));
@@ -54,7 +51,7 @@ int main(int argc, char** argv) {
 	printf("\tget_module_symbol: skipped\n");
 	printf("\tmodule_in_use: %d\n",ll_module_in_use("gedit.h"));
 	//printf("\tmodule_mime_types:\n");
-	//ll_module_mime_types("exempi.o");
+	ll_module_mime_types(".libs/stub.so");
 	printf("Stopping ll:\n");
 	ll_stop();
 	return 0;

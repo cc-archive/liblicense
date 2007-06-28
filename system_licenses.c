@@ -45,15 +45,6 @@ juris_t ll_get_jurisdiction(const uri_t uri) {
 	return result;
 }
 
-// returns the available locales for the given license.
-//STUB
-locale_t* ll_get_locales(const uri_t u) {
-	locale_t* result = (locale_t*) malloc(2*sizeof(locale_t));
-	result[0] = strdup("en_US");
-	result[1] = NULL;
-	return result;
-}
-
 // returns the name of the license.
 char* ll_get_name(const uri_t u) {
 	char** returned = ll_get_attribute(u,"http://purl.org/dc/elements/1.1/title",true);
@@ -95,16 +86,16 @@ version_t ll_get_version(const uri_t u) {
 	return result;
 }
 
-// returns the notification string for the given url.
-//STUB
-char* ll_get_notification(const uri_t u) {
-	return strdup("This work is licensed under the...");
+char** ll_get_prohibits(const uri_t u) {
+	return ll_get_attribute(u,"http://creativecommons.org/ns#prohibits",false);
 }
 
-// returns the notification string for the given uri and verification url.
-//STUB
-char* ll_get_verifiable_notification(const uri_t u, const char* v) {
-	return strdup("This work... verify at blah.");
+char** ll_get_permits(const uri_t u) {
+	return ll_get_attribute(u,"http://creativecommons.org/ns#permits",false);
+}
+
+char** ll_get_requires(const uri_t u) {
+	return ll_get_attribute(u,"http://creativecommons.org/ns#requires",false);
 }
 
 void _ll_free_uri_t_list(uri_t* us) {

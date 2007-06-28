@@ -42,19 +42,45 @@ static PyObject* py_get_version(PyObject* self, PyObject* args) { //(uri_t)
 	return Py_BuildValue("(iii)",v[0],v[1],v[2]);
 }
 
-static PyObject* py_get_notification(PyObject* self, PyObject* args) { // uri_t, char*
+static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)
 	const uri_t u;
-	const char* url;
-	char* s;
-	if (PyArg_ParseTuple(args,"ss",&u,&url))
-		s = ll_get_verifiable_notification(u,url);
-	else if (PyArg_ParseTuple(args,"s",&u))
-		s = ll_get_notification(u);
-	else
+	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
-	return Py_BuildValue("s",s);
+	locale_t* l = ll_get_permits(u);
+	int i =0;
+	PyObject* list = PyList_New(0);
+	while (l!=NULL && l[i]!=NULL) {
+		PyList_Append(list,PyString_FromString(l[i]));
+		i++;
+	}
+	return list;
 }
-
+static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(uri_t)
+	const uri_t u;
+	if (!PyArg_ParseTuple(args, "s", &u))
+		return NULL;
+	locale_t* l = ll_get_prohibits(u);
+	int i =0;
+	PyObject* list = PyList_New(0);
+	while (l!=NULL && l[i]!=NULL) {
+		PyList_Append(list,PyString_FromString(l[i]));
+		i++;
+	}
+	return list;
+}
+static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(uri_t)
+	const uri_t u;
+	if (!PyArg_ParseTuple(args, "s", &u))
+		return NULL;
+	locale_t* l = ll_get_requires(u);
+	int i =0;
+	PyObject* list = PyList_New(0);
+	while (l!=NULL && l[i]!=NULL) {
+		PyList_Append(list,PyString_FromString(l[i]));
+		i++;
+	}
+	return list;
+}
 static PyObject* py_verify_uri(PyObject* self, PyObject* args) { // uri_t
 	const uri_t u;
 	if (!PyArg_ParseTuple(args,"s",&u))
@@ -189,14 +215,16 @@ static PyObject* py_module_mime_types(PyObject* self, PyObject* args)  {
 static PyMethodDef LicenseMethods[] = {
 		{"get_jurisdiction",  py_get_jurisdiction, METH_VARARGS,
      "Get the jurisdiction of the given license uri."},
-		{"get_locales",  py_get_locales, METH_VARARGS,
-     "Get the available locales of the given license uri."},
 		{"get_name",  py_get_name, METH_VARARGS,
      "Get the name of the given license uri."},
     {"get_version",  py_get_version, METH_VARARGS,
      "Get the version of the given license uri."},
-    {"get_notification",  py_get_notification, METH_VARARGS,
-     "Get the copyright notification for the given uri with a possible verification url."},
+    {"get_permits",  py_get_permits, METH_VARARGS,
+     "Gets the uris of the actions permitted."},
+    {"get_prohibits",  py_get_prohibits, METH_VARARGS,
+     "Gets the uris of the actions prohibited."},
+    {"get_requires",  py_get_requires, METH_VARARGS,
+     "Gets the uris of the actions required."},
     {"verify_uri",  py_verify_uri, METH_VARARGS,
      "Returns a boolean indicating if the uri is recognized by the system."},
     {"get_attribute", py_get_attribute, METH_VARARGS,
