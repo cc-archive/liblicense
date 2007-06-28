@@ -1,7 +1,5 @@
 if HAVE_EXEMPI
-lib_LTLIBRARIES = \
-	exempi.la \
-	sidecar_xmp.la
+EXEMPI_MODULES = exempi.la sidecar_xmp.la
 
 exempi_la_SOURCES = exempi.c
 exempi_la_LDFLAGS = -no-undefined -module -avoid-version
@@ -13,3 +11,6 @@ sidecar_xmp_la_LDFLAGS = -no-undefined -module -avoid-version
 sidecar_xmp_la_LIBADD = $(EXEMPI_LIBS)
 sidecar_xmp_la_CFLAGS = $(EXEMPI_CFLAGS)
 endif
+
+lib_LTLIBRARIES = \
+	$(EXEMPI_MODULES)
