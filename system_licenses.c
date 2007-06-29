@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <locale.h>
 #include <ctype.h>
+#include "list.h"
 
 #define MAX_TRIPLES 5
 
@@ -21,27 +22,17 @@ int ll_stop() {
 	return 0;
 }
 
-// Frees a null terminated list of strings.
-void _ll_free_char_list(char** list) {
-	int i=0;
-	while(list[i]!=NULL) {
-		free(list[i]);
-		i++;
-	}
-	free(list);
-}
-
 //returns the jurisdiction for the given license.
 juris_t ll_get_jurisdiction(const uri_t uri) {
 	juris_t* returned = ll_get_attribute(uri,"http://purl.org/dc/elements/1.1/coverage",false);
 	if (returned==NULL)
 		return NULL;
 	else if (returned[0]==NULL) {
-		_ll_free_char_list(returned);
+		ll_free_list(returned);
 		return NULL;
 	}
 	juris_t result = strdup(returned[0]);
-	_ll_free_char_list(returned);
+	ll_free_list(returned);
 	return result;
 }
 
@@ -51,11 +42,11 @@ char* ll_get_name(const uri_t u) {
 	if (returned==NULL)
 		return NULL;
 	else if (returned[0]==NULL) {
-		_ll_free_char_list(returned);
+		ll_free_list(returned);
 		return NULL;
 	}
 	juris_t result = strdup(returned[0]);
-	_ll_free_char_list(returned);
+	ll_free_list(returned);
 	return result;
 }
 
@@ -65,7 +56,7 @@ version_t ll_get_version(const uri_t u) {
 	char* version;
 	if (versions!=NULL && versions[0]!=NULL) {
 		version = strdup(versions[0]);
-		_ll_free_char_list(versions);
+		ll_free_list(versions);
 	}
 	else
 		version = NULL;
@@ -220,8 +211,8 @@ void _ll_free_attribute_search_t(attribute_search_t* ast) {
 	free(ast->subject);
 	if (ast->predicate!=NULL)
 		free(ast->predicate);
-	_ll_free_char_list(ast->locales);
-	_ll_free_char_list(ast->values);
+	ll_free_list(ast->locales);
+	ll_free_list(ast->values);
 	free(ast);
 }
 // create the list to return from a attribute_search struct

@@ -34,11 +34,11 @@ int main(int argc, char** argv) {
 	
 	//printf("Test write_license:\n");
 	//printf("\twrite: %d\n",ll_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/"));
-	printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/stub.so"));
+	printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/sidecar_xmp.so"));
 	
 	//printf("Test read_license:\n");
 	//printf("\tread: %s\n",ll_read("license_me.txt"));
-	printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/stub.so"));
+	printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/sidecar_xmp.so"));
 	
 	//printf("Test system_default:\n");
 	//printf("\tset_default: %d\n",ll_set_default("creativecommons.org/licenses/by/2.5/au/"));
@@ -49,7 +49,6 @@ int main(int argc, char** argv) {
 	printf("\tget_config_modules: skipped\n");
 	printf("\tget_io_modules: skipped\n");
 	printf("\tget_module_symbol: skipped\n");
-	printf("\tmodule_in_use: %d\n",ll_module_in_use("gedit.h"));
 	//printf("\tmodule_mime_types:\n");
 	ll_module_mime_types(".libs/stub.so");
 	printf("Stopping ll:\n");

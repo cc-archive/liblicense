@@ -4,5 +4,4 @@
 #define LIBLICENSE_SYSTEM_DEFAULT_H
 	int ll_set_default(const uri_t);
 	uri_t ll_get_default();
-	module_t* ll_default_engines();
 #endif

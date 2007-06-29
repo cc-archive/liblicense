@@ -12,20 +12,6 @@ static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (uri_t
 	return Py_BuildValue("s",j);
 }
 
-static PyObject* py_get_locales(PyObject* self, PyObject* args) { //(uri_t)
-	const uri_t u;
-	if (!PyArg_ParseTuple(args, "s", &u))
-		return NULL;
-	locale_t* l = ll_get_locales(u);
-	int i =0;
-	PyObject* list = PyList_New(0);
-	while (l!=NULL && l[i]!=NULL) {
-		PyList_Append(list,PyString_FromString(l[i]));
-		i++;
-	}
-	return list;
-}
-
 static PyObject* py_get_name(PyObject* self, PyObject* args) { //(uri_t)
 	const uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
@@ -158,17 +144,6 @@ static PyObject* py_get_default(PyObject* self, PyObject* args)  {
 	return Py_BuildValue("s",u);
 }
 
-static PyObject* py_default_engines(PyObject* self, PyObject* args)  {
-	module_t* engines = ll_default_engines();
-	int i =0;
-	PyObject* list = PyList_New(0);
-	while (engines!=NULL && engines[i]!=NULL) {
-		PyList_Append(list,PyString_FromString(engines[i]));
-		i++;
-	}
-	return list;
-}
-
 static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
 	module_t* ms = ll_get_config_modules();
 	int i =0;
@@ -189,13 +164,6 @@ static PyObject* py_get_io_modules(PyObject* self, PyObject* args)  {
 		i++;
 	}
 	return list;
-}
-
-static PyObject* py_module_in_use(PyObject* self, PyObject* args)  { // uri_t
-	module_t m;
-	if(!PyArg_ParseTuple(args,"s",&m))
-		return NULL;
-	return PyBool_FromLong((long) ll_module_in_use(m));
 }
 
 static PyObject* py_module_mime_types(PyObject* self, PyObject* args)  {
@@ -239,14 +207,10 @@ static PyMethodDef LicenseMethods[] = {
      "Sets the system default license to the given uri."},
     {"get_default", py_get_default, METH_VARARGS,
      "Returns the system default license."},
-    {"default_engines", py_default_engines, METH_VARARGS,
-     "Returns a list of the active default engines."},
     {"get_config_modules", py_get_config_modules, METH_VARARGS,
      "Returns a list of the available config modules."},
     {"get_io_modules", py_get_io_modules, METH_VARARGS,
      "Returns a list of the available io modules."},
-    {"module_in_use",py_module_in_use, METH_VARARGS,
-     "Returns whether a config system is in use."},
     {"module_mime_types",py_module_mime_types, METH_VARARGS,
      "Returns a list of the mime types supported by the given module."},
     {NULL, NULL, 0, NULL}        /* Sentinel */

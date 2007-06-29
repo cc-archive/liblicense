@@ -9,4 +9,5 @@ liblicense_la_SOURCES = \
 	write_license.c \
 	system_default.c \
 	module_wrangler.c \
-	system_licenses.c 
+	system_licenses.c \
+	list.c

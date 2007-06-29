@@ -4,19 +4,36 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>
+#include <dirent.h>
+#include "list.h"
 
 #define MAX_MODULES 5
+#define MAX_MIME_TYPES 20
 #define MAX_LINE_LENGTH 100
+
+int _ll_so_filter(const struct dirent * d) {
+	return strstr(d->d_name,".so")!=NULL;
+}
+
 module_t* ll_get_config_modules() {
-	module_t* result = (module_t*) malloc(3*sizeof(module_t));
-	result[0] = strdup("gconf.o");
-	result[1] = strdup("xdg.o");
-	result[2] = NULL;
+  struct dirent **namelist;
+  int n = scandir(LIBLICENSE_CONFIG_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
+  if (n==-1) {
+  	fprintf(stderr,"No config modules found.");
+  	return ll_new_list(0);
+  }
+	module_t* result = ll_new_list(n);
+  int i;
+  for (i=0;i<n;++i) {
+    result[i] = strdup(namelist[i]->d_name);
+    free(namelist[i]);
+  }
+  free(namelist);
 	return result;
 }
 module_t* ll_get_io_modules() {
 	// temp data structure
-	char** lines = (char**) malloc(MAX_MODULES*sizeof(char*));
+	char** lines = ll_new_list(MAX_MODULES);
 	
 	// create file to open
 	char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen("registry")+1];
@@ -35,19 +52,19 @@ module_t* ll_get_io_modules() {
 		// reduce down to first token on line
 		lines[i]=strtok(lines[i]," \n");
 		i++;
-	  char* line = (char*) malloc(MAX_LINE_LENGTH*sizeof(char));
+	  line = (char*) malloc(MAX_LINE_LENGTH*sizeof(char));
 		lines[i] = fgets(line, MAX_LINE_LENGTH, registry);
 	}
+	free(line);
+	fclose(registry);
 	// shrink string lengths and result array
-	module_t* result = (module_t*) malloc((i+1)*sizeof(module_t));
-	result[i]=NULL;
+	module_t* result = ll_new_list(i+1);
 	i=0;
 	while(lines[i]!=NULL) {
 		result[i]=strdup(lines[i]);
-		free(lines[i]);
 		i++;
 	}
-	free(lines);
+	ll_free_list(lines);
 	return result;
 }
 
@@ -101,17 +118,11 @@ void* ll_get_module_symbol(char* directory, module_t m, symbol_t s) {
 	return symbol;
 }
 
-// Config Module functions.
-int ll_module_in_use(module_t m) {
-	return true;
-}
-
 // IO module functions.
 mime_type_t* ll_module_mime_types(module_t m) {
 		// temp data structure
-	char** types = (char**) malloc(MAX_MODULES*sizeof(char*));
-	types[0]=NULL;
-	
+	char** types = ll_new_list(MAX_MIME_TYPES);
+
 	// create file to open
 	char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen("registry")+1];
 	reg_file[0]='\0';
@@ -123,31 +134,32 @@ mime_type_t* ll_module_mime_types(module_t m) {
 	
 	// process lines
 	int stop = false;
-	int i = 0;
-	char* line = (char*) malloc(MAX_LINE_LENGTH*sizeof(char));
+	char line[MAX_LINE_LENGTH] = "";
 	while(line!=NULL && !stop) {
-		line = fgets(line, MAX_LINE_LENGTH, registry);
+		if (fgets(line, MAX_LINE_LENGTH, registry)==NULL) {
+			printf("We're in trouble.\n");
+		}
 		// reduce down to first token on line
 		char* start=strtok(line," \n");
 		if (strcmp(start,m)==0) {
 			stop=true;
-			char* last_type="bleh";
+			char* last_type="";
+			int i = 0;
 			while(last_type!=NULL) {
 				last_type = strtok(NULL," \n");
-				fflush(stdout);
 				types[i] = last_type;
 				i++;
 			}
 		}
 	}
-	
-	// shrink string lengths and result array
-	module_t* result = (module_t*) malloc((i)*sizeof(module_t));
-	result[i-1]=NULL;
-	i=0;
+	fclose(registry);
+	// shrink result array
+	module_t* result = ll_new_list(ll_list_length(types));
+	int i=0;
 	while(types[i]!=NULL) {
 		result[i]=strdup(types[i]);
 		i++;
 	}
+	free(types);
 	return result;
 }

@@ -1,7 +1,7 @@
 #ifndef LIBLICENSE_SYSTEM_LICENSES_H
 #define LIBLICENSE_SYSTEM_LICENSES_H
 
-#define LICENSE_DIR "/home/scott/work/cc/svn/liblicense/trunk/licenses/"
+#define LICENSE_DIR "../licenses/"
 typedef char* juris_t;
 typedef char* uri_t;
 typedef char* locale_t;

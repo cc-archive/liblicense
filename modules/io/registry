@@ -1,3 +1,3 @@
-exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime
-nautilus.so
+.libs/exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime
+.libs/sidecar_xmp.so
 .libs/stub.so
