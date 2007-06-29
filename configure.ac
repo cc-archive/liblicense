@@ -66,7 +66,7 @@ fi
 # check for exempi
 ##################################################################
 
-EXEMPI_REQUIRED=1.99.1
+EXEMPI_REQUIRED=1.99.3
 
 AC_ARG_ENABLE(xmp, AC_HELP_STRING([--disable-xmp], [Disable XMP extraction]),,[enable_xmp=yes])
 if test "x$enable_xmp" = "xyes"; then
@@ -89,6 +89,7 @@ AC_CONFIG_FILES([
 	bindings/Makefile
 	bindings/python/Makefile
 	tests/Makefile
+	xdgmime/Makefile
 ])
 
 AC_CONFIG_HEADERS([config.h])
