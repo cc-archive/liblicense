@@ -91,6 +91,7 @@ AC_CONFIG_FILES([
 	bindings/python/Makefile
 	tests/Makefile
 	xdgmime/Makefile
+	utils/Makefile
 ])
 
 AC_CONFIG_HEADERS([config.h])

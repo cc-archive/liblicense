@@ -22,7 +22,7 @@ print "\tget_licenses(juris):", get_licenses("za")
 
 print "Test write_license python bindings:"
 print "\twrite:",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/")
-print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","txt.h")
+print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/stub.so")
 
 #print "Test read_license python bindings:"
 #print "\tread:",read("license_me.txt")
@@ -31,12 +31,10 @@ print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by
 print "Test system_default:"
 print "\tset_default:",set_default("creativecommons.org/licenses/by/2.5/au/")
 print "\tget_default:",get_default()
-print "\tdefault_engines:",default_engines()
 
 print "Test module_wrangler:"
 print "\tget_config_modules:",get_config_modules()
 print "\tget_io_modules:",get_io_modules()
 print "\tget_module_symbol: not bound"
-print "\tmodule_in_use:",module_in_use("gconf.o")
-print "\tmodule_mime_types:",module_mime_types("exempi.o")
+print "\tmodule_mime_types:",module_mime_types(".libs/exempi.so")
 sys.exit(0)

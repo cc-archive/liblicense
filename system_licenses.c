@@ -201,6 +201,10 @@ attribute_search_t* _ll_get_triple(const uri_t u, const char* subject, const cha
 		// Run the parser.
 		raptor_parser* rdf_parser;
 	  rdf_parser = raptor_new_parser("rdfxml");
+	  if (rdf_parser==NULL) {
+	  	fprintf(stderr,"New parser failed.\n");
+	  	exit(1);
+	  }
 	  raptor_set_statement_handler(rdf_parser, helper, _ll_triple_handler);
 	  unsigned char* fnu = raptor_uri_filename_to_uri_string(fn);
 	  raptor_uri* fn_uri = raptor_new_uri(fnu);

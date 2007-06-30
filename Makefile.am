@@ -1,4 +1,4 @@
-SUBDIRS = . xdgmime licenses modules bindings tests
+SUBDIRS = . xdgmime licenses modules bindings tests utils
 
 libdir = @libdir@/liblicense
 lib_LTLIBRARIES = liblicense.la

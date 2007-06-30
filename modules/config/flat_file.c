@@ -16,7 +16,7 @@ int set_default(char* u) {
 char* get_default() {
 	FILE* file = fopen("default-license.txt","r");
 	if (file==NULL)
-		return "";
+		return strdup("");
 	char tmp[MAX_URI_LENGTH] = "";
 	fgets(tmp,MAX_URI_LENGTH,file);
 	fclose(file);

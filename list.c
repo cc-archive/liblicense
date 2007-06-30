@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 char** ll_new_list(int length) {
 	return (char**) calloc(length+1,sizeof(char*));

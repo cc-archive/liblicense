@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include "list.h"
+#include <stdio.h>
 
 int ll_set_default(const uri_t u) {
 	module_t* modules= ll_get_config_modules();
@@ -33,8 +34,14 @@ uri_t ll_get_default() {
 		ll_module_shutdown(LIBLICENSE_CONFIG_MODULE_DIR,modules[i]);
 		i++;
 	}
-	uri_t final_answer = strdup(ll_list_mode(responses,""));
+	uri_t final_answer = ll_list_mode(responses,"");
 	ll_free_list(modules);
+	if (final_answer==NULL) {
+		fprintf(stderr,"No system default set.\n");
+		ll_free_list(responses);
+		return NULL;
+	}
+	final_answer = strdup(final_answer);
 	ll_free_list(responses);
 	return final_answer;
 }
