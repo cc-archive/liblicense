@@ -1,3 +1,4 @@
+libdir = @libdir@/liblicense/config
 lib_LTLIBRARIES = \
 	flat_file.la
 

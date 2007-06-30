@@ -12,6 +12,7 @@ sidecar_xmp_la_LIBADD = $(EXEMPI_LIBS)
 sidecar_xmp_la_CFLAGS = $(EXEMPI_CFLAGS)
 endif
 
+libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
 	stub.la

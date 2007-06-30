@@ -1,5 +1,6 @@
-SUBDIRS = . xdgmime modules bindings tests
+SUBDIRS = . xdgmime licenses modules bindings tests
 
+libdir = @libdir@/liblicense
 lib_LTLIBRARIES = liblicense.la
 
 liblicense_la_CFLAGS = $(RAPTOR_CFLAGS)

@@ -13,8 +13,8 @@ AC_PROG_MAKE_SET
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
 
-AM_PATH_PYTHON
-if test "x$PYTHON" != "x"; then
+AM_CHECK_PYTHON_HEADERS
+if test "x$PYTHON_INCLUDES" != "x"; then
   PYTHON_DIR=python
 fi
 AC_SUBST(PYTHON_DIR)
@@ -83,6 +83,7 @@ test "$have_exempi" = "yes" && AC_DEFINE(HAVE_EXEMPI, [], [Define if we have exe
 
 AC_CONFIG_FILES([
 	Makefile
+	licenses/Makefile
 	modules/Makefile
 	modules/io/Makefile
 	modules/config/Makefile

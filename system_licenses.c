@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include <locale.h>
 #include <ctype.h>
+#include <assert.h>
+
 #include "list.h"
 
 #define MAX_TRIPLES 5
@@ -114,9 +116,12 @@ int ll_verify_uri(const uri_t u) {
 }
 
 uri_t _ll_filename_to_uri(const filename_t f) {
-	uri_t result = (uri_t) malloc((strlen(f)-3)*sizeof(char));
-	strncpy(result,f,(strlen(f)-4));
-	result[strlen(f)-3-1]='\0';
+	uri_t result = (uri_t) malloc((strlen(f)-3+7)*sizeof(char));
+
+	strcpy(result,"http://");
+	strncpy(&result[7],f,(strlen(f)-4));
+	result[strlen(f)-3+7-1]='\0';
+
 	int i =0 ;
 	while(result[i]!='\0') {
 		if (result[i]=='_')
@@ -127,8 +132,10 @@ uri_t _ll_filename_to_uri(const filename_t f) {
 }
 
 filename_t _ll_uri_to_filename(const uri_t u) {
-	char* tmp_u = strdup(u);
-	char* result = (char*) malloc((strlen(LICENSE_DIR)+strlen(u)+4+1)*sizeof(char));
+	assert( strncmp(u,"http://",7) == 0 );
+
+	char* tmp_u = strdup(&u[7]);
+	char* result = (char*) malloc((strlen(LICENSE_DIR)+strlen(tmp_u)+4+1)*sizeof(char));
 	result[0] = '\0';
 	int i =0 ;
 	while(tmp_u[i]!='\0') {
