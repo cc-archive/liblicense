@@ -117,6 +117,7 @@ char* read( const char* filename )
 		get_contents_stdio(f,&buffer,&len);
 
 		XmpPtr xmp = xmp_new(buffer,len);
+		free(buffer);
 
 		char *uri_string = NULL;
 		XmpStringPtr license_uri = xmp_string_new();
@@ -129,6 +130,8 @@ char* read( const char* filename )
 
 		return uri_string;
 	}
+
+	free(sidecar);
 
 	return NULL;
 }
@@ -149,6 +152,7 @@ int write( const char* filename, const char* uri )
 		get_contents_stdio(f,&buffer,&len);
 
 		xmp = xmp_new(buffer,len);
+		fclose(f);
 	}
 	
 	if ( !xmp ) {
@@ -170,8 +174,8 @@ int write( const char* filename, const char* uri )
 		success = false;
 	}
 
+	free(sidecar);
 	xmp_string_free(xmp_string);
-
 	xmp_free(xmp);
 
 	return success;
