@@ -15,18 +15,14 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-void init() {
-	return;
-}
+#include "write_license.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-void shutdown() {
-	return;
-}
-
-char* read(char* f) {
-	return strdup("http://creativecommons.org/licenses/by-nd/2.0/");
-}
-
-int write(char* f,char* u) {
+int main(int argc, char** argv) {
+	char* file="license_me.txt";
+	uri_t license = "creativecommons.org/licenses/by/2.5/au/";
+	int result = ll_write(file,license);
+	printf("Write result: %d\n",result);
 	return 0;
 }

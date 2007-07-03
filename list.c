@@ -1,3 +1,20 @@
+// Creative Commons has made the contents of this file
+// available under a CC-GNU-GPL license:
+//
+// http://creativecommons.org/licenses/GPL/2.0/
+//
+// A copy of the full license can be found as part of this
+// distribution in the file COPYING.
+// 
+// You may use the liblicense software in accordance with the
+// terms of that license. You agree that you are solely 
+// responsible for your use of the liblicense software and you
+// represent and warrant to Creative Commons that your use
+// of the liblicense software will comply with the CC-GNU-GPL.
+//
+// Copyright 2007, Creative Commons, www.creativecommons.org.
+// Copyright 2007, Scott Shawcroft.
+
 #include "list.h"
 #include <string.h>
 #include <stdbool.h>
@@ -8,6 +25,8 @@ char** ll_new_list(int length) {
 	return (char**) calloc(length+1,sizeof(char*));
 }
 void ll_free_list(char** list) {
+	if (list==NULL)
+		return;
 	int i=0;
 	while(list[i]!=NULL) {
 		free(list[i]);
@@ -17,6 +36,8 @@ void ll_free_list(char** list) {
 }
 
 int ll_list_contains(char** list, char* needle) {
+	if (list==NULL || needle==NULL)
+		return false;
 	int i=0;
 	while(list[i]!=NULL) {
 		if (strcmp(list[i],needle)==0)
@@ -74,11 +95,16 @@ char* ll_list_mode(char** list, char* ignore) {
 }
 
 void ll_list_print(char** list) {
+	if (list==NULL) {
+		printf("(null)\n");
+		return;
+	}
 	printf("[ ");
-	if (list[0]!=NULL)
+	if (list[0]!=NULL) {
 		printf("'%s'",list[0]);
-	int i = 1;
-	while (list[i]!=NULL)
-		printf(", '%s'",list[i++]);
+		int i = 1;
+		while (list[i]!=NULL)
+			printf(", '%s'",list[i++]);
+	}
 	printf(" ]\n");
 }
