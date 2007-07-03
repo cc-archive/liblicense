@@ -126,29 +126,27 @@ char* read( const char* filename )
 	printf("sidecar_xmp: read(%s)\n",filename);
 
 	char *sidecar = sidecar_filename( filename );
-
 	FILE *f = fopen(sidecar, "rb");
+	free(sidecar);
+
 	if ( f ) {
 		char *buffer;
 		size_t len;
-		get_contents_stdio(f,&buffer,&len);
-
-		XmpPtr xmp = xmp_new(buffer,len);
-		free(buffer);
-
-		char *uri_string = NULL;
-		XmpStringPtr license_uri = xmp_string_new();
-		if ( xmp_get_property(xmp, NS_CC, "license", license_uri) ) {
-			uri_string = strdup(xmp_string_cstr(license_uri));
+		if ( get_contents_stdio(f,&buffer,&len) ) {
+			XmpPtr xmp = xmp_new(buffer,len);
+			free(buffer);
+	
+			char *uri_string = NULL;
+			XmpStringPtr license_uri = xmp_string_new();
+			if ( xmp_get_property(xmp, NS_CC, "license", license_uri) ) {
+				uri_string = strdup(xmp_string_cstr(license_uri));
+			}
+	
+			xmp_string_free(license_uri);
+			xmp_free(xmp);
+			return uri_string;
 		}
-
-		xmp_string_free(license_uri);
-		xmp_free(xmp);
-
-		return uri_string;
 	}
-
-	free(sidecar);
 
 	return NULL;
 }
@@ -166,9 +164,10 @@ int write( const char* filename, const char* uri )
 	if ( f ) {
 		char *buffer;
 		size_t len;
-		get_contents_stdio(f,&buffer,&len); /* closes the file */
-
-		xmp = xmp_new(buffer,len);
+		if ( get_contents_stdio(f,&buffer,&len) ) { /* closes the file */
+			xmp = xmp_new(buffer,len);
+			free(buffer);
+		}
 	}
 	
 	if ( !xmp ) {
