@@ -149,10 +149,9 @@ int write( const char* filename, const char* uri )
 	if ( f ) {
 		char *buffer;
 		size_t len;
-		get_contents_stdio(f,&buffer,&len);
+		get_contents_stdio(f,&buffer,&len); /* closes the file */
 
 		xmp = xmp_new(buffer,len);
-		fclose(f);
 	}
 	
 	if ( !xmp ) {
