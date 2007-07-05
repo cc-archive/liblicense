@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+Creative Commons has made the contents of this file
+available under a CC-GNU-GPL license:
+
+ http://creativecommons.org/licenses/GPL/2.0/
+
+ A copy of the full license can be found as part of this
+ distribution in the file COPYING
+
+You may use the liblicense software in accordance with the
+terms of that license. You agree that you are solely 
+responsible for your use of the liblicense software and you
+represent and warrant to Creative Commons that your use
+of the liblicense software will comply with the CC-GNU-GPL.
+
+Copyright 2007, Creative Commons, www.creativecommons.org.
+
+-->
+<rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1'>
+  <rdf:Description rdf:about='http://creativecommons.org/licenses/publicdomain/'>
+    <dc:type>License</dc:type>
+    <dc:identifier>http://creativecommons.org/licenses/publicdomain/</dc:identifier>
+    <dc:publisher>Creative Commons</dc:publisher>
+    <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <dc:title>
+      <rdf:Alt>
+        <rdf:li xml:lang='af'>Openbare Domein</rdf:li>
+        <rdf:li xml:lang='bg'>Обществена Собственост</rdf:li>
+        <rdf:li xml:lang='ca'>Domini Públic</rdf:li>
+        <rdf:li xml:lang='da'>Public Domain</rdf:li>
+        <rdf:li xml:lang='de'>Public Domain</rdf:li>
+        <rdf:li xml:lang='de_AT'>Public Domain</rdf:li>
+        <rdf:li xml:lang='de_CH'>Public Domain</rdf:li>
+        <rdf:li xml:lang='x-default'>Public Domain</rdf:li>
+        <rdf:li xml:lang='en_CA'>Public Domain</rdf:li>
+        <rdf:li xml:lang='en_GB'>Public Domain</rdf:li>
+        <rdf:li xml:lang='en_US'>Public Domain</rdf:li>
+        <rdf:li xml:lang='eo'>Publika havaĵo</rdf:li>
+        <rdf:li xml:lang='es'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es_AR'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es_CL'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es_CO'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es_MX'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es_PE'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='eu'>Eskumen Publikoa</rdf:li>
+        <rdf:li xml:lang='fi'>Public Domain</rdf:li>
+        <rdf:li xml:lang='gl'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='he'>נחלת הכלל</rdf:li>
+        <rdf:li xml:lang='hr'>Javna domena</rdf:li>
+        <rdf:li xml:lang='hu'>Közkincs</rdf:li>
+        <rdf:li xml:lang='it'>Pubblico Dominio</rdf:li>
+        <rdf:li xml:lang='it_CH'>Pubblico Dominio</rdf:li>
+        <rdf:li xml:lang='ja'>パブリック・ドメイン</rdf:li>
+        <rdf:li xml:lang='ko'>
+        </rdf:li>
+        <rdf:li xml:lang='kr'>
+        </rdf:li>
+        <rdf:li xml:lang='mk'>Јавен домен</rdf:li>
+        <rdf:li xml:lang='ms'>Domain awam</rdf:li>
+        <rdf:li xml:lang='nl'>Publiek domein</rdf:li>
+        <rdf:li xml:lang='nso'>Bulegetše Setšhaba</rdf:li>
+        <rdf:li xml:lang='pt'>Domínio Público</rdf:li>
+        <rdf:li xml:lang='pt_PT'>Domínio Público</rdf:li>
+        <rdf:li xml:lang='sl'>Javna domena</rdf:li>
+        <rdf:li xml:lang='zh'>公共领域</rdf:li>
+        <rdf:li xml:lang='zh_TW'>公共領域 (Public Domain)</rdf:li>
+        <rdf:li xml:lang='zu'>Ukunikezela Emphakathini</rdf:li>
+      </rdf:Alt>
+    </dc:title>
+  </rdf:Description>
+</rdf:RDF>

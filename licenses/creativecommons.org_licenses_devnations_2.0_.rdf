@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+Creative Commons has made the contents of this file
+available under a CC-GNU-GPL license:
+
+ http://creativecommons.org/licenses/GPL/2.0/
+
+ A copy of the full license can be found as part of this
+ distribution in the file COPYING
+
+You may use the liblicense software in accordance with the
+terms of that license. You agree that you are solely 
+responsible for your use of the liblicense software and you
+represent and warrant to Creative Commons that your use
+of the liblicense software will comply with the CC-GNU-GPL.
+
+Copyright 2007, Creative Commons, www.creativecommons.org.
+
+-->
+<rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1'>
+  <rdf:Description rdf:about='http://creativecommons.org/licenses/devnations/2.0/'>
+    <dc:hasVersion>2.0</dc:hasVersion>
+    <dc:type>License</dc:type>
+    <dc:identifier>http://creativecommons.org/licenses/devnations/2.0/</dc:identifier>
+    <dc:creator>Creative Commons</dc:creator>
+    <dc:publisher>Creative Commons</dc:publisher>
+    <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <prohibits rdf:resource='http://creativecommons.org/ns#HighIncomeNationUse'/>
+    <dc:title>
+      <rdf:Alt/>
+    </dc:title>
+  </rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+Creative Commons has made the contents of this file
+available under a CC-GNU-GPL license:
+
+ http://creativecommons.org/licenses/GPL/2.0/
+
+ A copy of the full license can be found as part of this
+ distribution in the file COPYING
+
+You may use the liblicense software in accordance with the
+terms of that license. You agree that you are solely 
+responsible for your use of the liblicense software and you
+represent and warrant to Creative Commons that your use
+of the liblicense software will comply with the CC-GNU-GPL.
+
+Copyright 2007, Creative Commons, www.creativecommons.org.
+
+-->
+<rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1' xmlns:dcq='http://purl.org/dc/terms/'>
+  <rdf:Description rdf:about='http://creativecommons.org/licenses/sampling+/1.0/de/'>
+    <dc:hasVersion>1.0</dc:hasVersion>
+    <dc:type>License</dc:type>
+    <dc:identifier>http://creativecommons.org/licenses/sampling+/1.0/de/</dc:identifier>
+    <dc:creator>Creative Commons</dc:creator>
+    <dc:publisher>Creative Commons</dc:publisher>
+    <dc:coverage>
+      <dcq:ISO3166>
+        <rdf:value>de</rdf:value>
+      </dcq:ISO3166>
+    </dc:coverage>
+    <dc:isBasedOn>
+      <dcq:URI>
+        <rdf:value>http://creativecommons.org/licenses/sampling+/1.0/</rdf:value>
+      </dcq:URI>
+    </dc:isBasedOn>
+    <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Sharing'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <dc:title>
+      <rdf:Alt>
+        <rdf:li xml:lang='af'>Creative Commons - Voorsmaak Plus</rdf:li>
+        <rdf:li xml:lang='bg'>Creative Commons - Семплиране плюс</rdf:li>
+        <rdf:li xml:lang='ca'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='da'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='x-default'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='en_CA'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='en_GB'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='en_US'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='eo'>Creative Commons - Specimeno Plus</rdf:li>
+        <rdf:li xml:lang='es'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='es_AR'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='es_CL'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='es_CO'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='es_MX'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='es_PE'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='eu'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='fi'>Creative Commons - Sämpläys plus</rdf:li>
+        <rdf:li xml:lang='fr'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='fr_CA'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='fr_CH'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='fr_LU'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='gl'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='he'>Creative Commons - דגימה פלוס</rdf:li>
+        <rdf:li xml:lang='hr'>Creative Commons - Sempliranje plus</rdf:li>
+        <rdf:li xml:lang='hu'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='it'>Creative Commons - &lt;span lang=\"en\">Sampling Plus&lt;/span></rdf:li>
+        <rdf:li xml:lang='it_CH'>Creative Commons - &lt;span lang=\"en\">Sampling Plus&lt;/span></rdf:li>
+        <rdf:li xml:lang='ja'>Creative Commons - サンプリング・プラス</rdf:li>
+        <rdf:li xml:lang='mk'>Creative Commons - Семплирање плус</rdf:li>
+        <rdf:li xml:lang='ms'>Creative Commons - Mengambil contoh tambah</rdf:li>
+        <rdf:li xml:lang='nl'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='nso'>Creative Commons - Sampole ya Tlaleletšo</rdf:li>
+        <rdf:li xml:lang='pl'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='pt'>Creative Commons - Recombinação Plus</rdf:li>
+        <rdf:li xml:lang='pt_PT'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='sl'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='sv'>Creative Commons - Sampling Plus</rdf:li>
+        <rdf:li xml:lang='zh'>Creative Commons - 取样使用加强版</rdf:li>
+        <rdf:li xml:lang='zh_TW'>Creative Commons - 特別取樣</rdf:li>
+        <rdf:li xml:lang='zu'>Creative Commons - Ukuthatha Isampula Nokunye</rdf:li>
+      </rdf:Alt>
+    </dc:title>
+  </rdf:Description>
+</rdf:RDF>

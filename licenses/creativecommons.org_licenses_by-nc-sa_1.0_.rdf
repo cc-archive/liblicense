@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+
+Creative Commons has made the contents of this file
+available under a CC-GNU-GPL license:
+
+ http://creativecommons.org/licenses/GPL/2.0/
+
+ A copy of the full license can be found as part of this
+ distribution in the file COPYING
+
+You may use the liblicense software in accordance with the
+terms of that license. You agree that you are solely 
+responsible for your use of the liblicense software and you
+represent and warrant to Creative Commons that your use
+of the liblicense software will comply with the CC-GNU-GPL.
+
+Copyright 2007, Creative Commons, www.creativecommons.org.
+
+-->
+<rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1' xmlns:dcq='http://purl.org/dc/terms/'>
+  <rdf:Description rdf:about='http://creativecommons.org/licenses/by-nc-sa/1.0/'>
+    <dc:hasVersion>1.0</dc:hasVersion>
+    <dc:isReplacedBy>
+      <dcq:URI>
+        <rdf:value>http://creativecommons.org/licenses/by-nc-sa/3.0/</rdf:value>
+      </dcq:URI>
+    </dc:isReplacedBy>
+    <dc:type>License</dc:type>
+    <dc:identifier>http://creativecommons.org/licenses/by-nc-sa/1.0/</dc:identifier>
+    <dc:creator>Creative Commons</dc:creator>
+    <dc:publisher>Creative Commons</dc:publisher>
+    <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <prohibits rdf:resource='http://creativecommons.org/ns#CommercialUse'/>
+    <dc:title>
+      <rdf:Alt>
+        <rdf:li xml:lang='af'>Creative Commons - Erkenning-Niekommersieel-InsgelyksDeel</rdf:li>
+        <rdf:li xml:lang='bg'>Creative Commons - Признание-Некомерсиално-Споделяне на споделеното</rdf:li>
+        <rdf:li xml:lang='ca'>Creative Commons - Reconeixement-NoComercial-CompartirIgual</rdf:li>
+        <rdf:li xml:lang='da'>Creative Commons - Navngivelse-IkkeKommerciel–DelPåSammeVilkår</rdf:li>
+        <rdf:li xml:lang='de'>Creative Commons - Namensnennung-NichtKommerziell-Weitergabe unter gleichen Bedingungen</rdf:li>
+        <rdf:li xml:lang='de_AT'>Creative Commons - Namensnennung-NichtKommerziell-Weitergabe unter gleichen Bedingungen</rdf:li>
+        <rdf:li xml:lang='de_CH'>Creative Commons - Namensnennung-NichtKommerziell-Weitergabe unter gleichen Bedingungen</rdf:li>
+        <rdf:li xml:lang='x-default'>Creative Commons - Attribution-NonCommercial-ShareAlike</rdf:li>
+        <rdf:li xml:lang='en_CA'>Creative Commons - Attribution-NonCommercial-ShareAlike</rdf:li>
+        <rdf:li xml:lang='en_GB'>Creative Commons - Attribution-NonCommercial-ShareAlike</rdf:li>
+        <rdf:li xml:lang='en_US'>Creative Commons - Attribution-NonCommercial-ShareAlike</rdf:li>
+        <rdf:li xml:lang='eo'>Creative Commons - Atribuo-nekomerca-distribui samrajte</rdf:li>
+        <rdf:li xml:lang='es'>Creative Commons - Reconocimiento-NoComercial-CompartirIgual</rdf:li>
+        <rdf:li xml:lang='es_AR'>Creative Commons - Atribución-NoComercial-CompartirDerivadasIgual</rdf:li>
+        <rdf:li xml:lang='es_CL'>Creative Commons - Atribución-NoComercial-LicenciarIgual</rdf:li>
+        <rdf:li xml:lang='es_CO'>Creative Commons - Reconocimiento-NoComercial-CompartirIgual</rdf:li>
+        <rdf:li xml:lang='es_MX'>Creative Commons - Atribución-No Comercial-Licenciamiento Recíproco</rdf:li>
+        <rdf:li xml:lang='es_PE'>Creative Commons - Reconocimiento-NoComercial-CompartirIgual</rdf:li>
+        <rdf:li xml:lang='eu'>Creative Commons - Aitortu-EzKomertziala-PartekatuBerdin</rdf:li>
+        <rdf:li xml:lang='fi'>Creative Commons - Nimeä-Epäkaupallinen-Tarttuva</rdf:li>
+        <rdf:li xml:lang='fr'>Creative Commons - Paternité - Pas d'Utilisation Commerciale - Partage des Conditions Initiales à l'Identique</rdf:li>
+        <rdf:li xml:lang='fr_CA'>Creative Commons - Paternité - Pas d'Utilisation Commerciale - Partage des Conditions Initiales à l'Identique</rdf:li>
+        <rdf:li xml:lang='fr_CH'>Creative Commons - Paternité - Pas d'Utilisation Commerciale - Partage des Conditions Initiales à l'Identique</rdf:li>
+        <rdf:li xml:lang='fr_LU'>Creative Commons - Paternité - Pas d'Utilisation Commerciale - Partage des Conditions Initiales à l'Identique</rdf:li>
+        <rdf:li xml:lang='gl'>Creative Commons - Recoñecemento-NonComercial-CompartirIgual</rdf:li>
+        <rdf:li xml:lang='he'>Creative Commons - ייחוס-שימוש לא מסחרי-שיתוף זהה</rdf:li>
+        <rdf:li xml:lang='hr'>Creative Commons - Imenovanje-Nekomercijalno-Dijeli pod istim uvjetima</rdf:li>
+        <rdf:li xml:lang='hu'>Creative Commons - Nevezd meg! - Ne add el! - Így add tovább!</rdf:li>
+        <rdf:li xml:lang='it'>Creative Commons - Attribuzione - Non commerciale - Condividi allo stesso modo</rdf:li>
+        <rdf:li xml:lang='it_CH'>Creative Commons - Attribuzione - Non commerciale - Condividi allo stesso modo</rdf:li>
+        <rdf:li xml:lang='ja'>Creative Commons - 表示 - 非営利 - 継承</rdf:li>
+        <rdf:li xml:lang='ko'>Creative Commons - 저작자표시-비영리-동일조건변경허락</rdf:li>
+        <rdf:li xml:lang='kr'>Creative Commons - 저작자표시-비영리-동일조건변경허락</rdf:li>
+        <rdf:li xml:lang='mk'>Creative Commons - НаведиИзвор-Некомерцијално-СподелиПодИстиУслови</rdf:li>
+        <rdf:li xml:lang='ms'>Creative Commons - Pengiktirafan-BukanKomersial-PerkongsianSerupa</rdf:li>
+        <rdf:li xml:lang='nl'>Creative Commons - Naamsvermelding-NietCommercieel-GelijkDelen</rdf:li>
+        <rdf:li xml:lang='nso'>Creative Commons - Tsebagatšo - E sego ya Kgwebo - Mohlakanelwa</rdf:li>
+        <rdf:li xml:lang='pl'>Creative Commons - Uznanie autorstwa-Użycie niekomercyjne-Na tych samych warunkach</rdf:li>
+        <rdf:li xml:lang='pt'>Creative Commons - Atribuição-Uso Não-Comercial-Compatilhamento pela mesma licença</rdf:li>
+        <rdf:li xml:lang='pt_PT'>Creative Commons - Atribuição-Uso Não-Comercial-Partilha nos termos da mesma licença</rdf:li>
+        <rdf:li xml:lang='sl'>Creative Commons - Priznanje avtorstva-Nekomercialno-Deljenje pod enakimi pogoji</rdf:li>
+        <rdf:li xml:lang='sv'>Creative Commons - Erkännande-IckeKommersiell-DelaLika</rdf:li>
+        <rdf:li xml:lang='zh'>Creative Commons - 署名-非商业性使用-相同方式共享</rdf:li>
+        <rdf:li xml:lang='zh_TW'>Creative Commons - 姓名標示-非商業性-相同方式分享</rdf:li>
+        <rdf:li xml:lang='zu'>Creative Commons - Qaphela Umnikazi-Ungayisebenziseli Ezentengiselwano-Yihlanganyeleni</rdf:li>
+      </rdf:Alt>
+    </dc:title>
+  </rdf:Description>
+</rdf:RDF>
