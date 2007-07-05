@@ -26,14 +26,52 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <dc:creator>Creative Commons</dc:creator>
     <dc:publisher>Creative Commons</dc:publisher>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <prohibits rdf:resource='http://creativecommons.org/ns#HighIncomeNationUse'/>
     <dc:title>
-      <rdf:Alt/>
+      <rdf:Alt>
+        <rdf:li xml:lang='af'>Creative Commons - Ontwikkelende Nasies</rdf:li>
+        <rdf:li xml:lang='bg'>Creative Commons - Развиващи се нации</rdf:li>
+        <rdf:li xml:lang='ca'>Creative Commons - Nacions en desenvolupament</rdf:li>
+        <rdf:li xml:lang='da'>Creative Commons - Udviklingslande</rdf:li>
+        <rdf:li xml:lang='x-default'>Creative Commons - Developing Nations</rdf:li>
+        <rdf:li xml:lang='en_CA'>Creative Commons - Developing Nations</rdf:li>
+        <rdf:li xml:lang='en_GB'>Creative Commons - Developing Nations</rdf:li>
+        <rdf:li xml:lang='en_US'>Creative Commons - Developing Nations</rdf:li>
+        <rdf:li xml:lang='eo'>Creative Commons - Ne riĉaj landoj</rdf:li>
+        <rdf:li xml:lang='es'>Creative Commons - Naciones en desarrollo</rdf:li>
+        <rdf:li xml:lang='es_AR'>Creative Commons - Naciones en Desarrollo</rdf:li>
+        <rdf:li xml:lang='es_CL'>Creative Commons - Países en Desarrollo</rdf:li>
+        <rdf:li xml:lang='es_CO'>Creative Commons - Naciones en desarrollo</rdf:li>
+        <rdf:li xml:lang='es_MX'>Creative Commons - Naciones en desarrollo</rdf:li>
+        <rdf:li xml:lang='es_PE'>Creative Commons - Naciones en desarrollo</rdf:li>
+        <rdf:li xml:lang='eu'>Creative Commons - Garapen bidean diren herrialdeak</rdf:li>
+        <rdf:li xml:lang='fi'>Creative Commons - Kehitysmaa</rdf:li>
+        <rdf:li xml:lang='fr'>Creative Commons - Pays en Voie de Développement</rdf:li>
+        <rdf:li xml:lang='fr_CA'>Creative Commons - Pays en Voie de Développement</rdf:li>
+        <rdf:li xml:lang='fr_CH'>Creative Commons - Pays en Voie de Développement</rdf:li>
+        <rdf:li xml:lang='fr_LU'>Creative Commons - Pays en Voie de Développement</rdf:li>
+        <rdf:li xml:lang='he'>Creative Commons - מדינות מתפתחות</rdf:li>
+        <rdf:li xml:lang='hr'>Creative Commons - Zemlje u razvoju</rdf:li>
+        <rdf:li xml:lang='hu'>Creative Commons - Fejlődő országok</rdf:li>
+        <rdf:li xml:lang='ja'>Creative Commons - 発展途上国</rdf:li>
+        <rdf:li xml:lang='mk'>Creative Commons - Земји во развој</rdf:li>
+        <rdf:li xml:lang='ms'>Creative Commons - Negara-Negara Membangun</rdf:li>
+        <rdf:li xml:lang='nl'>Creative Commons - Developing Nations</rdf:li>
+        <rdf:li xml:lang='nso'>Creative Commons - Dinaga tše Hlabologago</rdf:li>
+        <rdf:li xml:lang='pl'>Creative Commons - Państwa rozwijające się</rdf:li>
+        <rdf:li xml:lang='pt'>Creative Commons - Nações em Desenvolvimento</rdf:li>
+        <rdf:li xml:lang='pt_PT'>Creative Commons - Nações em Desenvolvimento</rdf:li>
+        <rdf:li xml:lang='sl'>Creative Commons - Narodi v razvoju</rdf:li>
+        <rdf:li xml:lang='sv'>Creative Commons - Utvecklingsländer</rdf:li>
+        <rdf:li xml:lang='zh'>Creative Commons - 发展中国家</rdf:li>
+        <rdf:li xml:lang='zh_TW'>Creative Commons - 開發中國家</rdf:li>
+        <rdf:li xml:lang='zu'>Creative Commons - Izizwe Ezisathuthuka</rdf:li>
+      </rdf:Alt>
     </dc:title>
   </rdf:Description>
 </rdf:RDF>
