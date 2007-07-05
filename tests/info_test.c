@@ -21,7 +21,7 @@
 #include <stdio.h>
 int main(int argc,char** argv) {
 	ll_init();
-	uri_t license = "http://creativecommons.org/licenses/by-nd/2.0/";
+	uri_t license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
 	juris_t j = ll_get_jurisdiction(license);
 	printf("get_jurisdiction: '%s'\n",j);
 	free(j);

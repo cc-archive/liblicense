@@ -32,7 +32,7 @@ void help() {
 	printf("       --verbose               Outputs more license information.\n");
 	printf("       --quiet                 Output less.\n");
 	printf("   -a, --list=JURISDICTION     Lists all available licenses in JURISDICTION\n");
-	printf("                                 or in United States (\"us\") by default.\n");
+	printf("                                 or unported licenses by default.\n");
 	printf("       --set                   Sets the license instead of reading it.\n");
 	printf("   -l, --license=URI           Uses the license with URI instead of default.\n");
 	printf("       --help                  Output this help text and quit.\n");
@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
 				if (optarg!=NULL)
 					list_juris(optarg);
 				else
-					list_juris("us");
+					list_juris(NULL);
 				ll_stop();
 				return 0;
 			case '?':
