@@ -19,70 +19,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <getopt.h>
+static int verbose_flag;
+static int set_flag;
 
-int set(int argc, char** argv) {
-	if (argc==2) {
-		fprintf(stderr,"license: set requires at least one more argument.\n");
-		return 1;
-	} else if (argc>=3) {
-		uri_t license;
-		if (argc==3) {
-			license = ll_get_default();
-		} else {
-			license=argv[3];
-		}
-		if(license!=NULL)
-				printf("Setting license for %s to %s.\n",argv[2],ll_get_name(license));
-		if (license!=NULL && strcmp(argv[2],"default")!=0)
-			return !ll_write(argv[2],license);
-		else if (license!=NULL)
-			return ll_set_default(license);
-		else
-			return 1;
-	}
-	return 0;
+void help() {
+	printf("	Usage: license [OPTION] [FILE]\n");
+	printf("Reads and writes license information for a given file or the system default.\n");
+	printf("If options are omitted, assume default license.\n");
+	printf("If file is omitted, assumes system default.\n");
+	printf("\n");
+	printf("       --verbose               Outputs more license information.\n");
+	printf("       --quiet                 Output less.\n");
+	printf("   -a, --list=JURISDICTION     Lists all available licenses in JURISDICTION\n");
+	printf("                                 or in United States (\"us\") by default.\n");
+	printf("       --set                   Sets the license instead of reading it.\n");
+	printf("   -l, --license=URI           Uses the license with URI instead of default.\n");
+	printf("       --help                  Output this help text and quit.\n");
+	printf("\n");
+	printf("Exit status is 0 if OK, 1 if no default license is set and 2 if the given\n");
+	printf("license does not exist.\n");
 }
 
-int get(int argc, char** argv) {
-	if (argc==2) {
-		fprintf(stderr,"license: get requires one more argument.\n");
-		return 1;
-	} else if (argc==3) {
-		if (strcmp(argv[2],"default")!=0)
-			printf("'%s' is licensed under %s.\n",argv[2],ll_get_name(ll_read(argv[2])));
-		else {
-			uri_t license = ll_get_default();
-			printf("The system default license is %s.\n",license);
-		}
-	}
-	return 0;
+void print_license_info(uri_t license) {
+	printf("More.\n");
 }
 
-int help(int argc, char** argv) {
-	if (argc==2) {
-		printf("license -- alpha version\n\
-		list - lists all available licenses.\n\
-		get - gets the license for the given file.\n\
-		set - sets the license for the given file.\n\
-		help - this.  For more give the command after help.\n");
-	} else {
-		if (strcmp(argv[2],"set")==0) {
-			printf("set usage: license set <file> [<license uri>]\n");
-			printf("note: <file> can be 'default' for system default.\n");
-		} else if (strcmp(argv[2],"get")==0) {
-			printf("get usage: license get <file>\n");
-			printf("note: <file> can be 'default' for system default.\n");
-		} else if (strcmp(argv[2],"list")==0) {
-			printf("get usage: license list\n");
-		} else {
-			printf("unknown command: %s\n",argv[2]);
-		}
-	}	
-	return 0;
-}
-
-int list(int argc, char** argv) {
-	uri_t* licenses = ll_get_all_licenses();
+int list_juris(juris_t j) {
+	uri_t* licenses = ll_get_licenses(j);
 	int i = 0;
 	while (licenses[i]!=NULL) {
 		printf("%s - %s\n",ll_get_name(licenses[i]), licenses[i]);
@@ -92,27 +56,75 @@ int list(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-	int result = 0;
+	static struct option long_options[] =
+	{
+		{"verbose", no_argument, &verbose_flag, 1},
+		{"quiet", no_argument, &verbose_flag, 0},
+		{"set", no_argument, &set_flag, 1},
+		{"license", required_argument, 0, 'l'},
+		{"help", no_argument, 0, 'h'},
+		{"list-all", optional_argument, 0, 'a'},
+		{0,0,0,0}
+	};
+	int c;
+	int option_index;
+	uri_t license = NULL;
 	ll_init();
-	if (argc==1) {
-		fprintf(stderr,"license: please enter a command and appropriate options.\n");
-		result = 1;
-	} else if (argc>=2) {
-	
-		// commands
-		if (strcmp(argv[1],"list")==0) {
-			result = list(argc,argv);
-		} else if (strcmp(argv[1],"set")==0) {
-			result = set(argc,argv);
-		} else if (strcmp(argv[1],"get")==0) {
-			result = get(argc,argv);
-		} else if (strcmp(argv[1],"help")==0) {
-			result = help(argc,argv);
-		} else {
-			fprintf(stderr,"license: unknown command: '%s'\n",argv[1]);
-			result = 1;
+	while((c = getopt_long(argc,argv,"l:a::",long_options,&option_index))!=-1) {
+		switch(c) {
+			case 0:
+				continue;
+			case 'h':
+				help();
+				return 0;
+			case 'l':
+				if (optarg!=NULL) {
+					if (ll_verify_uri(optarg))
+						license=optarg;
+					else {
+						fprintf(stderr,"Error: License '%s' does not exist.\n",optarg);
+						return 2;
+					}
+				}
+				break;
+			case 'a':
+				if (optarg!=NULL)
+					list_juris(optarg);
+				else
+					list_juris("us");
+				ll_stop();
+				return 0;
+			case '?':
+				break;
+			default:
+				abort();
 		}
 	}
+	if (license==NULL) {
+		license = ll_get_default();
+		if (license==NULL) {
+			fprintf(stderr,"Error: No default license set.\n");
+			ll_stop();
+			return 1;
+		}			
+	}
+	if (argc==optind) { /* No more arguments, assume default. */
+		if (set_flag) {
+			ll_set_default(license);
+		} else {
+			license = ll_get_default();
+		}
+		printf("The system default license is %s.\n",license);
+		if (verbose_flag)
+			print_license_info(license);
+	} else { /* Next argument is file, use it. */
+		if (set_flag) {
+			ll_write(argv[optind],license);
+		} else {
+			license = ll_read(argv[optind]);
+		}
+		printf("%s is licensed under %s\n",argv[optind],license);
+	}
 	ll_stop();
-	return result;
+	return 0;
 }

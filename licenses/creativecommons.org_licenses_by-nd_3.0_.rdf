@@ -1,0 +1,62 @@
+<!--
+
+Creative Commons has made the contents of this file
+available under a CC-GNU-GPL license:
+
+ http://creativecommons.org/licenses/GPL/2.0/
+
+ A copy of the full license can be found as part of this
+ distribution in the file COPYING
+
+You may use the liblicense software in accordance with the
+terms of that license. You agree that you are solely 
+responsible for your use of the liblicense software and you
+represent and warrant to Creative Commons that your use
+of the liblicense software will comply with the CC-GNU-GPL.
+
+Copyright 2007, Creative Commons, www.creativecommons.org.
+Copyright 2006, Scott Shawcroft.
+
+-->
+<rdf:RDF
+   xmlns="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:dcq="http://purl.org/dc/terms/"
+>
+  <rdf:Description rdf:about="http://creativecommons.org/licenses/by-nd/3.0/">
+    <dc:title>
+        <rdf:Alt>
+            <rdf:li xml:lang="x-default">Creative Commons Attribution No Derivatives</rdf:li>
+            <rdf:li xml:lang="es_CL">Creative Commons Atribución-SinDerivadas</rdf:li>
+        </rdf:Alt>
+    </dc:title>
+    <dc:description>
+        <rdf:Alt>
+            <rdf:li xml:lang="x-default">This license allows for redistribution, commercial and non-commercial,
+ as long as it is passed along unchanged and in whole, with credit to you.</rdf:li>
+        </rdf:Alt>
+    </dc:description>
+    <dc:coverage>
+        <dcq:ISO3166>
+            <rdf:value>us</rdf:value>
+        </dcq:ISO3166>
+    </dc:coverage>
+    <dc:language>
+        <dcq:RFC3066>
+            <rdf:value>en</rdf:value>
+        </dcq:RFC3066>
+    </dc:language>
+    <dc:hasVersion>3.0</dc:hasVersion>
+    <dc:type>License</dc:type>
+    <dc:creator>Creative Commons</dc:creator>
+    <dc:publisher>Creative Commons</dc:publisher>
+    <dc:identifier>http://creativecommons.org/licenses/by-nd/3.0/</dc:identifier>
+
+    <rdf:type rdf:resource="http://creativecommons.org/ns#License"/>
+    <permits rdf:resource="http://creativecommons.org/ns#Distribution"/>
+    <permits rdf:resource="http://creativecommons.org/ns#Reproduction"/>
+    <requires rdf:resource="http://creativecommons.org/ns#Attribution"/>
+    <requires rdf:resource="http://creativecommons.org/ns#Notice"/>
+  </rdf:Description>
+</rdf:RDF>

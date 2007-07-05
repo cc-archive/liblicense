@@ -314,12 +314,14 @@ uri_t* ll_get_licenses(const juris_t j) {
 	while(licenses[z]!=NULL) {
 		//printf("%s\n",licenses[z]);
 		juris_t tmp_j = ll_get_jurisdiction(licenses[z]);
-		if(strcmp(tmp_j,j)==0)
+		uri_t successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
+		if(strcmp(tmp_j,j)==0 && successor[0]==NULL)
 			keep++;
 		else {
 			free(licenses[z]);
 			licenses[z] = strdup("remove");
 		}
+		ll_free_list(successor);
 		free(tmp_j);
 		z++;
 	}
