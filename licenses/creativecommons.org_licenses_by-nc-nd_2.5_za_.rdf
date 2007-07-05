@@ -18,7 +18,7 @@ of the liblicense software will comply with the CC-GNU-GPL.
 Copyright 2007, Creative Commons, www.creativecommons.org.
 
 -->
-<rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1' xmlns:dcq='http://purl.org/dc/terms/'>
+<rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:dcq='http://purl.org/dc/terms/'>
   <rdf:Description rdf:about='http://creativecommons.org/licenses/by-nc-nd/2.5/za/'>
     <dc:hasVersion>2.5</dc:hasVersion>
     <dc:type>License</dc:type>
