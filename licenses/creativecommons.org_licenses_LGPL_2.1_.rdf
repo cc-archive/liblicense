@@ -27,55 +27,55 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <dc:publisher>Creative Commons</dc:publisher>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
-    <requires rdf:resource='http://creativecommons.org/ns#SourceCode'/>
     <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <requires rdf:resource='http://creativecommons.org/ns#SourceCode'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <dc:title>
       <rdf:Alt>
         <rdf:li xml:lang='x-default'>LGPL</rdf:li>
-        <rdf:li xml:lang='af_AF'>LGPL</rdf:li>
-        <rdf:li xml:lang='bg_BG'>LGPL</rdf:li>
-        <rdf:li xml:lang='ca_CA'>LGPL</rdf:li>
-        <rdf:li xml:lang='da_DA'>LGPL</rdf:li>
-        <rdf:li xml:lang='de_DE'>LGPL</rdf:li>
-        <rdf:li xml:lang='de_AT'>LGPL</rdf:li>
-        <rdf:li xml:lang='de_CH'>LGPL</rdf:li>
-        <rdf:li xml:lang='en_CA'>LGPL</rdf:li>
-        <rdf:li xml:lang='en_GB'>LGPL</rdf:li>
-        <rdf:li xml:lang='en_US'>LGPL</rdf:li>
-        <rdf:li xml:lang='eo_EO'>LGPL</rdf:li>
-        <rdf:li xml:lang='es_ES'>LGPL</rdf:li>
-        <rdf:li xml:lang='es_AR'>LGPL</rdf:li>
-        <rdf:li xml:lang='es_CL'>LGPL</rdf:li>
-        <rdf:li xml:lang='es_CO'>LGPL</rdf:li>
-        <rdf:li xml:lang='es_MX'>LGPL</rdf:li>
-        <rdf:li xml:lang='es_PE'>LGPL</rdf:li>
-        <rdf:li xml:lang='eu_EU'>LGPL</rdf:li>
-        <rdf:li xml:lang='fi_FI'>LGPL</rdf:li>
-        <rdf:li xml:lang='fr_FR'>LGPL</rdf:li>
-        <rdf:li xml:lang='fr_CA'>LGPL</rdf:li>
-        <rdf:li xml:lang='fr_CH'>LGPL</rdf:li>
-        <rdf:li xml:lang='fr_LU'>LGPL</rdf:li>
-        <rdf:li xml:lang='gl_GL'>LGPL</rdf:li>
-        <rdf:li xml:lang='hr_HR'>LGPL</rdf:li>
-        <rdf:li xml:lang='hu_HU'>LGPL</rdf:li>
-        <rdf:li xml:lang='it_IT'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"Lesser general public license\">Lgpl&lt;/abbr></rdf:li>
-        <rdf:li xml:lang='it_CH'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"Lesser general public license\">Lgpl&lt;/abbr></rdf:li>
-        <rdf:li xml:lang='ja_JA'>LGPL</rdf:li>
-        <rdf:li xml:lang='mk_MK'>ЛГПЛ</rdf:li>
-        <rdf:li xml:lang='ms_MS'>LGPL (Lesen Awam Am Yang Lebih Kecil)</rdf:li>
-        <rdf:li xml:lang='nl_NL'>LGPL</rdf:li>
-        <rdf:li xml:lang='nso_NSO'>LGPL</rdf:li>
-        <rdf:li xml:lang='pl_PL'>LGPL</rdf:li>
-        <rdf:li xml:lang='pt_PT'>LGPL</rdf:li>
-        <rdf:li xml:lang='pt_PT'>LGPL</rdf:li>
-        <rdf:li xml:lang='sl_SL'>LGPL</rdf:li>
-        <rdf:li xml:lang='sv_SV'>LGPL</rdf:li>
-        <rdf:li xml:lang='zh_ZH'>LGPL</rdf:li>
-        <rdf:li xml:lang='zh_TW'>較寬鬆通用公共授權條款 (LGPL)</rdf:li>
-        <rdf:li xml:lang='zu_ZU'>LGPL</rdf:li>
+        <rdf:li xml:lang='af'>LGPL</rdf:li>
+        <rdf:li xml:lang='bg'>LGPL</rdf:li>
+        <rdf:li xml:lang='ca'>LGPL</rdf:li>
+        <rdf:li xml:lang='da'>LGPL</rdf:li>
+        <rdf:li xml:lang='de'>LGPL</rdf:li>
+        <rdf:li xml:lang='de-AT'>LGPL</rdf:li>
+        <rdf:li xml:lang='de-CH'>LGPL</rdf:li>
+        <rdf:li xml:lang='en-CA'>LGPL</rdf:li>
+        <rdf:li xml:lang='en-GB'>LGPL</rdf:li>
+        <rdf:li xml:lang='en-US'>LGPL</rdf:li>
+        <rdf:li xml:lang='eo'>LGPL</rdf:li>
+        <rdf:li xml:lang='es'>LGPL</rdf:li>
+        <rdf:li xml:lang='es-AR'>LGPL</rdf:li>
+        <rdf:li xml:lang='es-CL'>LGPL</rdf:li>
+        <rdf:li xml:lang='es-CO'>LGPL</rdf:li>
+        <rdf:li xml:lang='es-MX'>LGPL</rdf:li>
+        <rdf:li xml:lang='es-PE'>LGPL</rdf:li>
+        <rdf:li xml:lang='eu'>LGPL</rdf:li>
+        <rdf:li xml:lang='fi'>LGPL</rdf:li>
+        <rdf:li xml:lang='fr'>LGPL</rdf:li>
+        <rdf:li xml:lang='fr-CA'>LGPL</rdf:li>
+        <rdf:li xml:lang='fr-CH'>LGPL</rdf:li>
+        <rdf:li xml:lang='fr-LU'>LGPL</rdf:li>
+        <rdf:li xml:lang='gl'>LGPL</rdf:li>
+        <rdf:li xml:lang='hr'>LGPL</rdf:li>
+        <rdf:li xml:lang='hu'>LGPL</rdf:li>
+        <rdf:li xml:lang='it'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"Lesser general public license\">Lgpl&lt;/abbr></rdf:li>
+        <rdf:li xml:lang='it-CH'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"Lesser general public license\">Lgpl&lt;/abbr></rdf:li>
+        <rdf:li xml:lang='ja'>LGPL</rdf:li>
+        <rdf:li xml:lang='mk'>ЛГПЛ</rdf:li>
+        <rdf:li xml:lang='ms'>LGPL (Lesen Awam Am Yang Lebih Kecil)</rdf:li>
+        <rdf:li xml:lang='nl'>LGPL</rdf:li>
+        <rdf:li xml:lang='nso'>LGPL</rdf:li>
+        <rdf:li xml:lang='pl'>LGPL</rdf:li>
+        <rdf:li xml:lang='pt'>LGPL</rdf:li>
+        <rdf:li xml:lang='pt-PT'>LGPL</rdf:li>
+        <rdf:li xml:lang='sl'>LGPL</rdf:li>
+        <rdf:li xml:lang='sv'>LGPL</rdf:li>
+        <rdf:li xml:lang='zh'>LGPL</rdf:li>
+        <rdf:li xml:lang='zh-TW'>較寬鬆通用公共授權條款 (LGPL)</rdf:li>
+        <rdf:li xml:lang='zu'>LGPL</rdf:li>
       </rdf:Alt>
     </dc:title>
   </rdf:Description>

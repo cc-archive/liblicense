@@ -176,6 +176,26 @@ char* _ll_lowercase(char* string) {
 	return new_string;
 }
 
+/* Normalizes a locale to compare against the xml:lang attribute */
+char* _ll_normalize_locale(char* string) {
+	char* new_string = _ll_lowercase(string);
+
+	char *codeset = strchr(new_string,'.');
+	if (codeset) {
+		*codeset = '\0';
+	}
+
+	char *territory = strchr(new_string,'_');
+	if (territory) {
+		if ( strncmp(new_string,territory+1,strlen(territory+1)) == 0 ) {
+			*territory = '\0';
+		} else {
+			*territory = '-';
+		}
+	}
+	return new_string;
+}
+
 // helper function which runs the parser
 attribute_search_t* _ll_get_triple(const uri_t u, const char* subject, const char* predicate, raptor_identifier_type type, int locale) {
 	// create the helper struct
@@ -186,7 +206,7 @@ attribute_search_t* _ll_get_triple(const uri_t u, const char* subject, const cha
 	helper->uri = strdup(u);
 	helper->subject= strdup(subject);
 	if (locale)
-		helper->locale = _ll_lowercase(setlocale(LC_ALL,NULL));
+		helper->locale = _ll_normalize_locale(setlocale(LC_ALL,NULL));
 	else
 		helper->locale = NULL;
 	if (predicate!=NULL)

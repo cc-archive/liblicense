@@ -25,51 +25,51 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <dc:publisher>Creative Commons</dc:publisher>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
-    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <dc:title>
       <rdf:Alt>
         <rdf:li xml:lang='x-default'>Public Domain</rdf:li>
-        <rdf:li xml:lang='af_AF'>Openbare Domein</rdf:li>
-        <rdf:li xml:lang='bg_BG'>Обществена Собственост</rdf:li>
-        <rdf:li xml:lang='ca_CA'>Domini Públic</rdf:li>
-        <rdf:li xml:lang='da_DA'>Public Domain</rdf:li>
-        <rdf:li xml:lang='de_DE'>Public Domain</rdf:li>
-        <rdf:li xml:lang='de_AT'>Public Domain</rdf:li>
-        <rdf:li xml:lang='de_CH'>Public Domain</rdf:li>
-        <rdf:li xml:lang='en_CA'>Public Domain</rdf:li>
-        <rdf:li xml:lang='en_GB'>Public Domain</rdf:li>
-        <rdf:li xml:lang='en_US'>Public Domain</rdf:li>
-        <rdf:li xml:lang='eo_EO'>Publika havaĵo</rdf:li>
-        <rdf:li xml:lang='es_ES'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='es_AR'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='es_CL'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='es_CO'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='es_MX'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='es_PE'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='eu_EU'>Eskumen Publikoa</rdf:li>
-        <rdf:li xml:lang='fi_FI'>Public Domain</rdf:li>
-        <rdf:li xml:lang='gl_GL'>Dominio Público</rdf:li>
-        <rdf:li xml:lang='he_HE'>נחלת הכלל</rdf:li>
-        <rdf:li xml:lang='hr_HR'>Javna domena</rdf:li>
-        <rdf:li xml:lang='hu_HU'>Közkincs</rdf:li>
-        <rdf:li xml:lang='it_IT'>Pubblico Dominio</rdf:li>
-        <rdf:li xml:lang='it_CH'>Pubblico Dominio</rdf:li>
-        <rdf:li xml:lang='ja_JA'>パブリック・ドメイン</rdf:li>
-        <rdf:li xml:lang='ko_KO'>
+        <rdf:li xml:lang='af'>Openbare Domein</rdf:li>
+        <rdf:li xml:lang='bg'>Обществена Собственост</rdf:li>
+        <rdf:li xml:lang='ca'>Domini Públic</rdf:li>
+        <rdf:li xml:lang='da'>Public Domain</rdf:li>
+        <rdf:li xml:lang='de'>Public Domain</rdf:li>
+        <rdf:li xml:lang='de-AT'>Public Domain</rdf:li>
+        <rdf:li xml:lang='de-CH'>Public Domain</rdf:li>
+        <rdf:li xml:lang='en-CA'>Public Domain</rdf:li>
+        <rdf:li xml:lang='en-GB'>Public Domain</rdf:li>
+        <rdf:li xml:lang='en-US'>Public Domain</rdf:li>
+        <rdf:li xml:lang='eo'>Publika havaĵo</rdf:li>
+        <rdf:li xml:lang='es'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es-AR'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es-CL'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es-CO'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es-MX'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='es-PE'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='eu'>Eskumen Publikoa</rdf:li>
+        <rdf:li xml:lang='fi'>Public Domain</rdf:li>
+        <rdf:li xml:lang='gl'>Dominio Público</rdf:li>
+        <rdf:li xml:lang='he'>נחלת הכלל</rdf:li>
+        <rdf:li xml:lang='hr'>Javna domena</rdf:li>
+        <rdf:li xml:lang='hu'>Közkincs</rdf:li>
+        <rdf:li xml:lang='it'>Pubblico Dominio</rdf:li>
+        <rdf:li xml:lang='it-CH'>Pubblico Dominio</rdf:li>
+        <rdf:li xml:lang='ja'>パブリック・ドメイン</rdf:li>
+        <rdf:li xml:lang='ko'>
         </rdf:li>
-        <rdf:li xml:lang='kr_KR'>
+        <rdf:li xml:lang='kr'>
         </rdf:li>
-        <rdf:li xml:lang='mk_MK'>Јавен домен</rdf:li>
-        <rdf:li xml:lang='ms_MS'>Domain awam</rdf:li>
-        <rdf:li xml:lang='nl_NL'>Publiek domein</rdf:li>
-        <rdf:li xml:lang='nso_NSO'>Bulegetše Setšhaba</rdf:li>
-        <rdf:li xml:lang='pt_PT'>Domínio Público</rdf:li>
-        <rdf:li xml:lang='pt_PT'>Domínio Público</rdf:li>
-        <rdf:li xml:lang='sl_SL'>Javna domena</rdf:li>
-        <rdf:li xml:lang='zh_ZH'>公共领域</rdf:li>
-        <rdf:li xml:lang='zh_TW'>公共領域 (Public Domain)</rdf:li>
-        <rdf:li xml:lang='zu_ZU'>Ukunikezela Emphakathini</rdf:li>
+        <rdf:li xml:lang='mk'>Јавен домен</rdf:li>
+        <rdf:li xml:lang='ms'>Domain awam</rdf:li>
+        <rdf:li xml:lang='nl'>Publiek domein</rdf:li>
+        <rdf:li xml:lang='nso'>Bulegetše Setšhaba</rdf:li>
+        <rdf:li xml:lang='pt'>Domínio Público</rdf:li>
+        <rdf:li xml:lang='pt-PT'>Domínio Público</rdf:li>
+        <rdf:li xml:lang='sl'>Javna domena</rdf:li>
+        <rdf:li xml:lang='zh'>公共领域</rdf:li>
+        <rdf:li xml:lang='zh-TW'>公共領域 (Public Domain)</rdf:li>
+        <rdf:li xml:lang='zu'>Ukunikezela Emphakathini</rdf:li>
       </rdf:Alt>
     </dc:title>
   </rdf:Description>
