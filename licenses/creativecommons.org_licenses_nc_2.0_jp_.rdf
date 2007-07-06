@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-
 Creative Commons has made the contents of this file
 available under a CC-GNU-GPL license:
 
@@ -38,9 +37,9 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
     <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <prohibits rdf:resource='http://creativecommons.org/ns#CommercialUse'/>
     <dc:title>
       <rdf:Alt>
@@ -91,5 +90,54 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
         <rdf:li xml:lang='zu'>Creative Commons - Ungayisebenziseli Ezentengiselwano</rdf:li>
       </rdf:Alt>
     </dc:title>
+    <dc:description>
+      <rdf:Alt>
+        <rdf:li xml:lang='x-default'>The licensor permits others to copy, distribute and transmit the work. In return, licensees may not use the work for commercial purposes — unless they get the licensor's permission.</rdf:li>
+        <rdf:li xml:lang='af'>Die lisensiegewer laat ander toe om die werk te kopieer, te versprei en te versend.  As teenprestasie onderneem lisensiehouers om nie die werk vir kommersiële doeleindes te gebruik nie -- tensy hulle die lisensiegewer se toestemming verkry.</rdf:li>
+        <rdf:li xml:lang='bg'>Носителят на правата позволява на другите да създават копия, да разпространяват и предават на разстояние произведението. В замяна на това произведението не може да се ползва за комерсиални цели, освен с изрично разрешение от носителя на правата.</rdf:li>
+        <rdf:li xml:lang='ca'>El llicenciador us permet copiar, distribuir i comunicar públicament l'obra. A canvi, no podeu utilitzar l'obra per a finalitats comercials -- excepte si en rebeu un permís exprés.</rdf:li>
+        <rdf:li xml:lang='da'>Licensgiver tillader andre at kopiere værket og gøre værket tilgængeligt for almenheden. Derimod må andre ikke bruge værket til kommercielle formål, medmindre de har fået tilladelse fra licensgiveren.</rdf:li>
+        <rdf:li xml:lang='de'>Der Lizenzgeber erlaubt die Vervielfältigung, Verbreitung und öffentliche Wiedergabe seines Inhalts. Der Lizenznehmer darf den Inhalt nicht für kommerzielle Zwecke verwenden, es sei denn, der Lizenzgeber erteilt seine schriftliche Einwilligung.</rdf:li>
+        <rdf:li xml:lang='de-AT'>Der Lizenzgeber erlaubt Vervielfältigung, Verbreitung und öffentliche Wiedergabe seines Inhalts. Der Lizenznehmer darf den Schutzgegenstand nicht für kommerzielle Zwecke verwenden, es sei denn, der Lizenzgeber erteilt seine schriftliche Einwilligung.</rdf:li>
+        <rdf:li xml:lang='de-CH'>Der Lizenzgeber erlaubt die Vervielfältigung, Verbreitung und öffentliche Wiedergabe seines Inhalts. Der Lizenznehmer darf den Inhalt nicht für kommerzielle Zwecke verwenden, es sei denn, der Lizenzgeber erteilt seine schriftliche Einwilligung.</rdf:li>
+        <rdf:li xml:lang='en-CA'>The licensor permits others to copy, distribute and transmit the work. In return, licensees may not use the work for commercial purposes — unless they get the licensor's permission.</rdf:li>
+        <rdf:li xml:lang='en-GB'>The licensor permits others to copy, distribute, display, and perform the work. In return, licencees may not use the work for commercial purposes -- unless they get the licensor's permission.</rdf:li>
+        <rdf:li xml:lang='en-US'>The licensor permits others to copy, distribute, display, and perform the work. In return, licensees may not use the work for commercial purposes — unless they get the licensor's permission.</rdf:li>
+        <rdf:li xml:lang='eo'>La permesil-posedanto permesas aliajn kopii, distribui kaj transdoni la verkon. Tamen, interesitoj ne rajtas uzi la verkon por komercaj celoj -- krom se ili akiras la permeson de la permesil-posedanto.</rdf:li>
+        <rdf:li xml:lang='es'>El licenciador permite copiar, distribuir y comunicar públicamente la obra. A cambio, esta obra no puede ser utilizada con finalidades comerciales -- a menos que se obtenga el permiso del licenciador.</rdf:li>
+        <rdf:li xml:lang='es-AR'>El licenciante permite a otros copiar, distribuir, exhibir y ejecutar la obra. A cambio, los licenciatarios no pueden usar la obra con fines comerciales, a menos que ellos obtengan el permiso del licenciante.</rdf:li>
+        <rdf:li xml:lang='es-CL'>El licenciante permite copiar, distribuir, ejecutar y comunicar públicamente la obra, siempre que no sea utilizada con fines comerciales -- a menos que se obtenga el permiso del licenciante.</rdf:li>
+        <rdf:li xml:lang='es-CO'>El licenciador permite copiar, distribuir y comunicar públicamente la obra. A cambio, esta obra no puede ser utilizada con finalidades comerciales -- a menos que se obtenga el permiso del licenciador.</rdf:li>
+        <rdf:li xml:lang='es-MX'>El licenciante permite la copia, distribución, exhibición y representación de la obra. A cambio, los licenciatarios no podrán usar la obra con fines comerciales a menos que consigan el permiso del autor por escrito.</rdf:li>
+        <rdf:li xml:lang='es-PE'>El licenciador permite copiar, distribuir y comunicar públicamente la obra. A cambio, esta obra no puede ser utilizada con finalidades comerciales -- a menos que se obtenga el permiso del licenciador.</rdf:li>
+        <rdf:li xml:lang='eu'>Lan hau kopiatu, banatu eta jendaurrean hedatzea onartzen du baimendunak. Ordainetan, lan hau ezin da merkataritza xedetarako erabili, baimendunak hartarako baimenik eman ezean.</rdf:li>
+        <rdf:li xml:lang='fi'>Lisenssin antaja sallii teoksen kopioinnin, näyttämisen ja esittämisen. Lisenssin saaja ei saa käyttää teosta kaupallisiin tarkoituksiin ilman lisenssin antajalta saatua erillistä lupaa.</rdf:li>
+        <rdf:li xml:lang='fr'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat n'ont pas le droit d'utiliser cette création à des fins commerciales - à moins qu'ils n'obtiennent l'autorisation de l'offrant.</rdf:li>
+        <rdf:li xml:lang='fr-CA'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat n'ont pas le droit d'utiliser cette création à des fins commerciales - à moins qu'ils n'obtiennent l'autorisation du donneur de licence.</rdf:li>
+        <rdf:li xml:lang='fr-CH'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat n'ont pas le droit d'utiliser cette création à des fins commerciales - à moins qu'ils n'obtiennent l'autorisation de l'offrant.</rdf:li>
+        <rdf:li xml:lang='fr-LU'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat n'ont pas le droit d'utiliser cette création à des fins commerciales - à moins qu'ils n'obtiennent l'autorisation de l'offrant.</rdf:li>
+        <rdf:li xml:lang='gl'>O licenciador permite copiar, distribuír e comunicar publicamente a obra. A cambio, esta obra non pode ser empregada con finalidades comerciais -- salvo que se obteña o permiso do licenciador.</rdf:li>
+        <rdf:li xml:lang='he'>מעניק הרישיון מרשה לאחרים להעתיק, להפיץולהעביר את היצירה. בתמורה, המשתמשים אינם רשאים להשתמש ביצירה למטרות מסחריות — אלא אם קיבלו את הסכמת נותן הרשיון.</rdf:li>
+        <rdf:li xml:lang='hr'>Davatelj licence dopušta umnožavanje, distribuiranje i priopćavanje djela javnosti. Zauzvrat primatelji licence ne smiju djelo koristiti u komercijalne svrhe - osim ako imaju dopuštenje davatelja licence.</rdf:li>
+        <rdf:li xml:lang='hu'>A jogosult engedélyezi mások számára a mű másolását, terjesztését, bemutatását és előadását. A felhasználók kereskedelmi célokra nem használhatják fel a művet, kivéve, ha erre külön engedélyt kapnak a jogosulttól.</rdf:li>
+        <rdf:li xml:lang='it'>Il &lt;em>licenziante&lt;/em> acconsente che altri copino, distribuiscano, esibiscano ed eseguano l'opera. In cambio i &lt;em>licenziatari&lt;/em> non possono usare l'&lt;em>opera&lt;/em> per scopi commerciali &amp;mdash; a meno che non abbiano ottenuto il permesso del &lt;em>licenziante&lt;/em>.</rdf:li>
+        <rdf:li xml:lang='it-CH'>Il &lt;em>licenziante&lt;/em> acconsente che altri copino, distribuiscano, esibiscano ed eseguano l'opera. In cambio i &lt;em>licenziatari&lt;/em> non possono usare l'&lt;em>opera&lt;/em> per scopi commerciali &amp;mdash; a meno che non abbiano ottenuto il permesso del &lt;em>licenziante&lt;/em>.</rdf:li>
+        <rdf:li xml:lang='ja'>ライセンスの許諾者は、他の人々がこの著作物を複製、頒布、展示、実演することを許諾します。そのかわり、ライセンスの受諾者は、ライセンスの許諾者から別途承諾を受けない限り、この著作物を営利目的で利用してはなりません。</rdf:li>
+        <rdf:li xml:lang='ko'>이용허락자는 이 저작물을 복제, 배포, 전송, 전시, 공연 및 방송하는 것을 허락합니다. 그 대신 이용자는 이용허락자로부터 별도의 승낙을 받지 않는 한 이 저작물을 영리 목적으로 이용할 수 없습니다.</rdf:li>
+        <rdf:li xml:lang='kr'>이용허락자는 이 저작물을 복제, 배포, 전송, 전시, 공연 및 방송하는 것을 허락합니다. 그 대신 이용자는 이용허락자로부터 별도의 승낙을 받지 않는 한 이 저작물을 영리 목적으로 이용할 수 없습니다.</rdf:li>
+        <rdf:li xml:lang='mk'>Носителот на лиценцата им дозволува на другите да го копираат, дистрибуираат и пренесуваат делото. За возврат, корисниците не смеат да го користат делото за комерцијални цели – освен ако добијат дозвола од носителот на лиценцата.</rdf:li>
+        <rdf:li xml:lang='ms'>Pemberi lesen membenarkan orang-orang lain membuat salinan, mengedar, mempamerkan dan membuat pertunjukkan karya tersebut. Sebaliknya, penerima lesen tidak dbenarkan menggunakan karya tersebut untuk tujuan komersial - kecuali mereka mendapat kebenaran pemberi lesen.</rdf:li>
+        <rdf:li xml:lang='nl'>De licentiegever verleent anderen het recht om het werk te kopiëren, te verspreiden, te tonen en op en uit te voeren. In ruil daarvoor is het de licentienemers niet toegestaan om gebruik te maken van het werk voor commerciële doeleinden -- tenzij zij daarvoor de toestemming van de licentiegever hebben verkregen.</rdf:li>
+        <rdf:li xml:lang='nso'>Mong wa laesense o dumelela ba bangwe go kopiša, aba le go fetišetša mošomo. Ka morago ga moo, bao ba nago le laesense ba ka se diriše mošomo bakeng sa merero ya kgwebo — ka ntle le ge ba hwetša tumelelo ya mong wa laesense.</rdf:li>
+        <rdf:li xml:lang='pl'>Licencjodawca zezwala innym na kopiowanie, rozpowszechnianie, odtwarzanie i wykonywanie swojego utworu. W zamian licencjobiorcy nie mogą użyć tego utworu w celach komercyjnych – chyba że licencjodawca wyrazi na to zgodę.</rdf:li>
+        <rdf:li xml:lang='pt'>O licenciante permite copiar, distribuir, exibir e executar sua obra. Em contrapartida, o licenciado não poderá utilizar esta obra com finalidades comerciais -- a menos que obtenha permissão do licenciante.</rdf:li>
+        <rdf:li xml:lang='pt-PT'>O licenciante permite copiar, distribuir, exibir e executar a obra. Em contrapartida, o licenciado não poderá utilizar esta obra com finalidades comerciais -- a menos que obtenha permissão do licenciante.</rdf:li>
+        <rdf:li xml:lang='sl'>Dajalec licence dovoli uporabnikom, da reproducirajo, distribuirajo, dajejo v najem in priobčujejo delo javnosti. V zameno za to, uporabniki ne smejo uporabljati dela v komercialne namene -- razen če dobijo dovoljenje dajalca licence.</rdf:li>
+        <rdf:li xml:lang='sv'>Licensgivaren tillåter andra att kopiera, distribuera, visa och framföra verket. I gengäld får licenstagarna inte använda verket för kommersiella ändamål -- om de inte får licensgivarens tillstånd.</rdf:li>
+        <rdf:li xml:lang='zh'>许可人允许他人复制、发行、展览、表演、放映、广播或者通过信息网络向公众传播本作品。但是，除非取得许可人同意，被许可人不得将本作品用于商业目的。</rdf:li>
+        <rdf:li xml:lang='zh-TW'>授權人允許他人重製、散布、展示、演出本著作。相對地，除非得到授權人的允許，否則被授權人不得為商業目的使用本著作。</rdf:li>
+        <rdf:li xml:lang='zu'>Umnikazi wemvume uvumela abanye ukuba bakopishe, basabalalise futhi badlulise lo msebenzi. Kodwa-ke abanikwe imvume ngeke bawusebenzisele ezentengiselwano lo msebenzi — ngaphandle kokuba bathole imvume kumnikazi welayisensi.</rdf:li>
+      </rdf:Alt>
+    </dc:description>
   </rdf:Description>
 </rdf:RDF>

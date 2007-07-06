@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-
 Creative Commons has made the contents of this file
 available under a CC-GNU-GPL license:
 
@@ -36,12 +35,12 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
       </dcq:URI>
     </dc:isBasedOn>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
     <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
-    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <prohibits rdf:resource='http://creativecommons.org/ns#CommercialUse'/>
     <dc:title>
       <rdf:Alt>

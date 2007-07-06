@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-
 Creative Commons has made the contents of this file
 available under a CC-GNU-GPL license:
 
@@ -41,10 +40,10 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
       </dcq:URI>
     </dc:isBasedOn>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
     <dc:title>
       <rdf:Alt>
         <rdf:li xml:lang='x-default'>Creative Commons - Attribution-NoDerivs</rdf:li>

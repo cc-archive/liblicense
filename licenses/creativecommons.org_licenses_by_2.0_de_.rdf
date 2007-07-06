@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-
 Creative Commons has made the contents of this file
 available under a CC-GNU-GPL license:
 
@@ -36,8 +35,8 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
       </dcq:URI>
     </dc:isBasedOn>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
@@ -90,5 +89,54 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
         <rdf:li xml:lang='zu'>Creative Commons - Qaphela Umnikazi</rdf:li>
       </rdf:Alt>
     </dc:title>
+    <dc:description>
+      <rdf:Alt>
+        <rdf:li xml:lang='x-default'>You must attribute the work in the manner specified by the author or licensor.</rdf:li>
+        <rdf:li xml:lang='af'>U moet die erkenning verleen vir die werk op die manier wat deur die outeur of lisensiegewer gespesifiseer word.</rdf:li>
+        <rdf:li xml:lang='bg'>Трябва да посочите авторството по начин, определен от автора или носителя на правата.</rdf:li>
+        <rdf:li xml:lang='ca'>El llicenciador us permet copiar, distribuir i comunicar públicament l'obra. A canvi, heu de reconèixer i citar l'autor original.</rdf:li>
+        <rdf:li xml:lang='da'>Du skal kreditere værket på den måde, der er angivet af rettighedshaveren og licensgiveren.</rdf:li>
+        <rdf:li xml:lang='de'>Der Lizenzgeber erlaubt die Vervielfältigung, Verbreitung und öffentliche Wiedergabe seines Inhalts. Der Lizenznehmer muß dafür den Namen des Autors/Rechtsinhabers nennen.</rdf:li>
+        <rdf:li xml:lang='de-AT'>Der Lizenzgeber erlaubt die Vervielfältigung, Verbreitung und öffentliche Wiedergabe seines Inhalts. Der Lizenznehmer muß dafür den Namen des Autors/Rechtsinhabers nennen.</rdf:li>
+        <rdf:li xml:lang='de-CH'>Der Lizenzgeber erlaubt die Vervielfältigung, Verbreitung und öffentliche Wiedergabe seines Inhalts. Der Lizenznehmer muß dafür den Namen des Autors/Rechtsinhabers nennen.</rdf:li>
+        <rdf:li xml:lang='en-CA'>You must attribute the work in the manner specified by the author or licensor.</rdf:li>
+        <rdf:li xml:lang='en-GB'>The licensor permits others to copy, distribute, display, and perform the work. In return, licensees must give the original author credit.</rdf:li>
+        <rdf:li xml:lang='en-US'>You must attribute the work in the manner specified by the author or licensor.</rdf:li>
+        <rdf:li xml:lang='eo'>Vi devas atribui la verkon tiel kiel specifis la aŭtoro aŭ  la permesil-posedanto.</rdf:li>
+        <rdf:li xml:lang='es'>El licenciador permite copiar, distribuir y comunicar públicamente la obra. A cambio, hay que reconocer y citar al autor original.</rdf:li>
+        <rdf:li xml:lang='es-AR'>Usted debe atribuir la obra en la forma especificada por el autor o el licenciante.</rdf:li>
+        <rdf:li xml:lang='es-CL'>Debes reconocer y citar la obra de la forma especificada por el autor o el licenciante.</rdf:li>
+        <rdf:li xml:lang='es-CO'>El licenciador permite copiar, distribuir y comunicar públicamente la obra. A cambio, hay que reconocer y citar al autor original.</rdf:li>
+        <rdf:li xml:lang='es-MX'>Debes reconocer la autoría de la obra en los términos especificados por el propio autor o licenciante.</rdf:li>
+        <rdf:li xml:lang='es-PE'>Debe reconocer los créditos de la obra de la manera especificada por el autor o licenciante.</rdf:li>
+        <rdf:li xml:lang='eu'>Lan hau kopiatu, banatu eta jendaurrean hedatzea onartzen du baimendunak. Ordainetan, jatorrizko egilea aitortu eta aipatu behar da.</rdf:li>
+        <rdf:li xml:lang='fi'>Lisenssin antaja sallii teoksen kopioinnin, näyttämisen ja esittämisen sillä ehdolla että lisenssin saaja ilmoittaa alkuperäisen tekijän nimen.</rdf:li>
+        <rdf:li xml:lang='fr'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat doivent citer le nom de l'auteur original.</rdf:li>
+        <rdf:li xml:lang='fr-CA'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat doivent citer le nom de l'auteur original.</rdf:li>
+        <rdf:li xml:lang='fr-CH'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat doivent citer le nom de l'auteur original.</rdf:li>
+        <rdf:li xml:lang='fr-LU'>L'offrant autorise les autres à reproduire, distribuer et communiquer cette création au public. En échange, les personnes qui acceptent ce contrat doivent citer le nom de l'auteur original.</rdf:li>
+        <rdf:li xml:lang='gl'>O licenciador permite copiar, distribuír e comunicar publicamente a obra. A cambio, hai que citar ao autor orixinal</rdf:li>
+        <rdf:li xml:lang='he'>עליך לייחס את היצירה (לתת קרדיט) באופן המצויין על-ידי היוצר או מעניק הרישיון.</rdf:li>
+        <rdf:li xml:lang='hr'>Davatelj licence dopušta umnožavanje, distribuiranje i priopćavanje djela javnosti. Zauzvrat primatelji licence moraju imenovanjem priznati i označiti izvornog autora.</rdf:li>
+        <rdf:li xml:lang='hu'>A szerző vagy a jogosult által meghatározott módon kell megjelölni a művet (pl. a szerző és a cím feltüntetésével).</rdf:li>
+        <rdf:li xml:lang='it'>Il &lt;em>licenziante&lt;/em> acconsente che altri copino, distribuiscano, esibiscano ed eseguano l'opera. In cambio il &lt;em>licenziatario&lt;/em> deve attribuire la paternità all'&lt;em>autore originale&lt;/em>.</rdf:li>
+        <rdf:li xml:lang='it-CH'>Il &lt;em>licenziante&lt;/em> acconsente che altri copino, distribuiscano, esibiscano ed eseguano l'opera. In cambio il &lt;em>licenziatario&lt;/em> deve attribuire la paternità all'&lt;em>autore originale&lt;/em>.</rdf:li>
+        <rdf:li xml:lang='ja'>ライセンスの許諾者は、他の人々がこの著作物を複製、頒布、展示、実演することを許諾します。そのかわり、ライセンスの受諾者は、原著作者のクレジットを表示しなければなりません。</rdf:li>
+        <rdf:li xml:lang='ko'>이용허락자는 이 저작물을 복제, 배포, 전송, 전시, 공연 및 방송하는 것을 허락합니다. 그 대신, 이용자는 원저작자를 표시하여야 합니다.</rdf:li>
+        <rdf:li xml:lang='kr'>이용허락자는 이 저작물을 복제, 배포, 전송, 전시, 공연 및 방송하는 것을 허락합니다. 그 대신, 이용자는 원저작자를 표시하여야 합니다.</rdf:li>
+        <rdf:li xml:lang='mk'>Морате да го наведете изворот на ист начин како што тоа го направил авторот или давателот на лиценцата.</rdf:li>
+        <rdf:li xml:lang='ms'>Anda mesti mengiktirafkan karya tersebut dalam cara yang ditetapkan oleh pencipta atau pemberi lesen.</rdf:li>
+        <rdf:li xml:lang='nl'>De licentiegever verleent anderen het recht om het werk te kopiëren, te verspreiden, te tonen en op en uit te voeren. In ruil daarvoor dienen de licentienemers de naam van de maker te vermelden.</rdf:li>
+        <rdf:li xml:lang='nso'>O swanetše go tsebagatša mošomo ka tsela yeo e boletšwego ke mongwadi goba yo a tsentšhitšego laesense.</rdf:li>
+        <rdf:li xml:lang='pl'>Utwór należy oznaczyć w sposób określony przez Twórcę lub Licencjodawcę.</rdf:li>
+        <rdf:li xml:lang='pt'>O licenciante permite copiar, distribuir, exibir e executar sua obra. Em contrapartida, o licenciado deve dar crédito ao autor original.</rdf:li>
+        <rdf:li xml:lang='pt-PT'>Deve licenciar a sua obra da forma especificada pelo autor ou licenciante.</rdf:li>
+        <rdf:li xml:lang='sl'>Pri uporabi dela morate navesti izvirnega avtorja na način, ki ga določi izvirni avtor oziroma dajalec licence.</rdf:li>
+        <rdf:li xml:lang='sv'>Du måste ange upphovsmannen och/eller licensgivaren på det sätt de anger.</rdf:li>
+        <rdf:li xml:lang='zh'>您必须按照作者或者许可人指定的方式对本作品进行署名。</rdf:li>
+        <rdf:li xml:lang='zh-TW'>授權人允許他人重製、散布、展示、演出本著作。相對的，被授權人必須按照作者或授權人所指定的方式，保留原作者的姓名標示。</rdf:li>
+        <rdf:li xml:lang='zu'>Kumelwe uqaphele umnikazi walo msebenzi ngendlela eshiwo umbhali wawo noma umnikazi welayisensi.</rdf:li>
+      </rdf:Alt>
+    </dc:description>
   </rdf:Description>
 </rdf:RDF>

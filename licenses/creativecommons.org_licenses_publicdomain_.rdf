@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
-
 Creative Commons has made the contents of this file
 available under a CC-GNU-GPL license:
 
@@ -24,9 +23,9 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <dc:identifier>http://creativecommons.org/licenses/publicdomain/</dc:identifier>
     <dc:publisher>Creative Commons</dc:publisher>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <dc:title>
       <rdf:Alt>
         <rdf:li xml:lang='x-default'>Public Domain</rdf:li>
