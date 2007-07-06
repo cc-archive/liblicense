@@ -100,13 +100,15 @@ int main(int argc, char** argv) {
 				abort();
 		}
 	}
-	if (license==NULL) {
-		license = ll_get_default();
+	if (set_flag) {
 		if (license==NULL) {
-			fprintf(stderr,"Error: No default license set.\n");
-			ll_stop();
-			return 1;
-		}			
+			license = ll_get_default();
+			if (license==NULL) {
+				fprintf(stderr,"Error: No default license set.\n");
+				ll_stop();
+				return 1;
+			}			
+		}
 	}
 	if (argc==optind) { /* No more arguments, assume default. */
 		if (set_flag) {
@@ -123,7 +125,10 @@ int main(int argc, char** argv) {
 		} else {
 			license = ll_read(argv[optind]);
 		}
-		printf("%s is licensed under %s\n",argv[optind],license);
+		if (license)
+			printf("%s is licensed under %s\n",argv[optind],license);
+		else
+			printf("No license found for %s\n",argv[optind]);
 	}
 	ll_stop();
 	return 0;

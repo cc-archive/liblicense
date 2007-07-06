@@ -97,6 +97,28 @@ fi
 AM_CONDITIONAL(HAVE_EXEMPI, test "$have_exempi" = "yes")
 test "$have_exempi" = "yes" && AC_DEFINE(HAVE_EXEMPI, [], [Define if we have exempi])
 
+##################################################################
+# check for id3lib
+##################################################################
+
+AC_ARG_ENABLE(id3, AC_HELP_STRING([--enable-id3], [Disable ID3 embedding]),,[enable_id3=yes])
+if test "x$enable_id3" = "xyes"; then
+	AC_CHECK_LIB(id3, ID3Tag_New,
+			[AC_CHECK_HEADERS(id3.h,
+			[
+			have_id3lib=yes
+			],[have_id3lib=no])],
+			[have_id3lib=no])
+	
+	ID3LIB_LIBS="-lid3"
+	AC_SUBST(ID3LIB_LIBS)
+else
+	have_id3lib="no (disabled)"
+fi
+
+AM_CONDITIONAL(HAVE_ID3LIB, test "$have_id3lib" = "yes")
+test "$have_id3lib" = "yes" && AC_DEFINE(HAVE_ID3LIB, [], [Define if we have id3lib])
+
 AC_CONFIG_FILES([
 	Makefile
 	licenses/Makefile
@@ -127,4 +149,5 @@ I/O Modules:
 
 	exempi:					$have_exempi
 	sidecar:				$have_exempi
+	id3:					$have_id3lib
 "

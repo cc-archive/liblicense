@@ -31,15 +31,22 @@ uri_t ll_read(filename_t f) {
 	int i = 0;
 	while (modules[i]!=NULL) {
 		mime_type_t* supported = ll_module_mime_types(modules[i]);
-		if(ll_list_contains(supported,mt) || ll_list_length(supported)==0)
+		if(ll_list_contains(supported,mt) || ll_list_length(supported)==0) {
 			results[i] = ll_module_read(f,modules[i]);
+			if (!results[i]) results[i] = strdup("");
+		}
 		else
 			results[i] = strdup("");
+
 		ll_free_list(supported);
 		i++;
 	}
 	free(mt);
-	uri_t license = strdup(ll_list_mode(results,""));
+
+	uri_t license = ll_list_mode(results,"");
+	if (license)
+		license = strdup(license);
+
 	ll_free_list(results);
 	ll_free_list(modules);
 	return license;

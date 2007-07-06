@@ -22,16 +22,6 @@
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
 
-const char *mime_types[] = {
-  "image/jpeg",
-  "image/png",
-  "image/tiff",
-  "application/pdf",
-  "video/x-msvideo",
-  "video/quicktime",
-  0
-};
-
 void init()
 {
 	printf("exempi: init()\n");

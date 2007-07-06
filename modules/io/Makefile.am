@@ -29,9 +29,18 @@ sidecar_xmp_la_LIBADD = $(EXEMPI_LIBS)
 sidecar_xmp_la_CFLAGS = $(EXEMPI_CFLAGS)
 endif
 
+if HAVE_ID3LIB
+ID3LIB_MODULES = id3.la
+
+id3_la_SOURCES = id3.c
+id3_la_LIBADD = $(ID3LIB_LIBS)
+id3_la_LDFLAGS = -no-undefined -module -avoid-version
+endif
+
 libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
+	$(ID3LIB_MODULES) \
 	stub.la
 
 stub_la_SOURCES = stub.c
