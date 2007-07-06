@@ -36,55 +36,55 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
       </dcq:URI>
     </dc:isBasedOn>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <dc:title>
       <rdf:Alt>
-        <rdf:li xml:lang='af'>Creative Commons - Voorsmaak</rdf:li>
-        <rdf:li xml:lang='bg'>Creative Commons - Семплиране</rdf:li>
-        <rdf:li xml:lang='ca'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='da'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='de'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='x-default'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='af_AF'>Creative Commons - Voorsmaak</rdf:li>
+        <rdf:li xml:lang='bg_BG'>Creative Commons - Семплиране</rdf:li>
+        <rdf:li xml:lang='ca_CA'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='da_DA'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='de_DE'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='de_AT'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='de_CH'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='x-default'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='en_CA'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='en_GB'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='en_US'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='eo'>Creative Commons - Specimeno</rdf:li>
-        <rdf:li xml:lang='es'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='eo_EO'>Creative Commons - Specimeno</rdf:li>
+        <rdf:li xml:lang='es_ES'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='es_AR'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='es_CL'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='es_CO'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='es_MX'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='es_PE'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='eu'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='fi'>Creative Commons - Sämpläys</rdf:li>
-        <rdf:li xml:lang='fr'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='eu_EU'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='fi_FI'>Creative Commons - Sämpläys</rdf:li>
+        <rdf:li xml:lang='fr_FR'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='fr_CA'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='fr_CH'>Creative Commons - Sampling</rdf:li>
         <rdf:li xml:lang='fr_LU'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='gl'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='he'>Creative Commons - דגימה</rdf:li>
-        <rdf:li xml:lang='hr'>Creative Commons - Sempliranje</rdf:li>
-        <rdf:li xml:lang='hu'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='it'>Creative Commons - &lt;span lang=\"en\">Sampling&lt;/span></rdf:li>
+        <rdf:li xml:lang='gl_GL'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='he_HE'>Creative Commons - דגימה</rdf:li>
+        <rdf:li xml:lang='hr_HR'>Creative Commons - Sempliranje</rdf:li>
+        <rdf:li xml:lang='hu_HU'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='it_IT'>Creative Commons - &lt;span lang=\"en\">Sampling&lt;/span></rdf:li>
         <rdf:li xml:lang='it_CH'>Creative Commons - &lt;span lang=\"en\">Sampling&lt;/span></rdf:li>
-        <rdf:li xml:lang='ja'>Creative Commons - サンプリング</rdf:li>
-        <rdf:li xml:lang='mk'>Creative Commons - Семплирање</rdf:li>
-        <rdf:li xml:lang='ms'>Creative Commons - Mengambil Contoh</rdf:li>
-        <rdf:li xml:lang='nl'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='nso'>Creative Commons - Sampole</rdf:li>
-        <rdf:li xml:lang='pl'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='pt'>Creative Commons - Recombinação</rdf:li>
+        <rdf:li xml:lang='ja_JA'>Creative Commons - サンプリング</rdf:li>
+        <rdf:li xml:lang='mk_MK'>Creative Commons - Семплирање</rdf:li>
+        <rdf:li xml:lang='ms_MS'>Creative Commons - Mengambil Contoh</rdf:li>
+        <rdf:li xml:lang='nl_NL'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='nso_NSO'>Creative Commons - Sampole</rdf:li>
+        <rdf:li xml:lang='pl_PL'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='pt_PT'>Creative Commons - Recombinação</rdf:li>
         <rdf:li xml:lang='pt_PT'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='sl'>Creative Commons - Vzorčenje (sampling)</rdf:li>
-        <rdf:li xml:lang='sv'>Creative Commons - Sampling</rdf:li>
-        <rdf:li xml:lang='zh'>Creative Commons - 取样使用</rdf:li>
+        <rdf:li xml:lang='sl_SL'>Creative Commons - Vzorčenje (sampling)</rdf:li>
+        <rdf:li xml:lang='sv_SV'>Creative Commons - Sampling</rdf:li>
+        <rdf:li xml:lang='zh_ZH'>Creative Commons - 取样使用</rdf:li>
         <rdf:li xml:lang='zh_TW'>Creative Commons - 取樣</rdf:li>
-        <rdf:li xml:lang='zu'>Creative Commons - Ukuthatha isampula</rdf:li>
+        <rdf:li xml:lang='zu_ZU'>Creative Commons - Ukuthatha isampula</rdf:li>
       </rdf:Alt>
     </dc:title>
   </rdf:Description>

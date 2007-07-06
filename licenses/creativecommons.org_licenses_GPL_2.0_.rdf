@@ -26,56 +26,56 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <dc:creator>Free Software Foundation</dc:creator>
     <dc:publisher>Creative Commons</dc:publisher>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
+    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
     <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
     <requires rdf:resource='http://creativecommons.org/ns#SourceCode'/>
-    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <dc:title>
       <rdf:Alt>
-        <rdf:li xml:lang='af'>APL</rdf:li>
-        <rdf:li xml:lang='bg'>GPL</rdf:li>
-        <rdf:li xml:lang='ca'>GPL</rdf:li>
-        <rdf:li xml:lang='da'>GPL</rdf:li>
-        <rdf:li xml:lang='de'>GPL</rdf:li>
+        <rdf:li xml:lang='x-default'>GPL</rdf:li>
+        <rdf:li xml:lang='af_AF'>APL</rdf:li>
+        <rdf:li xml:lang='bg_BG'>GPL</rdf:li>
+        <rdf:li xml:lang='ca_CA'>GPL</rdf:li>
+        <rdf:li xml:lang='da_DA'>GPL</rdf:li>
+        <rdf:li xml:lang='de_DE'>GPL</rdf:li>
         <rdf:li xml:lang='de_AT'>GPL</rdf:li>
         <rdf:li xml:lang='de_CH'>GPL</rdf:li>
-        <rdf:li xml:lang='x-default'>GPL</rdf:li>
         <rdf:li xml:lang='en_CA'>GPL</rdf:li>
         <rdf:li xml:lang='en_GB'>GPL</rdf:li>
         <rdf:li xml:lang='en_US'>GPL</rdf:li>
-        <rdf:li xml:lang='eo'>GPL</rdf:li>
-        <rdf:li xml:lang='es'>GPL</rdf:li>
+        <rdf:li xml:lang='eo_EO'>GPL</rdf:li>
+        <rdf:li xml:lang='es_ES'>GPL</rdf:li>
         <rdf:li xml:lang='es_AR'>GPL</rdf:li>
         <rdf:li xml:lang='es_CL'>GPL</rdf:li>
         <rdf:li xml:lang='es_CO'>GPL</rdf:li>
         <rdf:li xml:lang='es_MX'>GPL</rdf:li>
         <rdf:li xml:lang='es_PE'>GPL</rdf:li>
-        <rdf:li xml:lang='eu'>GPL</rdf:li>
-        <rdf:li xml:lang='fi'>GPL</rdf:li>
-        <rdf:li xml:lang='fr'>GPL</rdf:li>
+        <rdf:li xml:lang='eu_EU'>GPL</rdf:li>
+        <rdf:li xml:lang='fi_FI'>GPL</rdf:li>
+        <rdf:li xml:lang='fr_FR'>GPL</rdf:li>
         <rdf:li xml:lang='fr_CA'>GPL</rdf:li>
         <rdf:li xml:lang='fr_CH'>GPL</rdf:li>
         <rdf:li xml:lang='fr_LU'>GPL</rdf:li>
-        <rdf:li xml:lang='gl'>GPL</rdf:li>
-        <rdf:li xml:lang='hr'>GPL</rdf:li>
-        <rdf:li xml:lang='hu'>GPL</rdf:li>
-        <rdf:li xml:lang='it'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"General public license\">Gpl&lt;/abbr></rdf:li>
+        <rdf:li xml:lang='gl_GL'>GPL</rdf:li>
+        <rdf:li xml:lang='hr_HR'>GPL</rdf:li>
+        <rdf:li xml:lang='hu_HU'>GPL</rdf:li>
+        <rdf:li xml:lang='it_IT'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"General public license\">Gpl&lt;/abbr></rdf:li>
         <rdf:li xml:lang='it_CH'>&lt;abbr title=\"Gnu is not Unix\">Gnu&lt;/abbr>-&lt;abbr title=\"General public license\">Gpl&lt;/abbr></rdf:li>
-        <rdf:li xml:lang='ja'>GPL</rdf:li>
-        <rdf:li xml:lang='mk'>ГПЛ</rdf:li>
-        <rdf:li xml:lang='ms'>GPL (Lesen Awam Am)</rdf:li>
-        <rdf:li xml:lang='nl'>GPL</rdf:li>
-        <rdf:li xml:lang='nso'>GPL</rdf:li>
-        <rdf:li xml:lang='pl'>GPL</rdf:li>
-        <rdf:li xml:lang='pt'>GPL</rdf:li>
+        <rdf:li xml:lang='ja_JA'>GPL</rdf:li>
+        <rdf:li xml:lang='mk_MK'>ГПЛ</rdf:li>
+        <rdf:li xml:lang='ms_MS'>GPL (Lesen Awam Am)</rdf:li>
+        <rdf:li xml:lang='nl_NL'>GPL</rdf:li>
+        <rdf:li xml:lang='nso_NSO'>GPL</rdf:li>
+        <rdf:li xml:lang='pl_PL'>GPL</rdf:li>
         <rdf:li xml:lang='pt_PT'>GPL</rdf:li>
-        <rdf:li xml:lang='sl'>GPL</rdf:li>
-        <rdf:li xml:lang='sv'>GPL</rdf:li>
-        <rdf:li xml:lang='zh'>GPL</rdf:li>
+        <rdf:li xml:lang='pt_PT'>GPL</rdf:li>
+        <rdf:li xml:lang='sl_SL'>GPL</rdf:li>
+        <rdf:li xml:lang='sv_SV'>GPL</rdf:li>
+        <rdf:li xml:lang='zh_ZH'>GPL</rdf:li>
         <rdf:li xml:lang='zh_TW'>通用公共授權條款 (GPL)</rdf:li>
-        <rdf:li xml:lang='zu'>GPL</rdf:li>
+        <rdf:li xml:lang='zu_ZU'>GPL</rdf:li>
       </rdf:Alt>
     </dc:title>
   </rdf:Description>
