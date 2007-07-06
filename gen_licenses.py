@@ -30,8 +30,7 @@ if not(os.path.exists(
 
 	os.mkdir('licenses')
 
-header = """<!--
-
+header = """
 Creative Commons has made the contents of this file
 available under a CC-GNU-GPL license:
 
@@ -48,7 +47,6 @@ of the liblicense software will comply with the CC-GNU-GPL.
 
 Copyright 2007, Creative Commons, www.creativecommons.org.
 
--->
 """
 
 PO_DIR="https://svn.sourceforge.net/svnroot/cctools/i18n/trunk/i18n/"
@@ -75,12 +73,12 @@ licenses = license_xml.getElementsByTagName('license')
 print [license.getAttribute('id') for license in licenses]
 for license in licenses:
 	id = license.getAttribute('id')
-	print id
+	print "Processing '%s' licenses" % id
 	jurisdictions = license.getElementsByTagName('jurisdiction')
 	for jurisdiction in jurisdictions:
 		jurisdiction_id = jurisdiction.getAttribute('id')
 		versions = jurisdiction.getElementsByTagName('version')
-		replacedByURI = versions[len(versions)-1].getAttribute('uri')
+		replacedByURI = versions[-1].getAttribute('uri')
 		for version in versions:
 			version_id = version.getAttribute('id')
 			uri = version.getAttribute('uri')
@@ -94,6 +92,7 @@ for license in licenses:
 				pass
 			else:
 				doc = xml.dom.minidom.Document()
+				doc.appendChild( doc.createComment(header) )
 				
 				rdf = doc.createElementNS(NS_RDF, "rdf:RDF")
 				doc.appendChild( rdf )
@@ -107,7 +106,7 @@ for license in licenses:
 					hasVersion.appendChild( doc.createTextNode(version_id) )
 					description.appendChild( hasVersion )
 					
-				if len(versions) > 0 and replacedByURI != uri:
+				if replacedByURI != uri:
 					isReplacedBy = doc.createElementNS(NS_DC, "dc:isReplacedBy")
 					isReplacedByURI = doc.createElementNS(NS_DCQ, "dcq:URI")
 					isReplacedByURIValue = doc.createElementNS(NS_RDF,"rdf:value")
@@ -176,7 +175,6 @@ for license in licenses:
 						element.setAttributeNS(NS_RDF,"rdf:resource",str(prohibits))
 						description.appendChild( element )
 						
-				#try:
 				
 				translation_map = {}
 				
@@ -189,18 +187,18 @@ for license in licenses:
 				else:
 					translation_map['msgid "licenses.pretty_%s"' % id] = title_alt
 				
-				"""
 				dcDescription = doc.createElementNS(NS_DC, "dc:description")
 				dcDescription_alt = doc.createElementNS(NS_RDF, "rdf:Alt")
 				dcDescription.appendChild( dcDescription_alt )
-				description.appendChild(dcDescription)
 				translation_map['msgid "char.%s_description"' % id] = dcDescription_alt
-				"""
 				
 				for locale in locales:
 					try:
 						#conn = urlopen(PO_DIR+"icommons-%s.po" % locale)
 						conn = open("i18n/icommons-%s.po" % locale,"r")
+					except:
+						print "getting po file, %s, failed" % locale
+					else:
 						lines = conn.readlines()
 						i = 0
 						while i < len(lines):
@@ -215,33 +213,19 @@ for license in licenses:
 								else:
 									li.setAttributeNS(xml.dom.XML_NAMESPACE,"xml:lang",locale.replace("_","-"))
 								
-								if creator_str == "Creative Commons":
+								if creator_str == "Creative Commons" and line.find("description") == -1:
 									msgstr = "Creative Commons - "+msgstr
 								li.appendChild( doc.createTextNode(msgstr) )
 								
 								element.appendChild( li )
 							i += 1
-					except:
-						print "getting po file, %s, failed" % locale
-						continue
+				
+				if dcDescription.hasChildNodes():
+					description.appendChild(dcDescription)
 				
 				output = "licenses/%s.rdf" % uri.lstrip("http://").replace("/","_")
 				output_file = open(output,"w")
-				#doc.writexml(output_file,'','\t','\n')
 				xml.dom.ext.PrettyPrint(doc,output_file)
 				output_file.close()
-				
-				# Now tack on the header comment
-				f_out = open(output+".new","w")
-				f_in = open(output,"r")
-				
-				f_out.write(f_in.readline())
-				f_out.write(header)
-				f_out.write(f_in.read())
-				
-				f_out.close()
-				f_in.close()
-				
-				os.rename(output+".new",output)
 
 print "Licenses output to licenses/"
