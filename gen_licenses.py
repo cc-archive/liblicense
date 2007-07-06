@@ -206,7 +206,7 @@ for license in licenses:
 							element = translation_map.get(line)
 							if element:
 								i += 1
-								msgstr = lines[i].strip().lstrip('msgstr "').rstrip('"')
+								msgstr = lines[i].strip().lstrip('msgstr "').rstrip('"').replace("\\n"," ")
 								li = doc.createElementNS(NS_RDF,"rdf:li")
 								if locale == xDefault:
 									li.setAttributeNS(xml.dom.XML_NAMESPACE,"xml:lang","x-default")
@@ -220,7 +220,7 @@ for license in licenses:
 								element.appendChild( li )
 							i += 1
 				
-				if dcDescription.hasChildNodes():
+				if dcDescription_alt.hasChildNodes():
 					description.appendChild(dcDescription)
 				
 				output = "licenses/%s.rdf" % uri.lstrip("http://").replace("/","_")
