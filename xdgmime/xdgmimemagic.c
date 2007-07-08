@@ -47,7 +47,9 @@
 #define	TRUE	(!FALSE)
 #endif
 
-extern int errno;
+#if !defined getc_unlocked && !defined HAVE_GETC_UNLOCKED
+#define getc_unlocked(fp) getc (fp)
+#endif
 
 typedef struct XdgMimeMagicMatch XdgMimeMagicMatch;
 typedef struct XdgMimeMagicMatchlet XdgMimeMagicMatchlet;
@@ -315,7 +317,7 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
   int c;
   int end_of_file;
   int indent = 0;
-  unsigned int bytes_read;
+  int bytes_read;
 
   assert (magic_file != NULL);
 
@@ -454,21 +456,17 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
 
   if (c == '+')
     {
-      int range_length;
-
-      range_length = _xdg_mime_magic_read_a_number (magic_file, &end_of_file);
+      matchlet->range_length = _xdg_mime_magic_read_a_number (magic_file, &end_of_file);
       if (end_of_file)
 	{
 	  _xdg_mime_magic_matchlet_free (matchlet);
 	  return XDG_MIME_MAGIC_EOF;
 	}
-      if (range_length == -1)
+      if (matchlet->range_length == -1)
 	{
 	  _xdg_mime_magic_matchlet_free (matchlet);
 	  return XDG_MIME_MAGIC_ERROR;
 	}
-      /* now we are sure that range_length is positive */
-      matchlet->range_length = (unsigned int) range_length;
       c = getc_unlocked (magic_file);
     }
 
@@ -479,7 +477,7 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
       if (matchlet->word_size > 1)
 	{
 #if LITTLE_ENDIAN
-	  unsigned int i;
+	  int i;
 #endif
 	  if (matchlet->value_length % matchlet->word_size != 0)
 	    {
@@ -525,7 +523,7 @@ _xdg_mime_magic_matchlet_compare_to_data (XdgMimeMagicMatchlet *matchlet,
 					  const void           *data,
 					  size_t                len)
 {
-  unsigned int i, j;
+  int i, j;
   for (i = matchlet->offset; i < matchlet->offset + matchlet->range_length; i++)
     {
       int valid_matchlet = TRUE;
@@ -682,7 +680,8 @@ _xdg_mime_magic_lookup_data (XdgMimeMagic *mime_magic,
 	      mime_type = match->mime_type;
 	      priority = match->priority;
 	    }
-	  else if (had_match && match->priority == priority)
+	  else if (had_match && match->priority == priority &&
+		   !_xdg_mime_mime_type_subclass (mime_type, match->mime_type))
 	    /* multiple unrelated patterns with the same priority matched,
 	     * so we can't tell what type this is. */
 	    mime_type = NULL;
