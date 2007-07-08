@@ -110,21 +110,17 @@ get_contents_stdio (FILE        *f,
 
 void init()
 {
-	printf("sidecar_xmp: init()\n");
 	xmp_init();
 	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
 void shutdown()
 {
-	printf("sidecar_xmp: shutdown()\n");
 	xmp_terminate();
 }
 
 char* read( const char* filename )
 {
-	printf("sidecar_xmp: read(%s)\n",filename);
-
 	char *sidecar = sidecar_filename( filename );
 	FILE *f = fopen(sidecar, "rb");
 	free(sidecar);
@@ -153,8 +149,6 @@ char* read( const char* filename )
 
 int write( const char* filename, const char* uri )
 {
-	printf("sidecar_xmp: write(%s,%s)\n",filename,uri);
-
 	int success = true;
 
 	char *sidecar = sidecar_filename( filename );

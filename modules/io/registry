@@ -1,4 +1,6 @@
 .libs/exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime
 .libs/sidecar_xmp.so
 .libs/id3.so audio/mpeg
+.libs/vorbis.so audio/x-vorbis+ogg application/ogg audio/x-vorbis
+.libs/flac.so audio/x-flac
 .libs/stub.so

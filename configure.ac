@@ -109,15 +109,55 @@ if test "x$enable_id3" = "xyes"; then
 			have_id3lib=yes
 			],[have_id3lib=no])],
 			[have_id3lib=no])
-	
 	ID3LIB_LIBS="-lid3"
 	AC_SUBST(ID3LIB_LIBS)
 else
 	have_id3lib="no (disabled)"
 fi
-
 AM_CONDITIONAL(HAVE_ID3LIB, test "$have_id3lib" = "yes")
 test "$have_id3lib" = "yes" && AC_DEFINE(HAVE_ID3LIB, [], [Define if we have id3lib])
+
+##################################################################
+# check for FLAC
+##################################################################
+
+AC_ARG_ENABLE(FLAC, AC_HELP_STRING([--enable-FLAC], [Disable FLAC embedding]),,[enable_FLAC=yes])
+if test "x$enable_FLAC" = "xyes"; then
+	AC_CHECK_LIB(FLAC, FLAC__file_decoder_new,
+			[AC_CHECK_HEADERS(FLAC/metadata.h,
+			[
+			have_flac=yes
+			],[have_flac=no])],
+			[have_flac=no])
+	FLAC_LIBS="-lFLAC"
+	AC_SUBST(FLAC_LIBS)
+else
+	have_flac="no (disabled)"
+fi
+AM_CONDITIONAL(HAVE_FLAC, test "$have_flac" = "yes")
+test "$have_flac" = "yes" && AC_DEFINE(HAVE_FLAC, [], [Define if we have FLAC])
+
+##################################################################
+# check for vorbis
+##################################################################
+
+VORBIS_REQUIRED=1.0
+
+AC_ARG_ENABLE(vorbis, AC_HELP_STRING([--enable-vorbis], [Disable Ogg Vorbis embedding]),,[enable_vorbis=yes])
+if test "x$enable_vorbis" = "xyes"; then
+	PKG_CHECK_MODULES(VORBIS,[
+		vorbisfile >= $VORBIS_REQUIRED],
+		[have_vorbis=yes] , [have_vorbis=no])
+	AC_SUBST(VORBIS_CFLAGS)
+	AC_SUBST(VORBIS_LIBS)
+else
+	have_vorbis="no (disabled)"
+fi
+
+AM_CONDITIONAL(HAVE_VORBIS, test "$have_vorbis" = "yes")
+test "$have_vorbis" = "yes" && AC_DEFINE(HAVE_VORBIS, [], [Define if we have vorbisfile])
+
+
 
 AC_CONFIG_FILES([
 	Makefile
@@ -146,8 +186,9 @@ Liblicense-$VERSION:
 	build with debug symbols:		$enable_debug_code
 
 I/O Modules:
-
 	exempi:					$have_exempi
 	sidecar:				$have_exempi
 	id3:					$have_id3lib
+	vorbis:					$have_vorbis
+	FLAC:					$have_flac
 "

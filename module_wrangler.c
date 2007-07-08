@@ -24,7 +24,7 @@
 #include <dirent.h>
 #include "list.h"
 
-#define MAX_MODULES 5
+#define MAX_MODULES 10
 #define MAX_MIME_TYPES 20
 #define MAX_LINE_LENGTH 100
 

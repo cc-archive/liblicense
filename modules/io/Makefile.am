@@ -37,10 +37,29 @@ id3_la_LIBADD = $(ID3LIB_LIBS)
 id3_la_LDFLAGS = -no-undefined -module -avoid-version
 endif
 
+if HAVE_VORBIS
+VORBIS_MODULES = vorbis.la
+
+vorbis_la_SOURCES = vorbis.c vcedit.c
+vorbis_la_LIBADD = $(VORBIS_LIBS)
+vorbis_la_CFLAGS = $(VORBIS_CFLAGS)
+vorbis_la_LDFLAGS = -no-undefined -module -avoid-version
+endif
+
+if HAVE_FLAC
+FLAC_MODULES = flac.la
+
+flac_la_SOURCES = flac.c
+flac_la_LIBADD = $(FLAC_LIBS)
+flac_la_LDFLAGS = -no-undefined -module -avoid-version
+endif
+
 libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
 	$(ID3LIB_MODULES) \
+	$(VORBIS_MODULES) \
+	$(FLAC_MODULES) \
 	stub.la
 
 stub_la_SOURCES = stub.c

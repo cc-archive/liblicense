@@ -25,7 +25,7 @@ uri_t ll_read(filename_t f) {
 	module_t* modules = ll_get_io_modules();
 	uri_t* results = ll_new_list(ll_list_length(modules));
 	
-	const mime_type_t mt = xdg_mime_get_mime_type_from_file_name(f);
+	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
 	printf("File mime-type: %s\n",mt);
 	// Get uris from all applicable modules.
 	int i = 0;
