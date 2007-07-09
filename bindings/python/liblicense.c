@@ -20,13 +20,16 @@
 #include "write_license.h"
 #include "read_license.h"
 #include "system_default.h"
+#include "list.h"
 
 static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (uri_t);
 	const uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	juris_t j = ll_get_jurisdiction(u);
-	return Py_BuildValue("s",j);
+	PyObject* result = Py_BuildValue("s",j);
+	free(j);
+	return result;
 }
 
 static PyObject* py_get_name(PyObject* self, PyObject* args) { //(uri_t)
@@ -34,7 +37,9 @@ static PyObject* py_get_name(PyObject* self, PyObject* args) { //(uri_t)
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	char* name = ll_get_name(u);
-	return Py_BuildValue("s",name);
+	PyObject* result = Py_BuildValue("s",name);
+	free(name);
+	return result;
 }
 
 static PyObject* py_get_version(PyObject* self, PyObject* args) { //(uri_t)
@@ -42,7 +47,9 @@ static PyObject* py_get_version(PyObject* self, PyObject* args) { //(uri_t)
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	version_t v = ll_get_version(u);
-	return Py_BuildValue("(iii)",v[0],v[1],v[2]);
+	PyObject* result = Py_BuildValue("(iii)",v[0],v[1],v[2]);
+	free(v);
+	return result;
 }
 
 static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)
@@ -56,6 +63,7 @@ static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)
 		PyList_Append(list,PyString_FromString(l[i]));
 		i++;
 	}
+	ll_free_list(l);
 	return list;
 }
 static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(uri_t)
@@ -69,6 +77,7 @@ static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(uri_t)
 		PyList_Append(list,PyString_FromString(l[i]));
 		i++;
 	}
+	ll_free_list(l);
 	return list;
 }
 static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(uri_t)
@@ -82,6 +91,7 @@ static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(uri_t)
 		PyList_Append(list,PyString_FromString(l[i]));
 		i++;
 	}
+	ll_free_list(l);
 	return list;
 }
 static PyObject* py_verify_uri(PyObject* self, PyObject* args) { // uri_t
@@ -104,6 +114,7 @@ static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // uri_t,at
 		PyList_Append(list,PyString_FromString(avs[i]));
 		i++;
 	}
+	ll_free_list(avs);
 	return list;
 }
 
@@ -120,6 +131,7 @@ static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // juris_t
 		PyList_Append(list,PyString_FromString(us[i]));
 		i++;
 	}
+	ll_free_list(us);
 	return list;
 }
 static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, juris_t[,module_t]
@@ -139,14 +151,16 @@ static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, juri
 static PyObject* py_read(PyObject* self, PyObject* args)  { // filename_t[,module_t]
 	const filename_t f;
 	const module_t m;
-	juris_t result;
+	juris_t j;
 	if (PyArg_ParseTuple(args,"ss",&f,&m))
-		result = ll_module_read(f,m);
+		j = ll_module_read(f,m);
 	else if (PyArg_ParseTuple(args,"s",&f))
-		result = ll_read(f);
+		j = ll_read(f);
 	else
 		return NULL;
-	return Py_BuildValue("s",result);
+	PyObject* result = Py_BuildValue("s",j);
+	free(j);
+	return result;
 }
 
 static PyObject* py_set_default(PyObject* self, PyObject* args)  { // uri_t
@@ -158,7 +172,9 @@ static PyObject* py_set_default(PyObject* self, PyObject* args)  { // uri_t
 
 static PyObject* py_get_default(PyObject* self, PyObject* args)  {
 	uri_t u = ll_get_default();
-	return Py_BuildValue("s",u);
+	PyObject* result = Py_BuildValue("s",u);
+	free(u);
+	return result;
 }
 
 static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
@@ -169,6 +185,7 @@ static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
 		PyList_Append(list,PyString_FromString(ms[i]));
 		i++;
 	}
+	ll_free_list(ms);
 	return list;
 }
 
@@ -180,6 +197,7 @@ static PyObject* py_get_io_modules(PyObject* self, PyObject* args)  {
 		PyList_Append(list,PyString_FromString(ms[i]));
 		i++;
 	}
+	ll_free_list(ms);
 	return list;
 }
 
@@ -194,6 +212,7 @@ static PyObject* py_module_mime_types(PyObject* self, PyObject* args)  {
 		PyList_Append(list,PyString_FromString(mts[i]));
 		i++;
 	}
+	ll_free_list(mts);
 	return list;
 }
 

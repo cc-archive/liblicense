@@ -15,13 +15,14 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
-SUBDIRS = . xdgmime licenses modules bindings tests utils
+SUBDIRS = xdgmime . licenses modules bindings tests utils
 
 libdir = @libdir@/liblicense
 lib_LTLIBRARIES = liblicense.la
 
 liblicense_la_CFLAGS = $(RAPTOR_CFLAGS)
-liblicense_la_LIBADD = $(RAPTOR_LIBS)
+liblicense_la_LIBADD = $(RAPTOR_LIBS) \
+											 xdgmime/libxdgmime.la
 liblicense_la_SOURCES = \
 	read_license.c \
 	write_license.c \

@@ -41,8 +41,8 @@ print "Test write_license python bindings:"
 print "\twrite:",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/")
 print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/stub.so")
 
-#print "Test read_license python bindings:"
-#print "\tread:",read("license_me.txt")
+print "Test read_license python bindings:"
+print "\tread:",read("license_me.txt")
 #print "\tmodule_read:",read("license_me.txt","exempi.o")
 
 print "Test system_default:"
