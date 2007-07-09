@@ -49,8 +49,8 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
 
 """
 
-PO_DIR="https://svn.sourceforge.net/svnroot/cctools/i18n/trunk/i18n/"
-LICENSE_FILE="https://svn.sourceforge.net/svnroot/cctools/license_xsl/trunk/licenses.xml"
+PO_DIR="https://cctools.svn.sourceforge.net/svnroot/cctools/i18n/trunk/i18n/"
+LICENSE_FILE="https://cctools.svn.sourceforge.net/svnroot/cctools/license_xsl/trunk/licenses.xml"
 
 NS_DC = "http://purl.org/dc/elements/1.1/"
 NS_DCQ = "http://purl.org/dc/terms/"
@@ -69,6 +69,12 @@ locales = [xDefault, "af","bg","ca","da","de","de_AT","de_CH","en_CA",
 conn = urlopen(LICENSE_FILE)
 license_xml = xml.dom.minidom.parse(conn)
 
+def latest_license( v, acc ):
+	if v == None or acc[1] == "-" or float(acc[1]) > float(v[1]):
+		return acc
+	else:
+		return v
+
 licenses = license_xml.getElementsByTagName('license')
 print [license.getAttribute('id') for license in licenses]
 for license in licenses:
@@ -78,7 +84,8 @@ for license in licenses:
 	for jurisdiction in jurisdictions:
 		jurisdiction_id = jurisdiction.getAttribute('id')
 		versions = jurisdiction.getElementsByTagName('version')
-		replacedByURI = versions[-1].getAttribute('uri')
+		#replacedByURI = versions[-1].getAttribute('uri')
+		replacedByURI, _ = reduce(latest_license,[(version.getAttribute('uri'),version.getAttribute('id')) for version in versions])
 		for version in versions:
 			version_id = version.getAttribute('id')
 			uri = version.getAttribute('uri')
