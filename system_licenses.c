@@ -15,7 +15,8 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "system_licenses.h"
+#include "liblicense.h"
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
@@ -26,9 +27,11 @@
 #include <ctype.h>
 #include <assert.h>
 
-#include "list.h"
-
 #define MAX_TRIPLES 5
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 // initializes the library and its dependencies.
 int ll_init() {

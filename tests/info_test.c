@@ -15,10 +15,11 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "system_licenses.h"
-#include "list.h"
+#include <liblicense.h>
+
 #include <stdlib.h>
 #include <stdio.h>
+
 int main(int argc,char** argv) {
 	ll_init();
 	uri_t license = "http://creativecommons.org/licenses/by-nd/2.0/de/";

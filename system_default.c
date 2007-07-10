@@ -15,13 +15,17 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "system_default.h"
+#include "liblicense.h"
+
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
-#include "list.h"
 #include <stdio.h>
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 int ll_set_default(const uri_t u) {
 	module_t* modules= ll_get_config_modules();

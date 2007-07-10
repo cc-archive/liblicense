@@ -15,11 +15,17 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "write_license.h"
+#include "liblicense.h"
+
 #include <stdbool.h>
-#include "list.h"
-#include "xdgmime/xdgmime.h"
 #include <stdio.h>
+
+#include "xdgmime/xdgmime.h"
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 int ll_write(filename_t f,uri_t u) {
 	module_t* modules = ll_get_io_modules();
 	int result = 0;

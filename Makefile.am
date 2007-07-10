@@ -31,5 +31,7 @@ liblicense_la_SOURCES = \
 	system_licenses.c \
 	list.c
 
+include_HEADERS = liblicense.h
+
 registrydir=@libdir@/liblicense/io
 registry_DATA=registry

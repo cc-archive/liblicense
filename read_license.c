@@ -15,12 +15,16 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "read_license.h"
-#include "module_wrangler.h"
+#include "liblicense.h"
 #include <string.h>
 #include <stdio.h>
-#include "list.h"
+
 #include "xdgmime/xdgmime.h"
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 uri_t ll_read(filename_t f) {
 	module_t* modules = ll_get_io_modules();
 	uri_t* results = ll_new_list(ll_list_length(modules));

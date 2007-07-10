@@ -15,13 +15,12 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "../system_licenses.h"
-#include "../write_license.h"
-#include "../read_license.h"
-#include "../system_default.h"
+#include <liblicense.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+
 int main(int argc, char** argv) {
   printf("Starting ll:\n");
   ll_init();

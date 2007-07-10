@@ -15,7 +15,8 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "read_license.h"
+#include <liblicense.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 

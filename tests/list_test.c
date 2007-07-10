@@ -15,7 +15,8 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "list.h"
+#include <liblicense.h>
+
 #include <string.h>
 #include <stdio.h>
 

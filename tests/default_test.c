@@ -15,9 +15,10 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
+#include <liblicense.h>
+
 #include <stdio.h>
 #include <unistd.h>
-#include "system_default.h"
 #include <stdlib.h>
 
 int main(int argc,char** argv) {

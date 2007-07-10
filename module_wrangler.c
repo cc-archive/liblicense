@@ -15,18 +15,22 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include "module_wrangler.h"
+#include "liblicense.h"
+
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlfcn.h>
 #include <dirent.h>
-#include "list.h"
 
 #define MAX_MODULES 10
 #define MAX_MIME_TYPES 20
 #define MAX_LINE_LENGTH 150
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 int _ll_so_filter(const struct dirent * d) {
 	return strstr(d->d_name,".so")!=NULL;
