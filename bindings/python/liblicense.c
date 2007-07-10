@@ -119,12 +119,15 @@ static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // uri_t,at
 }
 
 static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // juris_t
-	const juris_t j;
+	juris_t j;
 	uri_t* us;
-	if (PyArg_ParseTuple(args,"s",&j))
+	if (PyArg_ParseTuple(args,"s",&j)) {
+		if (strlen(j)==0)
+			j=NULL;
 		us = ll_get_licenses(j);
-	else
+	} else {
 		us = ll_get_all_licenses();
+	}
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (us!=NULL && us[i]!=NULL) {

@@ -18,7 +18,9 @@
 #ifndef LIBLICENSE_SYSTEM_LICENSES_H
 #define LIBLICENSE_SYSTEM_LICENSES_H
 
-#define LICENSE_DIR "../licenses/"
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
 typedef char* juris_t;
 typedef char* uri_t;
 typedef char* locale_t;

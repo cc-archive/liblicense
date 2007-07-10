@@ -30,3 +30,6 @@ liblicense_la_SOURCES = \
 	module_wrangler.c \
 	system_licenses.c \
 	list.c
+
+registrydir=@libdir@/liblicense/io
+registry_DATA=registry

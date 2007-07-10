@@ -176,7 +176,14 @@ fi
 AM_CONDITIONAL(HAVE_VORBIS, test "$have_vorbis" = "yes")
 test "$have_vorbis" = "yes" && AC_DEFINE(HAVE_VORBIS, [], [Define if we have vorbisfile])
 
-
+##################################################################
+# define paths to licenses and modules
+##################################################################
+AS_AC_EXPAND(DATADIR, $datadir)
+AS_AC_EXPAND(LIBDIR, $libdir)
+AC_DEFINE_UNQUOTED([LICENSE_DIR],["${DATADIR}/liblicense/licenses/"],[Location of license rdf files.])
+AC_DEFINE_UNQUOTED(LIBLICENSE_IO_MODULE_DIR,"${LIBDIR}/liblicense/io/",[Location of liblicense io modules.])
+AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/config/"],[Location of liblicense config modules.])
 
 AC_CONFIG_FILES([
 	Makefile
@@ -194,6 +201,33 @@ AC_CONFIG_FILES([
 AC_CONFIG_HEADERS([config.h])
 
 AC_OUTPUT
+#Output the registry.  Its hackish because the registry itsself is and it'll
+# change soon.
+echo "stub.so" > registry
+
+if test "x$have_vorbis" = "xyes"
+then
+	echo "vorbis.so audio/x-vorbis+ogg application/ogg audio/x-vorbis" >> registry
+fi
+
+if test "x$have_exempi" = "xyes"
+then
+	echo "exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime" >> registry
+	echo "sidecar_xmp.so" >> registry
+fi
+
+if test "x$have_id3lib" = "xyes"
+then
+	echo "id3.so audio/mpeg" >> registry
+fi
+if test "x$have_flac" = "xyes"
+then
+	echo "flac.so audio/x-flac" >> registry
+fi
+if test "x$have_raptor" = "xyes"
+then
+	echo "raptor.so image/svg+xml" >> registry
+fi
 
 echo "
 Liblicense-$VERSION:

@@ -57,7 +57,7 @@ module_t* ll_get_io_modules() {
 	reg_file[0]='\0';
 	strcat(reg_file,LIBLICENSE_IO_MODULE_DIR);
 	strcat(reg_file,"registry");
-	
+	printf("regsitry file: %s\n",reg_file);
 	// open file
 	FILE* registry = fopen(reg_file,"r");
 	
@@ -155,6 +155,7 @@ mime_type_t* ll_module_mime_types(module_t m) {
 	while(line!=NULL && !stop) {
 		if (fgets(line, MAX_LINE_LENGTH, registry)==NULL) {
 			printf("We're in trouble.\n");
+			stop=true;
 		}
 		// reduce down to first token on line
 		char* start=strtok(line," \n");

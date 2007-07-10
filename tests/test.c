@@ -49,25 +49,24 @@ int main(int argc, char** argv) {
 		printf("\t\t%s\n",result1[i++]);
 	printf("\tget_licenses_in_juris: skipped\n");
 	
-	//printf("Test write_license:\n");
-	//printf("\twrite: %d\n",ll_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/"));
-	printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/sidecar_xmp.so"));
+	printf("Test write_license:\n");
+	printf("\twrite: %d\n",ll_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/"));
+	//printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","sidecar_xmp.so"));
 	
-	//printf("Test read_license:\n");
-	//printf("\tread: %s\n",ll_read("license_me.txt"));
-	printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/sidecar_xmp.so"));
+	printf("Test read_license:\n");
+	printf("\tread: %s\n",ll_read("license_me.txt"));
+	//printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/sidecar_xmp.so"));
 	
-	//printf("Test system_default:\n");
-	//printf("\tset_default: %d\n",ll_set_default("creativecommons.org/licenses/by/2.5/au/"));
-	//printf("\tget_default: %s\n",ll_get_default());
-	//printf("\tdefault_engines: skipped\n");
+	printf("Test system_default:\n");
+	printf("\tset_default: %d\n",ll_set_default("creativecommons.org/licenses/by/2.5/au/"));
+	printf("\tget_default: %s\n",ll_get_default());
 
 	printf("Test module_wrangler:");
 	printf("\tget_config_modules: skipped\n");
 	printf("\tget_io_modules: skipped\n");
 	printf("\tget_module_symbol: skipped\n");
 	//printf("\tmodule_mime_types:\n");
-	ll_module_mime_types(".libs/stub.so");
+	ll_module_mime_types("stub.so");
 	printf("Stopping ll:\n");
 	ll_stop();
 	return 0;

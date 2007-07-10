@@ -18,8 +18,10 @@
 #ifndef LIBLICENSE_MODULE_WRANGLER_H
 #define LIBLICENSE_MODULE_WRANGLER_H
 
-	#define LIBLICENSE_CONFIG_MODULE_DIR "../modules/config/.libs/"
-	#define LIBLICENSE_IO_MODULE_DIR "../modules/io/"
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 	typedef char* module_t;
 	typedef char* symbol_t;
 	typedef char* mime_type_t;
