@@ -130,6 +130,7 @@ int main(int argc, char** argv) {
 		else
 			printf("No license found for %s\n",argv[optind]);
 	}
+	free(license);
 	ll_stop();
 	return 0;
 }

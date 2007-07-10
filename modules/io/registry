@@ -3,4 +3,5 @@
 .libs/id3.so audio/mpeg
 .libs/vorbis.so audio/x-vorbis+ogg application/ogg audio/x-vorbis
 .libs/flac.so audio/x-flac
+.libs/raptor.so image/svg+xml
 .libs/stub.so

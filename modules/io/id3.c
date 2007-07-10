@@ -46,7 +46,7 @@ char* read( const char* filename )
 		ID3Field_GetASCII(field,buffer,MAX_URI_LENGTH);
 	}
 
-	free(tag);
+	ID3Tag_Delete(tag);
 	return buffer;
 }
 
@@ -65,6 +65,6 @@ int write( const char* filename, const char* uri )
 	ID3Field_SetASCII(field, uri);
 
 	int err = ID3Tag_Update(tag);
-	free(tag);
+	ID3Tag_Delete(tag);
 	return err;
 }

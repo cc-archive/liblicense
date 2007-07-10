@@ -54,12 +54,18 @@ flac_la_LIBADD = $(FLAC_LIBS)
 flac_la_LDFLAGS = -no-undefined -module -avoid-version
 endif
 
+raptor_la_SOURCES = raptor.c
+raptor_la_LDFLAGS = -no-undefined -module -avoid-version
+raptor_la_LIBADD = $(RAPTOR_LIBS) $(LIBXML2_LIBS)
+raptor_la_CFLAGS = $(RAPTOR_CFLAGS) $(LIBXML2_CFLAGS)
+
 libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
 	$(ID3LIB_MODULES) \
 	$(VORBIS_MODULES) \
 	$(FLAC_MODULES) \
+	raptor.la \
 	stub.la
 
 stub_la_SOURCES = stub.c

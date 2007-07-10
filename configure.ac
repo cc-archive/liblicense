@@ -79,6 +79,25 @@ if test "x$enable_debug_code" = "xyes"; then
 fi
 
 ##################################################################
+# check for libxml2
+##################################################################
+
+LIBXML2_REQUIRED=0.6
+
+AC_ARG_ENABLE(libxml2, AC_HELP_STRING([--disable-libxml2],[Disable HTML/XML embedders]),,[enable_libxml2=yes])
+if test "x$enable_libxml2" = "xyes"; then
+	PKG_CHECK_MODULES(LIBXML2, [
+		libxml-2.0 >= $LIBXML2_REQUIRED],
+		[have_libxml2=yes] , [have_libxml2=no])
+	AC_SUBST(LIBXML2_CFLAGS)
+	AC_SUBST(LIBXML2_LIBS)
+else
+	have_libxml2="no (disabled)"
+fi
+AM_CONDITIONAL(HAVE_LIBXML2, test "$have_libxml2" = "yes")
+test "$have_libxml2" = "yes" && AC_DEFINE(HAVE_LIBXML2, [], [Define if we have libxml2])
+
+##################################################################
 # check for exempi
 ##################################################################
 
@@ -191,4 +210,5 @@ I/O Modules:
 	id3:					$have_id3lib
 	vorbis:					$have_vorbis
 	FLAC:					$have_flac
+	raptor:					$have_libxml2
 "

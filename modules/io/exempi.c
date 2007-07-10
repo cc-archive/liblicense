@@ -24,21 +24,17 @@
 
 void init()
 {
-	printf("exempi: init()\n");
 	xmp_init();
 	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
 void shutdown()
 {
-	printf("exempi: shutdown()\n");
 	xmp_terminate();
 }
 
 char* read( const char* filename )
 {
-	printf("exempi: read(%s)\n",filename);
-
 	XmpFilePtr f;
 
 	f = xmp_files_open_new(filename, XMP_OPEN_OPNLYXMP);
@@ -64,8 +60,6 @@ char* read( const char* filename )
 
 int write( const char* filename, const char* uri )
 {
-	printf("exempi: write(%s,%s)\n",filename,uri);
-
 	int success = true;
 
 	XmpFilePtr f;
