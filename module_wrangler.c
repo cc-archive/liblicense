@@ -26,7 +26,7 @@
 
 #define MAX_MODULES 10
 #define MAX_MIME_TYPES 20
-#define MAX_LINE_LENGTH 100
+#define MAX_LINE_LENGTH 150
 
 int _ll_so_filter(const struct dirent * d) {
 	return strstr(d->d_name,".so")!=NULL;

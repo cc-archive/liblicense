@@ -120,7 +120,7 @@ test "$have_exempi" = "yes" && AC_DEFINE(HAVE_EXEMPI, [], [Define if we have exe
 # check for id3lib
 ##################################################################
 
-AC_ARG_ENABLE(id3, AC_HELP_STRING([--enable-id3], [Disable ID3 embedding]),,[enable_id3=yes])
+AC_ARG_ENABLE(id3, AC_HELP_STRING([--disable-id3], [Disable ID3 embedding]),,[enable_id3=yes])
 if test "x$enable_id3" = "xyes"; then
 	AC_CHECK_LIB(id3, ID3Tag_New,
 			[AC_CHECK_HEADERS(id3.h,
@@ -140,16 +140,14 @@ test "$have_id3lib" = "yes" && AC_DEFINE(HAVE_ID3LIB, [], [Define if we have id3
 # check for FLAC
 ##################################################################
 
-AC_ARG_ENABLE(FLAC, AC_HELP_STRING([--enable-FLAC], [Disable FLAC embedding]),,[enable_FLAC=yes])
+AC_ARG_ENABLE(FLAC, AC_HELP_STRING([--disable-FLAC], [Disable FLAC embedding]),,[enable_FLAC=yes])
 if test "x$enable_FLAC" = "xyes"; then
-	AC_CHECK_LIB(FLAC, FLAC__file_decoder_new,
-			[AC_CHECK_HEADERS(FLAC/metadata.h,
-			[
-			have_flac=yes
-			],[have_flac=no])],
-			[have_flac=no])
-	FLAC_LIBS="-lFLAC"
-	AC_SUBST(FLAC_LIBS)
+	AM_PATH_LIBFLAC
+	if test "x$no_libFLAC" = "x" ; then
+		have_flac="yes"
+	else
+		have_flac="no"
+	fi
 else
 	have_flac="no (disabled)"
 fi
@@ -162,7 +160,7 @@ test "$have_flac" = "yes" && AC_DEFINE(HAVE_FLAC, [], [Define if we have FLAC])
 
 VORBIS_REQUIRED=1.0
 
-AC_ARG_ENABLE(vorbis, AC_HELP_STRING([--enable-vorbis], [Disable Ogg Vorbis embedding]),,[enable_vorbis=yes])
+AC_ARG_ENABLE(vorbis, AC_HELP_STRING([--disable-vorbis], [Disable Ogg Vorbis embedding]),,[enable_vorbis=yes])
 if test "x$enable_vorbis" = "xyes"; then
 	PKG_CHECK_MODULES(VORBIS,[
 		vorbisfile >= $VORBIS_REQUIRED],
@@ -203,8 +201,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_OUTPUT
 #Output the registry.  Its hackish because the registry itsself is and it'll
 # change soon.
-echo "stub.so" > registry
-
+rm -f registry
 if test "x$have_vorbis" = "xyes"
 then
 	echo "vorbis.so audio/x-vorbis+ogg application/ogg audio/x-vorbis" >> registry
@@ -212,7 +209,7 @@ fi
 
 if test "x$have_exempi" = "xyes"
 then
-	echo "exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime" >> registry
+	echo "exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime audio/x-wav" >> registry
 	echo "sidecar_xmp.so" >> registry
 fi
 
@@ -224,10 +221,11 @@ if test "x$have_flac" = "xyes"
 then
 	echo "flac.so audio/x-flac" >> registry
 fi
-if test "x$have_raptor" = "xyes"
+if test "x$have_libxml2" = "xyes"
 then
 	echo "raptor.so image/svg+xml" >> registry
 fi
+echo "stub.so" >> registry
 
 echo "
 Liblicense-$VERSION:

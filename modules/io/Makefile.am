@@ -50,7 +50,8 @@ if HAVE_FLAC
 FLAC_MODULES = flac.la
 
 flac_la_SOURCES = flac.c
-flac_la_LIBADD = $(FLAC_LIBS)
+flac_la_LIBADD = $(LIBFLAC_LIBS)
+flac_la_CFLAGS = $(LIBFLAC_CFLAGS)
 flac_la_LDFLAGS = -no-undefined -module -avoid-version
 endif
 
