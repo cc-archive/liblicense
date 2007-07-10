@@ -34,7 +34,7 @@ char* read( const char* filename )
 {
 	char *license = NULL;
 
-	FLAC__StreamMetadata *vc = FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT);
+	FLAC__StreamMetadata *vc;
 	if ( FLAC__metadata_get_tags(filename,&vc) ) {
 		int index = FLAC__metadata_object_vorbiscomment_find_entry_from(vc, 0, "LICENSE");
 		if (index != -1) {
