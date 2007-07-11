@@ -96,10 +96,12 @@ int ll_module_init(char* directory,module_t m) {// create file to open
 	strcat(reg_file,m);
 	void *handle = dlopen(reg_file,RTLD_LAZY);
 
-	void (*function_init)();
-	*(void**) (&function_init) = dlsym(handle,"init");
-	(*function_init)();
-
+	if (handle) {
+		void (*function_init)();
+		*(void**) (&function_init) = dlsym(handle,"init");
+		(*function_init)();
+		return 1;
+	}
 	return 0;
 }
 
