@@ -171,7 +171,7 @@ int write( const char* filename, const char* uri )
 	xmp_set_property(xmp, NS_CC, "license", uri);
 
 	XmpStringPtr xmp_string = xmp_string_new();
-	xmp_to_string(xmp,xmp_string,XMP_SERIAL_OMITPACKETWRAPPER,2);
+	xmp_serialize(xmp,xmp_string,XMP_SERIAL_OMITPACKETWRAPPER,2);
 
 	const char *xmp_cstr = xmp_string_cstr(xmp_string);
 	f = fopen(sidecar, "w");
