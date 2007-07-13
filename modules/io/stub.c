@@ -17,6 +17,8 @@
 
 #include <liblicense.h>
 
+#include <stdio.h>
+
 void stub_init() {
 }
 
