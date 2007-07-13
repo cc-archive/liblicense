@@ -21,9 +21,14 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
+	ll_init();
+
 	char* file="license_me.txt";
 	uri_t license = ll_read(file);
 	printf("File license: %s\n",license);
 	free(license);
+
+	ll_stop();
+
 	return 0;
 }

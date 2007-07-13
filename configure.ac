@@ -199,34 +199,6 @@ AC_CONFIG_FILES([
 AC_CONFIG_HEADERS([config.h])
 
 AC_OUTPUT
-#Output the registry.  Its hackish because the registry itsself is and it'll
-# change soon.
-rm -f registry
-if test "x$have_vorbis" = "xyes"
-then
-	echo "vorbis.so audio/x-vorbis+ogg application/ogg audio/x-vorbis" >> registry
-fi
-
-if test "x$have_exempi" = "xyes"
-then
-	echo "exempi.so image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime audio/x-wav" >> registry
-	echo "sidecar_xmp.so" >> registry
-fi
-
-if test "x$have_id3lib" = "xyes"
-then
-	echo "id3.so audio/mpeg" >> registry
-fi
-if test "x$have_flac" = "xyes"
-then
-	echo "flac.so audio/x-flac" >> registry
-fi
-if test "x$have_libxml2" = "xyes"
-then
-	echo "raptor.so image/svg+xml" >> registry
-fi
-echo "stub.so" >> registry
-
 echo "
 Liblicense-$VERSION:
 

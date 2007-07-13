@@ -27,14 +27,9 @@
 
 #include <liblicense.h>
 
-void init()
+void _raptor_init()
 {
 	raptor_init();
-}
-
-void shutdown()
-{
-	raptor_finish();
 }
 
 typedef struct {
@@ -53,7 +48,7 @@ void triple_handler(void* user_data, const raptor_statement* triple) {
 	}
 }
 
-char* read( const char* filename )
+char* raptor_read( const char* filename )
 {
 	char *license = NULL;
 
@@ -225,9 +220,9 @@ void declare_namespace(void* user_data, raptor_namespace *nspace)
 	raptor_serialize_set_namespace_from_namespace((raptor_serializer*)user_data, nspace);
 }
 
-int write( const char* filename, const char* license_uri_str )
+int raptor_write( const char* filename, const char* license_uri_str )
 {
-	int ret = 1;
+	int ret = 0;
 
 	raptor_parser* rdf_parser=NULL;
 	raptor_serializer* rdf_serializer;
@@ -300,7 +295,19 @@ int write( const char* filename, const char* license_uri_str )
 	raptor_free_memory(string);
 
 	xmlNode *rdf_element = xmlDocCopyNode(rdf_doc->children, doc, 1);
-	ret = write_svg(root_element, rdf_element);
+
+	xmlNode *cur_node = NULL;
+	for (cur_node = root_element; cur_node; cur_node = cur_node->next) {
+		if (cur_node->type == XML_ELEMENT_NODE) {
+			if (strcmp((char*)cur_node->name,"svg") == 0) {
+				ret = write_svg(root_element, rdf_element);
+				break;
+			} else if (strcmp((char*)cur_node->name,"smil") == 0) {
+				ret = write_smil(root_element, rdf_element);
+				break;
+			}
+		}
+	}
 	
 	xmlSaveFormatFileEnc(filename, doc, "UTF-8", 1);
 
@@ -310,3 +317,8 @@ int write( const char* filename, const char* license_uri_str )
 
 	return ret;
 }
+
+LL_MODULE_DEFINE("raptor.so","Write licenses in RDF embedded in XML.","0.1",
+  LL_FEATURES_EMBED,
+  "image/svg+xml application/smil",
+  _raptor_init,raptor_read,raptor_write);

@@ -15,18 +15,12 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-void init() {
-	return;
+#include <liblicense.h>
+
+void stub_init() {
 }
 
-void shutdown() {
-	return;
-}
-
-char* read(char* f) {
-	return strdup("http://creativecommons.org/licenses/by-nd/2.0/");
-}
-
-int write(char* f,char* u) {
-	return 0;
-}
+LL_MODULE_DEFINE("stub.so","A stupid module that can't read or write a license","infinity",
+  LL_FEATURES_NONE,
+  NULL,
+  stub_init,NULL,NULL);

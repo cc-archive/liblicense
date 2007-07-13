@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include <string.h>
 int main(int argc, char** argv) {
+	ll_init();
+
 	//leak free 6/29/07
 	printf("Getting the config modules: ");
 	char** list = ll_get_config_modules();
@@ -32,11 +34,10 @@ int main(int argc, char** argv) {
 	char* m = strdup(list[0]);
 	ll_free_list(list);
 	
-	printf("Getting mime-types for '%s':",m);
-	list = ll_module_mime_types(m);
-	ll_list_print(list);
-	ll_free_list(list);
-	free(m);
+	printf("Getting module info:\n");
+	ll_print_module_info();
+
+	ll_stop();
 	
 	return 0;
 }

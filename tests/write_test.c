@@ -21,9 +21,14 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
+	ll_init();
+
 	char* file="license_me.txt";
 	uri_t license = "creativecommons.org/licenses/by/2.5/au/";
 	int result = ll_write(file,license);
 	printf("Write result: %d\n",result);
+
+	ll_stop();
+
 	return 0;
 }

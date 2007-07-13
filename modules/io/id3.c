@@ -19,19 +19,17 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <liblicense.h>
+
 #include <id3.h>
 
 #define MAX_URI_LENGTH 50
 
-void init()
+void id3_init()
 {
 }
 
-void shutdown()
-{
-}
-
-char* read( const char* filename )
+char* id3_read( const char* filename )
 {
 	ID3Tag *tag = ID3Tag_New();
 	ID3Tag_Link(tag,filename);
@@ -50,7 +48,7 @@ char* read( const char* filename )
 	return buffer;
 }
 
-int write( const char* filename, const char* uri )
+int id3_write( const char* filename, const char* uri )
 {
 	ID3Tag *tag = ID3Tag_New();
 	ID3Tag_Link(tag,filename);
@@ -68,3 +66,8 @@ int write( const char* filename, const char* uri )
 	ID3Tag_Delete(tag);
 	return err;
 }
+
+LL_MODULE_DEFINE("id3.so","Write licenses within ID3 tags.","0.1",
+  LL_FEATURES_EMBED,
+  "audio/mpeg",
+  id3_init,id3_read,id3_write);

@@ -39,7 +39,7 @@ print "\tget_licenses(juris):", get_licenses("za")
 
 print "Test write_license python bindings:"
 print "\twrite:",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/")
-print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/",".libs/stub.so")
+print "\twrite(module):",write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","stub.so")
 
 print "Test read_license python bindings:"
 print "\tread:",read("license_me.txt")
@@ -53,5 +53,8 @@ print "Test module_wrangler:"
 print "\tget_config_modules:",get_config_modules()
 print "\tget_io_modules:",get_io_modules()
 print "\tget_module_symbol: not bound"
-print "\tmodule_mime_types:",module_mime_types(".libs/exempi.so")
+
+print "Module information and capabilities:"
+print_module_info();
+
 sys.exit(0)

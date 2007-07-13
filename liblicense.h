@@ -71,8 +71,54 @@ int ll_module_init(char*,module_t);
 void* ll_get_module_symbol(char*,module_t, symbol_t);
 int ll_module_shutdown(char*,module_t);
 
-/* IO module functions. */
-mime_type_t* ll_module_mime_types(module_t);
+void ll_print_module_info();
+
+void ll_init_modules();
+void ll_stop_modules();
+
+int _ll_contains_token(char *string, const char *token);
+
+typedef struct _LLModuleDesc LLModuleDesc;
+
+extern LLModuleDesc **_module_list;
+
+typedef void (*LLModuleInitFunc) (void);
+typedef char* (*LLModuleReadFunc) (const char*);
+typedef int (*LLModuleWriteFunc) (const char*,const char*);
+typedef void (*LLModuleShutdownFunc) (void);
+
+typedef enum {
+	LL_FEATURES_NONE = 		0x000000,
+	LL_FEATURES_EMBED = 	0x000001
+} features;
+
+struct _LLModuleDesc {
+	char *name;
+	char *description;
+	char *version;
+	int features;
+	char *mime_types;
+	LLModuleInitFunc module_init;
+	LLModuleReadFunc read;
+	LLModuleWriteFunc write;
+	void *handle;
+};
+
+/* FIXME: Windows */
+#define LL_MODULE_EXPORT
+
+#define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write)	\
+LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {	\
+  name,							\
+  description,						\
+  version,						\
+  features,							\
+  mime_types,							\
+  init,							\
+  read,							\
+  write,							\
+  0											\
+};
 
 /*******************************************************/
 

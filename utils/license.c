@@ -35,6 +35,8 @@ void help() {
 	printf("                                 or unported licenses by default.\n");
 	printf("       --set                   Sets the license instead of reading it.\n");
 	printf("   -l, --license=URI           Uses the license with URI instead of default.\n");
+	printf("   -m,                         Lists all available modules and their capabilities\n");
+	printf("                                 for reading and writing licenses in files\n");
 	printf("       --help                  Output this help text and quit.\n");
 	printf("\n");
 	printf("Exit status is 0 if OK, 1 if no default license is set and 2 if the given\n");
@@ -70,12 +72,15 @@ int main(int argc, char** argv) {
 	int option_index;
 	uri_t license = NULL;
 	ll_init();
-	while((c = getopt_long(argc,argv,"l:a::",long_options,&option_index))!=-1) {
+	while((c = getopt_long(argc,argv,"ml:a::",long_options,&option_index))!=-1) {
 		switch(c) {
 			case 0:
 				continue;
 			case 'h':
 				help();
+				return 0;
+			case 'm':
+				ll_print_module_info();
 				return 0;
 			case 'l':
 				if (optarg!=NULL) {
@@ -121,7 +126,11 @@ int main(int argc, char** argv) {
 			print_license_info(license);
 	} else { /* Next argument is file, use it. */
 		if (set_flag) {
-			ll_write(argv[optind],license);
+			int ret = ll_write(argv[optind],license);
+			if (!ret) {
+				printf("Unable to write license to file\n");
+				return 2;
+			}
 		} else {
 			license = ll_read(argv[optind]);
 		}

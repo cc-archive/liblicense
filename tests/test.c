@@ -64,8 +64,7 @@ int main(int argc, char** argv) {
 	printf("\tget_config_modules: skipped\n");
 	printf("\tget_io_modules: skipped\n");
 	printf("\tget_module_symbol: skipped\n");
-	//printf("\tmodule_mime_types:\n");
-	ll_module_mime_types("stub.so");
+
 	printf("Stopping ll:\n");
 	ll_stop();
 	return 0;

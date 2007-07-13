@@ -18,6 +18,7 @@
 #include "liblicense.h"
 #include <string.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "xdgmime/xdgmime.h"
 
@@ -26,46 +27,54 @@
 #endif
 
 uri_t ll_read(filename_t f) {
-	module_t* modules = ll_get_io_modules();
-	uri_t* results = ll_new_list(ll_list_length(modules));
-	
+	assert(_module_list);
+
+	int i, length = 0;
+	while (_module_list[length]) {length++;}
+
+	uri_t* results = ll_new_list(length);
+
 	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
 	printf("File mime-type: %s\n",mt);
-	// Get uris from all applicable modules.
-	int i = 0;
-	while (modules[i]!=NULL) {
-		mime_type_t* supported = ll_module_mime_types(modules[i]);
-		if(ll_list_contains(supported,mt) || ll_list_length(supported)==0) {
-			results[i] = ll_module_read(f,modules[i]);
-			if (!results[i]) results[i] = strdup("");
-		}
-		else
-			results[i] = strdup("");
 
-		ll_free_list(supported);
-		i++;
+	i = 0;
+	LLModuleDesc **curr_module = _module_list;
+	while (*curr_module) {
+		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
+			if ((*curr_module)->read) {
+				char *result = ((*curr_module)->read)(f);
+				if (result) {
+					results[i++] = result;
+				}
+			}
+		}
+		++curr_module;
 	}
 
-	uri_t license = ll_list_mode(results,"");
-	if (license)
+	char *license = ll_list_mode(results,"");
+	if (license) {
 		license = strdup(license);
+	}
 
 	ll_free_list(results);
-	ll_free_list(modules);
+
 	return license;
 }
 
 uri_t ll_module_read(filename_t f,module_t m) {
-	if (ll_module_init(LIBLICENSE_IO_MODULE_DIR, m)) {
-		char* (*function_read)(char*);
-		*(void**) (&function_read) = ll_get_module_symbol(LIBLICENSE_IO_MODULE_DIR, m, "read");
-		if(!function_read)
-			printf("Error: symbol 'read' not found in '%s'.\n",m);
-		uri_t result = (*function_read)(f);
-		ll_module_shutdown(LIBLICENSE_IO_MODULE_DIR, m);
-		return result;
-	} else {
-		fprintf(stderr,"Error: unable to load module '%s'.\n",m);
-		return NULL;
+	assert(_module_list);
+
+	char *license = NULL;
+
+	LLModuleDesc **curr_module = _module_list;
+	while (*curr_module) {
+		if ( strcmp((*curr_module)->name,m) == 0 ) {
+			if ((*curr_module)->write) {
+				license = ((*curr_module)->read)(f);
+			}
+		}
+		++curr_module;
 	}
+
+	return license;
 }

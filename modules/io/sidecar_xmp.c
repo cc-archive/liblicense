@@ -21,6 +21,8 @@
 #include <fcntl.h>
 #include <errno.h>
 
+#include <liblicense.h>
+
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
 
@@ -108,18 +110,13 @@ get_contents_stdio (FILE        *f,
 		return false;
 }
 
-void init()
+void sidecar_xmp_init()
 {
 	xmp_init();
 	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
-void shutdown()
-{
-	xmp_terminate();
-}
-
-char* read( const char* filename )
+char* sidecar_xmp_read( const char* filename )
 {
 	char *sidecar = sidecar_filename( filename );
 	FILE *f = fopen(sidecar, "rb");
@@ -147,8 +144,10 @@ char* read( const char* filename )
 	return NULL;
 }
 
-int write( const char* filename, const char* uri )
+int sidecar_xmp_write( const char* filename, const char* uri )
 {
+	printf("writing %s %s\n",filename,uri);
+
 	int success = true;
 
 	char *sidecar = sidecar_filename( filename );
@@ -189,3 +188,8 @@ int write( const char* filename, const char* uri )
 
 	return success;
 }
+
+LL_MODULE_DEFINE("sidecar_xmp.so","Write licenses in sidecar XMP files.","0.1",
+  LL_FEATURES_NONE,
+  NULL,
+  sidecar_xmp_init,sidecar_xmp_read,sidecar_xmp_write);

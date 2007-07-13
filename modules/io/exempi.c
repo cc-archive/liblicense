@@ -19,21 +19,18 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include <liblicense.h>
+
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
 
-void init()
+void exempi_init()
 {
 	xmp_init();
 	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
-void shutdown()
-{
-	xmp_terminate();
-}
-
-char* read( const char* filename )
+char* exempi_read( const char* filename )
 {
 	XmpFilePtr f;
 
@@ -58,7 +55,7 @@ char* read( const char* filename )
 	return uri_string;
 }
 
-int write( const char* filename, const char* uri )
+int exempi_write( const char* filename, const char* uri )
 {
 	int success = true;
 
@@ -84,3 +81,8 @@ int write( const char* filename, const char* uri )
 
 	return success;
 }
+
+LL_MODULE_DEFINE("exempi.so","Embeds licenses in formats recognized by Adobe's SDK.","0.1",
+  LL_FEATURES_EMBED,
+  "image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime audio/x-wav",
+  exempi_init,exempi_read,exempi_write);

@@ -31,6 +31,3 @@ liblicense_la_SOURCES = \
 	list.c
 
 include_HEADERS = liblicense.h
-
-registrydir=@libdir@/liblicense/io
-registry_DATA=registry

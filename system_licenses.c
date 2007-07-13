@@ -37,12 +37,14 @@
 int ll_init() {
 	raptor_init();
 	setlocale(LC_ALL,"");
+	ll_init_modules();
 	return 0;
 }
 
 // stops the library and its dependencies.
 int ll_stop() {
 	raptor_finish();
+	ll_stop_modules();
 	return 0;
 }
 

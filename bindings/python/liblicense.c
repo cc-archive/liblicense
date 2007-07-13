@@ -204,19 +204,9 @@ static PyObject* py_get_io_modules(PyObject* self, PyObject* args)  {
 	return list;
 }
 
-static PyObject* py_module_mime_types(PyObject* self, PyObject* args)  {
-	module_t m;
-	if(!PyArg_ParseTuple(args,"s",&m))
-		return NULL;
-	mime_type_t* mts = ll_module_mime_types(m);
-	int i =0;
-	PyObject* list = PyList_New(0);
-	while (mts!=NULL && mts[i]!=NULL) {
-		PyList_Append(list,PyString_FromString(mts[i]));
-		i++;
-	}
-	ll_free_list(mts);
-	return list;
+static PyObject* py_print_module_info(PyObject* self, PyObject* args)  {
+	ll_print_module_info();
+	return Py_BuildValue("");
 }
 
 static PyMethodDef LicenseMethods[] = {
@@ -250,8 +240,8 @@ static PyMethodDef LicenseMethods[] = {
 	 "Returns a list of the available config modules."},
 	{"get_io_modules", py_get_io_modules, METH_VARARGS,
 	 "Returns a list of the available io modules."},
-	{"module_mime_types",py_module_mime_types, METH_VARARGS,
-	 "Returns a list of the mime types supported by the given module."},
+	{"print_module_info",py_print_module_info, METH_VARARGS,
+	 "Print available modules and their capabilities"},
 	{NULL, NULL, 0, NULL}		/* Sentinel */
 };
 

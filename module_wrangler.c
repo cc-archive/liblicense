@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <dlfcn.h>
 #include <dirent.h>
+#include <assert.h>
 
 #define MAX_MODULES 10
 #define MAX_MIME_TYPES 20
@@ -32,8 +33,60 @@
 #include "config.h"
 #endif
 
+LLModuleDesc **_module_list = NULL;
+
 int _ll_so_filter(const struct dirent * d) {
 	return strstr(d->d_name,".so")!=NULL;
+}
+
+void ll_init_modules() {
+	assert(!_module_list);
+
+	struct dirent **namelist;
+	int n = scandir(LIBLICENSE_IO_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
+	if (n==-1) {
+		fprintf(stderr,"No io modules found.");
+		return;
+	}
+
+	_module_list = (LLModuleDesc*)calloc(n+1,sizeof(LLModuleDesc));
+	LLModuleDesc **curr_module = _module_list;
+
+	int i;
+	for (i=0;i<n;++i) {
+		char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen(namelist[i]->d_name)+1];
+		reg_file[0]='\0';
+		strcat(reg_file,LIBLICENSE_IO_MODULE_DIR);
+		strcat(reg_file,namelist[i]->d_name);
+
+		void *handle = dlopen(reg_file,RTLD_LAZY);
+		if (handle) {
+			LLModuleDesc *module_desc = dlsym(handle,"ll_module_desc");
+			if (!module_desc) {
+				fprintf(stderr,"Error: module '%s' doesn't call the required LL_MODULE_INIT\n",reg_file);
+				dlclose(handle);
+				continue;
+			}
+			module_desc->handle = handle;
+			module_desc->module_init();
+			*curr_module = module_desc;
+			curr_module++;
+		} else {
+			fprintf(stderr,"Unable to dlopen() '%s'\n",reg_file);
+		}
+		free(namelist[i]);
+	}
+	free(namelist);
+}
+
+void ll_stop_modules() {
+	LLModuleDesc **curr_module = _module_list;
+	while (*curr_module) {
+		dlclose((*curr_module)->handle);
+		++curr_module;
+	}
+	free(_module_list);
+	_module_list = NULL;
 }
 
 module_t* ll_get_config_modules() {
@@ -53,39 +106,18 @@ module_t* ll_get_config_modules() {
 	return result;
 }
 module_t* ll_get_io_modules() {
-	// temp data structure
-	char** lines = ll_new_list(MAX_MODULES);
-	
-	// create file to open
-	char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen("registry")+1];
-	reg_file[0]='\0';
-	strcat(reg_file,LIBLICENSE_IO_MODULE_DIR);
-	strcat(reg_file,"registry");
-	printf("regsitry file: %s\n",reg_file);
-	// open file
-	FILE* registry = fopen(reg_file,"r");
-	
-	// process lines
-	char* line = (char*) malloc(MAX_LINE_LENGTH*sizeof(char));
-	lines[0] = fgets(line, MAX_LINE_LENGTH, registry);
-	int i = 0;
-	while(lines[i]!=NULL) {
-		// reduce down to first token on line
-		lines[i]=strtok(lines[i]," \n");
-		i++;
-	  line = (char*) malloc(MAX_LINE_LENGTH*sizeof(char));
-		lines[i] = fgets(line, MAX_LINE_LENGTH, registry);
+	assert(_module_list);
+
+	int length = 0;
+	while (_module_list[length]) {length++;}
+
+	module_t* result = ll_new_list(length);
+
+	int i;
+	for (i = 0; i < length; i++) {
+		result[i] = strdup(_module_list[i]->name);
 	}
-	free(line);
-	fclose(registry);
-	// shrink string lengths and result array
-	module_t* result = ll_new_list(i+1);
-	i=0;
-	while(lines[i]!=NULL) {
-		result[i]=strdup(lines[i]);
-		i++;
-	}
-	ll_free_list(lines);
+
 	return result;
 }
 
@@ -142,48 +174,40 @@ void* ll_get_module_symbol(char* directory, module_t m, symbol_t s) {
 }
 
 // IO module functions.
-mime_type_t* ll_module_mime_types(module_t m) {
-		// temp data structure
-	char** types = ll_new_list(MAX_MIME_TYPES);
+void ll_print_module_info() {
+	assert(_module_list);
 
-	// create file to open
-	char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen("registry")+1];
-	reg_file[0]='\0';
-	strcat(reg_file,LIBLICENSE_IO_MODULE_DIR);
-	strcat(reg_file,"registry");
-	
-	// open file
-	FILE* registry = fopen(reg_file,"r");
-	
-	// process lines
-	int stop = false;
-	char line[MAX_LINE_LENGTH] = "";
-	while(line!=NULL && !stop) {
-		if (fgets(line, MAX_LINE_LENGTH, registry)==NULL) {
-			printf("We're in trouble.\n");
-			stop=true;
-		}
-		// reduce down to first token on line
-		char* start=strtok(line," \n");
-		if (strcmp(start,m)==0) {
-			stop=true;
-			char* last_type="";
-			int i = 0;
-			while(last_type!=NULL) {
-				last_type = strtok(NULL," \n");
-				types[i] = last_type;
-				i++;
+	LLModuleDesc **curr_module = _module_list;
+	while (*curr_module) {
+		printf("%s - %s\n",(*curr_module)->name,(*curr_module)->description);
+		printf("\tSupported formats: %s\n",(*curr_module)->mime_types ? (*curr_module)->mime_types : "any");
+		printf("\tRead support: %s\n",(*curr_module)->read ? "yes" : "no");
+		printf("\tWrite support: %s\n",(*curr_module)->write ? "yes" : "no");
+		if ((*curr_module)->features) {
+			printf("\tOther features:");
+			if ((*curr_module)->features & LL_FEATURES_EMBED) {
+				printf(" embeds natively in file\n");
 			}
 		}
+		++curr_module;
 	}
-	fclose(registry);
-	// shrink result array
-	module_t* result = ll_new_list(ll_list_length(types));
-	int i=0;
-	while(types[i]!=NULL) {
-		result[i]=strdup(types[i]);
-		i++;
-	}
-	free(types);
-	return result;
 }
+
+int _ll_contains_token(char *string, const char *token)
+{
+	char *copy = strdup(string);
+
+	char * pch = strtok (copy," ");
+	while (pch != NULL)
+	{
+		if ( strcmp(pch,token) == 0 ) {
+			free(copy);
+			return 1;
+		}
+		pch = strtok (NULL, " ");
+	}
+
+	free(copy);
+	return 0;
+}
+

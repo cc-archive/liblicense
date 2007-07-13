@@ -26,20 +26,18 @@
 #include <unistd.h>
 #endif
 
+#include <liblicense.h>
+
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>
 
 #include "vcedit.h"
 
-void init()
+void vorbis_init()
 {
 }
 
-void shutdown()
-{
-}
-
-char* read( const char* filename )
+char* vorbis_read( const char* filename )
 {
 	OggVorbis_File vf;
 
@@ -68,7 +66,7 @@ char* read( const char* filename )
 	return license;
 }
 
-int write( const char* filename, const char* uri )
+int vorbis_write( const char* filename, const char* uri )
 {
 	int ret = 0;
 
@@ -150,3 +148,8 @@ int write( const char* filename, const char* uri )
 
 	return ret;
 }
+
+LL_MODULE_DEFINE("vorbis.so","Write licenses in Vorbiscomments within an OGG stream.","0.1",
+  LL_FEATURES_EMBED,
+  "audio/x-vorbis+ogg audio/x-vorbis application/ogg",
+  vorbis_init,vorbis_read,vorbis_write);

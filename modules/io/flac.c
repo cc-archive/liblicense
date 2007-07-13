@@ -19,18 +19,16 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <liblicense.h>
+
 #include <FLAC/metadata.h>
 #include <FLAC/format.h>
 
-void init()
+void flac_init()
 {
 }
 
-void shutdown()
-{
-}
-
-char* read( const char* filename )
+char* flac_read( const char* filename )
 {
 	char *license = NULL;
 
@@ -46,7 +44,7 @@ char* read( const char* filename )
 	return license;
 }
 
-int write( const char* filename, const char* uri )
+int flac_write( const char* filename, const char* uri )
 {
 	int ret = 1;
 
@@ -86,3 +84,8 @@ int write( const char* filename, const char* uri )
 
 	return ret;
 }
+
+LL_MODULE_DEFINE("flac.so","Write licenses in a FLAC comment.","0.1",
+  LL_FEATURES_EMBED,
+  "audio/x-flac",
+  flac_init,flac_read,flac_write);

@@ -19,6 +19,8 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
+#include <assert.h>
 
 #include "xdgmime/xdgmime.h"
 
@@ -26,35 +28,62 @@
 #include "config.h"
 #endif
 
+/** Returns -1 if no embedders are available for this file type
+             0 if all available embedders failed
+             1 on success
+ */
 int ll_write(filename_t f,uri_t u) {
-	module_t* modules = ll_get_io_modules();
-	int result = 0;
-	
+	assert(_module_list);
+
+	int result = -1;
+
 	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
 	printf("File mime-type: %s\n",mt);
-	// Get uris from all applicable modules.
-	int i = 0;
-	while (modules[i]!=NULL) {
-		mime_type_t* supported = ll_module_mime_types(modules[i]);
-		if(ll_list_contains(supported,mt) || ll_list_length(supported)==0)
-			result += ll_module_write(f,u,modules[i]);
-		ll_free_list(supported);
-		i++;
+
+	int embedded = 0;
+
+	LLModuleDesc **curr_module = _module_list;
+	while (*curr_module) {
+		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
+			if ((*curr_module)->features & LL_FEATURES_EMBED) {
+				result = (*curr_module)->write(f,u);
+				if (result) {
+					embedded = 1;
+				}
+			}
+		}
+		++curr_module;
 	}
-	ll_free_list(modules);
+
+	if (!embedded) {
+		curr_module = _module_list;
+		while (*curr_module) {
+			if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
+				if ((*curr_module)->write) {
+					result = (*curr_module)->write(f,u);
+				}
+			}
+			++curr_module;
+		}
+	}
+
 	return result;
 }
+
 int ll_module_write(filename_t f,uri_t u,module_t m) {
-	if (ll_module_init(LIBLICENSE_IO_MODULE_DIR, m)) {
-		int (*function_write)(char*,char*);
-		*(void**) (&function_write) = ll_get_module_symbol(LIBLICENSE_IO_MODULE_DIR, m, "write");
-		if(!function_write)
-			printf("bad news bears, symbol not found.  HYCSBWK\n");
-		int result = (*function_write)(f,u);
-		ll_module_shutdown(LIBLICENSE_IO_MODULE_DIR, m);
-		return result;
-	} else {
-		fprintf(stderr,"Error: unable to load module '%s'.\n",m);
-		return NULL;
+	assert(_module_list);
+
+	int result = -1;
+
+	LLModuleDesc **curr_module = _module_list;
+	while (*curr_module) {
+		if ( strcmp((*curr_module)->name,m) == 0 ) {
+			if ((*curr_module)->write) {
+				result = (*curr_module)->write(f,u);
+			}
+		}
+		++curr_module;
 	}
+
+	return result;
 }
