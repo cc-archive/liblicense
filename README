@@ -1,4 +1,4 @@
-liblicense - 0.1
+liblicense - 0.2
 
 http://wiki.creativecommons.org/Liblicense
 
@@ -10,7 +10,7 @@ The benefit of this library is that applications linking to it can correctly off
 
 Liblicense also features the capability to embed and extract license metadata from various file formats, including sidecar XMP.
 
-==== Dependencies ===
+== Dependencies ==
 
 Required:
  * Raptor - http://librdf.org/raptor/
