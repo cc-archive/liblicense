@@ -19,7 +19,7 @@
 # This file is part of Liblicense.
 
 AC_PREREQ(2.57)
-AC_INIT([liblicense],[0.1],[cc-devel@lists.ibiblio.org])
+AC_INIT([liblicense],[0.2],[cc-devel@lists.ibiblio.org])
 AM_INIT_AUTOMAKE([dist-bzip2])
 
 # Checks for programs.
