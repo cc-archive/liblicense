@@ -16,7 +16,7 @@
 # Copyright 2007, Jason Kivlighn.
 
 licensesdir = $(datadir)/liblicense/licenses
-licenses_DATA = \
+dist_licenses_DATA = \
 	creativecommons.org_licenses_by_1.0_fi_.rdf \
 	creativecommons.org_licenses_by_1.0_il_.rdf \
 	creativecommons.org_licenses_by_1.0_nl_.rdf \
