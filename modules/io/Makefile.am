@@ -40,7 +40,7 @@ endif
 if HAVE_VORBIS
 VORBIS_MODULES = vorbis.la
 
-vorbis_la_SOURCES = vorbis.c vcedit.c
+vorbis_la_SOURCES = vorbis.c vcedit.c vcedit.h
 vorbis_la_LIBADD = $(VORBIS_LIBS)
 vorbis_la_CFLAGS = $(VORBIS_CFLAGS)
 vorbis_la_LDFLAGS = -no-undefined -module -avoid-version

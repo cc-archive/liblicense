@@ -15,7 +15,7 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
-licensesdir = $(datadir)/liblicense/licenses
+licensesdir = $(pkgdatadir)/licenses
 dist_licenses_DATA = \
 	creativecommons.org_licenses_by_1.0_fi_.rdf \
 	creativecommons.org_licenses_by_1.0_il_.rdf \
