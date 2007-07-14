@@ -31,3 +31,19 @@ puts "\n== Change uri =="
 l.uri = 'http://creativecommons.org/licenses/by-sa/2.5/au/'
 run_test l
 
+
+puts "\n== Writing to file =="
+l.write "license_test.xmp"
+
+
+puts "\n== Loading from file =="
+l = Liblicense.read('license_test.xmp')
+unless l == nil
+	run_test l 
+	puts "File:      " + l.filename
+else 
+	puts "Nil"
+end
+
+
+

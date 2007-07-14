@@ -36,11 +36,6 @@ typedef struct {
 	
 	VALUE filename;
 
-	juris_t c_juris;
-	uri_t c_uri;
-	version_t c_version;
-	filename_t c_filename;
-
 } ruby_liblicense;
 
 

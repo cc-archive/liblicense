@@ -35,7 +35,6 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	u = StringValueCStr(uri);
 
 	license->uri = uri;
-	license->c_uri = u;
 
 	/* name */
 	license->name = rb_str_new2(ll_get_name(u));
@@ -49,7 +48,6 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	}
 	
 	license->jurisdiction = rb_str_new2(j);
-	license->c_juris = j;
 	
 	/* Version info */
 	v = ll_get_version(u);
@@ -58,7 +56,6 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	license->version = rb_ary_push(license->version, INT2NUM(v[0]));
 	license->version = rb_ary_push(license->version, INT2NUM(v[1]));
 	license->version = rb_ary_push(license->version, INT2NUM(v[2]));	
-	license->c_version = v;
 	
 	/* Permits */
 	l = ll_get_permits(u);
@@ -141,20 +138,38 @@ static VALUE rbll_initialize(VALUE self, VALUE uri) {
 	return self;
 }
 
-static VALUE rbll_jurisdiction_get(VALUE self) {
+/* Class Methods */
+
+static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
+	VALUE obj;
+	VALUE file, module;
+	uri_t uri;
 	ruby_liblicense *license;
+
+	rb_scan_args(argc, argv, "11", &file, &module);
+
+	if (module != Qnil) 
+		uri = ll_module_read(StringValueCStr(file), StringValueCStr(module));
+	else
+		uri = ll_read(StringValueCStr(file));
 	
-	Data_Get_Struct(self, ruby_liblicense, license);
-	
-	return license->jurisdiction;
+	if (uri == NULL) 
+		return Qnil;
+
+		
+	obj = rbll_alloc(klass);
+	Data_Get_Struct(obj, ruby_liblicense, license);
+
+	_rbll_cache_info(license, rb_str_new2(uri));
+
+
+	license->filename = file;
+
+
+	return obj;
 }
 
-static VALUE rbll_name_get(VALUE self) {
-	ruby_liblicense *license;
-	Data_Get_Struct(self, ruby_liblicense, license);
-		
-	return license->name;
-}
+/* Instance Methods */
 
 static VALUE rbll_uri_get(VALUE self) {
 	ruby_liblicense *license;
@@ -172,12 +187,36 @@ static VALUE rbll_uri_set(VALUE self, VALUE uri) {
 	return Qnil;
 }
 
+static VALUE rbll_filename_get(VALUE self) {
+	ruby_liblicense *license;
+	Data_Get_Struct(self, ruby_liblicense, license);
+		
+	return license->filename;
+}
+
+
+static VALUE rbll_name_get(VALUE self) {
+	ruby_liblicense *license;
+	Data_Get_Struct(self, ruby_liblicense, license);
+		
+	return license->name;
+}
+
 static VALUE rbll_version_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
 		
 	return license->version;
 }
+
+static VALUE rbll_jurisdiction_get(VALUE self) {
+	ruby_liblicense *license;
+	
+	Data_Get_Struct(self, ruby_liblicense, license);
+	
+	return license->jurisdiction;
+}
+
 
 static VALUE rbll_permits_get(VALUE self) {
 	ruby_liblicense *license;
@@ -208,6 +247,28 @@ static VALUE rbll_to_s(VALUE self) {
 }
 
 
+static VALUE rbll_write(int argc, VALUE *argv, VALUE self) {
+	VALUE file, module;
+	int result;
+	ruby_liblicense *license;
+	Data_Get_Struct(self, ruby_liblicense, license);
+	
+	rb_scan_args(argc, argv, "11", &file, &module);
+	
+	if (module != Qnil)
+		result = ll_module_write(
+		                StringValueCStr(file), 
+		                StringValueCStr(license->uri), 
+		                StringValueCStr(module));
+	else
+		result = ll_write(
+		                StringValueCStr(file), 
+		                StringValueCStr(license->uri));
+		
+	
+	return INT2NUM(result);
+}
+
 void Init_liblicense() {
 	ll_init();
 
@@ -218,6 +279,7 @@ void Init_liblicense() {
 
 	rb_define_method(cLiblicense, "uri", rbll_uri_get, 0);
 	rb_define_method(cLiblicense, "uri=", rbll_uri_set, 1);
+	rb_define_method(cLiblicense, "filename", rbll_filename_get, 0);
 
 	rb_define_method(cLiblicense, "name", rbll_name_get, 0);
 	rb_define_method(cLiblicense, "version", rbll_version_get, 0);	
@@ -229,7 +291,7 @@ void Init_liblicense() {
 
 	rb_define_method(cLiblicense, "to_s", rbll_to_s, 0);
 
-//	rb_define_method(cLiblicense, "write", rbll_write, 1);
-//	rb_define_class_method(cLiblicense, "read", rbll_read, 1);
+	rb_define_method(cLiblicense, "write", rbll_write, -1);
+	rb_define_singleton_method(cLiblicense, "read", rbll_read, -1);
 }
 
