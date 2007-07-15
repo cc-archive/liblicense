@@ -236,6 +236,7 @@ static VALUE rbll_modules_config(VALUE self) {
 		modules = rb_ary_push(modules, rb_str_new2(m[i]));
 		i++;
 	}
+	ll_free_list(m);
 	
 	return modules;
 }
@@ -251,6 +252,7 @@ static VALUE rbll_modules_io(VALUE self) {
 		modules = rb_ary_push(modules, rb_str_new2(m[i]));
 		i++;
 	}
+	ll_free_list(m);
 	
 	return modules;
 }
