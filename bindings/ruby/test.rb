@@ -45,5 +45,8 @@ else
 	puts "Nil"
 end
 
+puts "\n== Licences Available =="
+#puts Liblicense.licenses('us').join("\n")
+Liblicense.licenses.each { |l| puts "* " + Liblicense.new(l).to_s }
 
 

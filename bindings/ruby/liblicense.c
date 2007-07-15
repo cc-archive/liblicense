@@ -138,6 +138,24 @@ static VALUE rbll_initialize(VALUE self, VALUE uri) {
 	return self;
 }
 
+static VALUE rbll_initialize_copy(VALUE copy, VALUE orig) {
+	ruby_liblicense *l_orig, *l_copy;
+	
+	if (copy == orig)
+		return copy;
+	
+	if (TYPE(orig) != T_DATA || RDATA(orig)->dfree != (RUBY_DATA_FUNC)rbll_free) {
+		rb_raise(rb_eTypeError, "wrong argument type");
+	}
+	
+	// copy license details
+	Data_Get_Struct(orig, ruby_liblicense, l_orig);
+	Data_Get_Struct(copy, ruby_liblicense, l_copy);
+	MEMCPY(l_copy, l_orig, ruby_liblicense, 1);
+	
+	return copy;
+}
+
 /* Class Methods */
 
 static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
@@ -167,6 +185,66 @@ static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
 
 
 	return obj;
+}
+
+static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
+	VALUE licenses, juris;
+	uri_t *l;
+	int i;
+	
+	rb_scan_args(argc, argv, "01", &juris);
+	
+	if (juris != Qnil)
+		l = ll_get_licenses(StringValueCStr(juris));
+	else
+		l = ll_get_licenses(NULL);
+	
+	licenses = rb_ary_new();
+	i = 0;
+	while (l != NULL && l[i] != NULL) {
+		licenses = rb_ary_push(licenses, rb_str_new2(l[i]));
+		i++;
+	}
+	ll_free_list(l);
+	
+	return licenses;
+}
+
+static VALUE rbll_modules(VALUE self) {
+	
+	ll_print_module_info();
+	
+	return Qnil;
+}
+
+static VALUE rbll_modules_config(VALUE self) {
+	module_t *m = ll_get_config_modules();
+	VALUE modules;
+	int i;
+	
+	modules = rb_ary_new();
+	i = 0;
+	while (m != NULL && m[i] != NULL) {
+		modules = rb_ary_push(modules, rb_str_new2(m[i]));
+		i++;
+	}
+	
+	return modules;
+}
+
+static VALUE rbll_modules_io(VALUE self) {
+	module_t *m = ll_get_io_modules();
+	VALUE modules;
+	int i;
+	
+	modules = rb_ary_new();
+	i = 0;
+	while (m != NULL && m[i] != NULL) {
+		modules = rb_ary_push(modules, rb_str_new2(m[i]));
+		i++;
+	}
+	
+	return modules;
 }
 
 /* Instance Methods */
@@ -239,14 +317,6 @@ static VALUE rbll_requires_get(VALUE self) {
 	return license->requires;
 }
 
-static VALUE rbll_to_s(VALUE self) {
-	ruby_liblicense *license;
-	Data_Get_Struct(self, ruby_liblicense, license);
-	
-	return rb_str_new2("*FIXME* Name - Version (Jurisdiction)");
-}
-
-
 static VALUE rbll_write(int argc, VALUE *argv, VALUE self) {
 	VALUE file, module;
 	int result;
@@ -276,6 +346,7 @@ void Init_liblicense() {
 	rb_define_alloc_func(cLiblicense, rbll_alloc);
 	
 	rb_define_method(cLiblicense, "initialize", rbll_initialize, 1);
+	rb_define_method(cLiblicense, "initialize_copy", rbll_initialize_copy, 1);
 
 	rb_define_method(cLiblicense, "uri", rbll_uri_get, 0);
 	rb_define_method(cLiblicense, "uri=", rbll_uri_set, 1);
@@ -289,9 +360,13 @@ void Init_liblicense() {
 	rb_define_method(cLiblicense, "prohibits", rbll_prohibits_get, 0);		
 	rb_define_method(cLiblicense, "requires", rbll_requires_get, 0);	
 
-	rb_define_method(cLiblicense, "to_s", rbll_to_s, 0);
-
 	rb_define_method(cLiblicense, "write", rbll_write, -1);
 	rb_define_singleton_method(cLiblicense, "read", rbll_read, -1);
+
+	rb_define_singleton_method(cLiblicense, "licenses", rbll_licenses_get, -1);
+
+	rb_define_singleton_method(cLiblicense, "modules", rbll_modules, 0);
+	rb_define_singleton_method(cLiblicense, "modules_config", rbll_modules_config, 0);
+	rb_define_singleton_method(cLiblicense, "modules_io", rbll_modules_io, 0);
 }
 
