@@ -8,6 +8,7 @@
 #
 
 $LOAD_PATH.unshift "."
+$LOAD_PATH.unshift "./.libs"
 $LOAD_PATH.unshift "./lib"
 require 'liblicense'
 
@@ -33,11 +34,11 @@ run_test l
 
 
 puts "\n== Writing to file =="
-l.write "license_test.xmp"
+l.write "license_test.xmp", "sidecar_xmp.so"
 
 
 puts "\n== Loading from file =="
-l = Liblicense.read('license_test.xmp')
+l = Liblicense.read('license_test.xmp', 'sidecar_xmp.so')
 unless l == nil
 	run_test l 
 	puts "File:      " + l.filename

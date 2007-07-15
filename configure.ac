@@ -35,6 +35,29 @@ if test "x$PYTHON_INCLUDES" != "x"; then
 fi
 AC_SUBST(PYTHON_DIR)
 
+# All required to build Ruby binding
+# Inspired from Ruby's own "mkmf," not exactly clean, I know.
+AC_PATH_PROG(RUBY, ruby, none)
+if test "$RUBY" != "none"; then
+  if "$RUBY" -r mkmf -e 'exit(have_func("rb_ary_push") ? 0 : 1)'; then
+    RUBY_DIR=ruby
+    RUBY_ARCHDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitearchdir"]]'`
+    RUBY_LIBDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitelibdir"]]'`
+    RUBY_LIBS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["LIBS"]]; puts " -l" + Config::CONFIG[["RUBY_SO_NAME"]]'`
+    RUBY_CFLAGS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["CFLAGS"]]; puts " -I" + Config::CONFIG[["archdir"]]'`
+    RUBY_LDFLAGS=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["LDFLAGS"]]'` 
+  else
+    RUBY="none"
+    AC_MSG_WARN([The detected Ruby is too old, or no development files installed.])
+  fi
+fi
+AC_SUBST(RUBY_DIR)
+AC_SUBST(RUBY_ARCHDIR)
+AC_SUBST(RUBY_LIBDIR)
+AC_SUBST(RUBY_LIBS)
+AC_SUBST(RUBY_CFLAGS)
+AC_SUBST(RUBY_LDFLAGS)
+
 CFLAGS="$CFLAGS"
 
 # Checks for header files.
@@ -191,6 +214,7 @@ AC_CONFIG_FILES([
 	modules/config/Makefile
 	bindings/Makefile
 	bindings/python/Makefile
+	bindings/ruby/Makefile
 	tests/Makefile
 	xdgmime/Makefile
 	utils/Makefile
