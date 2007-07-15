@@ -210,6 +210,14 @@ static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
 	return licenses;
 }
 
+static VALUE rbll_verify(VALUE self, VALUE uri) {
+	
+	if (ll_verify_uri(StringValueCStr(uri)))
+		return Qtrue;
+	else
+		return Qfalse;
+}
+
 static VALUE rbll_modules(VALUE self) {
 	
 	ll_print_module_info();
@@ -295,6 +303,32 @@ static VALUE rbll_jurisdiction_get(VALUE self) {
 	return license->jurisdiction;
 }
 
+static VALUE rbll_attribute_get(int argc, VALUE *argv, VALUE self) {
+	VALUE attribute, locale;
+	VALUE attribs;
+	int i;
+	char **avs;
+	ruby_liblicense *license;
+	Data_Get_Struct(self, ruby_liblicense, license);
+	
+	rb_scan_args(argc, argv, "11", &attribute, &locale);
+	
+	
+	avs = ll_get_attribute(
+	                  StringValueCStr(license->uri), 
+	                  StringValueCStr(attribute),
+	                  locale);
+
+	attribs = rb_ary_new();
+	i = 0;
+	while (avs != NULL && avs[i] != NULL) {
+		attribs = rb_ary_push(attribs, rb_str_new2(avs[i]));
+		i++;
+	}
+	ll_free_list(avs);
+	
+	return attribs;
+}
 
 static VALUE rbll_permits_get(VALUE self) {
 	ruby_liblicense *license;
@@ -356,6 +390,8 @@ void Init_liblicense() {
 	rb_define_method(cLiblicense, "version", rbll_version_get, 0);	
 	rb_define_method(cLiblicense, "jurisdiction", rbll_jurisdiction_get, 0);
 	
+	rb_define_method(cLiblicense, "attribute", rbll_attribute_get, -1);
+	
 	rb_define_method(cLiblicense, "permits", rbll_permits_get, 0);	
 	rb_define_method(cLiblicense, "prohibits", rbll_prohibits_get, 0);		
 	rb_define_method(cLiblicense, "requires", rbll_requires_get, 0);	
@@ -364,6 +400,7 @@ void Init_liblicense() {
 	rb_define_singleton_method(cLiblicense, "read", rbll_read, -1);
 
 	rb_define_singleton_method(cLiblicense, "licenses", rbll_licenses_get, -1);
+	rb_define_singleton_method(cLiblicense, "verify", rbll_verify, 1);
 
 	rb_define_singleton_method(cLiblicense, "modules", rbll_modules, 0);
 	rb_define_singleton_method(cLiblicense, "modules_config", rbll_modules_config, 0);
