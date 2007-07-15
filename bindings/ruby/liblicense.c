@@ -27,7 +27,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	juris_t j;
 	uri_t u;
 	version_t v;
-	locale_t* l;
+	ll_locale_t* l;
 	
 	int i;
 

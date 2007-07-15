@@ -26,7 +26,7 @@ extern "C" {
 /******************* system_licenses *******************/
 typedef char* juris_t;
 typedef char* uri_t;
-typedef char* locale_t;
+typedef char* ll_locale_t;
 typedef int* version_t;
 typedef char* attribute_t;
 typedef char* filename_t;

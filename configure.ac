@@ -107,7 +107,7 @@ fi
 
 LIBXML2_REQUIRED=0.6
 
-AC_ARG_ENABLE(libxml2, AC_HELP_STRING([--disable-libxml2],[Disable HTML/XML embedders]),,[enable_libxml2=yes])
+AC_ARG_ENABLE(libxml2, AC_HELP_STRING([--disable-libxml2],[Disable XML embedders]),,[enable_libxml2=yes])
 if test "x$enable_libxml2" = "xyes"; then
 	PKG_CHECK_MODULES(LIBXML2, [
 		libxml-2.0 >= $LIBXML2_REQUIRED],
@@ -196,6 +196,28 @@ fi
 
 AM_CONDITIONAL(HAVE_VORBIS, test "$have_vorbis" = "yes")
 test "$have_vorbis" = "yes" && AC_DEFINE(HAVE_VORBIS, [], [Define if we have vorbisfile])
+
+##################################################################
+# check for taglib
+##################################################################
+AC_PROG_CXX
+
+TAGLIB_REQUIRED=1.3
+
+AC_ARG_ENABLE(taglib, AC_HELP_STRING([--disable-taglib], [Disable TagLib embedding]),,[enable_taglib=yes])
+if test "x$enable_taglib" = "xyes"; then
+	PKG_CHECK_MODULES(TAGLIB,[
+		taglib >= $TAGLIB_REQUIRED],
+		[have_taglib=yes] , [have_taglib=no])
+	AC_SUBST(TAGLIB_CFLAGS)
+	AC_SUBST(TAGLIB_LIBS)
+else
+	have_taglib="no (disabled)"
+fi
+
+AM_CONDITIONAL(HAVE_TAGLIB, test "$have_taglib" = "yes")
+test "$have_taglib" = "yes" && AC_DEFINE(HAVE_TAGLIB, [], [Define if we have taglib])
+
 
 ##################################################################
 # define paths to licenses and modules

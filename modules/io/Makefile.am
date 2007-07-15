@@ -64,6 +64,15 @@ raptor_la_LIBADD = $(RAPTOR_LIBS) $(LIBXML2_LIBS)
 raptor_la_CFLAGS = $(RAPTOR_CFLAGS) $(LIBXML2_CFLAGS)
 endif
 
+if HAVE_TAGLIB
+TAGLIB_MODULES = taglib.la
+
+taglib_la_SOURCES = taglib.cpp
+taglib_la_LDFLAGS = -no-undefined -module -avoid-version
+taglib_la_LIBADD = $(TAGLIB_LIBS)
+taglib_la_CXXFLAGS = $(TAGLIB_CFLAGS)
+endif
+
 libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
@@ -71,6 +80,7 @@ lib_LTLIBRARIES = \
 	$(VORBIS_MODULES) \
 	$(FLAC_MODULES) \
 	$(RAPTOR_MODULES) \
+	$(TAGLIB_MODULES) \
 	stub.la
 
 stub_la_SOURCES = stub.c

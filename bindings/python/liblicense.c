@@ -53,7 +53,7 @@ static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)
 	const uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
-	locale_t* l = ll_get_permits(u);
+	ll_locale_t* l = ll_get_permits(u);
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (l!=NULL && l[i]!=NULL) {
@@ -67,7 +67,7 @@ static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(uri_t)
 	const uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
-	locale_t* l = ll_get_prohibits(u);
+	ll_locale_t* l = ll_get_prohibits(u);
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (l!=NULL && l[i]!=NULL) {
@@ -81,7 +81,7 @@ static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(uri_t)
 	const uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
-	locale_t* l = ll_get_requires(u);
+	ll_locale_t* l = ll_get_requires(u);
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (l!=NULL && l[i]!=NULL) {
