@@ -75,6 +75,8 @@ def latest_license( v, acc ):
 	else:
 		return v
 
+all_uris = [version.getAttribute('uri') for version in license_xml.getElementsByTagName('version')]
+
 licenses = license_xml.getElementsByTagName('license')
 print [license.getAttribute('id') for license in licenses]
 for license in licenses:
@@ -89,6 +91,34 @@ for license in licenses:
 		for version in versions:
 			version_id = version.getAttribute('id')
 			uri = version.getAttribute('uri')
+			
+			# Handle by-nd-nc -> by-nc-nd change
+			if version_id == "1.0" and id == "by-nd-nc":
+				replacedByURI = "http://creativecommons.org/licenses/by-nc-nd/2.0/"
+				if jurisdiction_id != "-":
+					portedReplacement = replacedByURI + jurisdiction_id+"/"
+					if portedReplacement in all_uris:
+						replacedByURI = portedReplacement
+					else:
+						print "No ported replacement for:", uri
+						print "Using unported:",replacedByURI
+			
+			# Handle obsoleted licenses without 'by'
+			if version_id == "1.0" and id in ["sa","nc","nd","nc-sa","nc-nd","nd-nc"]:
+				if id == "nd-nc":
+					replacedId = "by-nc-nd"
+				else:
+					replacedId = "by-"+id
+					
+				replacedByURI = "http://creativecommons.org/licenses/"+replacedId+"/2.0/"
+				if jurisdiction_id != "-":
+					portedReplacement = replacedByURI + jurisdiction_id+"/"
+					if portedReplacement in all_uris:
+						replacedByURI = portedReplacement
+					else:
+						print "No ported replacement for:", uri
+						print "Using unported:",replacedByURI
+			
 			
 			store = Graph()
 			
