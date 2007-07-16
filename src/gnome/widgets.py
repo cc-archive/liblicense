@@ -20,7 +20,7 @@ class LicenseWidget(gtk.VBox):
 
         label = gtk.Label("Attribution")
         label.show()
-        box.pack_start(label)
+        box.pack_start(label,False,False,10)
         
         self.pack_start(box)
         
@@ -39,7 +39,7 @@ class LicenseWidget(gtk.VBox):
         
         label = gtk.Label("Allow Sharing")
         label.show()
-        box.pack_start(label)
+        box.pack_start(label,False,False,10)
         self.ash_box = box
         self.pack_start(box)
         
@@ -59,7 +59,7 @@ class LicenseWidget(gtk.VBox):
         
         label = gtk.Label("Allow Remixing")
         label.show()
-        box.pack_start(label)
+        box.pack_start(label,False,False,10)
         self.ar_box = box
         self.pack_start(box)
         
@@ -78,7 +78,7 @@ class LicenseWidget(gtk.VBox):
         
         label = gtk.Label("Prohibit Commercial Works")
         label.show()
-        box.pack_start(label)
+        box.pack_start(label,False,False,10)
         self.pcw_box = box
         self.pack_start(box)
         
@@ -97,19 +97,35 @@ class LicenseWidget(gtk.VBox):
         
         label = gtk.Label("Require Others to Share-Alike")
         label.show()
-        box.pack_start(label)
+        box.pack_start(label,False,False,10)
         self.sa_box = box
         
         self.pack_start(box)
         
-        # License
-        box = gtk.HBox()
+        # License and URI
+        hbox = gtk.HBox()
+        hbox.show()
+        
+        box = gtk.VBox()
         box.show()
+        hbox.pack_start(box,False,False,5)
         
         label = gtk.Label("License:")
         label.show()
         box.pack_start(label)
         
+        label = gtk.Label("Jurisdiction:")
+        label.show()
+        box.pack_start(label)
+        
+        label = gtk.Label("URI:")
+        label.show()
+        box.pack_start(label)
+        
+        box = gtk.VBox()
+        box.show()
+        
+        #license
         current_license = liblicense.read(filename)
         self.license = gtk.Entry()
         if current_license:
@@ -122,15 +138,22 @@ class LicenseWidget(gtk.VBox):
         self.license.show()
         box.pack_start(self.license)
         
-        self.pack_start(box)
+        #jurisdiction
+        self.jurisdictions = gtk.ListStore(str,str,gtk.gdk.Pixbuf)
+        self.jurisdiction = gtk.ComboBox(self.jurisdictions)
+        cell = gtk.CellRendererPixbuf()
+        self.jurisdiction.pack_start(cell, False)
+        self.jurisdiction.add_attribute(cell, 'pixbuf', 2)
+        cell = gtk.CellRendererText()
+        self.jurisdiction.pack_start(cell, True)
+        self.jurisdiction.add_attribute(cell, 'text', 1)
+        self.jurisdiction.connect("changed",self.update_jurisdiction)
+        self.jurisdictions.append(["","Unported",gtk.gdk.pixbuf_new_from_file_at_size("icons/unported.png",27,16)])
+        self.jurisdictions.append(["uk","United Kingdom",gtk.gdk.pixbuf_new_from_file_at_size("icons/uk.png",27,16)])
+        self.jurisdictions.append(["us","United States",gtk.gdk.pixbuf_new_from_file_at_size("icons/us.png",27,16)])
+        self.jurisdiction.show()
         
-        # URI
-        box = gtk.HBox()
-        box.show()
-        
-        label = gtk.Label("URI:")
-        label.show()
-        box.pack_start(label)
+        box.pack_start(self.jurisdiction,False,False,0)
         
         self.update_checkboxes(current_license)
         self.uri = gtk.Entry()
@@ -141,22 +164,28 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.uri)
         self.label = label
         self.icon = icon
-        self.pack_start(box)
+        hbox.pack_start(box)
+        self.pack_start(hbox)
         
-        # get list of licenses
-        l = liblicense.get_licenses()
+        self.get_licenses()
+        
+        # hook up license switcher
+        self.ash.connect("toggled",self.checkbox_toggled,0)
+        self.ar.connect("toggled",self.checkbox_toggled,2)
+        self.pcw.connect("toggled",self.checkbox_toggled,1)
+        self.sa.connect("toggled",self.checkbox_toggled,3)
+        self.by.connect("toggled",self.checkbox_toggled,4)
+    
+    def get_licenses(self):
+        if not self.jurisdiction.get_active() or self.jurisdictions[self.jurisdiction.get_active()][0]=="  ":
+            l = liblicense.get_licenses()
+        else:
+            l = liblicense.get_licenses(self.jurisdictions[self.jurisdiction.get_active()][0])
         self.licenses = {}
         for license in l:
             if not self.licenses.has_key(self.license_flags(license)):
                 self.licenses[self.license_flags(license)] = []
             self.licenses[self.license_flags(license)].append(license)
-        
-        # hook up license switcher
-        self.ash.connect("toggled",self.update_license,0)
-        self.ar.connect("toggled",self.update_license,2)
-        self.pcw.connect("toggled",self.update_license,1)
-        self.sa.connect("toggled",self.update_license,3)
-        self.by.connect("toggled",self.update_license,4)
     
     def update_checkboxes(self,license):
         if license=="http://creativecommons.org/licenses/publicdomain/":
@@ -180,8 +209,11 @@ class LicenseWidget(gtk.VBox):
             self.sa.set_active(False)
             self.sa.toggled()
     
-    def update_license(self,button,flag):
+    def checkbox_toggled(self,button,flag):
         self.flags[flag] = button.get_active()
+        self.update_license()
+    
+    def update_license(self):
         if self.licenses.has_key(tuple(self.flags)):
             print self.licenses[tuple(self.flags)]
             u = self.licenses[tuple(self.flags)][0]
@@ -200,6 +232,10 @@ class LicenseWidget(gtk.VBox):
                 "http://creativecommons.org/ns#DerivativeWorks" in permits,
                 "http://creativecommons.org/ns#ShareAlike" in requires,
                 "http://creativecommons.org/ns#Attribution" in requires)
+    
+    def update_jurisdiction(self, widget):
+        self.get_licenses()
+        self.update_license()
 
 if __name__=="__main__":
     import sys
