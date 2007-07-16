@@ -23,3 +23,6 @@ AM_LDFLAGS = -module -avoid-version \
              $(top_builddir)/liblicense.la
 
 liblicense_la_SOURCES = liblicense.c
+
+EXTRA_DIST = tests/test.py
+
