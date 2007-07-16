@@ -128,6 +128,12 @@ static VALUE rbll_alloc(VALUE klass) {
 	return obj;
 }
 
+/* 
+ * call-seq:
+ *   Liblicense.new(uri)                         => license
+ *
+ * Returns new Liblicense object from a properly formed URI 
+ */
 static VALUE rbll_initialize(VALUE self, VALUE uri) {
 	ruby_liblicense *license;
 	
@@ -158,6 +164,13 @@ static VALUE rbll_initialize_copy(VALUE copy, VALUE orig) {
 
 /* Class Methods */
 
+/*
+ * call-seq:
+ *   Liblicense.read(filename)
+ *   Liblicense.read(filename, module)
+ *
+ * Reads license from given file and returns new Liblicense object. 
+ */
 static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
 	VALUE obj;
 	VALUE file, module;
@@ -187,6 +200,12 @@ static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
 	return obj;
 }
 
+/*
+ * call-seq:
+ *   Liblicense.licenses                         => array
+ *
+ * Returns array of all known licenses
+ */
 static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
 	VALUE licenses, juris;
 	uri_t *l;
@@ -210,6 +229,12 @@ static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
 	return licenses;
 }
 
+/*
+ * call-seq:
+ *   Liblicense.verify(uri)                         => true or false
+ *
+ * Verifies the given URI is a license
+ */
 static VALUE rbll_verify(VALUE self, VALUE uri) {
 	
 	if (ll_verify_uri(StringValueCStr(uri)))
@@ -218,6 +243,12 @@ static VALUE rbll_verify(VALUE self, VALUE uri) {
 		return Qfalse;
 }
 
+/*
+ * call-seq:
+ *   Liblicense.modules
+ *
+ * Prints detailed information on all modules installed
+ */
 static VALUE rbll_modules(VALUE self) {
 	
 	ll_print_module_info();
@@ -225,6 +256,12 @@ static VALUE rbll_modules(VALUE self) {
 	return Qnil;
 }
 
+/*
+ * call-seq:
+ *   Liblicense.modules_config                         => array
+ *
+ * Returns array of all configuration modules
+ */
 static VALUE rbll_modules_config(VALUE self) {
 	module_t *m = ll_get_config_modules();
 	VALUE modules;
@@ -241,6 +278,12 @@ static VALUE rbll_modules_config(VALUE self) {
 	return modules;
 }
 
+/*
+ * call-seq:
+ *   Liblicense.modules_io                         => array
+ *
+ * Returns array of all IO modules
+ */
 static VALUE rbll_modules_io(VALUE self) {
 	module_t *m = ll_get_io_modules();
 	VALUE modules;
@@ -259,6 +302,12 @@ static VALUE rbll_modules_io(VALUE self) {
 
 /* Instance Methods */
 
+/*
+ * call-seq:
+ *   uri                         => string
+ *
+ * Returns URI of license
+ */
 static VALUE rbll_uri_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -266,6 +315,12 @@ static VALUE rbll_uri_get(VALUE self) {
 	return license->uri;
 }
 
+/*
+ * call-seq:
+ *   uri=(uri)
+ *
+ * Sets URI of license
+ */
 static VALUE rbll_uri_set(VALUE self, VALUE uri) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -275,6 +330,12 @@ static VALUE rbll_uri_set(VALUE self, VALUE uri) {
 	return Qnil;
 }
 
+/*
+ * call-seq:
+ *   filename                         => string
+ *
+ * Returns filename of the file license was retrieved from, or written to
+ */
 static VALUE rbll_filename_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -282,7 +343,12 @@ static VALUE rbll_filename_get(VALUE self) {
 	return license->filename;
 }
 
-
+/*
+ * call-seq:
+ *   name                         => string
+ *
+ * Returns name of license
+ */
 static VALUE rbll_name_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -290,6 +356,12 @@ static VALUE rbll_name_get(VALUE self) {
 	return license->name;
 }
 
+/*
+ * call-seq:
+ *   version                         => array
+ *
+ * Returns version of license, in format [major, minor, micro]
+ */
 static VALUE rbll_version_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -297,6 +369,12 @@ static VALUE rbll_version_get(VALUE self) {
 	return license->version;
 }
 
+/*
+ * call-seq:
+ *   jurisdiction                         => string
+ *
+ * Returns jurisdiction country code of license, "Unported" if none set
+ */
 static VALUE rbll_jurisdiction_get(VALUE self) {
 	ruby_liblicense *license;
 	
@@ -305,6 +383,12 @@ static VALUE rbll_jurisdiction_get(VALUE self) {
 	return license->jurisdiction;
 }
 
+/*
+ * call-seq:
+ *   attribute(foo)                         => array
+ *
+ * Returns array of matching attributes in license
+ */
 static VALUE rbll_attribute_get(int argc, VALUE *argv, VALUE self) {
 	VALUE attribute, locale;
 	VALUE attribs;
@@ -332,6 +416,12 @@ static VALUE rbll_attribute_get(int argc, VALUE *argv, VALUE self) {
 	return attribs;
 }
 
+/*
+ * call-seq:
+ *   permits                         => array
+ *
+ * Returns array of permissions from license
+ */
 static VALUE rbll_permits_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -339,6 +429,12 @@ static VALUE rbll_permits_get(VALUE self) {
 	return license->permits;
 }
 
+/*
+ * call-seq:
+ *   prohibits                         => array
+ *
+ * Returns array of prohibitions from license
+ */
 static VALUE rbll_prohibits_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -346,6 +442,12 @@ static VALUE rbll_prohibits_get(VALUE self) {
 	return license->prohibits;
 }
 
+/*
+ * call-seq:
+ *   requires                         => array
+ *
+ * Returns array of requirements from license
+ */
 static VALUE rbll_requires_get(VALUE self) {
 	ruby_liblicense *license;
 	Data_Get_Struct(self, ruby_liblicense, license);
@@ -353,6 +455,12 @@ static VALUE rbll_requires_get(VALUE self) {
 	return license->requires;
 }
 
+/*
+ * call-seq:
+ *   write(filename, module=nil)                         
+ *
+ * Write license to filename, using IO module if provided
+ */
 static VALUE rbll_write(int argc, VALUE *argv, VALUE self) {
 	VALUE file, module;
 	int result;
@@ -371,7 +479,9 @@ static VALUE rbll_write(int argc, VALUE *argv, VALUE self) {
 		                StringValueCStr(file), 
 		                StringValueCStr(license->uri));
 		
-	
+	if (result)
+		license->filename = file;
+		
 	return INT2NUM(result);
 }
 
