@@ -1,8 +1,10 @@
 import gtk
+import gobject
 import liblicense
 
 class LicenseWidget(gtk.VBox):
-    def __init__(self,filename):
+    __gsignals__ = {"changed":(gobject.SIGNAL_RUN_FIRST,gobject.TYPE_NONE,(gobject.TYPE_STRING,))}
+    def __init__(self,license):
         gtk.VBox.__init__(self)
         
         # Attribution
@@ -126,11 +128,10 @@ class LicenseWidget(gtk.VBox):
         box.show()
         
         #license
-        current_license = liblicense.read(filename)
         self.license = gtk.Entry()
-        if current_license:
-            version = liblicense.get_version(current_license)
-            self.license.set_text(liblicense.get_name(current_license) + " " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]))
+        if license:
+            version = liblicense.get_version(license)
+            self.license.set_text(liblicense.get_name(license) + " " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]))
         else:
             self.license.set_text("none")
         self.license.set_editable(False)
@@ -155,10 +156,10 @@ class LicenseWidget(gtk.VBox):
         
         box.pack_start(self.jurisdiction,False,False,0)
         
-        self.update_checkboxes(current_license)
+        self.update_checkboxes(license)
         self.uri = gtk.Entry()
-        if current_license:
-            self.uri.set_text(current_license)
+        if license:
+            self.uri.set_text(license)
         self.uri.set_editable(True)
         self.uri.show()
         box.pack_start(self.uri)
@@ -215,8 +216,8 @@ class LicenseWidget(gtk.VBox):
     
     def update_license(self):
         if self.licenses.has_key(tuple(self.flags)):
-            print self.licenses[tuple(self.flags)]
             u = self.licenses[tuple(self.flags)][0]
+            self.emit("changed",u)
             self.uri.set_text(u)
             v = liblicense.get_version(u)
             self.license.set_text(liblicense.get_name(u) + " " + str(v[0]) + "." + str(v[1]) + "." + str(v[2]))
@@ -236,6 +237,9 @@ class LicenseWidget(gtk.VBox):
     def update_jurisdiction(self, widget):
         self.get_licenses()
         self.update_license()
+    
+    #def uri_changed(self, widget):
+        
 
 if __name__=="__main__":
     import sys
@@ -244,10 +248,13 @@ if __name__=="__main__":
         sys.exit(1)
     def close(window):
         sys.exit(0)
+    def changed(widget,uri):
+        print "changed: " + uri
     window = gtk.Window()
     window.connect("destroy",close)
     window.set_title("liblicense widget test")
-    widget = LicenseWidget(sys.argv[1])
+    widget = LicenseWidget(liblicense.read(sys.argv[1]))
+    widget.connect("changed",changed)
     widget.show()
     window.add(widget)
     window.show()
