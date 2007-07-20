@@ -138,6 +138,7 @@ class LicenseWidget(gtk.VBox):
         self.license.set_has_frame(False)
         self.license.show()
         box.pack_start(self.license)
+        self.update_checkboxes(license)
         
         #jurisdiction
         self.jurisdictions = gtk.ListStore(str,str,gtk.gdk.Pixbuf)
@@ -148,16 +149,22 @@ class LicenseWidget(gtk.VBox):
         cell = gtk.CellRendererText()
         self.jurisdiction.pack_start(cell, True)
         self.jurisdiction.add_attribute(cell, 'text', 1)
-        self.jurisdiction.connect("changed",self.update_jurisdiction)
         self.jurisdictions.append(["","Unported",gtk.gdk.pixbuf_new_from_file_at_size("icons/unported.png",27,16)])
+        j = []
+        j.append(None)
         self.jurisdictions.append(["uk","United Kingdom",gtk.gdk.pixbuf_new_from_file_at_size("icons/uk.png",27,16)])
+        j.append("uk")
         self.jurisdictions.append(["us","United States",gtk.gdk.pixbuf_new_from_file_at_size("icons/us.png",27,16)])
+        j.append("us")
+        if license:
+            self.jurisdiction.set_active(j.index(liblicense.get_jurisdiction(license)))
+        self.jurisdiction.connect("changed",self.update_jurisdiction)
         self.jurisdiction.show()
         
         box.pack_start(self.jurisdiction,False,False,0)
         
-        self.update_checkboxes(license)
         self.uri = gtk.Entry()
+        self.update_checkboxes(license)
         if license:
             self.uri.set_text(license)
         self.uri.set_editable(True)
@@ -178,8 +185,9 @@ class LicenseWidget(gtk.VBox):
         self.by.connect("toggled",self.checkbox_toggled,4)
     
     def get_licenses(self):
-        if not self.jurisdiction.get_active() or self.jurisdictions[self.jurisdiction.get_active()][0]=="  ":
+        if not self.jurisdiction.get_active() or self.jurisdictions[self.jurisdiction.get_active()][0]=="":
             l = liblicense.get_licenses()
+            print "empty"
         else:
             l = liblicense.get_licenses(self.jurisdictions[self.jurisdiction.get_active()][0])
         self.licenses = {}
@@ -189,20 +197,16 @@ class LicenseWidget(gtk.VBox):
             self.licenses[self.license_flags(license)].append(license)
     
     def update_checkboxes(self,license):
-        if license=="http://creativecommons.org/licenses/publicdomain/":
-            self.pd.set_active(True)
-            self.pd.toggled()
+        if license:
+            self.current_flags= list(self.license_flags(license))
         else:
-            if license:
-                self.flags= list(self.license_flags(license))
-            else:
-                self.flags=[False,False,False,False,False]
-            self.ash.set_active(self.flags[0])
-            self.pcw.set_active(self.flags[1])
-            self.ar.set_active(self.flags[2])
-            self.ar.toggled()
-            self.sa.set_active(self.flags[3])
-            self.by.set_active(self.flags[4])
+            self.current_flags=[False,False,False,False,False]
+        self.ash.set_active(self.current_flags[0])
+        self.pcw.set_active(self.current_flags[1])
+        self.ar.set_active(self.current_flags[2])
+        self.ar.toggled()
+        self.sa.set_active(self.current_flags[3])
+        self.by.set_active(self.current_flags[4])
 
     def ar_toggled(self,button):
         self.sa_box.set_sensitive(button.get_active())
@@ -211,12 +215,12 @@ class LicenseWidget(gtk.VBox):
             self.sa.toggled()
     
     def checkbox_toggled(self,button,flag):
-        self.flags[flag] = button.get_active()
+        self.current_flags[flag] = button.get_active()
         self.update_license()
     
     def update_license(self):
-        if self.licenses.has_key(tuple(self.flags)):
-            u = self.licenses[tuple(self.flags)][0]
+        if self.licenses.has_key(tuple(self.current_flags)):
+            u = self.licenses[tuple(self.current_flags)][0]
             self.emit("changed",u)
             self.uri.set_text(u)
             v = liblicense.get_version(u)

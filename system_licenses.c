@@ -339,7 +339,7 @@ uri_t* ll_get_licenses(const juris_t j) {
 	while(licenses[z]!=NULL) {
 		juris_t tmp_j = ll_get_jurisdiction(licenses[z]);
 		uri_t *successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
-		if((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0 && successor[0]==NULL))
+		if(((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0)) && successor[0]==NULL)
 			keep++;
 		else {
 			free(licenses[z]);
