@@ -198,6 +198,25 @@ AM_CONDITIONAL(HAVE_VORBIS, test "$have_vorbis" = "yes")
 test "$have_vorbis" = "yes" && AC_DEFINE(HAVE_VORBIS, [], [Define if we have vorbisfile])
 
 ##################################################################
+# check for libgsf
+##################################################################
+
+LIBGSF_REQUIRED=1.13
+
+AC_ARG_ENABLE(gsf, AC_HELP_STRING([--disable-gsf], [Disable MS Office (Pre-2007) embedding]),,[enable_gsf=yes])
+if test "x$enable_gsf" = "xyes"; then
+	PKG_CHECK_MODULES(LIBGSF,[
+		libgsf-1 >= $LIBGSF_REQUIRED],
+		[have_libgsf=yes] , [have_libgsf=no])
+	AC_SUBST(LIBGSF_CFLAGS)
+	AC_SUBST(LIBGSF_LIBS)
+else
+	have_libgsf="no (disabled)"
+fi
+AM_CONDITIONAL(HAVE_LIBGSF, test "$have_libgsf" = "yes")
+test "$have_libgsf" = "yes" && AC_DEFINE(HAVE_LIBGSF, [], [Define if we have libgsf])
+
+##################################################################
 # check for taglib
 ##################################################################
 AC_PROG_CXX
@@ -261,4 +280,6 @@ I/O Modules:
 	vorbis:					$have_vorbis
 	FLAC:					$have_flac
 	raptor:					$have_libxml2
+	taglib:					$have_taglib
+	gsf:					$have_libgsf
 "

@@ -74,6 +74,15 @@ taglib_la_LIBADD = $(TAGLIB_LIBS)
 taglib_la_CXXFLAGS = $(TAGLIB_CFLAGS)
 endif
 
+if HAVE_LIBGSF
+LIBGSF_MODULES = gsf.la
+
+gsf_la_SOURCES = gsf.c
+gsf_la_LDFLAGS = -no-undefined -module -avoid-version
+gsf_la_LIBADD = $(LIBGSF_LIBS)
+gsf_la_CFLAGS = $(LIBGSF_CFLAGS)
+endif
+
 libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
@@ -82,6 +91,7 @@ lib_LTLIBRARIES = \
 	$(FLAC_MODULES) \
 	$(RAPTOR_MODULES) \
 	$(TAGLIB_MODULES) \
+	$(LIBGSF_MODULES) \
 	stub.la
 
 stub_la_SOURCES = stub.c
