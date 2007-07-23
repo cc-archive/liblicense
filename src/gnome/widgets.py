@@ -242,8 +242,8 @@ class LicenseWidget(gtk.VBox):
         self.get_licenses()
         self.update_license()
     
-    #def uri_changed(self, widget):
-        
+    def set_license(self, license):
+        print "set_license"
 
 if __name__=="__main__":
     import sys

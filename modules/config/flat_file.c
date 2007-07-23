@@ -16,6 +16,12 @@
 // Copyright 2007, Scott Shawcroft.
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 #define MAX_URI_LENGTH 50
 void init() {
 }
@@ -23,19 +29,52 @@ void init() {
 void shutdown() {
 }
 
+char* get_filename() {
+    char* home = getenv("HOME");
+    char* path = (char*) calloc((strlen(home)+strlen("/.license/default")+1),sizeof(char));
+    path[0] = '\0';
+    strcat(path,home);
+    strcat(path,"/.license/");
+    /* make directory as needed*/
+    struct stat sb;
+    if (stat(path, &sb) == -1) {
+        if (mkdir(path,(S_IRWXU | S_IRGRP | S_IROTH))==-1) {
+            fprintf(stderr,"Failed to make directory.\n");
+            return NULL;
+        }
+    } else if ((sb.st_mode & S_IFMT) != S_IFDIR) {
+        fprintf(stderr,"File exists and is not a directory: %s\n",path);
+        return NULL;
+    }
+    strcat(path,"default");
+    return path;
+}
 int set_default(char* u) {
-	FILE* file = fopen("default-license.txt","w");
-	int result = fprintf(file,"%s",u);
-	fclose(file);
-	return result;
+    char* path = get_filename();
+    if (path == NULL) {
+        free(path);
+        return false;
+    }
+    printf("path: %s\n",path);
+    FILE* file = fopen(path,"w");
+    free(path);
+    int result = fprintf(file,"%s",u);
+    fclose(file);
+    return result;
 }
 
 char* get_default() {
-	FILE* file = fopen("default-license.txt","r");
-	if (file==NULL)
-		return strdup("");
-	char tmp[MAX_URI_LENGTH] = "";
-	fgets(tmp,MAX_URI_LENGTH,file);
-	fclose(file);
-	return strdup(tmp);
+    char* path = get_filename();
+    if (path == NULL) {
+        free(path);
+        return NULL;
+    }
+    FILE* file = fopen(path,"r");
+    free(path);
+    if (file==NULL)
+        return strdup("");
+    char tmp[MAX_URI_LENGTH] = "";
+    fgets(tmp,MAX_URI_LENGTH,file);
+    fclose(file);
+    return strdup(tmp);
 }
