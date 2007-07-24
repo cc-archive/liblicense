@@ -46,7 +46,12 @@ int main(int argc, char** argv) {
 	i =0;
 	while(result1[i]!=NULL)
 		printf("\t\t%s\n",result1[i++]);
-	printf("\tget_licenses_in_juris: skipped\n");
+	printf("\tget_licenses: \n");
+	ll_free_list(result1);
+	result1 = ll_get_licenses(NULL);
+	i =0;
+	while(result1[i]!=NULL)
+		printf("\t\t%s\n",result1[i++]);
 	
 	printf("Test write_license:\n");
 	printf("\twrite: %d\n",ll_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/"));

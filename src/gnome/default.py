@@ -66,11 +66,11 @@ class DefaultLicense (gtk.Window):
         gtk.main()
     
     def save(self,widget):
-        liblicense.set_default(self.chooser.license.get_text())
-        self.destroy()
+        liblicense.set_default(self.chooser.get_license())
+        self.destroy(widget)
     
     def reset(self,widget):
-        liblicense.set_license(self.default)
+        self.chooser.set_license(self.default)
         
 
 if __name__=="__main__":

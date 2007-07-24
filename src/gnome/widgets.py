@@ -129,16 +129,10 @@ class LicenseWidget(gtk.VBox):
         
         #license
         self.license = gtk.Entry()
-        if license:
-            version = liblicense.get_version(license)
-            self.license.set_text(liblicense.get_name(license) + " " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]))
-        else:
-            self.license.set_text("none")
         self.license.set_editable(False)
         self.license.set_has_frame(False)
         self.license.show()
         box.pack_start(self.license)
-        self.update_checkboxes(license)
         
         #jurisdiction
         self.jurisdictions = gtk.ListStore(str,str,gtk.gdk.Pixbuf)
@@ -150,23 +144,18 @@ class LicenseWidget(gtk.VBox):
         self.jurisdiction.pack_start(cell, True)
         self.jurisdiction.add_attribute(cell, 'text', 1)
         self.jurisdictions.append(["","Unported",gtk.gdk.pixbuf_new_from_file_at_size("icons/unported.png",27,16)])
-        j = []
-        j.append(None)
+        self._j = []
+        self._j.append(None)
         self.jurisdictions.append(["uk","United Kingdom",gtk.gdk.pixbuf_new_from_file_at_size("icons/uk.png",27,16)])
-        j.append("uk")
+        self._j.append("uk")
         self.jurisdictions.append(["us","United States",gtk.gdk.pixbuf_new_from_file_at_size("icons/us.png",27,16)])
-        j.append("us")
-        if license:
-            self.jurisdiction.set_active(j.index(liblicense.get_jurisdiction(license)))
-        self.jurisdiction.connect("changed",self.update_jurisdiction)
+        self._j.append("us")
+        
         self.jurisdiction.show()
         
         box.pack_start(self.jurisdiction,False,False,0)
         
         self.uri = gtk.Entry()
-        self.update_checkboxes(license)
-        if license:
-            self.uri.set_text(license)
         self.uri.set_editable(True)
         self.uri.show()
         box.pack_start(self.uri)
@@ -175,7 +164,7 @@ class LicenseWidget(gtk.VBox):
         hbox.pack_start(box)
         self.pack_start(hbox)
         
-        self.get_licenses()
+        self.set_license(license)
         
         # hook up license switcher
         self.ash.connect("toggled",self.checkbox_toggled,0)
@@ -183,11 +172,12 @@ class LicenseWidget(gtk.VBox):
         self.pcw.connect("toggled",self.checkbox_toggled,1)
         self.sa.connect("toggled",self.checkbox_toggled,3)
         self.by.connect("toggled",self.checkbox_toggled,4)
+        
+        self.jurisdiction.connect("changed",self.update_jurisdiction)
     
     def get_licenses(self):
-        if not self.jurisdiction.get_active() or self.jurisdictions[self.jurisdiction.get_active()][0]=="":
+        if self.jurisdiction.get_active()<=0:
             l = liblicense.get_licenses()
-            print "empty"
         else:
             l = liblicense.get_licenses(self.jurisdictions[self.jurisdiction.get_active()][0])
         self.licenses = {}
@@ -243,7 +233,23 @@ class LicenseWidget(gtk.VBox):
         self.update_license()
     
     def set_license(self, license):
-        print "set_license"
+        if license:
+            version = liblicense.get_version(license)
+            self.license.set_text(liblicense.get_name(license) + " " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]))
+            self.uri.set_text(license)
+            if self.jurisdiction.get_active()==-1 or self._j[self.jurisdiction.get_active()]!=liblicense.get_jurisdiction(license):
+                self.get_licenses()
+                
+            self.jurisdiction.set_active(self._j.index(liblicense.get_jurisdiction(license)))
+        else:
+            self.license.set_text("none")
+            if self.jurisdiction.get_active()!=0:
+                self.get_licenses()
+            self.jurisdiction.set_active(0)
+        self.update_checkboxes(license)
+    
+    def get_license(self):
+        return self.uri.get_text()
 
 if __name__=="__main__":
     import sys
