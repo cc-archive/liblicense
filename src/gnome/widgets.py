@@ -5,8 +5,11 @@ import liblicense
 class LicenseWidget(gtk.VBox):
     __gsignals__ = {"changed":(gobject.SIGNAL_RUN_FIRST,gobject.TYPE_NONE,(gobject.TYPE_STRING,))}
     def __init__(self,license):
+        icon_size=48
+        icon_padding = 4
         gtk.VBox.__init__(self)
         
+        self.set_spacing(5)
         # Attribution
         box = gtk.HBox()
         box.show()
@@ -16,9 +19,9 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.by,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_file("by.svg")
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("by.svg", icon_size, icon_size))
         icon.show()
-        box.pack_start(icon,False,False,10)
+        box.pack_start(icon,False,False,icon_padding)
 
         label = gtk.Label("Attribution")
         label.show()
@@ -35,9 +38,9 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.ash,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_file("ash.svg")
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("ash.svg", icon_size, icon_size))
         icon.show()
-        box.pack_start(icon,False,False,10)
+        box.pack_start(icon,False,False,icon_padding)
         
         label = gtk.Label("Allow Sharing")
         label.show()
@@ -55,9 +58,9 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.ar,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_file("ar.svg")
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("ar.svg", icon_size, icon_size))
         icon.show()
-        box.pack_start(icon,False,False,10)
+        box.pack_start(icon,False,False,icon_padding)
         
         label = gtk.Label("Allow Remixing")
         label.show()
@@ -74,9 +77,9 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.pcw,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_file("pcw.svg")
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("pcw.svg", icon_size, icon_size))
         icon.show()
-        box.pack_start(icon,False,False,10)
+        box.pack_start(icon,False,False,icon_padding)
         
         label = gtk.Label("Prohibit Commercial Works")
         label.show()
@@ -93,9 +96,9 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.sa,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_file("sa.svg")
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("sa.svg", icon_size, icon_size))
         icon.show()
-        box.pack_start(icon,False,False,10)
+        box.pack_start(icon,False,False,icon_padding)
         
         label = gtk.Label("Require Others to Share-Alike")
         label.show()

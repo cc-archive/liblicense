@@ -17,8 +17,9 @@ class DefaultLicense (gtk.Window):
         
         #title
         title_box = gtk.HBox()
+        title_box.set_border_width(4)
         icon = gtk.Image()
-        icon.set_from_file("scales.svg")
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("scales.svg", 48, 48))
         icon.show()
         title_box.pack_start(icon,False,False,5)
         
@@ -31,10 +32,12 @@ class DefaultLicense (gtk.Window):
         #widget
         frame = gtk.Frame()
         frame.show()
+        frame.set_border_width(4)
         
         self.default = liblicense.get_default()
         self.chooser = widgets.LicenseWidget(self.default)
         self.chooser.show()
+        self.chooser.set_border_width(4)
         frame.add(self.chooser)
         box.pack_start(frame)
         
