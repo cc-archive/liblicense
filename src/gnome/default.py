@@ -7,12 +7,11 @@ class DefaultLicense (gtk.Window):
     def __init__(self):
         gtk.Window.__init__(self)
         self.set_title("Default Content License")
-        
         self.connect("destroy",self.destroy)
         
         box = gtk.VBox()
         box.show()
-        
+        box.set_border_width(4)
         self.add(box)
         
         #title
