@@ -15,12 +15,12 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
-pyexec_LTLIBRARIES = liblicense.la
-
+pkgpyexec_LTLIBRARIES = liblicense.la
+pkgpython_PYTHON = __init__.py
 AM_CPPFLAGS = $(PYTHON_INCLUDES)
 AM_LDFLAGS = -module -avoid-version \
              -export-symbols-regex initliblicense \
-             $(top_builddir)/liblicense.la
+             $(top_builddir)/liblicense/liblicense.la
 
 liblicense_la_SOURCES = liblicense.c
 

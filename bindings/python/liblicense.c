@@ -17,7 +17,7 @@
 
 #include <Python.h>
 
-#include <liblicense.h>
+#include <liblicense/liblicense.h>
 
 static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (uri_t);
 	const uri_t u;

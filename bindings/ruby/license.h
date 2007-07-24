@@ -19,7 +19,7 @@
 #define __LICENSE_H__
 
 #include "ruby.h"
-#include "liblicense.h"
+#include <liblicense/liblicense.h>
 
 extern VALUE cLiblicense;
 

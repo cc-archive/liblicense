@@ -25,7 +25,7 @@
 #include <libxml/tree.h>
 #include <libxml/parser.h>
 
-#include <liblicense.h>
+#include <liblicense/liblicense.h>
 
 void _raptor_init()
 {

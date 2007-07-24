@@ -14,14 +14,28 @@
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Scott Shawcroft.
-# Copyright 2007, Jason Kivlighn.
 
+pkgpython_PYTHON = gui_gtk.py
+bin_SCRIPTS = default-content-license
 
-UTILS = license
+iconsdir = $(pkgdatadir)/icons
 
-bin_PROGRAMS = $(UTILS)
+icons_DATA = ar.svg \
+             ash.svg \
+             by.svg \
+             pcw.svg \
+             sa.svg \
+             scales.svg \
+             icons/unported.png \
+             icons/us.png \
+             icons/uk.png
+Applicationsdir = $(datadir)/applications
+Applications_DATA = default-content-license.desktop
 
-license_SOURCES = \
-	license.c
+EXTRA_DIST = $(icons_DATA) $(Applications_DATA)
 
-license_LDADD = $(top_builddir)/liblicense/liblicense.la $(top_builddir)/xdgmime/libxdgmime.la
+logodir = $(datadir)/pixmaps
+logo_DATA = scales.svg
+
+pynautilusdir = $(libdir)/nautilus/extensions-1.0/python/
+pynautilus_SCRIPTS = nautilus-liblicense.py

@@ -13,27 +13,6 @@
 # of the liblicense software will comply with the CC-GNU-LGPL.
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
-# Copyright 2007, Alex Roberts.
+# Copyright 2007, Scott Shawcroft.
 
-#rb_LTLIBRARIES = liblicense.la
-
-AM_CPPFLAGS = $(RUBY_CFLAGS)
-AM_LDFLAGS = $(RUBY_LDFLAGS) \
-             $(RUBY_LIBS)    \
-             $(top_builddir)/liblicense/liblicense.la
-
-liblicense_la_SOURCES = liblicense.c
-liblicense_la_LDFLAGS = $(RUBY_LDFLAGS) -module -avoid-version
-liblicense_la_LIBADD = $(RUBY_LIBS)
-liblicense_la_CFLAGS = $(RUBY_CFLAGS)
-
-libdir = $(RUBY_ARCHDIR)
-lib_LTLIBRARIES = liblicense.la
-
-rbdir = $(RUBY_LIBDIR)
-
-rb_DATA = lib/liblicense.rb
-
-EXTRA_DIST = license.h  \
-             test.rb    \
-             $(rb_DATA)
+SUBDIRS = gnome

@@ -15,7 +15,7 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
 
-#include <liblicense.h>
+#include <liblicense/liblicense.h>
 
 #include <stdio.h>
 #include <stdlib.h>

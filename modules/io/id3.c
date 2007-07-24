@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <liblicense.h>
+#include <liblicense/liblicense.h>
 
 #include <id3.h>
 

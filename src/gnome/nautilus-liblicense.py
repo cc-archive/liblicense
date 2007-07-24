@@ -3,7 +3,7 @@ import urllib
 
 import gtk
 import nautilus
-from widgets import *
+from liblicense.gui_gtk import *
 
 class LicensePropertyPage(nautilus.PropertyPageProvider):
     def __init__(self):

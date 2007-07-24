@@ -256,6 +256,7 @@ AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/config/
 
 AC_CONFIG_FILES([
 	Makefile
+	liblicense/Makefile
 	licenses/Makefile
 	modules/Makefile
 	modules/io/Makefile
@@ -266,6 +267,10 @@ AC_CONFIG_FILES([
 	tests/Makefile
 	xdgmime/Makefile
 	utils/Makefile
+	src/Makefile
+	src/gnome/Makefile
+	src/gnome/gui_gtk.py
+	src/gnome/default-content-license
 ])
 
 AC_CONFIG_HEADERS([config.h])

@@ -21,7 +21,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include <liblicense.h>
+#include <liblicense/liblicense.h>
 
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>

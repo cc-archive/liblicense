@@ -1,6 +1,10 @@
+#! /usr/bin/env python
 import gtk
 import gobject
 import liblicense
+icon_location = "@prefix@/share/liblicense/icons"
+if icon_location[0]=="@":
+    icon_location="."
 
 class LicenseWidget(gtk.VBox):
     __gsignals__ = {"changed":(gobject.SIGNAL_RUN_FIRST,gobject.TYPE_NONE,(gobject.TYPE_STRING,))}
@@ -9,6 +13,9 @@ class LicenseWidget(gtk.VBox):
         icon_padding = 4
         gtk.VBox.__init__(self)
         
+        if license==None:
+            license = liblicense.get_default()
+            
         self.set_spacing(5)
         # Attribution
         box = gtk.HBox()
@@ -19,7 +26,7 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.by,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("by.svg", icon_size, icon_size))
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/by.svg", icon_size, icon_size))
         icon.show()
         box.pack_start(icon,False,False,icon_padding)
 
@@ -38,7 +45,7 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.ash,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("ash.svg", icon_size, icon_size))
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size(icon_location+"/ash.svg", icon_size, icon_size))
         icon.show()
         box.pack_start(icon,False,False,icon_padding)
         
@@ -58,7 +65,7 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.ar,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("ar.svg", icon_size, icon_size))
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/ar.svg", icon_size, icon_size))
         icon.show()
         box.pack_start(icon,False,False,icon_padding)
         
@@ -77,7 +84,7 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.pcw,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("pcw.svg", icon_size, icon_size))
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/pcw.svg", icon_size, icon_size))
         icon.show()
         box.pack_start(icon,False,False,icon_padding)
         
@@ -96,7 +103,7 @@ class LicenseWidget(gtk.VBox):
         box.pack_start(self.sa,False,False,10)
         
         icon = gtk.Image()
-        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size("sa.svg", icon_size, icon_size))
+        icon.set_from_pixbuf(gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/sa.svg", icon_size, icon_size))
         icon.show()
         box.pack_start(icon,False,False,icon_padding)
         
@@ -146,12 +153,12 @@ class LicenseWidget(gtk.VBox):
         cell = gtk.CellRendererText()
         self.jurisdiction.pack_start(cell, True)
         self.jurisdiction.add_attribute(cell, 'text', 1)
-        self.jurisdictions.append(["","Unported",gtk.gdk.pixbuf_new_from_file_at_size("icons/unported.png",27,16)])
+        self.jurisdictions.append(["","Unported",gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/unported.png",27,16)])
         self._j = []
         self._j.append(None)
-        self.jurisdictions.append(["uk","United Kingdom",gtk.gdk.pixbuf_new_from_file_at_size("icons/uk.png",27,16)])
+        self.jurisdictions.append(["uk","United Kingdom",gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/uk.png",27,16)])
         self._j.append("uk")
-        self.jurisdictions.append(["us","United States",gtk.gdk.pixbuf_new_from_file_at_size("icons/us.png",27,16)])
+        self.jurisdictions.append(["us","United States",gtk.gdk.pixbuf_new_from_file_at_size(icon_location + "/us.png",27,16)])
         self._j.append("us")
         
         self.jurisdiction.show()
