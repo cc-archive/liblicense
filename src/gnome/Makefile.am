@@ -14,7 +14,7 @@
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Scott Shawcroft.
-
+if HAVE_PYGTK
 pkgpython_PYTHON = gui_gtk.py
 bin_SCRIPTS = default-content-license
 
@@ -36,6 +36,9 @@ EXTRA_DIST = $(icons_DATA) $(Applications_DATA)
 
 logodir = $(datadir)/pixmaps
 logo_DATA = scales.svg
+endif
 
+if HAVE_NP
 pynautilusdir = $(libdir)/nautilus/extensions-1.0/python/
 pynautilus_SCRIPTS = nautilus-liblicense.py
+endif

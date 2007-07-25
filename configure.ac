@@ -28,34 +28,37 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_LIBTOOL_DLOPEN
 AC_PROG_LIBTOOL
-
-AM_CHECK_PYTHON_HEADERS
-if test "x$PYTHON_INCLUDES" != "x"; then
-  PYTHON_DIR=python
+AC_ARG_ENABLE(python,
+			  AC_HELP_STRING([--disable-python], [disable Python binding]),,
+			  [enable_python=yes])
+if test "x$enable_python" = "xyes"; then
+	AM_CHECK_PYTHON_HEADERS
+	if test "x$PYTHON_INCLUDES" != "x"; then
+	  PYTHON_DIR=python
+	fi
 fi
 AC_SUBST(PYTHON_DIR)
 
-
 AC_ARG_ENABLE(ruby,
-              AC_HELP_STRING([--disable-ruby], [disable Ruby binding]),,
-              [enable_ruby=yes])
+			  AC_HELP_STRING([--disable-ruby], [disable Ruby binding]),,
+			  [enable_ruby=yes])
 
 if test "x$enable_ruby" = "xyes"; then
   # All required to build Ruby binding
   # Inspired from Ruby's own "mkmf," not exactly clean, I know.
   AC_PATH_PROG(RUBY, ruby, none)
   if test "$RUBY" != "none"; then
-    if "$RUBY" -r mkmf -e 'exit(have_func("rb_ary_push") ? 0 : 1)'; then
-      RUBY_DIR=ruby
-      RUBY_ARCHDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitearchdir"]]'`
-      RUBY_LIBDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitelibdir"]]'`
-      RUBY_LIBS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["LIBS"]]; puts " -l" + Config::CONFIG[["RUBY_SO_NAME"]]'`
-      RUBY_CFLAGS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["CFLAGS"]]; puts " -I" + Config::CONFIG[["archdir"]]'`
-      RUBY_LDFLAGS=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["LDFLAGS"]]'` 
-    else
-      RUBY="none"
-      AC_MSG_WARN([The detected Ruby is too old, or no development files installed.])
-    fi
+	if "$RUBY" -r mkmf -e 'exit(have_func("rb_ary_push") ? 0 : 1)'; then
+	  RUBY_DIR=ruby
+	  RUBY_ARCHDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitearchdir"]]'`
+	  RUBY_LIBDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitelibdir"]]'`
+	  RUBY_LIBS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["LIBS"]]; puts " -l" + Config::CONFIG[["RUBY_SO_NAME"]]'`
+	  RUBY_CFLAGS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["CFLAGS"]]; puts " -I" + Config::CONFIG[["archdir"]]'`
+	  RUBY_LDFLAGS=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["LDFLAGS"]]'` 
+	else
+	  RUBY="none"
+	  AC_MSG_WARN([The detected Ruby is too old, or no development files installed.])
+	fi
   fi
 fi
 AC_SUBST(RUBY_DIR)
@@ -82,8 +85,8 @@ AC_SUBST(RAPTOR_LIBS)
 # Compiler warning checks
 ####################################################################
 AC_ARG_ENABLE(warnings,
-              AC_HELP_STRING([--disable-warnings], [disable GCC warnings]),,
-              [enable_warnings=yes])
+			  AC_HELP_STRING([--disable-warnings], [disable GCC warnings]),,
+			  [enable_warnings=yes])
 
 if test "x$enable_warnings" = "xyes"; then
    CFLAGS="\
@@ -101,8 +104,8 @@ fi
 
 
 AC_ARG_ENABLE([debug_code],
-              AC_HELP_STRING([--enable-debug-code], [build with debug symbols]),,
-              [enable_debug_code=no])
+			  AC_HELP_STRING([--enable-debug-code], [build with debug symbols]),,
+			  [enable_debug_code=no])
 
 if test "x$enable_debug_code" = "xyes"; then
 	CFLAGS="-g $CFLAGS"
@@ -224,6 +227,48 @@ AM_CONDITIONAL(HAVE_LIBGSF, test "$have_libgsf" = "yes")
 test "$have_libgsf" = "yes" && AC_DEFINE(HAVE_LIBGSF, [], [Define if we have libgsf])
 
 ##################################################################
+# check for pygtk
+##################################################################
+AC_PROG_CXX
+
+PYGTK_REQUIRED=2.10
+
+AC_ARG_ENABLE(pygtk, AC_HELP_STRING([--disable-pygtk], [Disable gtk gui components.]),,[enable_pygtk=yes])
+if test "x$enable_pygtk" = "xyes" -a "x$enable_python" = "xyes"; then
+	PKG_CHECK_MODULES(PYGTK,[
+		pygtk-2.0 >= $PYGTK_REQUIRED],
+		[have_pygtk=yes] , [have_pygtk=no])
+	AC_SUBST(PYGTK_CFLAGS)
+	AC_SUBST(PYGTK_LIBS)
+else
+	have_pygtk="no (disabled)"
+fi
+
+AM_CONDITIONAL(HAVE_PYGTK, test "$have_pygtk" = "yes")
+test "$have_pygtk" = "yes" && AC_DEFINE(HAVE_PYGTK, [], [Define if we have pygtk])
+
+##################################################################
+# check for nautilus-python
+##################################################################
+AC_PROG_CXX
+
+NP_REQUIRED=0.4.3
+
+AC_ARG_ENABLE(nautilus, AC_HELP_STRING([--disable-nautilus], [Disable nautilus python extensions.]),,[enable_np=yes])
+if test "x$enable_np" = "xyes" -a "x$enable_python" = "xyes" -a "x$enable_pygtk" = "xyes"; then
+	PKG_CHECK_MODULES(NP,[
+		nautilus-python >= $NP_REQUIRED],
+		[have_np=yes] , [have_np=no])
+	AC_SUBST(NP_CFLAGS)
+	AC_SUBST(NP_LIBS)
+else
+	have_np="no (disabled)"
+fi
+
+AM_CONDITIONAL(HAVE_NP, test "$have_np" = "yes")
+test "$have_np" = "yes" && AC_DEFINE(HAVE_NP, [], [Define if we have nautilus-python])
+
+##################################################################
 # check for taglib
 ##################################################################
 AC_PROG_CXX
@@ -243,7 +288,6 @@ fi
 
 AM_CONDITIONAL(HAVE_TAGLIB, test "$have_taglib" = "yes")
 test "$have_taglib" = "yes" && AC_DEFINE(HAVE_TAGLIB, [], [Define if we have taglib])
-
 
 ##################################################################
 # define paths to licenses and modules
@@ -285,6 +329,11 @@ Liblicense-$VERSION:
 	enable gcc warnings:			$enable_warnings
 	build with debug symbols:		$enable_debug_code
 	enable ruby bindings:			$enable_ruby
+	enable python bindings: 		$enable_python
+
+Desktop Integration:
+	GTK widget and app: 			$have_pygtk
+	Nautilus-python extensions:	 	$have_np
 
 I/O Modules:
 	exempi:					$have_exempi
