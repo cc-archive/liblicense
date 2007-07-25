@@ -61,7 +61,7 @@ RAPTOR_MODULES = raptor.la
 
 raptor_la_SOURCES = raptor.c
 raptor_la_LDFLAGS = -no-undefined -module -avoid-version
-raptor_la_LIBADD = $(RAPTOR_LIBS) $(LIBXML2_LIBS)
+raptor_la_LIBADD = $(top_builddir)/liblicense/liblicense.la $(RAPTOR_LIBS) $(LIBXML2_LIBS)
 raptor_la_CFLAGS = $(RAPTOR_CFLAGS) $(LIBXML2_CFLAGS)
 endif
 
