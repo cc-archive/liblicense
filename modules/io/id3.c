@@ -56,7 +56,7 @@ int id3_write( const char* filename, const char* uri )
 	ID3Frame *frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
 	if (!frame) {
 		frame = ID3Frame_NewID(ID3FID_WWWCOPYRIGHT);
-		ID3Tag_AddFrame(tag, frame);
+		ID3Tag_AttachFrame(tag, frame);
 	}
 
 	ID3Field *field = ID3Frame_GetField(frame, ID3FN_URL);
