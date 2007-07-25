@@ -40,3 +40,16 @@ class LicensePropertyPage(nautilus.PropertyPageProvider):
         
         return nautilus.PropertyPage("NautilusPython::license",
                                      self.property_label, self.box),
+
+class LicenseInfoProvider(nautilus.InfoProvider):
+    def __init__(self):
+        pass
+    
+    def update_file_info(self, f):
+        if f.get_uri()[:7]=="file://":
+            license = liblicense.read(f.get_uri()[7:].replace("%20"," "))
+            if license:
+                if "Creative Commons" in liblicense.get_attribute(license,"http://purl.org/dc/elements/1.1/creator",False):
+                    f.add_emblem("cc")
+                else:
+                    f.add_emblem("licensed")

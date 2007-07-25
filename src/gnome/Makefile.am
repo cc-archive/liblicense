@@ -32,13 +32,20 @@ icons_DATA = ar.svg \
 Applicationsdir = $(datadir)/applications
 Applications_DATA = default-content-license.desktop
 
-EXTRA_DIST = $(icons_DATA) $(Applications_DATA)
 
 logodir = $(datadir)/pixmaps
 logo_DATA = scales.svg
+
+emblemsdir=$(datadir)/icons/hicolor/scalable/emblems/
+emblems_DATA=emblem-cc.svg \
+	     emblem-cc.icon \
+	     emblem-licensed.svg \
+	     emblem-licensed.icon
 endif
 
 if HAVE_NP
 pynautilusdir = $(libdir)/nautilus/extensions-1.0/python/
 pynautilus_SCRIPTS = nautilus-liblicense.py
 endif
+
+EXTRA_DIST = $(icons_DATA) $(Applications_DATA) $(emblems_DATA)
