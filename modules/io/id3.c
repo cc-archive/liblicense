@@ -62,7 +62,7 @@ int id3_write( const char* filename, const char* uri )
 	ID3Field *field = ID3Frame_GetField(frame, ID3FN_URL);
 	ID3Field_SetASCII(field, uri);
 
-	int err = ID3Tag_Update(tag);
+	int err = !ID3Tag_Update(tag);
 	ID3Tag_Delete(tag);
 	return err;
 }
