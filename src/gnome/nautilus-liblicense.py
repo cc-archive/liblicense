@@ -10,25 +10,29 @@ class LicensePropertyPage(nautilus.PropertyPageProvider):
         pass
 
     def license_chosen(self, widget):
-        liblicense.write(self.filename,self.box.get_license())
+        license = self.box.get_license()
+        if license:
+            for f in self.files:
+                liblicense.write(f,license)
         
     def get_property_pages(self, files):
-        if len(files) != 1:
-            return
+        self.files = files
+
+        self.files = filter(lambda f: f.get_uri_scheme() == 'file' and not f.is_directory(),self.files)
+        self.files = map(lambda f: urllib.unquote(f.get_uri()[7:]),self.files)
         
-        file = files[0]
-        if file.get_uri_scheme() != 'file':
+        if len(self.files)==0:
             return
-
-        if file.is_directory():
-            return
-
-        self.filename = urllib.unquote(file.get_uri()[7:])
 
         self.property_label = gtk.Label('License')
         self.property_label.show()
         
-        license = liblicense.read(self.filename)
+        if len(files) == 1:
+            license = liblicense.read(self.files[0])
+            if license==None:
+                license = liblicense.get_default()
+        else:
+            license = None
         self.box = LicenseWidget(license)
         self.box.connect("destroy",self.license_chosen)
         self.box.show()

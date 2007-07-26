@@ -12,9 +12,6 @@ class LicenseWidget(gtk.VBox):
         icon_size=48
         icon_padding = 4
         gtk.VBox.__init__(self)
-        
-        if license==None:
-            license = liblicense.get_default()
             
         self.set_spacing(5)
         # Attribution
