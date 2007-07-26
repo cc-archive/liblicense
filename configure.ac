@@ -340,6 +340,17 @@ AC_CONFIG_FILES([
 
 AC_CONFIG_HEADERS([config.h])
 
+AC_ARG_ENABLE(kde,
+			  AC_HELP_STRING([--enable-kde4], [enable KDE 4 desktop integration]),[enable_kde4s=yes],)
+
+if test "x$enable_kde4" = "xyes"; then
+	AC_CONFIG_SUBDIRS([src/kde])
+	KDE_SUBDIR=kde
+else
+	enable_kde4=no
+fi
+AC_SUBST(KDE_SUBDIR)
+
 AC_OUTPUT
 echo "
 Liblicense-$VERSION:
@@ -356,6 +367,7 @@ Liblicense-$VERSION:
 Desktop Integration:
 	GTK widget and app: 			$have_pygtk
 	Nautilus-python extensions:	 	$have_np
+	KDE					$enable_kde4
 
 I/O Modules:
 	exempi:					$have_exempi

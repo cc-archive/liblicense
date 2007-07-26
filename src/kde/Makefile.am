@@ -13,6 +13,19 @@
 # of the liblicense software will comply with the CC-GNU-LGPL.
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
-# Copyright 2007, Scott Shawcroft.
+# Copyright 2007, Jason Kivlighn.
 
-SUBDIRS = gnome $(KDE_SUBDIR)
+SUBDIRS = . kde-licenseprops kcm-license
+
+noinst_LTLIBRARIES = libkdelicensewidget.la
+libkdelicensewidget_la_CPPFLAGS = $(QTCORE_CFLAGS) $(QTGUI_CFLAGS) $(KDE4_INCLUDES)
+libkdelicensewidget_la_LDFLAGS = ../../liblicense/liblicense.la
+libkdelicensewidget_la_LIBADD = $(QTCORE_LIBS) $(QTGUI_LIBS) $(KDE4_LIBS)
+
+# I can only get this to be generated if I give it the extension cpp (instead of h that I want)
+libkdelicensewidget_la_SOURCES = ui_license_chooser.cpp license_chooser.ui
+
+ui_%.cpp: %.ui
+	uic $< -o $@
+
+CLEANFILES = ui_license_chooser.cpp
