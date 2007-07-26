@@ -40,6 +40,7 @@ LicensePropsPlugin::LicensePropsPlugin(KPropertiesDialog *_props, const QStringL
 	vbox->addWidget( main );
 	
 	licenseChooser = new LicenseChooser(main);
+	connect( licenseChooser, SIGNAL(licenseChanged()), this, SLOT(setDirty()) );
 
 	m_widget->show(); // In case the dialog was shown already.
 

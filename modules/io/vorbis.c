@@ -26,7 +26,7 @@
 #include <unistd.h>
 #endif
 
-#include <liblicense/liblicense.h>
+#include <liblicense.h>
 
 #include <vorbis/codec.h>
 #include <vorbis/vorbisfile.h>

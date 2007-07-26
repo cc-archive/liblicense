@@ -22,7 +22,7 @@
 
 #include "ui_license_chooser.cpp"
 
-class LicenseChooser : private QObject, public Ui::LicenseChooserWidget
+class LicenseChooser : public QObject, public Ui::LicenseChooserWidget
 {
     Q_OBJECT
 

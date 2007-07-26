@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <liblicense/liblicense.h>
+#include <liblicense.h>
 
 #include <FLAC/metadata.h>
 #include <FLAC/format.h>

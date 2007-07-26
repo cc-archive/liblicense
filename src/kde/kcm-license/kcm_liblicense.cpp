@@ -28,6 +28,7 @@ KCMLiblicense::KCMLiblicense(QWidget *parent, const QStringList &) :
 	  KCModule(LibLicenseFactory::componentData(), parent/*, name*/)
 {
 	licenseChooser = new LicenseChooser(this);
+	connect( licenseChooser, SIGNAL(licenseChanged()), this, SLOT(changed()) );
 
 	load();
 }

@@ -19,7 +19,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include <liblicense/liblicense.h>
+#include <liblicense.h>
 
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>

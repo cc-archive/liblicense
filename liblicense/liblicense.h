@@ -23,6 +23,14 @@
 extern "C" {
 #endif
 
+#ifndef WIN32
+#define LL_DIR_SEPARATOR '/'
+#define LL_DIR_SEPARATOR_S "/"
+#else
+#define LL_DIR_SEPARATOR '\\'
+#define LL_DIR_SEPARATOR_S "\\"
+#endif
+
 /******************* license_info *******************/
 typedef char* juris_t;
 typedef char* uri_t;
@@ -106,8 +114,11 @@ struct _LLModuleDesc {
 	void *handle;
 };
 
-/* FIXME: Windows */
+#ifdef _MSC_VER
+#define LL_MODULE_EXPORT __declspec(dllexport) extern
+#else
 #define LL_MODULE_EXPORT
+#endif
 
 #define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write)	\
 LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {	\

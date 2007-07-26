@@ -20,6 +20,11 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
 <rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:dcq='http://purl.org/dc/terms/'>
   <rdf:Description rdf:about='http://creativecommons.org/licenses/nc-sa/1.0/fi/'>
     <dc:hasVersion>1.0</dc:hasVersion>
+    <dc:isReplacedBy>
+      <dcq:URI>
+        <rdf:value>http://creativecommons.org/licenses/by-nc-sa/2.0/</rdf:value>
+      </dcq:URI>
+    </dc:isReplacedBy>
     <dc:type>License</dc:type>
     <dc:identifier>http://creativecommons.org/licenses/nc-sa/1.0/fi/</dc:identifier>
     <dc:creator>Creative Commons</dc:creator>
@@ -35,12 +40,12 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
       </dcq:URI>
     </dc:isBasedOn>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
     <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
     <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
-    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <prohibits rdf:resource='http://creativecommons.org/ns#CommercialUse'/>
     <dc:title>
       <rdf:Alt>

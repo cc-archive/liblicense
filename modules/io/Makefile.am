@@ -83,6 +83,8 @@ gsf_la_LIBADD = $(LIBGSF_LIBS)
 gsf_la_CFLAGS = $(LIBGSF_CFLAGS)
 endif
 
+AM_CPPFLAGS = -I$(top_builddir)/liblicense
+
 libdir = @libdir@/liblicense/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \

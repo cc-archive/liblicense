@@ -40,12 +40,12 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
       </dcq:URI>
     </dc:isBasedOn>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
     <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
+    <requires rdf:resource='http://creativecommons.org/ns#ShareAlike'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
-    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <prohibits rdf:resource='http://creativecommons.org/ns#CommercialUse'/>
     <dc:title>
       <rdf:Alt>

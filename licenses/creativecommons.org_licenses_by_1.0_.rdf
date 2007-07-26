@@ -30,10 +30,10 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <dc:creator>Creative Commons</dc:creator>
     <dc:publisher>Creative Commons</dc:publisher>
     <rdf:type rdf:resource='http://creativecommons.org/ns#License'/>
-    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
     <requires rdf:resource='http://creativecommons.org/ns#Attribution'/>
-    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
+    <requires rdf:resource='http://creativecommons.org/ns#Notice'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
+    <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
     <dc:title>
       <rdf:Alt>

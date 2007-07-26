@@ -21,7 +21,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#include <liblicense/liblicense.h>
+#include <liblicense.h>
 
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
@@ -30,7 +30,7 @@
 
 char *sidecar_filename( const char *filename )
 {
-	const char *base_sep = strrchr(filename,'/');
+	const char *base_sep = strrchr(filename,LL_DIR_SEPARATOR);
 	if ( !base_sep )
 		base_sep = filename;
 
