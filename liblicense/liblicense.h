@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-/******************* system_licenses *******************/
+/******************* license_info *******************/
 typedef char* juris_t;
 typedef char* uri_t;
 typedef char* ll_locale_t;
@@ -42,21 +42,23 @@ typedef struct {
 	int num_values;
 } attribute_search_t;
 
-int ll_init();
-int ll_stop();
-
 juris_t ll_get_jurisdiction(const uri_t);
 char* ll_get_name(const uri_t);
 version_t ll_get_version(const uri_t);
 char** ll_get_prohibits(const uri_t);
 char** ll_get_permits(const uri_t);
 char** ll_get_requires(const uri_t);
-int ll_verify_uri(const uri_t);
 char** ll_get_attribute(uri_t,attribute_t,int);
+uri_t ll_filename_to_uri(const filename_t);
+filename_t ll_uri_to_filename(const uri_t);
+/*******************************************************/
 
+/************** licenses_{cached,uncached} *************/
+int ll_init();
+int ll_stop();
+int ll_verify_uri(const uri_t);
 uri_t* ll_get_all_licenses();
 uri_t* ll_get_licenses(const juris_t);
-
 /*******************************************************/
 
 /******************* module_wrangler *******************/

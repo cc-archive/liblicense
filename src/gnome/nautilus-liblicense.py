@@ -10,11 +10,7 @@ class LicensePropertyPage(nautilus.PropertyPageProvider):
         pass
 
     def license_chosen(self, widget):
-        liblicense.write(self.filename,self.license)
-    
-    def new_license(self,widget,license):
-        self.license = license
-        print license
+        liblicense.write(self.filename,self.box.get_license())
         
     def get_property_pages(self, files):
         if len(files) != 1:
@@ -32,10 +28,9 @@ class LicensePropertyPage(nautilus.PropertyPageProvider):
         self.property_label = gtk.Label('License')
         self.property_label.show()
         
-        self.license = liblicense.read(self.filename)
-        self.box = LicenseWidget(self.license)
+        license = liblicense.read(self.filename)
+        self.box = LicenseWidget(license)
         self.box.connect("destroy",self.license_chosen)
-        self.box.connect("changed",self.new_license)
         self.box.show()
         
         return nautilus.PropertyPage("NautilusPython::license",

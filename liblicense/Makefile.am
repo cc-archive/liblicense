@@ -21,13 +21,22 @@ lib_LTLIBRARIES = liblicense.la
 
 liblicense_la_CFLAGS = $(RAPTOR_CFLAGS)
 liblicense_la_LIBADD = $(RAPTOR_LIBS) \
-											 $(top_builddir)/xdgmime/libxdgmime.la
+					   $(top_builddir)/xdgmime/libxdgmime.la \
+					   $(SQLITE_LIBS)
+
+if HAVE_SQLITE
+licenses = licenses_cached.c
+else
+licenses = licenses_uncached.c
+endif
+
 liblicense_la_SOURCES = \
 	read_license.c \
 	write_license.c \
 	system_default.c \
 	module_wrangler.c \
-	system_licenses.c \
+	license_info.c \
+	$(licenses) \
 	list.c
 
 include_HEADERS = liblicense.h

@@ -26,21 +26,21 @@ test_SOURCES = \
 test_list_SOURCES = \
 	list_test.c
 
-test_LDADD = $(top_builddir)/liblicense.la
+test_LDADD = $(top_builddir)/liblicense/liblicense.la
 
-test_list_LDADD = $(top_builddir)/liblicense.la
+test_list_LDADD = $(top_builddir)/liblicense/liblicense.la
 
 test_default_SOURCES = default_test.c
-test_default_LDADD = $(top_builddir)/liblicense.la
+test_default_LDADD = $(top_builddir)/liblicense/liblicense.la
 
 test_mw_SOURCES = mw_test.c
-test_mw_LDADD = $(top_builddir)/liblicense.la
+test_mw_LDADD = $(top_builddir)/liblicense/liblicense.la
 
 test_read_SOURCES = read_test.c
-test_read_LDADD = $(top_builddir)/liblicense.la
+test_read_LDADD = $(top_builddir)/liblicense/liblicense.la
 
 test_info_SOURCES = info_test.c
-test_info_LDADD = $(top_builddir)/liblicense.la
+test_info_LDADD = $(top_builddir)/liblicense/liblicense.la
 
 test_write_SOURCES = write_test.c
-test_write_LDADD = $(top_builddir)/liblicense.la
+test_write_LDADD = $(top_builddir)/liblicense/liblicense.la

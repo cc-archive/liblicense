@@ -290,6 +290,27 @@ AM_CONDITIONAL(HAVE_TAGLIB, test "$have_taglib" = "yes")
 test "$have_taglib" = "yes" && AC_DEFINE(HAVE_TAGLIB, [], [Define if we have taglib])
 
 ##################################################################
+# check for sqlite3
+##################################################################
+AC_PROG_CXX
+
+SQLITE_REQUIRED=1.3
+
+AC_ARG_ENABLE(sqlite, AC_HELP_STRING([--disable-sqlite], [Disable sqlite3 caching]),,[enable_sqlite=yes])
+if test "x$enable_sqlite" = "xyes"; then
+	PKG_CHECK_MODULES(SQLITE,[
+		sqlite3 >= $SQLITE_REQUIRED],
+		[have_sqlite=yes] , [have_sqlite=no])
+	AC_SUBST(SQLITE_CFLAGS)
+	AC_SUBST(SQLITE_LIBS)
+else
+	have_sqlite="no (disabled)"
+fi
+
+AM_CONDITIONAL(HAVE_SQLITE, test "$have_sqlite" = "yes")
+test "$have_sqlite" = "yes" && AC_DEFINE(HAVE_SQLITE, [], [Define if we have sqlite3])
+
+##################################################################
 # define paths to licenses and modules
 ##################################################################
 AS_AC_EXPAND(DATADIR, $datadir)
@@ -328,6 +349,7 @@ Liblicense-$VERSION:
 	compiler:				${CC}
 	enable gcc warnings:			$enable_warnings
 	build with debug symbols:		$enable_debug_code
+	enable sqlite3 caching: 		$enable_sqlite
 	enable ruby bindings:			$enable_ruby
 	enable python bindings: 		$enable_python
 

@@ -33,21 +33,6 @@
 #include "config.h"
 #endif
 
-// initializes the library and its dependencies.
-int ll_init() {
-	raptor_init();
-	setlocale(LC_ALL,"");
-	ll_init_modules();
-	return 0;
-}
-
-// stops the library and its dependencies.
-int ll_stop() {
-	raptor_finish();
-	ll_stop_modules();
-	return 0;
-}
-
 // returns the first element of a list and frees the rest.
 char* _ll_get_first(char** list) {
 	if (list==NULL)
@@ -106,16 +91,8 @@ char** ll_get_requires(const uri_t u) {
 	return ll_get_attribute(u,"http://creativecommons.org/ns#requires",false);
 }
 
-// returns whether or not the given uri is recognized by the system.
-int ll_verify_uri(const uri_t u) {
-	uri_t* licenses = ll_get_all_licenses();
-	int result = ll_list_contains(licenses,u);
-	ll_free_list(licenses);
-	return result;
-}
-
 // converts a filename string to a uri
-uri_t _ll_filename_to_uri(const filename_t f) {
+uri_t ll_filename_to_uri(const filename_t f) {
 	uri_t result = (uri_t) malloc((strlen(f)-3+7)*sizeof(char));
 
 	strcpy(result,"http://");
@@ -132,7 +109,7 @@ uri_t _ll_filename_to_uri(const filename_t f) {
 }
 
 // converts a uri string to a filename
-filename_t _ll_uri_to_filename(const uri_t u) {
+filename_t ll_uri_to_filename(const uri_t u) {
 	assert( strncmp(u,"http://",7) == 0 );
 
 	char* tmp_u = strdup(&u[7]);
@@ -219,7 +196,7 @@ attribute_search_t* _ll_get_triple(const uri_t u, const char* subject, const cha
 	else
 		helper->predicate = NULL;
 	helper->type = type;
-	char * fn = _ll_uri_to_filename(u);
+	char * fn = ll_uri_to_filename(u);
 	
 	// BREAKS_WINDOWS
 	if(access(fn,R_OK)==0) {
@@ -310,54 +287,3 @@ char** ll_get_attribute(uri_t u,attribute_t a, int locale) {
   	free(further_search);
   return result;
 }
-
-// helper which returns whether a file ands in .rdf
-int _ll_rdf_filter(const struct dirent * d) {
-	return strstr(d->d_name,".rdf")!=NULL;
-}
-
-// returns a null-terminated list of all general licenses available.
-uri_t* ll_get_all_licenses() {
-  struct dirent **namelist;
-  int n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
-	uri_t* result = (uri_t*) malloc((n+1)*sizeof(uri_t));
-	result[n]=NULL;
-  int i;
-  for (i=0;i<n;++i) {
-    result[i] = _ll_filename_to_uri(namelist[i]->d_name);
-    free(namelist[i]);
-  }
-  free(namelist);
-	return result;
-}
-
-// returns a null-terminated list of all general licenses in a family.
-uri_t* ll_get_licenses(const juris_t j) {
-	uri_t* licenses = ll_get_all_licenses();
-	int z=0;
-	int keep=0;
-	while(licenses[z]!=NULL) {
-		juris_t tmp_j = ll_get_jurisdiction(licenses[z]);
-		uri_t *successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
-		if(((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0)) && successor[0]==NULL)
-			keep++;
-		else {
-			free(licenses[z]);
-			licenses[z] = strdup("remove");
-		}
-		ll_free_list(successor);
-		free(tmp_j);
-		z++;
-	}
-	uri_t* result = ll_new_list(keep);
-	z=0;
-	int pos = 0;
-	while(licenses[z]!=NULL && pos<keep) {
-		if(strcmp(licenses[z],"remove")!=0)
-			result[pos++] = strdup(licenses[z]);
-		z++;
-	}
-	ll_free_list(licenses);
-	return result;
-}
-
