@@ -23,7 +23,9 @@
 #include <stdio.h>
 #include <locale.h>
 #include <ctype.h>
-
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
