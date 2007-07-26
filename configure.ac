@@ -294,7 +294,7 @@ test "$have_taglib" = "yes" && AC_DEFINE(HAVE_TAGLIB, [], [Define if we have tag
 ##################################################################
 AC_PROG_CXX
 
-SQLITE_REQUIRED=0.21
+SQLITE_REQUIRED=3.3
 
 AC_ARG_ENABLE(sqlite, AC_HELP_STRING([--disable-sqlite], [Disable sqlite3 caching]),,[enable_sqlite=yes])
 if test "x$enable_sqlite" = "xyes"; then
