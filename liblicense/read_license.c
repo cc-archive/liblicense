@@ -35,7 +35,6 @@ uri_t ll_read(filename_t f) {
 	uri_t* results = ll_new_list(length);
 
 	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
-	printf("File mime-type: %s\n",mt);
 
 	i = 0;
 	LLModuleDesc **curr_module = _module_list;

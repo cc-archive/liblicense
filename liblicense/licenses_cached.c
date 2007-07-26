@@ -110,7 +110,7 @@ int ll_update_cache() {
 	
 	/* create table if it doesn't exist. */
 	char *zErrMsg = 0;
-	int rc = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS licenses( uri TEXT UNIQUE, jurisdiction TEXT, obsolete INTEGER);" , _ll_sql_callback, 0, &zErrMsg);
+	int rc = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS licenses( uri TEXT UNIQUE ON CONFLICT IGNORE, jurisdiction TEXT, obsolete INTEGER);" , _ll_sql_callback, 0, &zErrMsg);
 	if (rc!=SQLITE_OK) {
 		printf("Table creation failed: %s\n",zErrMsg);
 		return false;
@@ -133,10 +133,7 @@ int ll_update_cache() {
 			/* Get data */
 			juris_t j = ll_get_jurisdiction(u);
 			uri_t *successor = ll_get_attribute(u,"http://purl.org/dc/elements/1.1/isReplacedBy",0);
-			printf("%s:\n",u);
-			ll_list_print(successor);
 			int obsolete = ll_list_length(successor);
-			printf("obsolete: %d\n",obsolete);
 			ll_free_list(successor);
 			char* query;
 			/* build insert query */

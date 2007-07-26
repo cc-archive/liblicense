@@ -38,7 +38,6 @@ int ll_write(filename_t f,uri_t u) {
 	int result = -1;
 
 	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
-	printf("File mime-type: %s\n",mt);
 
 	int embedded = 0;
 
