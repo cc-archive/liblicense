@@ -341,7 +341,7 @@ AC_CONFIG_FILES([
 AC_CONFIG_HEADERS([config.h])
 
 AC_ARG_ENABLE(kde,
-			  AC_HELP_STRING([--enable-kde4], [enable KDE 4 desktop integration]),[enable_kde4s=yes],)
+			  AC_HELP_STRING([--enable-kde4], [enable KDE 4 desktop integration]),[enable_kde4=yes],)
 
 if test "x$enable_kde4" = "xyes"; then
 	AC_CONFIG_SUBDIRS([src/kde])

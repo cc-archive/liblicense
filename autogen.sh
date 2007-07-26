@@ -36,7 +36,7 @@ which gnome-autogen.sh || {
 }
 
 cd src/kde
-. gnome-autogen.sh
+autoreconf --force --install
 cd ../../
 . gnome-autogen.sh
 
