@@ -48,7 +48,10 @@ void print_license_info(uri_t license) {
 }
 
 int list_juris(juris_t j) {
-	uri_t* licenses = ll_get_licenses(j);
+	uri_t* licenses;
+	if(j!=NULL && strcmp(j,"")==0)
+		j=NULL;
+	licenses = ll_get_licenses(j);
 	int i = 0;
 	while (licenses[i]!=NULL) {
 		printf("%s - %s\n",ll_get_name(licenses[i]), licenses[i]);

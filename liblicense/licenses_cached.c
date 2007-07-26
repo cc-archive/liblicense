@@ -133,7 +133,10 @@ int ll_update_cache() {
 			/* Get data */
 			juris_t j = ll_get_jurisdiction(u);
 			uri_t *successor = ll_get_attribute(u,"http://purl.org/dc/elements/1.1/isReplacedBy",0);
-			int obsolete = !(successor[0]==NULL);
+			printf("%s:\n",u);
+			ll_list_print(successor);
+			int obsolete = ll_list_length(successor);
+			printf("obsolete: %d\n",obsolete);
 			ll_free_list(successor);
 			char* query;
 			/* build insert query */
@@ -144,7 +147,7 @@ int ll_update_cache() {
 			} else {
 				size_t buf_size = sizeof(char)*(strlen("INSERT INTO licenses VALUES ('',NULL,)")+strlen(u)+2);
 				query = (char*) malloc(buf_size);
-				int num_printed = snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s',NULL,%d)",u,j,obsolete);
+				int num_printed = snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s',NULL,%d)",u,obsolete);
 			}
 			_ll_query(query,0);
 			free(query);
@@ -208,7 +211,7 @@ uri_t* ll_get_licenses(const juris_t j) {
 		query = (char*) malloc(buf_size);
 		snprintf(query,buf_size,"SELECT uri FROM licenses WHERE jurisdiction='%s' AND obsolete=0 LIMIT 15",j);
 	} else {
-		query = strdup("SELECT uri FROM licenses WHERE jurisdiction=NULL AND obsolete=0 LIMIT 15");
+		query = strdup("SELECT uri FROM licenses WHERE jurisdiction ISNULL AND obsolete=0 LIMIT 15");
 	}
 	uri_t* result = _ll_query(query,15);
 	free(query);
