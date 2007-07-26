@@ -34,4 +34,9 @@ which gnome-autogen.sh || {
     echo "You need to install gnome-common from the GNOME CVS"
     exit 1
 }
+
+cd src/kde
 . gnome-autogen.sh
+cd ../../
+. gnome-autogen.sh
+
