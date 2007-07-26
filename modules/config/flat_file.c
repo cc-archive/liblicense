@@ -55,7 +55,6 @@ int set_default(char* u) {
         free(path);
         return false;
     }
-    printf("path: %s\n",path);
     FILE* file = fopen(path,"w");
     free(path);
     int result = fprintf(file,"%s",u);
