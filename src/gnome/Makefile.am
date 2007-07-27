@@ -45,7 +45,7 @@ endif
 
 if HAVE_NP
 pynautilusdir = $(libdir)/nautilus/extensions-1.0/python/
-pynautilus_SCRIPTS = nautilus-liblicense.py
+dist_pynautilus_SCRIPTS = nautilus-liblicense.py
 endif
 
 EXTRA_DIST = $(icons_DATA) $(Applications_DATA) $(emblems_DATA)
