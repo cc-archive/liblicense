@@ -270,6 +270,8 @@ char** _ll_build_list(attribute_search_t * ast, char** fsi) {
 }
 // calls the helper parser function to get nodes with a depth of 1 or 2
 char** ll_get_attribute(uri_t u,attribute_t a, int locale) {
+	if ( strncmp(u,"http://",7) != 0 ) return NULL;
+
 	attribute_search_t* helper = _ll_get_triple(u,u,a,-1,locale);
 
   char* further_search = NULL;
