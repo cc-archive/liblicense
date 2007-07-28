@@ -16,7 +16,6 @@
 // Copyright 2007, Scott Shawcroft.
 
 #include <Python.h>
-#include "structmember.h"
 
 #include <liblicense.h>
 
@@ -301,7 +300,7 @@ static PyTypeObject LicenseChooserType = {
 	0,                         /*tp_setattro*/
 	0,                         /*tp_as_buffer*/
 	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /*tp_flags*/
-	"LicenseChooser objects",           /* tp_doc */
+	"Object for searching for licenses based on what the license permits, requires, and/or prohibits",           /* tp_doc */
 	0,		               /* tp_traverse */
 	0,		               /* tp_clear */
 	0,		               /* tp_richcompare */
