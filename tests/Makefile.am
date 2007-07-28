@@ -16,7 +16,9 @@
 # Copyright 2007, Scott Shawcroft.
 # Copyright 2007, Jason Kivlighn.
 
-TESTS = test test_list test_default test_mw test_read test_info test_write
+AM_CFLAGS = -I$(top_builddir)/liblicense
+
+TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
 
 check_PROGRAMS = $(TESTS)
 
@@ -44,3 +46,6 @@ test_info_LDADD = $(top_builddir)/liblicense/liblicense.la
 
 test_write_SOURCES = write_test.c
 test_write_LDADD = $(top_builddir)/liblicense/liblicense.la
+
+test_chooser_SOURCES = chooser_test.c
+test_chooser_LDADD = $(top_builddir)/liblicense/liblicense.la

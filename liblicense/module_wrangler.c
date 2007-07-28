@@ -40,7 +40,7 @@ int _ll_so_filter(const struct dirent * d) {
 }
 
 void ll_init_modules() {
-	assert(!_module_list);
+	if (_module_list) return;
 
 	struct dirent **namelist;
 	int n = scandir(LIBLICENSE_IO_MODULE_DIR , &namelist, _ll_so_filter, alphasort);

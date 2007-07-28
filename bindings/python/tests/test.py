@@ -57,4 +57,15 @@ print "\tget_module_symbol: not bound"
 print "Module information and capabilities:"
 print_module_info();
 
+print "What license(s) permit Distribution and DerivativeWorks without Attribution or Notice?"
+attributes = ["http://creativecommons.org/ns#Distribution",
+		"http://creativecommons.org/ns#DerivativeWorks",
+		"http://creativecommons.org/ns#Attribution",
+		"http://creativecommons.org/ns#Notice"]
+chooser = LicenseChooser(None,attributes)
+permits = (1 << 0) | (1 << 1)
+requires = 0
+prohibits = 0
+print "\t",chooser.get_licenses(permits,requires,prohibits)
+
 sys.exit(0)

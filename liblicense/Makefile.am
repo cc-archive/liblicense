@@ -36,6 +36,7 @@ liblicense_la_SOURCES = \
 	system_default.c \
 	module_wrangler.c \
 	license_info.c \
+	license_chooser.c \
 	$(licenses) \
 	list.c
 

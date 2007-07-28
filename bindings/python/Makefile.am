@@ -17,7 +17,7 @@
 
 pkgpyexec_LTLIBRARIES = liblicense.la
 pkgpython_PYTHON = __init__.py
-AM_CPPFLAGS = $(PYTHON_INCLUDES)
+AM_CPPFLAGS = $(PYTHON_INCLUDES) -I$(top_builddir)/liblicense
 AM_LDFLAGS = -module -avoid-version \
              -export-symbols-regex initliblicense \
              $(top_builddir)/liblicense/liblicense.la

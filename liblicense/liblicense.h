@@ -156,6 +156,20 @@ int ll_module_write(filename_t,uri_t,module_t);
 
 /*******************************************************/
 
+/******************* license_chooser *******************/
+
+typedef struct _ll_license_chooser_t ll_license_chooser_t;
+typedef struct node {
+	struct node *next;
+	const char *license;
+} license_list_t;
+
+ll_license_chooser_t* ll_new_license_chooser( const juris_t, char **attributes );
+void ll_free_license_chooser(ll_license_chooser_t *);
+const license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *, int permits, int requires, int prohibits );
+
+/*******************************************************/
+
 /************************* list ************************/
 
 char** ll_new_list(int);

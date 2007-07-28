@@ -16,8 +16,9 @@
 // Copyright 2007, Scott Shawcroft.
 
 #include <Python.h>
+#include "structmember.h"
 
-#include <liblicense/liblicense.h>
+#include <liblicense.h>
 
 static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (uri_t);
 	const uri_t u;
@@ -209,6 +210,115 @@ static PyObject* py_print_module_info(PyObject* self, PyObject* args)  {
 	return Py_BuildValue("");
 }
 
+typedef struct {
+	PyObject_HEAD
+	ll_license_chooser_t *chooser;
+} LicenseChooser;
+
+static void
+LicenseChooser_dealloc(LicenseChooser* self)
+{
+	if (self->chooser)
+		ll_free_license_chooser(self->chooser);
+	self->ob_type->tp_free((PyObject*)self);
+}
+
+static int
+LicenseChooser_init(LicenseChooser *self, PyObject *args, PyObject *kwds)
+{
+	const juris_t j = NULL;
+	PyObject *attrs = NULL;
+
+	if (! PyArg_ParseTuple(args,"zO",&j,&attrs))
+			return -1; 
+
+	if (!PyList_Check(attrs))
+		return -1;
+
+	char *attributes[PyList_Size(attrs)+1];
+	attributes[PyList_Size(attrs)] = NULL;
+
+	int i;
+	for (i=0; i<PyList_Size(attrs); ++i) {
+		PyObject *attr = PyList_GetItem(attrs,i);
+		if (!PyString_Check(attr))
+			return -1;
+		char *string = PyString_AsString(attr);
+		attributes[i] = string;
+	}
+
+	ll_license_chooser_t *chooser = ll_new_license_chooser(j,attributes);
+	self->chooser = chooser;
+
+	return 0;
+}
+
+static PyObject *
+LicenseChooser_get_licenses(LicenseChooser* self, PyObject *args )
+{
+	int permits, requires, prohibits;
+	if (!PyArg_ParseTuple(args,"iii",&permits,&requires,&prohibits))
+		return NULL;
+
+	const license_list_t *license_list = ll_get_licenses_from_flags(self->chooser, permits, requires, prohibits);
+
+	license_list_t *curr = license_list->next;
+	PyObject* list = PyList_New(0);
+	while (curr!=NULL) {
+		PyList_Append(list,PyString_FromString(curr->license));
+		curr = curr->next;
+	}
+
+	return list;
+}
+
+static PyMethodDef LicenseChooser_methods[] = {
+	{"get_licenses", (PyCFunction)LicenseChooser_get_licenses, METH_VARARGS,
+		"Return a list of licenses matching the given flags"
+	},
+	{NULL}  /* Sentinel */
+};
+
+static PyTypeObject LicenseChooserType = {
+	PyObject_HEAD_INIT(NULL)
+	0,                         /*ob_size*/
+	"Liblicense.LicenseChooser",             /*tp_name*/
+	sizeof(LicenseChooser),             /*tp_basicsize*/
+	0,                         /*tp_itemsize*/
+	(destructor)LicenseChooser_dealloc, /*tp_dealloc*/
+	0,                         /*tp_print*/
+	0,                         /*tp_getattr*/
+	0,                         /*tp_setattr*/
+	0,                         /*tp_compare*/
+	0,                         /*tp_repr*/
+	0,                         /*tp_as_number*/
+	0,                         /*tp_as_sequence*/
+	0,                         /*tp_as_mapping*/
+	0,                         /*tp_hash */
+	0,                         /*tp_call*/
+	0,                         /*tp_str*/
+	0,                         /*tp_getattro*/
+	0,                         /*tp_setattro*/
+	0,                         /*tp_as_buffer*/
+	Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /*tp_flags*/
+	"LicenseChooser objects",           /* tp_doc */
+	0,		               /* tp_traverse */
+	0,		               /* tp_clear */
+	0,		               /* tp_richcompare */
+	0,		               /* tp_weaklistoffset */
+	0,		               /* tp_iter */
+	0,		               /* tp_iternext */
+	LicenseChooser_methods,             /* tp_methods */
+	0,             /* tp_members */
+	0,                         /* tp_getset */
+	0,                         /* tp_base */
+	0,                         /* tp_dict */
+	0,                         /* tp_descr_get */
+	0,                         /* tp_descr_set */
+	0,                         /* tp_dictoffset */
+	(initproc)LicenseChooser_init,      /* tp_init */
+};
+
 static PyMethodDef LicenseMethods[] = {
 		{"get_jurisdiction",  py_get_jurisdiction, METH_VARARGS,
 	 "Get the jurisdiction of the given license uri."},
@@ -247,5 +357,12 @@ static PyMethodDef LicenseMethods[] = {
 
 PyMODINIT_FUNC initliblicense(void) {
   ll_init();
-	(void) Py_InitModule("liblicense",LicenseMethods);
+	PyObject *m = Py_InitModule("liblicense",LicenseMethods);
+
+	LicenseChooserType.tp_new = PyType_GenericNew;
+	if (PyType_Ready(&LicenseChooserType) < 0)
+			return;
+
+	Py_INCREF(&LicenseChooserType);
+	PyModule_AddObject(m, "LicenseChooser", (PyObject *)&LicenseChooserType);
 }

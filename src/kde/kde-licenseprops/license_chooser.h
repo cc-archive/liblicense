@@ -20,6 +20,8 @@
 
 #include <kdebug.h>
 
+#include <liblicense.h>
+
 #include "ui_license_chooser.cpp"
 
 class LicenseChooser : public QObject, public Ui::LicenseChooserWidget
@@ -37,6 +39,10 @@ private slots:
 	void checkBoxClicked(QWidget *);
 
 private:
+	ll_license_chooser_t *chooser;
+	int permits_flags;
+	int requires_flags;
+	int prohibits_flags;
 };
 
 #endif
