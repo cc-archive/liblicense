@@ -126,6 +126,8 @@ int ll_update_cache() {
 		struct stat fileinfo;
 		if (stat(fn,&fileinfo)==-1) {
 			printf("error failed to stat %s, skipping\n",fn);
+			free(u);
+			free(fn);
 			free(namelist[i]);
 			continue;
 		}
@@ -149,6 +151,8 @@ int ll_update_cache() {
 			_ll_query(query,0);
 			free(query);
 		}
+		free(u);
+		free(fn);
 		free(namelist[i]);
 	}
 	free(namelist);
