@@ -41,6 +41,11 @@ emblems_DATA=emblem-cc.svg \
 	     emblem-cc.icon \
 	     emblem-licensed.svg \
 	     emblem-licensed.icon
+
+#force an update of the icon cache
+install-data-hook:
+	touch $(datadir)/icons/hicolor
+
 endif
 
 if HAVE_NP
