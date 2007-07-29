@@ -225,7 +225,7 @@ LicenseChooser_dealloc(LicenseChooser* self)
 static int
 LicenseChooser_init(LicenseChooser *self, PyObject *args, PyObject *kwds)
 {
-	const juris_t j = NULL;
+	juris_t j = NULL;
 	PyObject *attrs = NULL;
 
 	if (! PyArg_ParseTuple(args,"zO",&j,&attrs))
