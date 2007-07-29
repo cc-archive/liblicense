@@ -134,13 +134,19 @@ int main(int argc, char** argv) {
 				printf("Unable to write license to file\n");
 				return 2;
 			}
-		} else {
-			license = ll_read(argv[optind]);
 		}
+		/* Even if we wrote a license, read it to make sure it worked */
+		license = ll_read(argv[optind]);
 		if (license)
 			printf("%s is licensed under %s\n",argv[optind],license);
-		else
-			printf("No license found for %s\n",argv[optind]);
+		else {
+			if (set_flag) {
+				printf("Unable to write license to file\n");
+				return 2;
+			} else {
+				printf("No license found for %s\n",argv[optind]);
+			}
+		}
 	}
 	ll_stop();
 	return 0;
