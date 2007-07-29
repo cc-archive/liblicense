@@ -66,6 +66,6 @@ chooser = LicenseChooser(None,attributes)
 permits = (1 << 0) | (1 << 1)
 requires = 0
 prohibits = 0
-print "\t",chooser.get_licenses(permits,requires,prohibits)
+print "\t",chooser.get_licenses(permits=permits)
 
 sys.exit(0)

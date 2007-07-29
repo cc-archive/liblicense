@@ -253,15 +253,17 @@ LicenseChooser_init(LicenseChooser *self, PyObject *args, PyObject *kwds)
 }
 
 static PyObject *
-LicenseChooser_get_licenses(LicenseChooser* self, PyObject *args )
+LicenseChooser_get_licenses(LicenseChooser* self, PyObject *args, PyObject *kwds )
 {
-	int permits, requires, prohibits;
-	if (!PyArg_ParseTuple(args,"iii",&permits,&requires,&prohibits))
+	static char *kwlist[] = {"permits", "requires", "prohibits", NULL};
+
+	int permits = 0, requires = 0, prohibits = 0;
+	if (!PyArg_ParseTupleAndKeywords(args,kwds,"|iii",kwlist,&permits,&requires,&prohibits))
 		return NULL;
 
-	const license_list_t *license_list = ll_get_licenses_from_flags(self->chooser, permits, requires, prohibits);
+	const ll_license_list_t *license_list = ll_get_licenses_from_flags(self->chooser, permits, requires, prohibits);
 
-	license_list_t *curr = license_list->next;
+	ll_license_list_t *curr = license_list;
 	PyObject* list = PyList_New(0);
 	while (curr!=NULL) {
 		PyList_Append(list,PyString_FromString(curr->license));
@@ -272,7 +274,7 @@ LicenseChooser_get_licenses(LicenseChooser* self, PyObject *args )
 }
 
 static PyMethodDef LicenseChooser_methods[] = {
-	{"get_licenses", (PyCFunction)LicenseChooser_get_licenses, METH_VARARGS,
+	{"get_licenses", (PyCFunction)LicenseChooser_get_licenses, METH_VARARGS | METH_KEYWORDS,
 		"Return a list of licenses matching the given flags"
 	},
 	{NULL}  /* Sentinel */

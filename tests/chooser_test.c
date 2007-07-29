@@ -2,10 +2,10 @@
 
 #include <liblicense.h>
 
-void print_licenses( const license_list_t *list )
+void print_licenses( const ll_license_list_t *list )
 {
 	printf("Matching licenses:\n");
-	license_list_t *curr = list->next;
+	ll_license_list_t *curr = list;
 	while (curr) {
 		printf("\t%s\n",curr->license);
 		curr = curr->next;

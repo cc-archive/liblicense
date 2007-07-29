@@ -113,7 +113,7 @@ void LicenseChooser::checkBoxClicked(QWidget *checkBox)
 	}
 
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
-	const license_list_t *licenses = ll_get_licenses_from_flags(chooser,permits_flags,requires_flags,prohibits_flags);
+	const ll_license_list_t *licenses = ll_get_licenses_from_flags(chooser,permits_flags,requires_flags,prohibits_flags);
 	if (licenses->next) {
 		const uri_t uri = (const uri_t)licenses->next->license;
 		uriEdit->setText(QString::fromLatin1(uri));

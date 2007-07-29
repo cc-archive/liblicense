@@ -9,7 +9,7 @@
 struct _ll_license_chooser_t {
 	char **attributes;
 	int num_attributes;
-	license_list_t **license_list;
+	ll_license_list_t **license_list;
 	uri_t *all_licenses; 	//to avoid copying each license, store the license entire license list
 												//and free them all in one go when we destroy the license_chooser
 };
@@ -21,7 +21,7 @@ struct _ll_license_chooser_t {
 
 #define N_STATES 4
 
-const license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
+const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
 {
 	//traverse the down the tree until we get to the right leaf
 	int curr = N_STATES - 1;
@@ -41,7 +41,7 @@ const license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_
 		}
 	}
 	int arrayIndex = curr-indexAt(license_chooser->num_attributes);
-	return license_chooser->license_list[arrayIndex];
+	return license_chooser->license_list[arrayIndex]->next;
 }
 
 void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, int *requires, int *prohibits )
@@ -115,12 +115,12 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 	int num_nodes = 1 << (num_attributes * 2);
 
 	int license_hits[num_nodes];
-	license_list_t **license_heap = (license_list_t**)malloc(sizeof(license_list_t*)*num_nodes);
+	ll_license_list_t **license_heap = (ll_license_list_t**)malloc(sizeof(ll_license_list_t*)*num_nodes);
 
 	int i;
 	for (i=0; i<num_nodes; ++i) {
 		license_hits[i] = 0;
-		license_heap[i] = (license_list_t*)calloc(1,sizeof(license_list_t));
+		license_heap[i] = (ll_license_list_t*)calloc(1,sizeof(ll_license_list_t));
 	}
 
 	int used_attrs;
@@ -181,10 +181,10 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 
 		for (i=0; i<num_nodes; ++i) {
 			if ( license_hits[i] == num_attributes ) {
-				license_list_t *new_license_list = (license_list_t*)malloc(sizeof(license_list_t));
+				ll_license_list_t *new_license_list = (ll_license_list_t*)malloc(sizeof(ll_license_list_t));
 				new_license_list->license = *license;
 
-				license_list_t *tmp = license_heap[i]->next;
+				ll_license_list_t *tmp = license_heap[i]->next;
 				license_heap[i]->next = new_license_list;
 				new_license_list->next = tmp;
 			}
@@ -205,7 +205,7 @@ void ll_free_license_chooser(ll_license_chooser_t *chooser)
 	int num_nodes = 1 << (chooser->num_attributes * 2);
 
 	int i;
-	license_list_t *curr, *tmp;
+	ll_license_list_t *curr, *tmp;
 	for (i=0; i<num_nodes; ++i) {
 		curr = chooser->license_list[i];
 		while (curr) {
