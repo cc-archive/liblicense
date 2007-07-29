@@ -21,3 +21,10 @@ Optional for embedding and extracting licenses:
  * id3tag
  * libFLAC
  * libvorbis
+ * TagLib
+
+Optional for desktop integration:
+ * Nautilus
+ * pygtk
+ * nautilus-python (>0.4, currently SVN)
+
