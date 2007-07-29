@@ -6,6 +6,14 @@ icon_location = "@prefix@/share/liblicense/icons"
 if icon_location[0]=="@":
     icon_location="."
 
+attributes = ["http://creativecommons.org/ns#Attribution",
+              "http://creativecommons.org/ns#Distribution",
+              "http://creativecommons.org/ns#DerivativeWorks",
+              "http://creativecommons.org/ns#CommercialUse",
+              "http://creativecommons.org/ns#ShareAlike",
+              #temporarily include this to prevent getting the retired devnations license
+              "http://creativecommons.org/ns#HighIncomeNationUse"] 
+
 class LicenseWidget(gtk.VBox):
     __gsignals__ = {"changed":(gobject.SIGNAL_RUN_FIRST,gobject.TYPE_NONE,(gobject.TYPE_STRING,))}
     def __init__(self,license):
@@ -174,36 +182,26 @@ class LicenseWidget(gtk.VBox):
         self.set_license(license)
         
         # hook up license switcher
-        self.ash.connect("toggled",self.checkbox_toggled,0)
+        self.by.connect("toggled",self.checkbox_toggled,0)
+        self.ash.connect("toggled",self.checkbox_toggled,1)
         self.ar.connect("toggled",self.checkbox_toggled,2)
-        self.pcw.connect("toggled",self.checkbox_toggled,1)
-        self.sa.connect("toggled",self.checkbox_toggled,3)
-        self.by.connect("toggled",self.checkbox_toggled,4)
+        self.pcw.connect("toggled",self.checkbox_toggled,3)
+        self.sa.connect("toggled",self.checkbox_toggled,4)
         
         self.jurisdiction.connect("changed",self.update_jurisdiction)
-    
-    def get_licenses(self):
-        if self.jurisdiction.get_active()<=0:
-            l = liblicense.get_licenses()
-        else:
-            l = liblicense.get_licenses(self.jurisdictions[self.jurisdiction.get_active()][0])
-        self.licenses = {}
-        for license in l:
-            if not self.licenses.has_key(self.license_flags(license)):
-                self.licenses[self.license_flags(license)] = []
-            self.licenses[self.license_flags(license)].append(license)
     
     def update_checkboxes(self,license):
         if license:
             self.current_flags= list(self.license_flags(license))
         else:
             self.current_flags=[False,False,False,False,False]
-        self.ash.set_active(self.current_flags[0])
-        self.pcw.set_active(self.current_flags[1])
+        self.by.set_active(self.current_flags[0])
+        self.ash.set_active(self.current_flags[1])
         self.ar.set_active(self.current_flags[2])
         self.ar.toggled()
-        self.sa.set_active(self.current_flags[3])
-        self.by.set_active(self.current_flags[4])
+        self.pcw.set_active(self.current_flags[3])
+        self.sa.set_active(self.current_flags[4])
+        
 
     def ar_toggled(self,button):
         self.sa_box.set_sensitive(button.get_active())
@@ -216,42 +214,56 @@ class LicenseWidget(gtk.VBox):
         self.update_license()
     
     def update_license(self):
-        if self.licenses.has_key(tuple(self.current_flags)):
-            u = self.licenses[tuple(self.current_flags)][0]
+        licenses = self.ll_chooser.get_licenses(
+          permits=(self.current_flags[1]<<1)|(self.current_flags[2]<<2),
+          requires=(self.current_flags[0]<<0)|(self.current_flags[4]<<4),
+          prohibits=(self.current_flags[3]<<3))
+
+        if licenses:
+            u = licenses[0]
             self.emit("changed",u)
             self.uri.set_text(u)
             v = liblicense.get_version(u)
-            self.license.set_text(liblicense.get_name(u) + " " + str(v[0]) + "." + str(v[1]) + "." + str(v[2]))
+            self.license.set_text("%s - %d.%d.%d" % (liblicense.get_name(u), v[0], v[1], v[2]))
         else:
             self.uri.set_text("")
             self.license.set_text("none")
+
+    def update_chooser(self):
+        if self.jurisdiction.get_active()<=0:
+            j = None
+        else:
+            j = self.jurisdictions[self.jurisdiction.get_active()][0]
+
+        self.ll_chooser = liblicense.LicenseChooser(j,attributes)
     
     def license_flags(self,license):
         permits = liblicense.get_permits(license)
         requires = liblicense.get_requires(license)
-        return ("http://creativecommons.org/ns#Distribution" in permits,
-                "http://creativecommons.org/ns#CommercialUse" in liblicense.get_prohibits(license),
-                "http://creativecommons.org/ns#DerivativeWorks" in permits,
-                "http://creativecommons.org/ns#ShareAlike" in requires,
-                "http://creativecommons.org/ns#Attribution" in requires)
+        prohibits = liblicense.get_prohibits(license)
+        return (attributes[0] in requires,
+                attributes[1] in permits,
+                attributes[2] in permits,
+                attributes[3] in prohibits,
+                attributes[4] in requires)
     
     def update_jurisdiction(self, widget):
-        self.get_licenses()
+        self.update_chooser()
         self.update_license()
     
     def set_license(self, license):
         if license and liblicense.verify_uri(license):
             version = liblicense.get_version(license)
-            self.license.set_text(liblicense.get_name(license) + " " + str(version[0]) + "." + str(version[1]) + "." + str(version[2]))
+            self.license.set_text("%s - %d.%d.%d" % (liblicense.get_name(license), version[0], version[1], version[2]))
             self.uri.set_text(license)
             if self.jurisdiction.get_active()==-1 or self._j[self.jurisdiction.get_active()]!=liblicense.get_jurisdiction(license):
-                self.get_licenses()
+                self.update_chooser()
                 
             self.jurisdiction.set_active(self._j.index(liblicense.get_jurisdiction(license)))
         else:
             self.license.set_text("none")
             if self.jurisdiction.get_active()!=0:
-                self.get_licenses()
+               self.update_chooser()
             self.jurisdiction.set_active(0)
             license=None
         self.update_checkboxes(license)
