@@ -263,7 +263,7 @@ LicenseChooser_get_licenses(LicenseChooser* self, PyObject *args, PyObject *kwds
 
 	const ll_license_list_t *license_list = ll_get_licenses_from_flags(self->chooser, permits, requires, prohibits);
 
-	ll_license_list_t *curr = license_list;
+	const ll_license_list_t *curr = license_list;
 	PyObject* list = PyList_New(0);
 	while (curr!=NULL) {
 		PyList_Append(list,PyString_FromString(curr->license));
@@ -365,5 +365,5 @@ PyMODINIT_FUNC initliblicense(void) {
 			return;
 
 	Py_INCREF(&LicenseChooserType);
-	PyModule_AddObject(m, "LicenseChooser", (PyObject *)&LicenseChooserType);
+	PyModule_AddObject(m, "LicenseChooser", (PyObject*)&LicenseChooserType);
 }

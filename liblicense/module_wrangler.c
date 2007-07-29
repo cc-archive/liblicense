@@ -49,7 +49,7 @@ void ll_init_modules() {
 		return;
 	}
 
-	_module_list = (LLModuleDesc*)calloc(n+1,sizeof(LLModuleDesc));
+	_module_list = (LLModuleDesc**)calloc(n+1,sizeof(LLModuleDesc*));
 	LLModuleDesc **curr_module = _module_list;
 
 	int i;
@@ -129,8 +129,7 @@ int ll_module_init(char* directory,module_t m) {// create file to open
 	void *handle = dlopen(reg_file,RTLD_LAZY);
 
 	if (handle) {
-		void (*function_init)();
-		*(void**) (&function_init) = dlsym(handle,"init");
+		void (*function_init)() = dlsym(handle,"init");
 		(*function_init)();
 		return 1;
 	}
@@ -146,8 +145,7 @@ int ll_module_shutdown(char* directory,module_t m) {// create file to open
 	//Get the handle without skewing the number open.
 	void* handle = dlopen(lib_file,RTLD_LAZY);
 
-	void (*function_shutdown)();
-	*(void**) (&function_shutdown) = dlsym(handle,"shutdown");
+	void (*function_shutdown)() = dlsym(handle,"shutdown");
 	(*function_shutdown)();
 
 	dlclose(handle);

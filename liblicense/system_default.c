@@ -33,8 +33,7 @@ int ll_set_default(const uri_t u) {
 	int result = true;
 	while(modules[i]!=NULL) {
 		ll_module_init(LIBLICENSE_CONFIG_MODULE_DIR,modules[i]);
-		int (*set_default) (uri_t);
-		*(void**) (&set_default) = ll_get_module_symbol(LIBLICENSE_CONFIG_MODULE_DIR,modules[i],"set_default");
+		int (*set_default) (uri_t) = ll_get_module_symbol(LIBLICENSE_CONFIG_MODULE_DIR,modules[i],"set_default");
 		result = (result && set_default(u));
 		ll_module_shutdown(LIBLICENSE_CONFIG_MODULE_DIR,modules[i]);
 		i++;
@@ -49,8 +48,7 @@ uri_t ll_get_default() {
 	int i = 0;
 	while(modules[i]!=NULL) {
 		ll_module_init(LIBLICENSE_CONFIG_MODULE_DIR,modules[i]);
-		uri_t (*get_default) ();
-		*(void**) (&get_default) = ll_get_module_symbol(LIBLICENSE_CONFIG_MODULE_DIR,modules[i],"get_default");
+		uri_t (*get_default) () = ll_get_module_symbol(LIBLICENSE_CONFIG_MODULE_DIR,modules[i],"get_default");
 		responses[i] = get_default();
 		ll_module_shutdown(LIBLICENSE_CONFIG_MODULE_DIR,modules[i]);
 		i++;

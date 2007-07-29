@@ -21,33 +21,6 @@ struct _ll_license_chooser_t {
 
 #define N_STATES 4
 
-const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
-{
-	//traverse the down the tree until we get to the right leaf
-	int curr = N_STATES - 1;
-	int i;
-	for (i=1; i<(1<<license_chooser->num_attributes); i <<= 1) {
-		if ( permits & i ) {
-			curr = (curr-N_STATES+2)*N_STATES+LL_PERMITS;
-		}
-		else if ( requires & i ) {
-			curr = (curr-N_STATES+2)*N_STATES+LL_REQUIRES;
-		}
-		else if ( prohibits & i ) {
-			curr = (curr-N_STATES+2)*N_STATES+LL_PROHIBITS;
-		}
-		else {
-			curr = (curr-N_STATES+2)*N_STATES+LL_UNSPECIFIED;
-		}
-	}
-	int arrayIndex = curr-indexAt(license_chooser->num_attributes);
-	return license_chooser->license_list[arrayIndex]->next;
-}
-
-void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, int *requires, int *prohibits )
-{
-}
-
 int indexAt( int height )
 {
 	int h = 0;
@@ -102,6 +75,33 @@ int attribute_index( char **attributes, char *attr, int num_attributes )
 			return i+1;
 	}
 	return -1;
+}
+
+const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
+{
+	//traverse the down the tree until we get to the right leaf
+	int curr = N_STATES - 1;
+	int i;
+	for (i=1; i<(1<<license_chooser->num_attributes); i <<= 1) {
+		if ( permits & i ) {
+			curr = (curr-N_STATES+2)*N_STATES+LL_PERMITS;
+		}
+		else if ( requires & i ) {
+			curr = (curr-N_STATES+2)*N_STATES+LL_REQUIRES;
+		}
+		else if ( prohibits & i ) {
+			curr = (curr-N_STATES+2)*N_STATES+LL_PROHIBITS;
+		}
+		else {
+			curr = (curr-N_STATES+2)*N_STATES+LL_UNSPECIFIED;
+		}
+	}
+	int arrayIndex = curr-indexAt(license_chooser->num_attributes);
+	return license_chooser->license_list[arrayIndex]->next;
+}
+
+void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, int *requires, int *prohibits )
+{
 }
 
 ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char **attributes )
