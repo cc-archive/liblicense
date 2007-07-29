@@ -254,7 +254,7 @@ AC_PROG_CXX
 
 NP_REQUIRED=0.4.3
 
-AC_ARG_ENABLE(nautilus, AC_HELP_STRING([--disable-nautilus], [Disable nautilus python extensions.]),,[enable_np=yes])
+AC_ARG_ENABLE(nautilus, AC_HELP_STRING([--disable-nautilus], [Disable nautilus python extensions.]),[enable_np=$enableval],[enable_np=yes])
 if test "x$enable_np" = "xyes" -a "x$enable_python" = "xyes" -a "x$enable_pygtk" = "xyes"; then
 	PKG_CHECK_MODULES(NP,[
 		nautilus-python >= $NP_REQUIRED],
