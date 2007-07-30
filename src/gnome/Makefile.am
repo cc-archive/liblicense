@@ -36,7 +36,7 @@ Applications_DATA = default-content-license.desktop
 logodir = $(datadir)/pixmaps
 logo_DATA = scales.svg
 
-emblemsdir=$(datadir)/icons/hicolor/scalable/emblems/
+emblemsdir=$(datadir)/icons/hicolor/scalable/emblems
 emblems_DATA=emblem-cc.svg \
 	     emblem-cc.icon \
 	     emblem-licensed.svg \
@@ -49,7 +49,7 @@ install-data-hook:
 endif
 
 if HAVE_NP
-pynautilusdir = $(libdir)/nautilus/extensions-1.0/python/
+pynautilusdir = $(libdir)/nautilus/extensions-1.0/python
 dist_pynautilus_SCRIPTS = nautilus-liblicense.py
 endif
 

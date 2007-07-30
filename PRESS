@@ -9,10 +9,11 @@ the ability to easily discover and display those permissions to a user.
 Liblicense also offers authors the ability to embed those permissions
 in a standard way in files.
 
-Generally, copyright law indicates once an original creative work has
-been fixed, others must get explicit permission before they are allowed
-to re-use or change it.  To allow collaboration, many authors choose to
-stamp their work with content licenses allowing some forms of re-use.
+Generally, copyright law applies automatically upon fixation of a creative
+work to tangible form, and people must get explicit permission from the
+copyright owner before they are allowed to re-use or change the work.
+To allow collaboration, many authors choose to stamp their work with
+content licenses allowing some forms of re-use.
 
 On the World-Wide Web, authors frequently publish license information in
 a web page shown to users before they download the actual work.  "Once off
@@ -37,15 +38,14 @@ called "fair use" that allows for some use of a work without permission,
 and all of the licenses supported by Liblicense do not restrict those
 fair uses.
 
-However, this is a very small step. There are many interesting
-applications which have yet to be explored. As one example, Creative
-Commons plans on integration in the Sugar for the One Laptop Per Child
-(OLPC) project. They are also considering use in applications such
-as music players, web feed readers, desktop publishing programs, and
-text editors. "Imagine finding a song you love using Amarok and finding
-out you can share it with your friends. Or imagine finding a brilliant
-poem on a blog through Liferea you can base a video or song off of,"
-said Scott Shawcroft.
+There are many interesting applications which have yet to be explored. As
+one example, Creative Commons plans on integration in the Sugar for the
+One Laptop Per Child (OLPC) project. They are also considering use in
+applications such as music players, web feed readers, desktop publishing
+programs, and text editors. "Imagine finding a song you love using Amarok
+and finding out you can share it with your friends. Or imagine finding
+a brilliant poem on a blog through Liferea you can base a video or song
+off of," says Shawcroft.
 
 Additionally, in the future, Creative Commons hopes that Liblicense will
 support embedding license information into all of the file types used
@@ -61,17 +61,16 @@ the CC-GNU-LGPL, http://creativecommons.org/licenses/LGPL/2.1/.
 
 About Creative Commons
 
-Creative Commons is a not-for-profit organization, founded in
-2001, that promotes the creative re-use of intellectual and artistic
-works-whether owned or in the public domain. Creative Commons licences
-provide a flexible range of protections and freedoms for authors,
-artists, and educators that build upon the "all rights reserved"
-concept of traditional copyright to offer a voluntary "some rights
-reserved" approach. It is sustained by the generous support of
-various organizations including the John D. and Catherine T. MacArthur
-Foundation, Omidyar Network, the Hewlett Foundation, and the Rockefeller
-Foundation as well as members of the public. For general information,
-visit http://creativecommons.org.
+Creative Commons is a not-for-profit organization, founded in 2001, that
+promotes the creative re-use of intellectual and artistic works-whether
+owned or in the public domain. Creative Commons licences provide a
+flexible range of protections and freedoms for authors, artists, and
+educators that build upon the "all rights reserved" concept of traditional
+copyright to offer a voluntary "some rights reserved" approach. It is
+sustained by the generous support of various organizations including
+the John D. and Catherine T. MacArthur Foundation, Omidyar Network, the
+Hewlett Foundation, and the Rockefeller Foundation as well as members
+of the public. For general information, visit http://creativecommons.org.
 
 Press Contact
 
