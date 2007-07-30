@@ -50,17 +50,18 @@ the ability of users to use their computers or the content that is
 stored on those computers.  It serves to inform rather than enforce.
 This is especially important because copyright law has a broad
 exception category called "fair use" that allows for some use of a
-work without permission, and all of the licenses Liblicense knows
-about do not restrict those fair uses.
+work without permission, and all of the licenses supported by
+Liblicense do not restrict those fair uses.
 
 However, this is a very small step. There are many interesting
 applications which have yet to be explored. As one example, Creative
 Commons plans on integration in the Sugar for the One Laptop Per Child
 (OLPC) project. They are also considering use in applications such as
-Amarok, Liferea, Inkscape and GEdit. "Imagine finding a song you love
-using Amarok and finding out you can share it with your friends. Or
-imagine finding a brilliant poem on a blog through Liferea you can
-base a video or song off of." said Scott Shawcroft.
+music players, web feed readers, desktop publishing programs, and text
+editors. "Imagine finding a song you love using Amarok and finding out
+you can share it with your friends. Or imagine finding a brilliant
+poem on a blog through Liferea you can base a video or song off of,"
+said Scott Shawcroft.
 
 Additionally, in the future, Creative Commons hopes that Liblicense
 will support embedding license information into all of the file types
