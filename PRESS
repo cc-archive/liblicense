@@ -1,18 +1,6 @@
-Media Contact:
+CREATIVE COMMONS RELEASES LIBLICENSE FOR SIMPLE TECHNICAL LICENSING INTEGRATION
 
-Nathan Yergler
-Chief Technical Officer
-Creative Commons
-(415) 369 - 8487
-nathan@creativecommons.org
-
-Scott Shawcroft
-Technical Intern
-Creative Commons
-(360) 930 - 2256
-scott.shawcroft@gmail.com
-
-San Francisco, CA - July 30, 2007 - Creative Commons released its second version of its desktop licensing library, Liblicense, featuring desktop integration today.  Liblicense provides software developers with easy access to content licenses, such as the Creative Commons Attribution v 3.0 license, and modules to embed the corresponding Uniform Resource Identifier (URI) for a particular license in a file.
+San Francisco, CA - July 30, 2007 - Creative Commons released the second version of its desktop licensing library, Liblicense, featuring desktop integration today.  Liblicense provides software developers with easy access to content licenses, such as the Creative Commons Attribution v 3.0 licenses, and modules to embed the corresponding Uniform Resource Identifier (URI) for a particular license in a file.
 
 The Internet has enabled global collaboration for a greater good. Many households were introduced to a new world by broadband Internet. Amongst these groups of collaboration were those people centered around the ideas of the book Free Culture by Lawrence Lessig. These people continue to collaborate across borders in hopes of expressing ideas in an endless variety of ways. Audio, video, photography, poetry and scientific research have all been released with 'some rights reserved', Creative Commons' slogan. The web is  brimming with license data, the GNU General Public License (GPL) and others on Sourceforge and Creative Commons licenses on Flickr. The web has developed license awareness and the desktop has not.
 
@@ -30,3 +18,13 @@ For more information visit http://www.creativecommons.org/project/Liblicense, jo
 
 About Creative Commons
 Creative Commons is a not-for-profit organization, founded in 2001, that promotes the creative re-use of intellectual and artistic works—whether owned or in the public domain. Creative Commons licences provide a flexible range of protections and freedoms for authors, artists, and educators that build upon the “all rights reserved” concept of traditional copyright to offer a voluntary “some rights reserved” approach. It is sustained by the generous support of various organizations including the John D. and Catherine T. MacArthur Foundation, Omidyar Network, the Hewlett Foundation, and the Rockefeller Foundation as well as members of the public. For general information, visit http://creativecommons.org.
+
+
+Press Contact
+
+Nathan Yergler
+Chief Technical Officer
+Creative Commons
+(415) 369 - 8487
+nathan@creativecommons.org
+
