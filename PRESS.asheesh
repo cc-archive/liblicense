@@ -1,0 +1,32 @@
+Media Contact:
+
+Nathan Yergler
+Chief Technical Officer
+Creative Commons
+(415) 369 - 8487
+nathan@creativecommons.org
+
+Scott Shawcroft
+Technical Intern
+Creative Commons
+(360) 930 - 2256
+scott.shawcroft@gmail.com
+
+San Francisco, CA - July 30, 2007 - Creative Commons released its second version of its desktop licensing library, Liblicense, featuring desktop integration today.  Liblicense provides software developers with easy access to content licenses, such as the Creative Commons Attribution v 3.0 license, and modules to embed the corresponding Uniform Resource Identifier (URI) for a particular license in a file.
+
+The Internet has enabled global collaboration for a greater good. Many households were introduced to a new world by broadband Internet. Amongst these groups of collaboration were those people centered around the ideas of the book Free Culture by Lawrence Lessig. These people continue to collaborate across borders in hopes of expressing ideas in an endless variety of ways. Audio, video, photography, poetry and scientific research have all been released with 'some rights reserved', Creative Commons' slogan. The web is  brimming with license data, the GNU General Public License (GPL) and others on Sourceforge and Creative Commons licenses on Flickr. The web has developed license awareness and the desktop has not.
+
+While the web has a way of denoting and acknowledging an author's intention, the desktop has no such thing. "Once off of the web, the files are on their own. Away from all of the comforts of the creator's website in the big mess of files that we call a desktop computer. When would this all change? When will a license be as ubiquitous as a last modified date?" asks Scott Shawcroft, one of the developers of Liblicense.
+
+Every file has finite points of modification. The first of these is the point of creation. Both the original Get Creative video and in the newer Wanna Work Together video emphasize the fact that upon the expression of an idea in a tangible form its author gains a bundle of exclusive rights formally known as copyright. Each and every file on each and every computer has rights. While many files may be generated, others are the result of the expression of an idea by someone. That person on the computer has a copyright for all of those files. However, now there is no fundamental way to release ( or express retention of ) those given rights.
+
+Developed by Scott Shawcroft, Jason Kivlighn, Jon Phillips and Nathan Yergler, Liblicense 0.3 is the first small step towards universal license tracking on the desktop. What they've created is a library to aggregate license data and tracking in order to allow client applications to acknowledge and leverage creative licenses. Their intention is not to create the means for technologically based rights restriction or digital rights management but to create a system to ease the process of explicating and, conversely, inquiring about a file's rights. Liblicense aims to present the intentions of the author but not enforce them.
+
+However, this is a very small step. There are many interesting applications which have yet to be explored. As one example, Creative Commons plans on integration in the Sugar for the One Laptop Per Child (OLPC) project. They are also considering use in applications such as Amarok, Liferea, Inkscape and GEdit. "Imagine finding a song you love using Amarok and finding out you can share it with your friends. Or imagine finding a brilliant poem on a blog through Liferea you can base a video or song off of." said Scott Shawcroft.
+
+Additionally, in the future, Creative Commons hopes that Liblicense will support embedding license information into all of the file types used on the desktop. While this goal is technically challenging, steps must first be made in creating standardized ways of embedding license data in some file types.
+
+For more information visit http://www.creativecommons.org/project/Liblicense, join the developers on irc.freenode.net/#cc or email them on cc-devel@lists.ibiblio.org.  To download Liblicense visit http://sourceforge.net/projects/cctools .
+
+About Creative Commons
+Creative Commons is a not-for-profit organization, founded in 2001, that promotes the creative re-use of intellectual and artistic works—whether owned or in the public domain. Creative Commons licences provide a flexible range of protections and freedoms for authors, artists, and educators that build upon the “all rights reserved” concept of traditional copyright to offer a voluntary “some rights reserved” approach. It is sustained by the generous support of various organizations including the John D. and Catherine T. MacArthur Foundation, Omidyar Network, the Hewlett Foundation, and the Rockefeller Foundation as well as members of the public. For general information, visit http://creativecommons.org.
