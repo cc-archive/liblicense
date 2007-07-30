@@ -12,7 +12,8 @@ Creative Commons
 (360) 930 - 2256
 scott.shawcroft@gmail.com
 
-San Francisco, CA - July 30, 2007 - Creative Commons released its second version of its desktop licensing library, Liblicense, featuring desktop integration today.  Liblicense provides software developers with easy access to content licenses, such as the Creative Commons Attribution v 3.0 license, and modules to embed the corresponding Uniform Resource Identifier (URI) for a particular license in a file.
+San Francisco, CA - July 30, 2007 - Creative Commons released the second testing version of its desktop licensing library, Liblicense, featuring desktop integration.  When content authors grant permission for re-use of their work, Liblicense provides software developers with the ability to easily discover and display those permissions to a user.  Liblicense also offers authors the ability to embed those permissions in a standard way in files.
+
 
 The Internet has enabled global collaboration for a greater good. Many households were introduced to a new world by broadband Internet. Amongst these groups of collaboration were those people centered around the ideas of the book Free Culture by Lawrence Lessig. These people continue to collaborate across borders in hopes of expressing ideas in an endless variety of ways. Audio, video, photography, poetry and scientific research have all been released with 'some rights reserved', Creative Commons' slogan. The web is  brimming with license data, the GNU General Public License (GPL) and others on Sourceforge and Creative Commons licenses on Flickr. The web has developed license awareness and the desktop has not.
 
