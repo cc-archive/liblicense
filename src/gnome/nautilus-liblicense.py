@@ -5,16 +5,32 @@ import gtk
 import nautilus
 from liblicense.gui_gtk import *
 
+class LicenseInfoProvider(nautilus.InfoProvider):
+    def __init__(self):
+        pass
+    
+    def update_file_info(self, f):
+        if f.get_uri()[:7]=="file://":
+            license = liblicense.read(urllib.unquote(f.get_uri()[7:]))
+            if license:
+                if "Creative Commons" in liblicense.get_attribute(license,"http://purl.org/dc/elements/1.1/creator",False):
+                    f.add_emblem("cc")
+                else:
+                    f.add_emblem("licensed")
+
 class LicensePropertyPage(nautilus.PropertyPageProvider):
     def __init__(self):
         pass
 
     def license_chosen(self, widget):
         license = self.box.get_license()
-        if license:
+        if license and self.seen:
             for f in self.files:
                 liblicense.write(f,license)
-        
+    
+    def i_see_you(self,widget,event):
+        self.seen = self.seen or widget.props.visible
+
     def get_property_pages(self, files):
         self.files = files
 
@@ -23,7 +39,8 @@ class LicensePropertyPage(nautilus.PropertyPageProvider):
         
         if len(self.files)==0:
             return
-
+        
+        self.seen = False
         self.property_label = gtk.Label('License')
         self.property_label.show()
         
@@ -35,20 +52,11 @@ class LicensePropertyPage(nautilus.PropertyPageProvider):
             license = None
         self.box = LicenseWidget(license)
         self.box.connect("destroy",self.license_chosen)
+        
+        #when the by checkbox is exposed we know the whole layout is.
+        self.box.by.connect("expose-event",self.i_see_you)
+
         self.box.show()
         
         return nautilus.PropertyPage("NautilusPython::license",
                                      self.property_label, self.box),
-
-class LicenseInfoProvider(nautilus.InfoProvider):
-    def __init__(self):
-        pass
-    
-    def update_file_info(self, f):
-        if f.get_uri()[:7]=="file://":
-            license = liblicense.read(f.get_uri()[7:].replace("%20"," "))
-            if license:
-                if "Creative Commons" in liblicense.get_attribute(license,"http://purl.org/dc/elements/1.1/creator",False):
-                    f.add_emblem("cc")
-                else:
-                    f.add_emblem("licensed")
