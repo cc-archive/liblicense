@@ -45,16 +45,13 @@ on old files.  By embedding information about many licenses into the
 software package, liblicense allows authors to embed concise license
 names while users can see a full name and description.
 
----
-
-What they've created is a library to
-aggregate license data and tracking in order to allow client
-applications to acknowledge and leverage creative licenses. Their
-intention is not to create the means for technologically based rights
-restriction or digital rights management but to create a system to
-ease the process of explicating and, conversely, inquiring about a
-file's rights. Liblicense aims to present the intentions of the author
-but not enforce them.
+Liblicense does not and is never intended to technologically restrict
+the ability of users to use their computers or the content that is
+stored on those computers.  It serves to inform rather than enforce.
+This is especially important because copyright law has a broad
+exception category called "fair use" that allows for some use of a
+work without permission, and all of the licenses Liblicense knows
+about do not restrict those fair uses.
 
 However, this is a very small step. There are many interesting
 applications which have yet to be explored. As one example, Creative
