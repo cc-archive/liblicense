@@ -31,6 +31,7 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
     <permits rdf:resource='http://creativecommons.org/ns#DerivativeWorks'/>
     <permits rdf:resource='http://creativecommons.org/ns#Distribution'/>
     <permits rdf:resource='http://creativecommons.org/ns#Reproduction'/>
+    <prohibits rdf:resource='http://creativecommons.org/ns#CommercialUse'/>
     <dc:title>
       <rdf:Alt>
         <rdf:li xml:lang='x-default'>Creative Commons - NonCommercial Sampling Plus</rdf:li>

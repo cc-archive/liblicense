@@ -10,9 +10,7 @@ attributes = ["http://creativecommons.org/ns#Attribution",
               "http://creativecommons.org/ns#Distribution",
               "http://creativecommons.org/ns#DerivativeWorks",
               "http://creativecommons.org/ns#CommercialUse",
-              "http://creativecommons.org/ns#ShareAlike",
-              #temporarily include this to prevent getting the retired devnations license
-              "http://creativecommons.org/ns#HighIncomeNationUse"] 
+              "http://creativecommons.org/ns#ShareAlike"] 
 
 class LicenseWidget(gtk.VBox):
     __gsignals__ = {"changed":(gobject.SIGNAL_RUN_FIRST,gobject.TYPE_NONE,(gobject.TYPE_STRING,))}
