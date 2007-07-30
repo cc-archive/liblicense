@@ -1,7 +1,7 @@
 CREATIVE COMMONS RELEASES LIBLICENSE FOR SIMPLE TECHNICAL LICENSING
 INTEGRATION
 
-San Francisco, CA - July 30, 2007 - Today, Creative Commons puliblished
+San Francisco, CA - July 30, 2007 - Today, Creative Commons published
 the first public release of its desktop licensing library, Liblicense,
 featuring desktop integration.  When content authors grant permission
 for re-use of their work, Liblicense provides software developers with
@@ -39,13 +39,13 @@ and all of the licenses supported by Liblicense do not restrict those
 fair uses.
 
 There are many interesting applications which have yet to be explored. As
-one example, Creative Commons plans on integration in the Sugar for the
-One Laptop Per Child (OLPC) project. They are also considering use in
-applications such as music players, web feed readers, desktop publishing
-programs, and text editors. "Imagine finding a song you love using Amarok
-and finding out you can share it with your friends. Or imagine finding
-a brilliant poem on a blog through Liferea you can base a video or song
-off of," says Shawcroft.
+one example, Creative Commons plans on integrating liblicense with Sugar,
+the user interface library used by the One Laptop Per Child (OLPC) project. 
+They are also considering use in applications such as music players, web 
+feed readers, desktop publishing programs, and text editors. "Imagine 
+finding a song you love using Amarok and finding out you can share it with 
+your friends. Or imagine finding a brilliant poem on a blog through 
+Liferea you can base a video or song off of," says Shawcroft.
 
 Additionally, in the future, Creative Commons hopes that Liblicense will
 support embedding license information into all of the file types used
@@ -63,7 +63,7 @@ About Creative Commons
 
 Creative Commons is a not-for-profit organization, founded in 2001, that
 promotes the creative re-use of intellectual and artistic works-whether
-owned or in the public domain. Creative Commons licences provide a
+owned or in the public domain. Creative Commons licenses provide a
 flexible range of protections and freedoms for authors, artists, and
 educators that build upon the "all rights reserved" concept of traditional
 copyright to offer a voluntary "some rights reserved" approach. It is
