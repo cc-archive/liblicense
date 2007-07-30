@@ -1,4 +1,4 @@
-liblicense - 0.2
+liblicense - 0.3
 
 http://wiki.creativecommons.org/Liblicense
 
@@ -26,5 +26,5 @@ Optional for embedding and extracting licenses:
 Optional for desktop integration:
  * Nautilus
  * pygtk
- * nautilus-python (>0.4.3, currently SVN.  0.4.3 WILL NOT work)
+ * nautilus-python
 
