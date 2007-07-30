@@ -16,3 +16,4 @@
 # Copyright 2007, Jason Kivlighn.
 
 SUBDIRS = xdgmime liblicense . licenses modules bindings tests utils src
+EXTRA_DIST=PRESS
