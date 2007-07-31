@@ -77,6 +77,17 @@ int attribute_index( char **attributes, char *attr, int num_attributes )
 	return -1;
 }
 
+int ll_attribute_flag( ll_license_chooser_t *license_chooser, const char *attr )
+{
+	int i;
+	for (i=0; i<license_chooser->num_attributes; ++i) {
+		if (strcmp(attr,license_chooser->attributes[i])==0) {
+			return (1<<i);
+		}
+	}
+	return -1;
+}
+
 const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
 {
 	//traverse the down the tree until we get to the right leaf
@@ -194,7 +205,10 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 
 	chooser->all_licenses = licenses;
 	chooser->num_attributes = num_attributes;
-	chooser->attributes = attributes;
+	chooser->attributes = (char**)malloc(sizeof(char*)*num_attributes);
+	for (i=0; i<num_attributes; ++i) {
+		chooser->attributes[i] = strdup(attributes[i]);
+	}
 	chooser->license_list = license_heap;
 
 	return chooser;
@@ -214,6 +228,11 @@ void ll_free_license_chooser(ll_license_chooser_t *chooser)
 			curr = tmp;
 		}
 	}
+
+	for (i=0; i<chooser->num_attributes; ++i) {
+		free(chooser->attributes[i]);
+	}
+	free(chooser->attributes);
 
 	free(chooser->license_list);
 	ll_free_list(chooser->all_licenses);

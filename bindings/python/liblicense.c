@@ -273,9 +273,22 @@ LicenseChooser_get_licenses(LicenseChooser* self, PyObject *args, PyObject *kwds
 	return list;
 }
 
+static PyObject *
+LicenseChooser_attribute_flag(LicenseChooser* self, PyObject *args)
+{
+	char *attr;
+	if (!PyArg_ParseTuple(args,"s",&attr))
+		return NULL;
+
+	return PyInt_FromLong((long)ll_attribute_flag(self->chooser,attr));
+}
+
 static PyMethodDef LicenseChooser_methods[] = {
 	{"get_licenses", (PyCFunction)LicenseChooser_get_licenses, METH_VARARGS | METH_KEYWORDS,
 		"Return a list of licenses matching the given flags"
+	},
+	{"attribute_flag", (PyCFunction)LicenseChooser_attribute_flag, METH_VARARGS,
+		"Return the appropriate permits/requires/prohibits flag to be passed to get_licenses"
 	},
 	{NULL}  /* Sentinel */
 };
@@ -359,6 +372,7 @@ static PyMethodDef LicenseMethods[] = {
 PyMODINIT_FUNC initliblicense(void) {
   ll_init();
 	PyObject *m = Py_InitModule("liblicense",LicenseMethods);
+	PyModule_AddIntConstant(m, "UNSPECIFIED",LL_UNSPECIFIED);
 
 	LicenseChooserType.tp_new = PyType_GenericNew;
 	if (PyType_Ready(&LicenseChooserType) < 0)

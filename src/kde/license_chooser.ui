@@ -46,6 +46,9 @@
      <property name="text" >
       <string>Require Others to Share-Alike</string>
      </property>
+     <property name="enabled" >
+       <bool>false</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -72,7 +75,7 @@
        <item>
         <widget class="QLabel" name="label_3" >
          <property name="text" >
-          <string>URI:</string>
+          <string>License URI:</string>
          </property>
          <property name="alignment" >
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -86,12 +89,12 @@
        <item>
         <widget class="QLineEdit" name="licenseEdit" >
          <property name="text" >
-          <string/>
+           <string>none</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox" >
+        <widget class="QComboBox" name="jurisdictionComboBox" >
          <property name="sizePolicy" >
           <sizepolicy vsizetype="Fixed" hsizetype="MinimumExpanding" >
            <horstretch>0</horstretch>

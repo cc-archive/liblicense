@@ -63,9 +63,8 @@ attributes = ["http://creativecommons.org/ns#Distribution",
 		"http://creativecommons.org/ns#Attribution",
 		"http://creativecommons.org/ns#Notice"]
 chooser = LicenseChooser(None,attributes)
-permits = (1 << 0) | (1 << 1)
-requires = 0
-prohibits = 0
-print "\t",chooser.get_licenses(permits=permits)
+
+permits = chooser.attribute_flag("http://creativecommons.org/ns#Distribution") |  chooser.attribute_flag("http://creativecommons.org/ns#DerivativeWorks")
+print "\t",chooser.get_licenses(permits=permits,requires=liblicense.UNSPECIFIED,prohibits=liblicense.UNSPECIFIED)
 
 sys.exit(0)

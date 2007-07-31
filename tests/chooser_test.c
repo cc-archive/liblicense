@@ -5,7 +5,7 @@
 void print_licenses( const ll_license_list_t *list )
 {
 	printf("Matching licenses:\n");
-	ll_license_list_t *curr = list;
+	const ll_license_list_t *curr = list;
 	while (curr) {
 		printf("\t%s\n",curr->license);
 		curr = curr->next;
@@ -45,11 +45,11 @@ int main(int argc, char *argv[])
 	ll_init();
 
 	char *attributes[] = {
-			"http://creativecommons.org/ns#Distribution",			//0
-			"http://creativecommons.org/ns#CommercialUse",		//1
-			"http://creativecommons.org/ns#DerivativeWorks",	//2
-			"http://creativecommons.org/ns#ShareAlike",				//3
-			"http://creativecommons.org/ns#Attribution",			//4
+			"http://creativecommons.org/ns#Distribution",
+			"http://creativecommons.org/ns#CommercialUse",
+			"http://creativecommons.org/ns#DerivativeWorks",
+			"http://creativecommons.org/ns#ShareAlike",
+			"http://creativecommons.org/ns#Attribution",
 			NULL
 	};
 	print_attributes(attributes);
@@ -58,16 +58,12 @@ int main(int argc, char *argv[])
 	
 	int permits_flags, requires_flags, prohibits_flags;
 	
-	//permits Distribution(0) and DerivativeWorks(2)
-	permits_flags = (1 << 0) | (1 << 2);
+	permits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Distribution") |
+	 ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#DerivativeWorks");
+	requires_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#ShareAlike");
+	prohibits_flags = LL_UNSPECIFIED;
 	
-	//requires ShareAlike(3)
-	requires_flags = (1 << 3);
-	
-	//doesn't prohibit any particular attribute, but could still prohibit an attribute that isn't in the 'attributes' list
-	prohibits_flags = 0;
-	
-	//Attribution(4) and CommercialUse(1) must be unspecified in the license RDF.
+	//Attribution and CommercialUse must be unspecified in the license RDF.
 	//If you don't want this to be the case, leave these two attributes out of the list that is
 	//passed to ll_new_license_chooser()
 	
@@ -75,42 +71,28 @@ int main(int argc, char *argv[])
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
 
-	//permits Distribution(0)
-	permits_flags = (1 << 0);
-	
-	//requires ShareAlike(3)
-	requires_flags = (1 << 4);
-	
-	//prohibits CommercialUse(1)
-	prohibits_flags = (1 << 1);
+	permits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Distribution");
+	requires_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Attribution");
+	prohibits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#CommercialUse");
 
-	//returns all by-nc-nd licenses
+	//returns by-nc-nd
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
-
-	//permits Distribution(0)
-	permits_flags = (1 << 0);
-	
-	//requires ShareAlike(3)
-	requires_flags = (1 << 4);
-	
-	//prohibits CommercialUse(1)
-	prohibits_flags = (1 << 1);
 
 	ll_free_license_chooser(license_chooser);
 
 
 	char *attributes2[] = {
-			"http://creativecommons.org/ns#DerivativeWorks",	//0
+			"http://creativecommons.org/ns#DerivativeWorks",
 			NULL
 	};
 	print_attributes(attributes2);
 	license_chooser = ll_new_license_chooser("us",attributes2);
 
 	//returns all the licenses that don't specify DerivativeWorks
-	permits_flags = 0;
-	requires_flags = 0;
-	prohibits_flags = 0;
+	permits_flags = LL_UNSPECIFIED;
+	requires_flags = LL_UNSPECIFIED;
+	prohibits_flags = LL_UNSPECIFIED;
 
 	print_flags(attributes2,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));

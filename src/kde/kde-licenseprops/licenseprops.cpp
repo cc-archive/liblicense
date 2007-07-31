@@ -51,7 +51,7 @@ LicensePropsPlugin::LicensePropsPlugin(KPropertiesDialog *_props, const QStringL
 
 			char *license = ll_read(item->localPath().toUtf8().data());
 
-			licenseChooser->uriEdit->setText(QString::fromUtf8(license));
+			licenseChooser->setLicenseURI(QString::fromUtf8(license));
 		}
 	}
 }
@@ -81,7 +81,7 @@ void LicensePropsPlugin::applyChanges()
 
 	KFileItem *item = properties->item();
 	if (!licenseChooser->uriEdit->text().isEmpty()) {
-		QByteArray byteArray = licenseChooser->uriEdit->text().toUtf8();
+		QByteArray byteArray = licenseChooser->licenseURI().toUtf8();
 		
 		//watch out: we can't do uriEdit->text().toUtf8().data() because the result is 
 		//only valid as long as the QByteArray is around

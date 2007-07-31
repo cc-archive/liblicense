@@ -19,6 +19,7 @@
 
 #include <QtCore/QSignalMapper>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <liblicense.h>
 
@@ -27,11 +28,11 @@
 #endif
 
 char *attributes[] = {
-		"http://creativecommons.org/ns#Distribution",			//0
-		"http://creativecommons.org/ns#CommercialUse",		//1
-		"http://creativecommons.org/ns#DerivativeWorks",	//2
-		"http://creativecommons.org/ns#ShareAlike",				//3
-		"http://creativecommons.org/ns#Attribution",			//4
+		"http://creativecommons.org/ns#Distribution",
+		"http://creativecommons.org/ns#CommercialUse",
+		"http://creativecommons.org/ns#DerivativeWorks",
+		"http://creativecommons.org/ns#ShareAlike",
+		"http://creativecommons.org/ns#Attribution",
 		NULL
 };
 
@@ -59,10 +60,11 @@ LicenseChooser::LicenseChooser( QWidget *parent )
 
 	ll_init();
 
-	permits_flags = requires_flags = prohibits_flags = 0;
+	permits_flags = requires_flags = prohibits_flags = LL_UNSPECIFIED;
 
-
-	chooser = ll_new_license_chooser(NULL,attributes);
+	jurisdictionComboBox->addItem(QIcon(LICENSE_DIR "../icons/unported.png"), i18n("Unported"), QVariant(QString::null));
+	jurisdictionComboBox->addItem(QIcon(LICENSE_DIR "../icons/uk.png"), i18n("United Kingdom"), QVariant("uk"));
+	jurisdictionComboBox->addItem(QIcon(LICENSE_DIR "../icons/us.png"), i18n("United States"), QVariant("us"));
 
 	// CLEANUP: icon paths
 	attributionCheckBox->setIcon( QIcon(LICENSE_DIR "../icons/by.svg") );
@@ -89,6 +91,10 @@ LicenseChooser::LicenseChooser( QWidget *parent )
 
 	connect(signalMapper, SIGNAL(mapped(QWidget*)),
 		this, SLOT(checkBoxClicked(QWidget*)));
+
+	connect(jurisdictionComboBox, SIGNAL(activated(int)), this, SLOT(updateJurisdiction()));
+
+	updateChooser();
 }
 
 LicenseChooser::~LicenseChooser()
@@ -97,46 +103,136 @@ LicenseChooser::~LicenseChooser()
 	ll_stop();
 }
 
-void LicenseChooser::checkBoxClicked(QWidget *checkBox)
+QString LicenseChooser::licenseURI()
 {
-	kdDebug() << checkBox->objectName() << " clicked" << endl;
-	if ( checkBox->objectName() == "attributionCheckBox" ) {
-		requires_flags ^= (1 << 4);
-	} else if ( checkBox->objectName() == "sharingCheckBox" ) {
-		permits_flags ^= (1 << 0);
-	} else if ( checkBox->objectName() == "remixingCheckBox" ) {
-		permits_flags ^= (1 << 2);
-	} else if ( checkBox->objectName() == "noCommercialCheckBox" ) {
-		prohibits_flags ^= (1 << 1);
-	} else if ( checkBox->objectName() == "shareAlikeCheckBox" ) {
-		requires_flags ^= (1 << 3);
+	return uriEdit->text();
+}
+
+void LicenseChooser::setLicenseURI( const QString &uriString )
+{
+	int flag;
+	char **attr;
+	char **attrs;
+
+	const QByteArray uri_ba = uriString.toUtf8();
+	const uri_t uri = (const uri_t)uri_ba.data();
+
+	if ( !ll_verify_uri(uri) ) {
+		uriEdit->setText(QString::fromUtf8(uri));
+		return;
 	}
 
+	attrs = ll_get_permits(uri);
+	for (attr=attrs; *attr; ++attr) {
+		if (strcmp(*attr,"http://creativecommons.org/ns#Distribution")==0) {
+			sharingCheckBox->setChecked(true);
+		} else if (strcmp(*attr,"http://creativecommons.org/ns#DerivativeWorks")==0) {
+			remixingCheckBox->setChecked(true);
+		}
+	}
+
+	attrs = ll_get_requires(uri);
+	for (attr=attrs; *attr; ++attr) {
+		if (strcmp(*attr,"http://creativecommons.org/ns#Attribution")==0) {
+			attributionCheckBox->setChecked(true);
+		} else if (strcmp(*attr,"http://creativecommons.org/ns#ShareAlike")==0) {
+			shareAlikeCheckBox->setChecked(true);
+		}
+	}
+
+	attrs = ll_get_prohibits(uri);
+	for (attr=attrs; *attr; ++attr) {
+		if (strcmp(*attr,"http://creativecommons.org/ns#CommercialUse")==0) {
+			noCommercialCheckBox->setChecked(true);
+		}
+	}
+
+	char *j = ll_get_jurisdiction(uri);
+	QString juris = QString::fromLatin1(j);
+	int i;
+	for (i=0; i<jurisdictionComboBox->count(); ++i) {
+		if (juris == jurisdictionComboBox->itemData(i).toString()) {
+			jurisdictionComboBox->setCurrentIndex(i);
+			updateChooser();
+			goto juris_found;
+		}
+	}
+	//no match found, set to unported
+	if ( jurisdictionComboBox->currentIndex() != 0 ) {
+		jurisdictionComboBox->setCurrentIndex(0);
+		updateChooser();
+	}
+
+	juris_found:
+	free(j);
+
+	updateLicense(uri);
+}
+
+void LicenseChooser::updateJurisdiction()
+{
+	updateChooser();
+	updateLicense();
+}
+
+void LicenseChooser::updateChooser()
+{
+	QByteArray juris_ba = jurisdictionComboBox->itemData( jurisdictionComboBox->currentIndex() ).toString().toLatin1();
+	char *juris = juris_ba.data();
+	if ( juris[0] == '\0' ) juris = NULL;
+
+	kdDebug() << "juris: " << juris << endl;
+	chooser = ll_new_license_chooser(juris,attributes);
+}
+
+void LicenseChooser::updateLicense()
+{
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
 	const ll_license_list_t *licenses = ll_get_licenses_from_flags(chooser,permits_flags,requires_flags,prohibits_flags);
-	if (licenses->next) {
-		kdDebug() << "Matching licenses\n" << endl;
-		ll_license_list_t *curr = licenses->next;
-		while (curr) {
-			kdDebug() << "\t" << curr->license << endl;
-			curr = curr->next;
-		}
+	if (licenses) {
+		const uri_t uri = (const uri_t)licenses->license;
+		updateLicense(uri);
+	} else {
+		kdDebug() << "No license matches" << endl;
+		uriEdit->setText(QString::null);
+		licenseEdit->setText(i18n("none"));
+		emit licenseChanged();
+	}
+}
 
-		const uri_t uri = (const uri_t)licenses->next->license;
+void LicenseChooser::updateLicense(const uri_t uri)
+{
 		uriEdit->setText(QString::fromLatin1(uri));
 
-		int *v = ll_get_version((const uri_t)uri);
+		int *v = ll_get_version(uri);
 
 		licenseEdit->setText(
 			QString("%1 - %2.%3.%4")
 				.arg(QString::fromLatin1(ll_get_name(uri)))
 				.arg(v[0]).arg(v[1]).arg(v[2])
 		);
-	} else {
-		kdDebug() << "No license matches" << endl;
-		uriEdit->setText(QString::null);
-		licenseEdit->setText(QString::null);
+		free(v);
+}
+
+void LicenseChooser::checkBoxClicked(QWidget *checkBox)
+{
+	kdDebug() << checkBox->objectName() << " clicked" << endl;
+	if ( checkBox == attributionCheckBox ) {
+		requires_flags ^= ll_attribute_flag(chooser,"http://creativecommons.org/ns#Attribution");
+	} else if ( checkBox == sharingCheckBox ) {
+		permits_flags ^= ll_attribute_flag(chooser,"http://creativecommons.org/ns#Distribution");
+	} else if ( checkBox == remixingCheckBox ) {
+		permits_flags ^= ll_attribute_flag(chooser,"http://creativecommons.org/ns#DerivativeWorks");
+
+		shareAlikeCheckBox->setEnabled( remixingCheckBox->isChecked() );
+		if (!remixingCheckBox->isChecked())
+			shareAlikeCheckBox->setChecked(false);
+
+	} else if ( checkBox == noCommercialCheckBox ) {
+		prohibits_flags ^= ll_attribute_flag(chooser,"http://creativecommons.org/ns#CommercialUse");
+	} else if ( checkBox == shareAlikeCheckBox ) {
+		requires_flags ^= ll_attribute_flag(chooser,"http://creativecommons.org/ns#ShareAlike");
 	}
 
-	emit licenseChanged();
+	updateLicense();
 }

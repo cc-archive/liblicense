@@ -26,17 +26,24 @@
 
 class LicenseChooser : public QObject, public Ui::LicenseChooserWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    LicenseChooser(QWidget *);
-    virtual ~LicenseChooser();
+	LicenseChooser(QWidget *);
+	virtual ~LicenseChooser();
+
+	QString licenseURI();
+	void setLicenseURI( const QString & );
 
 signals:
-    void licenseChanged();
+	void licenseChanged();
 
 private slots:
 	void checkBoxClicked(QWidget *);
+	void updateJurisdiction();
+	void updateChooser();
+	void updateLicense();
+	void updateLicense(const uri_t uri);
 
 private:
 	ll_license_chooser_t *chooser;
