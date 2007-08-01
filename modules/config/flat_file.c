@@ -22,7 +22,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define MAX_URI_LENGTH 50
+#define MAX_URI_LENGTH 100
 void init() {
 }
 

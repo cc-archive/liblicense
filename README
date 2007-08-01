@@ -23,8 +23,3 @@ Optional for embedding and extracting licenses:
  * libvorbis
  * TagLib
 
-Optional for desktop integration:
- * Nautilus
- * pygtk
- * nautilus-python
-
