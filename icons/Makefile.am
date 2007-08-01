@@ -14,43 +14,19 @@
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Scott Shawcroft.
-if HAVE_PYGTK
-pkgpython_PYTHON = gui_gtk.py
-bin_SCRIPTS = default-content-license
 
 iconsdir = $(pkgdatadir)/icons
-
 icons_DATA = ar.svg \
              ash.svg \
              by.svg \
              pcw.svg \
              sa.svg \
              scales.svg \
-             icons/unported.png \
-             icons/us.png \
-             icons/uk.png
-Applicationsdir = $(datadir)/applications
-Applications_DATA = default-content-license.desktop
-
+             jurisdictions/unported.png \
+             jurisdictions/us.png \
+             jurisdictions/uk.png
 
 logodir = $(datadir)/pixmaps
 logo_DATA = scales.svg
 
-emblemsdir=$(datadir)/icons/hicolor/scalable/emblems
-emblems_DATA=emblem-cc.svg \
-	     emblem-cc.icon \
-	     emblem-licensed.svg \
-	     emblem-licensed.icon
-
-#force an update of the icon cache
-install-data-hook:
-	touch $(datadir)/icons/hicolor
-
-endif
-
-if HAVE_NP
-pynautilusdir = $(libdir)/nautilus/extensions-1.0/python
-dist_pynautilus_SCRIPTS = nautilus-liblicense.py
-endif
-
-EXTRA_DIST = $(icons_DATA) $(Applications_DATA) $(emblems_DATA)
+EXTRA_DIST = $(icons_DATA)

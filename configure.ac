@@ -227,48 +227,6 @@ AM_CONDITIONAL(HAVE_LIBGSF, test "$have_libgsf" = "yes")
 test "$have_libgsf" = "yes" && AC_DEFINE(HAVE_LIBGSF, [], [Define if we have libgsf])
 
 ##################################################################
-# check for pygtk
-##################################################################
-AC_PROG_CXX
-
-PYGTK_REQUIRED=2.10
-
-AC_ARG_ENABLE(pygtk, AC_HELP_STRING([--disable-pygtk], [Disable gtk gui components.]),,[enable_pygtk=yes])
-if test "x$enable_pygtk" = "xyes" -a "x$enable_python" = "xyes"; then
-	PKG_CHECK_MODULES(PYGTK,[
-		pygtk-2.0 >= $PYGTK_REQUIRED],
-		[have_pygtk=yes] , [have_pygtk=no])
-	AC_SUBST(PYGTK_CFLAGS)
-	AC_SUBST(PYGTK_LIBS)
-else
-	have_pygtk="no (disabled)"
-fi
-
-AM_CONDITIONAL(HAVE_PYGTK, test "$have_pygtk" = "yes")
-test "$have_pygtk" = "yes" && AC_DEFINE(HAVE_PYGTK, [], [Define if we have pygtk])
-
-##################################################################
-# check for nautilus-python
-##################################################################
-AC_PROG_CXX
-
-NP_REQUIRED=0.4.3
-
-AC_ARG_ENABLE(nautilus, AC_HELP_STRING([--disable-nautilus], [Disable nautilus python extensions.]),[enable_np=$enableval],[enable_np=yes])
-if test "x$enable_np" = "xyes" -a "x$enable_python" = "xyes" -a "x$enable_pygtk" = "xyes"; then
-	PKG_CHECK_MODULES(NP,[
-		nautilus-python >= $NP_REQUIRED],
-		[have_np=yes] , [have_np=no])
-	AC_SUBST(NP_CFLAGS)
-	AC_SUBST(NP_LIBS)
-else
-	have_np="no (disabled)"
-fi
-
-AM_CONDITIONAL(HAVE_NP, test "$have_np" = "yes")
-test "$have_np" = "yes" && AC_DEFINE(HAVE_NP, [], [Define if we have nautilus-python])
-
-##################################################################
 # check for taglib
 ##################################################################
 AC_PROG_CXX
@@ -320,6 +278,7 @@ AC_DEFINE_UNQUOTED(LIBLICENSE_IO_MODULE_DIR,"${LIBDIR}/liblicense/io/",[Location
 AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/config/"],[Location of liblicense config modules.])
 
 AC_CONFIG_FILES([
+	liblicense.pc
 	Makefile
 	liblicense/Makefile
 	licenses/Makefile
@@ -332,24 +291,10 @@ AC_CONFIG_FILES([
 	tests/Makefile
 	xdgmime/Makefile
 	utils/Makefile
-	src/Makefile
-	src/gnome/Makefile
-	src/gnome/gui_gtk.py
-	src/gnome/default-content-license
+	icons/Makefile
 ])
 
 AC_CONFIG_HEADERS([config.h])
-
-AC_ARG_ENABLE(kde,
-			  AC_HELP_STRING([--enable-kde4], [enable KDE 4 desktop integration]),[enable_kde4=yes],)
-
-if test "x$enable_kde4" = "xyes"; then
-	AC_CONFIG_SUBDIRS([src/kde])
-	KDE_SUBDIR=kde
-else
-	enable_kde4=no
-fi
-AC_SUBST(KDE_SUBDIR)
 
 AC_OUTPUT
 echo "
@@ -363,11 +308,6 @@ Liblicense-$VERSION:
 	enable sqlite3 caching: 		$enable_sqlite
 	enable ruby bindings:			$enable_ruby
 	enable python bindings: 		$enable_python
-
-Desktop Integration:
-	GTK widget and app: 			$have_pygtk
-	Nautilus-python extensions:	 	$have_np
-	KDE					$enable_kde4
 
 I/O Modules:
 	exempi:					$have_exempi

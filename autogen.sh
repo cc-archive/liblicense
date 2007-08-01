@@ -35,8 +35,4 @@ which gnome-autogen.sh || {
     exit 1
 }
 
-cd src/kde
-autoreconf --force --install
-cd ../../
 . gnome-autogen.sh
-

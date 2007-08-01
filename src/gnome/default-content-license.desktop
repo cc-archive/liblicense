@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Default Content License
-Comment=Set the default license for content.
-Exec=default-content-license
-Icon=scales.svg
-Terminal=0
-Type=Application
-Categories=Settings;X-GNOME-PersonalSettings;GTK;

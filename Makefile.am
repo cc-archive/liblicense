@@ -15,5 +15,8 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
-SUBDIRS = xdgmime liblicense . licenses modules bindings tests utils src
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = liblicense.pc
+
+SUBDIRS = xdgmime liblicense . licenses modules bindings tests utils icons
 EXTRA_DIST=PRESS
