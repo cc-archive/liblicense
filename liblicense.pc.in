@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+icondir=${prefix}/share/liblicense/icons
+
+Name: liblicense
+Description: Description
+Version: @VERSION@
+Requires: raptor
+Libs: -L${libdir} -llicense
+Cflags: -I${includedir}
