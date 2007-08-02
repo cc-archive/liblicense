@@ -81,7 +81,7 @@ int main(int argc, char** argv) {
 	uri_t license = NULL;
 	module_t module = NULL;
 	ll_init();
-	while((c = getopt_long(argc,argv,"hmu:l:a::",long_options,&option_index))!=-1) {
+	while((c = getopt_long(argc,argv,"vqhmu:l:a::",long_options,&option_index))!=-1) {
 		switch(c) {
 			case 0:
 				continue;
@@ -114,6 +114,11 @@ int main(int argc, char** argv) {
 				ll_stop();
 				return 0;
 			case '?':
+			case 'v':
+				verbose_flag = 1;
+				break;
+			case 'q':
+				verbose_flag = 0;
 				break;
 			default:
 				abort();
