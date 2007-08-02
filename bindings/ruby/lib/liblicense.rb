@@ -3,7 +3,11 @@ require 'liblicense.so'
 class Liblicense
 
 	def to_s
-		self.name + " " + self.version.join('.') + " (" + self.jurisdiction + ")"
+		version = ""
+		if self.version then
+			version = " " + self.version.join('.')
+		end
+		self.name + version  + " (" + self.jurisdiction + ")"
 	end
 
 end

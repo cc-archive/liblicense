@@ -51,11 +51,15 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	
 	/* Version info */
 	v = ll_get_version(u);
-	
-	license->version = rb_ary_new();
-	license->version = rb_ary_push(license->version, INT2NUM(v[0]));
-	license->version = rb_ary_push(license->version, INT2NUM(v[1]));
-	license->version = rb_ary_push(license->version, INT2NUM(v[2]));	
+
+	if (v) {
+		license->version = rb_ary_new();
+		for (i=1; i<=v[0]; ++i) {
+			license->version = rb_ary_push(license->version, INT2NUM(v[i]));
+		}
+	} else {
+		license->version = NULL;
+	}
 	
 	/* Permits */
 	l = ll_get_permits(u);
