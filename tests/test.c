@@ -31,10 +31,21 @@ int main(int argc, char** argv) {
 	result = ll_get_name("http://creativecommons.org/licenses/by-nd/2.0/");
 	printf("\tget_name: %s\n", result);
 	free(result);
+
 	printf("\tget_version: ");
-	version_t v = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
-	printf("%d.%d.%d\n",v[0],v[1],v[2]);
-	free(v);
+	version_t version = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
+	if (version) {
+		int i;
+		for (i=1; i<=version[0]; ++i) {
+			if (i!=1) printf(".");
+			printf("%d",version[i]);
+		}
+		printf("\n");
+		free(version);
+	} else {
+		printf("unversioned\n");
+	}
+
 	printf("\tverify_uri: %d\n", ll_verify_uri("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_attribute:\n");
 	char** result1 = ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title",1);

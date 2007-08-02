@@ -44,9 +44,14 @@ static PyObject* py_get_version(PyObject* self, PyObject* args) { //(uri_t)
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	version_t v = ll_get_version(u);
-	PyObject* result = Py_BuildValue("(iii)",v[0],v[1],v[2]);
+	int i=1;
+	PyObject* list = PyList_New(0);
+	while (v!=NULL && i <= v[0]) {
+		PyList_Append(list,PyInt_FromLong((long)v[i]));
+		i++;
+	}
 	free(v);
-	return result;
+	return list;
 }
 
 static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)

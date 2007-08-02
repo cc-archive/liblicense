@@ -28,7 +28,7 @@ license="http://creativecommons.org/licenses/by-nd/2.0/"
 print "\tget_jurisdiction:",get_jurisdiction(license)
 print "\tget_name:", get_name(license)
 v = get_version(license)
-print "\tget_version: "+str(v[0])+"."+str(v[1])+"."+str(v[2])
+print "\tget_version: "+".".join(map(str,v))
 print "\tget_permits:", get_permits(license)
 print "\tget_prohibits:", get_prohibits(license)
 print "\tget_requires:", get_requires(license)

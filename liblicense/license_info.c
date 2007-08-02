@@ -59,21 +59,32 @@ char* ll_get_name(const uri_t u) {
 // returns the version of the license.
 version_t ll_get_version(const uri_t u) {
 	char* version = _ll_get_first(ll_get_attribute(u,"http://purl.org/dc/elements/1.1/hasVersion",false));
-	int c = 0;
-	int position = 0;
-	version_t result = (version_t) calloc(3,sizeof(int));
-	while(version!=NULL && version[c]!='\0' && position<3) {
-		if (version[c]!='.') {
-			result[position] *= 10;
-			result[position] += atoi(&version[c]);
-		} else {
-			position++;
+	if (version) {
+		int c;
+		int divisions = 1;
+		for (c=0; c<strlen(version); ++c) {
+			if (version[c] == '.') {
+				++divisions;
+			}
 		}
-		c++;			
-	}
-	if (version!=NULL)
+
+		c = 0;
+		int position = 1;
+		version_t result = (version_t) calloc(divisions+1,sizeof(int));
+		result[0] = divisions;
+		while(version!=NULL && version[c]!='\0' && position<3) {
+			if (version[c]!='.') {
+				result[position] *= 10;
+				result[position] += atoi(&version[c]);
+			} else {
+				position++;
+			}
+			c++;			
+		}
 		free(version);
-	return result;
+		return result;
+	}
+	return NULL;
 }
 
 // returns a list of uris which the license prohibits

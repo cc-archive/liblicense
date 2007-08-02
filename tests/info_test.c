@@ -31,8 +31,18 @@ int main(int argc,char** argv) {
 	free(name);
 	
 	int* version = ll_get_version(license);
-	printf("get_version: %d.%d.%d\n",version[0],version[1],version[2]);
-	free(version);
+	printf("get_version: ");
+	if (version) {
+		int i;
+		for (i=1; i<=version[0]; ++i) {
+			if (i!=1) printf(".");
+			printf("%d",version[i]);
+		}
+		printf("\n");
+		free(version);
+	} else {
+		printf("unversioned\n");
+	}
 	
 	uri_t* p = ll_get_prohibits(license);
 	printf("get_prohibits: ");
