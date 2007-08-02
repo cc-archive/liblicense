@@ -65,6 +65,8 @@ char** ll_get_requires(const uri_t);
 char** ll_get_attribute(uri_t,attribute_t,int);
 uri_t ll_filename_to_uri(const filename_t);
 filename_t ll_uri_to_filename(const uri_t);
+
+char *ll_jurisdiction_name(const juris_t);
 /*******************************************************/
 
 /************** licenses_{cached,uncached} *************/

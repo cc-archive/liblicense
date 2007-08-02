@@ -154,6 +154,16 @@ static PyObject* py_get_jurisdictions(PyObject* self)  {
 	return list;
 }
 
+static PyObject* py_jurisdiction_name(PyObject* self, PyObject* args) { //(juris_t)
+	const juris_t j;
+	if (!PyArg_ParseTuple(args, "s", &j))
+		return NULL;
+	char* name = ll_jurisdiction_name(j);
+	PyObject* result = Py_BuildValue("s",name);
+	free(name);
+	return result;
+}
+
 static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, uri_t[,module_t]
 	const filename_t f;
 	const uri_t u;
@@ -373,6 +383,8 @@ static PyMethodDef LicenseMethods[] = {
 	 "Returns a list of licenses in the optional jurisdiciton (otherwise all are given.)"},
 	{"get_jurisdictions", py_get_jurisdictions, METH_NOARGS,
 	 "Returns a list of all jurisdictions."},
+	{"jurisdiction_name", py_jurisdiction_name, METH_VARARGS,
+	 "Returns the jurisdiction name from the jurisdiction code."},
 	{"write", py_write, METH_VARARGS,
 	 "Returns whether or not the license write succeeded."},
 	{"read",py_read, METH_VARARGS,

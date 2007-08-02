@@ -46,6 +46,68 @@ char* _ll_get_first(char** list) {
 	return result;
 }
 
+#define _(x) (x)
+
+typedef struct {
+	juris_t jurisdiction;
+	const char *name;
+} jurisdiction_map_t;
+
+jurisdiction_map_t jurisdiction_map[] = {
+	{"unported",_("Unported")},
+	{"ar",_("Argentina")},
+	{"at",_("Austria")},
+	{"au",_("Australia")},
+	{"be",_("Belgium")},
+	{"bg",_("Bulgaria")},
+	{"br",_("Brazil")},
+	{"ca",_("Canada")},
+	{"ch",_("Switzerland")},
+	{"cl",_("Chile")},
+	{"cn",_("China")},
+	{"co",_("Colombia")},
+	{"de",_("Germany")},
+	{"dk",_("Denmark")},
+	{"es",_("Spain")},
+	{"fi",_("Finland")},
+	{"fr",_("France")},
+	{"hr",_("Croatia")},
+	{"hu",_("Hungary")},
+	{"il",_("Israel")},
+	{"in",_("India")},
+	{"it",_("Italy")},
+	{"jp",_("Japan")},
+	{"kr",_("South Korea")},
+	{"mk",_("Macedonia")},
+	{"mt",_("Malta")},
+	{"mx",_("Mexico")},
+	{"my",_("Malaysia")},
+	{"nl",_("Netherlands")},
+	{"pe",_("Peru")},
+	{"pl",_("Poland")},
+	{"pt",_("Portugal")},
+	{"scotland",_("UK Scotland")},
+	{"se",_("Sweden")},
+	{"si",_("Slovenia")},
+	{"tw",_("Taiwan")},
+	{"uk",_("UK Englands and Wales")},
+	{"us",_("United States")},
+	{"za",_("South Africa")},
+	{0,0}
+};
+
+char *ll_jurisdiction_name(const juris_t juris) {
+	jurisdiction_map_t *entry = jurisdiction_map;
+	while (entry->jurisdiction) {
+		if (strcmp(juris,entry->jurisdiction) == 0) {
+			return strdup(entry->name);
+		}
+		++entry;
+	}
+
+	return strdup(juris);
+}
+
 //returns the jurisdiction for the given license.
 juris_t ll_get_jurisdiction(const uri_t uri) {
 	return _ll_get_first(ll_get_attribute(uri,"http://purl.org/dc/elements/1.1/coverage",false));
