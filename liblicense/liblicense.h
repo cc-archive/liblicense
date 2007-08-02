@@ -52,7 +52,13 @@ typedef struct {
 
 juris_t ll_get_jurisdiction(const uri_t);
 char* ll_get_name(const uri_t);
+
+/** Returns an array of integers representing each division
+  * The first element of the array specifies the number of version
+  * divisions that follow, and the rest are the actual version numbers
+  */
 version_t ll_get_version(const uri_t);
+
 char** ll_get_prohibits(const uri_t);
 char** ll_get_permits(const uri_t);
 char** ll_get_requires(const uri_t);
