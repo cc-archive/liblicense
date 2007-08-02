@@ -66,7 +66,10 @@ uri_t* ll_get_all_licenses() {
 }
 
 // returns a null-terminated list of all general licenses in a family.
-uri_t* ll_get_licenses(const juris_t j) {
+uri_t* ll_get_licenses(const juris_t _j) {
+	juris_t j = _j;
+	if (j && strcmp(j,"unported") == 0) j = NULL;
+
 	uri_t* licenses = ll_get_all_licenses();
 	int z=0;
 	int keep=0;
@@ -92,6 +95,50 @@ uri_t* ll_get_licenses(const juris_t j) {
 		z++;
 	}
 	ll_free_list(licenses);
+	return result;
+}
+
+juris_t* ll_get_jurisdictions() {
+	uri_t* licenses = ll_get_all_licenses();
+
+	juris_t* result = ll_new_list(50);
+	int count = 0;
+
+	result[count++] = strdup("unported");
+
+	juris_t juris;
+	int i;
+	int len = ll_list_length(licenses);
+	for (i=0; i<len; ++i) {
+		juris = ll_get_jurisdiction(licenses[i]);
+		if (!juris) continue;
+
+		if (!ll_list_contains(result,juris)) {
+			if (count < 50)
+				result[count++] = juris;
+			else {
+				fprintf(stderr,"Hard-coded limit: not enough space for all jurisdictions\n");
+				free(juris);
+				break;
+			}
+		} else {
+			free(juris);
+		}
+	}
+
+	/* Do an insertion sort.  We can get away with O(n^2) since we're guaranteed n<50
+	 * This works well since it's done in-place.
+	 * Keep the first element in the list alone; we want 'unported' first
+	 */
+	int j;
+	for (i = 2; i < count; ++i) {
+		for (j = i; ( j >= 2 ) && (strcmp(result[j],result[j-1]) < 0); --j ) {
+			juris_t tmp = result[j];
+			result[j] = result[j-1];
+			result[j-1] = tmp;
+		}
+	}
+
 	return result;
 }
 

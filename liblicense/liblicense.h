@@ -73,6 +73,7 @@ int ll_stop();
 int ll_verify_uri(const uri_t);
 uri_t* ll_get_all_licenses();
 uri_t* ll_get_licenses(const juris_t);
+juris_t* ll_get_jurisdictions();
 /*******************************************************/
 
 /******************* module_wrangler *******************/

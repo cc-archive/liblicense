@@ -37,7 +37,11 @@ sqlite3 *db;
 int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
 	uri_t* results = (uri_t*) list;
 	if (results!=NULL)
-		results[ll_list_length(results)]=strdup(argv[0]);
+		if (argv[0]) {
+			results[ll_list_length(results)]=strdup(argv[0]);
+		} else {
+			results[ll_list_length(results)]=strdup("");
+		}
 	return 0;
 }
 
@@ -205,7 +209,10 @@ uri_t* ll_get_all_licenses() {
 }
 
 // returns a null-terminated list of all general licenses in a family.
-uri_t* ll_get_licenses(const juris_t j) {
+uri_t* ll_get_licenses(const juris_t _j) {
+	juris_t j = _j;
+	if (j && strcmp(j,"unported") == 0) j = NULL;
+
 	char* query;
 	if (j!=NULL){
 		size_t buf_size = sizeof(char)*(strlen("SELECT uri FROM licenses WHERE jurisdiction='' AND obsolete=0 LIMIT 15")+strlen(j)+1);
@@ -217,6 +224,22 @@ uri_t* ll_get_licenses(const juris_t j) {
 	uri_t* result = _ll_query(query,15);
 	free(query);
   	return result;
+}
+
+// returns a null-terminated list of all jurisdictions in use
+juris_t* ll_get_jurisdictions() {
+	juris_t* result = _ll_query("SELECT DISTINCT(jurisdiction) FROM licenses ORDER BY jurisdiction LIMIT 50",50);
+
+	int i;
+	int len = ll_list_length(result);
+	for (i=0; i<len; ++i) {
+		if (strcmp(result[i],"") == 0) {
+			free(result[i]);
+			result[i] = strdup("unported");
+		}
+	}
+
+	return result;
 }
 
 // returns whether or not the given uri is recognized by the system.

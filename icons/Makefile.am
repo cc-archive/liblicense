@@ -23,8 +23,44 @@ icons_DATA = ar.svg \
              sa.svg \
              scales.svg \
              jurisdictions/unported.png \
+             jurisdictions/ar.png \
+             jurisdictions/at.png \
+             jurisdictions/au.png \
+             jurisdictions/be.png \
+             jurisdictions/bg.png \
+             jurisdictions/br.png \
+             jurisdictions/ca.png \
+             jurisdictions/ch.png \
+             jurisdictions/cl.png \
+             jurisdictions/cn.png \
+             jurisdictions/co.png \
+             jurisdictions/de.png \
+             jurisdictions/dk.png \
+             jurisdictions/es.png \
+             jurisdictions/fi.png \
+             jurisdictions/fr.png \
+             jurisdictions/hr.png \
+             jurisdictions/hu.png \
+             jurisdictions/il.png \
+             jurisdictions/in.png \
+             jurisdictions/it.png \
+             jurisdictions/jp.png \
+             jurisdictions/kr.png \
+             jurisdictions/mk.png \
+             jurisdictions/mt.png \
+             jurisdictions/mx.png \
+             jurisdictions/my.png \
+             jurisdictions/nl.png \
+             jurisdictions/pe.png \
+             jurisdictions/pl.png \
+             jurisdictions/pt.png \
+             jurisdictions/scotland.png \
+             jurisdictions/se.png \
+             jurisdictions/si.png \
+             jurisdictions/tw.png \
+             jurisdictions/uk.png \
              jurisdictions/us.png \
-             jurisdictions/uk.png
+             jurisdictions/za.png
 
 logodir = $(datadir)/pixmaps
 logo_DATA = scales.svg

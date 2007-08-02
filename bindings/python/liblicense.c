@@ -140,6 +140,20 @@ static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // juris_t
 	ll_free_list(us);
 	return list;
 }
+
+static PyObject* py_get_jurisdictions(PyObject* self)  {
+	juris_t *j = ll_get_jurisdictions();
+
+	int i =0;
+	PyObject* list = PyList_New(0);
+	while (j!=NULL && j[i]!=NULL) {
+		PyList_Append(list,PyString_FromString(j[i]));
+		i++;
+	}
+	ll_free_list(j);
+	return list;
+}
+
 static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, uri_t[,module_t]
 	const filename_t f;
 	const uri_t u;
@@ -357,6 +371,8 @@ static PyMethodDef LicenseMethods[] = {
 	 "Returns a list of values found for the given attribute."},
 	{"get_licenses", py_get_licenses, METH_VARARGS,
 	 "Returns a list of licenses in the optional jurisdiciton (otherwise all are given.)"},
+	{"get_jurisdictions", py_get_jurisdictions, METH_NOARGS,
+	 "Returns a list of all jurisdictions."},
 	{"write", py_write, METH_VARARGS,
 	 "Returns whether or not the license write succeeded."},
 	{"read",py_read, METH_VARARGS,
