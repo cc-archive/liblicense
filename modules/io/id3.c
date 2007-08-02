@@ -54,15 +54,23 @@ int id3_write( const char* filename, const char* uri )
 	ID3Tag_Link(tag,filename);
 
 	ID3Frame *frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
-	if (!frame) {
-		frame = ID3Frame_NewID(ID3FID_WWWCOPYRIGHT);
-		ID3Tag_AttachFrame(tag, frame);
+
+	if ( uri ) {
+		if (!frame) {
+			frame = ID3Frame_NewID(ID3FID_WWWCOPYRIGHT);
+			ID3Tag_AttachFrame(tag, frame);
+		}
+	
+		ID3Field *field = ID3Frame_GetField(frame, ID3FN_URL);
+		ID3Field_SetASCII(field, uri);
+	} else {
+		if (frame) {
+			ID3Tag_RemoveFrame(tag,frame);
+		}
 	}
 
-	ID3Field *field = ID3Frame_GetField(frame, ID3FN_URL);
-	ID3Field_SetASCII(field, uri);
-
 	int err = !ID3Tag_Update(tag);
+
 	ID3Tag_Delete(tag);
 	return err;
 }

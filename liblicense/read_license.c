@@ -70,6 +70,7 @@ uri_t ll_module_read(filename_t f,module_t m) {
 		if ( strcmp((*curr_module)->name,m) == 0 ) {
 			if ((*curr_module)->write) {
 				license = ((*curr_module)->read)(f);
+				break;
 			}
 		}
 		++curr_module;

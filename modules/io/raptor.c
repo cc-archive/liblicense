@@ -252,22 +252,27 @@ int raptor_write( const char* filename, const char* license_uri_str )
 	raptor_parse_file(rdf_parser, uri, base_uri);
 
 	raptor_statement license_triple;
-	license_triple.subject=(void*)raptor_uri_copy(uri);
-	license_triple.subject_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-	license_triple.predicate=(void*)raptor_new_uri((const unsigned char*)((helper.new_ns)?"http://creativecommons.org/ns#license":"http://web.resource.org/cc/license"));
-	license_triple.predicate_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-	license_triple.object=(void*)raptor_uri_copy(license_uri);
-	license_triple.object_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-	raptor_serialize_statement(rdf_serializer, &license_triple);
 
-	serialize_license(rdf_serializer, license_uri, helper.new_ns);
+	if (license_uri_str) {
+		license_triple.subject=(void*)raptor_uri_copy(uri);
+		license_triple.subject_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		license_triple.predicate=(void*)raptor_new_uri((const unsigned char*)((helper.new_ns)?"http://creativecommons.org/ns#license":"http://web.resource.org/cc/license"));
+		license_triple.predicate_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		license_triple.object=(void*)raptor_uri_copy(license_uri);
+		license_triple.object_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		raptor_serialize_statement(rdf_serializer, &license_triple);
+
+		serialize_license(rdf_serializer, license_uri, helper.new_ns);
+	}
 
 	raptor_serialize_end(rdf_serializer);
 
-	raptor_free_uri((raptor_uri*)license_triple.predicate);
-	raptor_free_uri((raptor_uri*)license_triple.subject);
-	raptor_free_uri((raptor_uri*)license_triple.object);
-	
+	if (license_uri_str) {
+		raptor_free_uri((raptor_uri*)license_triple.predicate);
+		raptor_free_uri((raptor_uri*)license_triple.subject);
+		raptor_free_uri((raptor_uri*)license_triple.object);
+	}
+
 	raptor_free_serializer(rdf_serializer);
 	raptor_free_parser(rdf_parser);
 	

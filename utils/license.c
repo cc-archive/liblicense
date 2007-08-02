@@ -22,6 +22,7 @@
 #include <getopt.h>
 static int verbose_flag;
 static int set_flag;
+static int remove_flag;
 
 void help() {
 	printf("	Usage: license [OPTION] [FILE]\n");
@@ -29,15 +30,17 @@ void help() {
 	printf("If options are omitted, assume default license.\n");
 	printf("If file is omitted, assumes system default.\n");
 	printf("\n");
-	printf("       --verbose               Outputs more license information.\n");
-	printf("       --quiet                 Output less.\n");
+	printf("   -v  --verbose               Outputs more license information.\n");
+	printf("   -q  --quiet                 Output less.\n");
 	printf("   -a, --list=JURISDICTION     Lists all available licenses in JURISDICTION\n");
 	printf("                                 or unported licenses by default.\n");
 	printf("       --set                   Sets the license instead of reading it.\n");
+	printf("       --remove                Removes any existing licenses from the file.\n");
 	printf("   -l, --license=URI           Uses the license with URI instead of default.\n");
-	printf("   -m,                         Lists all available modules and their capabilities\n");
+	printf("   -m                          Lists all available modules and their capabilities\n");
 	printf("                                 for reading and writing licenses in files\n");
-	printf("       --help                  Output this help text and quit.\n");
+	printf("   -u, --use=MODULE            Specify which module to use to read/write the license\n");
+	printf("   -h, --help                  Output this help text and quit.\n");
 	printf("\n");
 	printf("Exit status is 0 if OK, 1 if no default license is set and 2 if the given\n");
 	printf("license does not exist.\n");
@@ -66,7 +69,9 @@ int main(int argc, char** argv) {
 		{"verbose", no_argument, &verbose_flag, 1},
 		{"quiet", no_argument, &verbose_flag, 0},
 		{"set", no_argument, &set_flag, 1},
+		{"remove", no_argument, &remove_flag, 1},
 		{"license", required_argument, 0, 'l'},
+		{"use", required_argument, 0, 'u'},
 		{"help", no_argument, 0, 'h'},
 		{"list-all", optional_argument, 0, 'a'},
 		{0,0,0,0}
@@ -74,8 +79,9 @@ int main(int argc, char** argv) {
 	int c;
 	int option_index;
 	uri_t license = NULL;
+	module_t module = NULL;
 	ll_init();
-	while((c = getopt_long(argc,argv,"ml:a::",long_options,&option_index))!=-1) {
+	while((c = getopt_long(argc,argv,"hmu:l:a::",long_options,&option_index))!=-1) {
 		switch(c) {
 			case 0:
 				continue;
@@ -85,6 +91,11 @@ int main(int argc, char** argv) {
 			case 'm':
 				ll_print_module_info();
 				return 0;
+			case 'u':
+				if (optarg!=NULL) {
+					module=optarg;
+				}
+				break;
 			case 'l':
 				if (optarg!=NULL) {
 					if (ll_verify_uri(optarg))
@@ -128,15 +139,30 @@ int main(int argc, char** argv) {
 		if (verbose_flag)
 			print_license_info(license);
 	} else { /* Next argument is file, use it. */
-		if (set_flag) {
-			int ret = ll_write(argv[optind],license);
+		if (remove_flag) {
+			license = NULL;
+		}
+		if (set_flag || remove_flag) {
+			int ret;
+			printf("uri: %s\n",license);
+			if (module) {
+				ret = ll_module_write(argv[optind],license,module);
+			} else {
+				ret = ll_write(argv[optind],license);
+			}
 			if (!ret) {
 				printf("Unable to write license to file\n");
 				return 2;
 			}
 		}
 		/* Even if we wrote a license, read it to make sure it worked */
-		license = ll_read(argv[optind]);
+		printf("module: %s\n",module);
+		if (module) {
+			license = ll_module_read(argv[optind],module);
+		} else {
+			license = ll_read(argv[optind]);
+		}
+
 		if (license)
 			printf("%s is licensed under %s\n",argv[optind],license);
 		else {

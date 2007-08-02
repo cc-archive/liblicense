@@ -146,14 +146,17 @@ char* sidecar_xmp_read( const char* filename )
 
 int sidecar_xmp_write( const char* filename, const char* uri )
 {
-	printf("writing %s %s\n",filename,uri);
-
 	int success = true;
 
 	char *sidecar = sidecar_filename( filename );
 
 	XmpPtr xmp = NULL;
 	FILE *f = fopen(sidecar, "rb");
+
+	if ( !f && !uri ) { //no file to remove license info from
+		return 1;
+	}
+
 	if ( f ) {
 		char *buffer;
 		size_t len;
@@ -165,6 +168,10 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 	
 	if ( !xmp ) {
 		xmp = xmp_new_empty();
+	}
+
+	if ( !uri ) {
+		uri = "";
 	}
 
 	xmp_set_property(xmp, NS_CC, "license", uri);

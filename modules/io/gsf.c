@@ -152,9 +152,13 @@ clone_dir (GsfInfile *in, GsfOutfile *out, const char *uri)
 			GsfDocMetaData *md = gsf_doc_meta_data_new();
 			gsf_msole_metadata_read(new_input, md);
 			
-			GValue *uri_value = g_value_init(g_new0(GValue,1),G_TYPE_STRING);
-			g_value_set_string(uri_value,uri);
-			gsf_doc_meta_data_insert(md,strdup("CreativeCommons_LicenseURL"),uri_value);	
+			if (uri) {
+				GValue *uri_value = g_value_init(g_new0(GValue,1),G_TYPE_STRING);
+				g_value_set_string(uri_value,uri);
+				gsf_doc_meta_data_insert(md,strdup("CreativeCommons_LicenseURL"),uri_value);	
+			} else {
+				gsf_doc_meta_data_remove(md,"CreativeCommons_LicenseURL");
+			}
 			gsf_msole_metadata_write(new_output,md,true);
 		
 			g_object_unref (G_OBJECT (md));

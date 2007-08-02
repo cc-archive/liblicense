@@ -56,9 +56,16 @@ int flac_write( const char* filename, const char* uri )
 				found_vc = true;
 				FLAC__StreamMetadata *vc = FLAC__metadata_simple_iterator_get_block(iter);
 
-				FLAC__StreamMetadata_VorbisComment_Entry entry;
-				FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair(&entry, "LICENSE", uri);
-				FLAC__metadata_object_vorbiscomment_replace_comment(vc,entry,true,false);
+				if (uri) {
+					FLAC__StreamMetadata_VorbisComment_Entry entry;
+					FLAC__metadata_object_vorbiscomment_entry_from_name_value_pair(&entry, "LICENSE", uri);
+					FLAC__metadata_object_vorbiscomment_replace_comment(vc,entry,true,false);
+				} else {
+					int i = FLAC__metadata_object_vorbiscomment_find_entry_from(vc,0,"LICENSE");
+					if (i != -1) {
+						FLAC__metadata_object_vorbiscomment_delete_comment(vc,i);
+					}
+				}
 
 				ret = FLAC__metadata_simple_iterator_set_block(iter, vc, true);
 				FLAC__metadata_object_delete(vc);
@@ -66,7 +73,7 @@ int flac_write( const char* filename, const char* uri )
 			}
 		} while (FLAC__metadata_simple_iterator_next(iter));
 		
-		if (!found_vc) {
+		if (!found_vc && uri) {
 			FLAC__StreamMetadata *vc = FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT);
 
 			FLAC__StreamMetadata_VorbisComment_Entry entry;

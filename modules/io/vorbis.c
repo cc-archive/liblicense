@@ -91,7 +91,10 @@ int vorbis_write( const char* filename, const char* uri )
 						vorbis_comment_add(&vc_new,*comments);
 					}
 				}
-				vorbis_comment_add_tag(&vc_new, "LICENSE", uri);
+
+				if (uri) {
+					vorbis_comment_add_tag(&vc_new, "LICENSE", uri);
+				}
 
 				vorbis_comment_clear(vc);
 				vorbis_comment_init(vc);

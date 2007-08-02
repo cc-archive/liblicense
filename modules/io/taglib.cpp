@@ -83,20 +83,36 @@ int taglib_write( const char* filename, const char* uri )
 	File *file = fileref.file();
 	if (file) {
 		if (dynamic_cast<MPC::File*>(file)) {
-			APE::Tag *tag = ((MPC::File*)(file))->APETag(true);
-			tag->addValue("LICENSE",uri);
+			APE::Tag *tag = ((MPC::File*)(file))->APETag(uri!=NULL);
+			if (uri) {
+				tag->addValue("LICENSE",uri);
+			} else if (tag) {
+				tag->removeItem("LICENSE");
+			}
 			return fileref.save();
 		} else if (dynamic_cast<Ogg::Vorbis::File*>(file)) {
 			Ogg::XiphComment *tag = ((Ogg::Vorbis::File*)(file))->tag();
-			tag->addField("LICENSE",uri,true);
+			if (uri) {
+				tag->addField("LICENSE",uri,true);
+			} else if (tag) {
+				tag->removeField("LICENSE");
+			}
 			return fileref.save();
 		} else if (dynamic_cast<FLAC::File*>(file)) {
-			Ogg::XiphComment *tag = ((FLAC::File*)(file))->xiphComment(true);
-			tag->addField("LICENSE",uri,true);
+			Ogg::XiphComment *tag = ((FLAC::File*)(file))->xiphComment(uri!=NULL);
+			if (uri) {
+				tag->addField("LICENSE",uri,true);
+			} else if (tag) {
+				tag->removeField("LICENSE");
+			}
 			return fileref.save();
 		} else if (dynamic_cast<Ogg::FLAC::File*>(file)) {
 			Ogg::XiphComment *tag = ((Ogg::FLAC::File*)(file))->tag();
-			tag->addField("LICENSE",uri,true);
+			if (uri) {
+				tag->addField("LICENSE",uri,true);
+			} else if (tag) {
+				tag->removeField("LICENSE");
+			}
 			return fileref.save();
 		}
 	}

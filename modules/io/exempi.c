@@ -65,7 +65,14 @@ int exempi_write( const char* filename, const char* uri )
 	XmpPtr xmp = xmp_files_get_new_xmp(f);
 	
 	if ( xmp == NULL ) {
+		if (uri == NULL) return 1;
+
 		xmp = xmp_new_empty();
+	}
+
+	//FIXME: I think exempi needs a xmp_del_property().  For now, set the uri to ""
+	if ( uri == NULL ) {
+		uri = "";
 	}
 	
 	if ( xmp_files_can_put_xmp(f, xmp) ) {

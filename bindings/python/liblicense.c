@@ -135,16 +135,16 @@ static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // juris_t
 	ll_free_list(us);
 	return list;
 }
-static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, juris_t[,module_t]
+static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, uri_t[,module_t]
 	const filename_t f;
-	const juris_t j;
+	const uri_t u;
 	const module_t m = NULL;
 	int result;
-	if (PyArg_ParseTuple(args,"ss|s",&f,&j,&m))
+	if (PyArg_ParseTuple(args,"sz|s",&f,&u,&m))
 		if (m!=NULL)
-			result = ll_module_write(f,j,m);
+			result = ll_module_write(f,u,m);
 		else
-			result = ll_write(f,j);
+			result = ll_write(f,u);
 	else
 		return NULL;
 	return PyBool_FromLong((long) result);
