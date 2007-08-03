@@ -1,0 +1,237 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-08-02 19:06-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 92
+#: license-widget/licensechooser.cpp:203 rc.cpp:28
+#: ../../../liblicense-gnome/trunk/src/gui_gtk.py:253
+#: ../../../liblicense-gnome/trunk/src/gui_gtk.py:287
+msgid "None"
+msgstr ""
+
+#: license-properties-plugin/licenseprops.cpp:50
+msgid "&License"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 19
+#: rc.cpp:4 ../../../liblicense-gnome/trunk/src/gui_gtk.py:59
+msgid "Require Attribution"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 26
+#: rc.cpp:7 ../../../liblicense-gnome/trunk/src/gui_gtk.py:78
+msgid "Allow Sharing"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 33
+#: rc.cpp:10 ../../../liblicense-gnome/trunk/src/gui_gtk.py:98
+msgid "Allow Remixing"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 40
+#: rc.cpp:13 ../../../liblicense-gnome/trunk/src/gui_gtk.py:117
+msgid "Prohibit Commercial Works"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 47
+#: rc.cpp:16 ../../../liblicense-gnome/trunk/src/gui_gtk.py:136
+msgid "Require Others to Share-Alike"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 61
+#: rc.cpp:19 ../../../liblicense-gnome/trunk/src/gui_gtk.py:151
+msgid "License:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 71
+#: rc.cpp:22 ../../../liblicense-gnome/trunk/src/gui_gtk.py:155
+msgid "Jurisdiction:"
+msgstr ""
+
+#. i18n: tag string
+#. i18n: file ./license-widget/license_chooser.ui line 78
+#: rc.cpp:25 ../../../liblicense-gnome/trunk/src/gui_gtk.py:159
+msgid "License URI:"
+msgstr ""
+
+#: ../liblicense/license_info.c:57
+msgid "Unported"
+msgstr ""
+
+#: ../liblicense/license_info.c:58
+msgid "Argentina"
+msgstr ""
+
+#: ../liblicense/license_info.c:59
+msgid "Austria"
+msgstr ""
+
+#: ../liblicense/license_info.c:60
+msgid "Australia"
+msgstr ""
+
+#: ../liblicense/license_info.c:61
+msgid "Belgium"
+msgstr ""
+
+#: ../liblicense/license_info.c:62
+msgid "Bulgaria"
+msgstr ""
+
+#: ../liblicense/license_info.c:63
+msgid "Brazil"
+msgstr ""
+
+#: ../liblicense/license_info.c:64
+msgid "Canada"
+msgstr ""
+
+#: ../liblicense/license_info.c:65
+msgid "Switzerland"
+msgstr ""
+
+#: ../liblicense/license_info.c:66
+msgid "Chile"
+msgstr ""
+
+#: ../liblicense/license_info.c:67
+msgid "China"
+msgstr ""
+
+#: ../liblicense/license_info.c:68
+msgid "Colombia"
+msgstr ""
+
+#: ../liblicense/license_info.c:69
+msgid "Germany"
+msgstr ""
+
+#: ../liblicense/license_info.c:70
+msgid "Denmark"
+msgstr ""
+
+#: ../liblicense/license_info.c:71
+msgid "Spain"
+msgstr ""
+
+#: ../liblicense/license_info.c:72
+msgid "Finland"
+msgstr ""
+
+#: ../liblicense/license_info.c:73
+msgid "France"
+msgstr ""
+
+#: ../liblicense/license_info.c:74
+msgid "Croatia"
+msgstr ""
+
+#: ../liblicense/license_info.c:75
+msgid "Hungary"
+msgstr ""
+
+#: ../liblicense/license_info.c:76
+msgid "Israel"
+msgstr ""
+
+#: ../liblicense/license_info.c:77
+msgid "India"
+msgstr ""
+
+#: ../liblicense/license_info.c:78
+msgid "Italy"
+msgstr ""
+
+#: ../liblicense/license_info.c:79
+msgid "Japan"
+msgstr ""
+
+#: ../liblicense/license_info.c:80
+msgid "South Korea"
+msgstr ""
+
+#: ../liblicense/license_info.c:81
+msgid "Macedonia"
+msgstr ""
+
+#: ../liblicense/license_info.c:82
+msgid "Malta"
+msgstr ""
+
+#: ../liblicense/license_info.c:83
+msgid "Mexico"
+msgstr ""
+
+#: ../liblicense/license_info.c:84
+msgid "Malaysia"
+msgstr ""
+
+#: ../liblicense/license_info.c:85
+msgid "Netherlands"
+msgstr ""
+
+#: ../liblicense/license_info.c:86
+msgid "Peru"
+msgstr ""
+
+#: ../liblicense/license_info.c:87
+msgid "Poland"
+msgstr ""
+
+#: ../liblicense/license_info.c:88
+msgid "Portugal"
+msgstr ""
+
+#: ../liblicense/license_info.c:89
+msgid "UK Scotland"
+msgstr ""
+
+#: ../liblicense/license_info.c:90
+msgid "Sweden"
+msgstr ""
+
+#: ../liblicense/license_info.c:91
+msgid "Slovenia"
+msgstr ""
+
+#: ../liblicense/license_info.c:92
+msgid "Taiwan"
+msgstr ""
+
+#: ../liblicense/license_info.c:93
+msgid "UK Englands and Wales"
+msgstr ""
+
+#: ../liblicense/license_info.c:94
+msgid "United States"
+msgstr ""
+
+#: ../liblicense/license_info.c:95
+msgid "South Africa"
+msgstr ""
+
+#: ../../../liblicense-gnome/trunk/src/nautilus-liblicense.py:66
+msgid "License"
+msgstr ""

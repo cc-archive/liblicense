@@ -19,6 +19,11 @@ struct _ll_license_chooser_t {
 #define LL_PROHIBITS 		2
 #define LL_UNSPECIFIED 	3
 
+/* Note: if N_STATES changes, lines like these also need to be adapted:
+ * 1 << (num_attributes * 2)
+ * which are optimized from pow(N_STATES,num_attributes)
+ * due to the fact that 4 is a power of 2
+ */
 #define N_STATES 4
 
 int indexAt( int height )
@@ -54,7 +59,7 @@ void iterate_children( int *license_hits, uri_t license, int index, int height, 
 	int leftChild = (index-N_STATES+2)*N_STATES;
 
 	if (leftChild >= size(num_attributes)) {
-		//the array tracks leaf nodes, while the heap tracks all nodes
+		/* the array tracks leaf nodes, while the heap tracks all nodes */
 		int arrayIndex = index-indexAt(height);
 		license_hits[arrayIndex] += 1;
 		return;
@@ -90,7 +95,7 @@ int ll_attribute_flag( ll_license_chooser_t *license_chooser, const char *attr )
 
 const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
 {
-	//traverse the down the tree until we get to the right leaf
+	/* traverse the down the tree until we get to the right leaf */
 	int curr = N_STATES - 1;
 	int i;
 	for (i=1; i<(1<<license_chooser->num_attributes); i <<= 1) {
