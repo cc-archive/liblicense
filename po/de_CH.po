@@ -2,7 +2,7 @@
 # Copyright (C) YEAR This file copyright Creative Commons (http://www.creativecommons.org)
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -98,157 +98,119 @@ msgstr ""
 msgid "Unported"
 msgstr ""
 
-#: ../liblicense/license_info.c:58
 msgid "Argentina"
-msgstr ""
+msgstr "Argentinien"
 
-#: ../liblicense/license_info.c:59
 msgid "Austria"
-msgstr ""
+msgstr "Österreich"
 
-#: ../liblicense/license_info.c:60
 msgid "Australia"
-msgstr ""
+msgstr "Australien"
 
-#: ../liblicense/license_info.c:61
 msgid "Belgium"
-msgstr ""
+msgstr "Belgien"
 
-#: ../liblicense/license_info.c:62
 msgid "Bulgaria"
-msgstr ""
+msgstr "Bulgarien"
 
-#: ../liblicense/license_info.c:63
 msgid "Brazil"
-msgstr ""
+msgstr "Brasilien"
 
-#: ../liblicense/license_info.c:64
 msgid "Canada"
-msgstr ""
+msgstr "Kanada"
 
-#: ../liblicense/license_info.c:65
 msgid "Switzerland"
-msgstr ""
+msgstr "Schweiz"
 
-#: ../liblicense/license_info.c:66
 msgid "Chile"
-msgstr ""
+msgstr "Chile"
 
-#: ../liblicense/license_info.c:67
 msgid "China"
-msgstr ""
+msgstr "China"
 
-#: ../liblicense/license_info.c:68
 msgid "Colombia"
-msgstr ""
+msgstr "Kolumbien"
 
-#: ../liblicense/license_info.c:69
 msgid "Germany"
-msgstr ""
+msgstr "Deutschland"
 
-#: ../liblicense/license_info.c:70
 msgid "Denmark"
-msgstr ""
+msgstr "Dänemark"
 
-#: ../liblicense/license_info.c:71
 msgid "Spain"
-msgstr ""
+msgstr "Spanien"
 
-#: ../liblicense/license_info.c:72
 msgid "Finland"
-msgstr ""
+msgstr "Finnland"
 
-#: ../liblicense/license_info.c:73
 msgid "France"
-msgstr ""
+msgstr "Frankreich"
 
-#: ../liblicense/license_info.c:74
 msgid "Croatia"
-msgstr ""
+msgstr "Kroatien"
 
-#: ../liblicense/license_info.c:75
 msgid "Hungary"
-msgstr ""
+msgstr "Ungarn"
 
-#: ../liblicense/license_info.c:76
 msgid "Israel"
-msgstr ""
+msgstr "Israel"
 
-#: ../liblicense/license_info.c:77
 msgid "India"
-msgstr ""
+msgstr "Indien"
 
-#: ../liblicense/license_info.c:78
 msgid "Italy"
-msgstr ""
+msgstr "Italien"
 
-#: ../liblicense/license_info.c:79
 msgid "Japan"
-msgstr ""
+msgstr "Japan"
 
-#: ../liblicense/license_info.c:80
 msgid "South Korea"
-msgstr ""
+msgstr "Süd-Korea"
 
-#: ../liblicense/license_info.c:81
 msgid "Macedonia"
-msgstr ""
+msgstr "Mazedonien"
 
-#: ../liblicense/license_info.c:82
 msgid "Malta"
-msgstr ""
+msgstr "Malta"
 
-#: ../liblicense/license_info.c:83
 msgid "Mexico"
-msgstr ""
+msgstr "Mexiko"
 
-#: ../liblicense/license_info.c:84
 msgid "Malaysia"
-msgstr ""
+msgstr "Malaysia"
 
-#: ../liblicense/license_info.c:85
 msgid "Netherlands"
-msgstr ""
+msgstr "Niederlande"
 
-#: ../liblicense/license_info.c:86
 msgid "Peru"
-msgstr ""
+msgstr "Peru"
 
-#: ../liblicense/license_info.c:87
 msgid "Poland"
-msgstr ""
+msgstr "Polen"
 
-#: ../liblicense/license_info.c:88
 msgid "Portugal"
-msgstr ""
+msgstr "Portugal"
 
-#: ../liblicense/license_info.c:89
 msgid "UK Scotland"
-msgstr ""
+msgstr "Schottland"
 
-#: ../liblicense/license_info.c:90
 msgid "Sweden"
-msgstr ""
+msgstr "Schweden"
 
-#: ../liblicense/license_info.c:91
 msgid "Slovenia"
-msgstr ""
+msgstr "Slowenien"
 
-#: ../liblicense/license_info.c:92
 msgid "Taiwan"
-msgstr ""
+msgstr "Taiwan"
 
-#: ../liblicense/license_info.c:93
 msgid "UK Englands and Wales"
-msgstr ""
+msgstr "England & Wales"
 
-#: ../liblicense/license_info.c:94
 msgid "United States"
-msgstr ""
+msgstr "Vereinigte Staaten von Amerika"
 
-#: ../liblicense/license_info.c:95
 msgid "South Africa"
-msgstr ""
+msgstr "Südafrika"
 
 #: ../../../liblicense-gnome/trunk/src/nautilus-liblicense.py:69
 msgid "License"

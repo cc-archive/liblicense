@@ -2,7 +2,7 @@
 # Copyright (C) YEAR This file copyright Creative Commons (http://www.creativecommons.org)
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
@@ -186,9 +186,8 @@ msgstr ""
 msgid "Japan"
 msgstr ""
 
-#: ../liblicense/license_info.c:80
 msgid "South Korea"
-msgstr ""
+msgstr "대한민국"
 
 #: ../liblicense/license_info.c:81
 msgid "Macedonia"

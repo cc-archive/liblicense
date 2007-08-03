@@ -18,5 +18,5 @@
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = liblicense.pc
 
-SUBDIRS = xdgmime liblicense . licenses modules bindings tests utils icons
+SUBDIRS = xdgmime liblicense . licenses modules bindings tests utils icons po
 EXTRA_DIST=PRESS

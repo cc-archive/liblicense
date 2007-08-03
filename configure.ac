@@ -277,7 +277,17 @@ AC_DEFINE_UNQUOTED([LICENSE_DIR],["${DATADIR}/liblicense/licenses/"],[Location o
 AC_DEFINE_UNQUOTED(LIBLICENSE_IO_MODULE_DIR,"${LIBDIR}/liblicense/io/",[Location of liblicense io modules.])
 AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/config/"],[Location of liblicense config modules.])
 
+USE_NLS=yes
+GMSGFMT=gmsgfmt
+GETTEXT_PACKAGE=$PACKAGE
+DATADIRNAME=share
+AC_SUBST(USE_NLS)
+AC_SUBST(GMSGFMT)
+AC_SUBST(GETTEXT_PACKAGE)
+AC_SUBST(DATADIRNAME)
+
 AC_CONFIG_FILES([
+	po/Makefile
 	liblicense.pc
 	Makefile
 	liblicense/Makefile
