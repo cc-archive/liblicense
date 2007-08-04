@@ -239,15 +239,18 @@ int main(int argc, char** argv) {
 			}
 		}
 		/* Even if we wrote a license, read it to make sure it worked */
-		printf("module: %s\n",module);
 		if (module) {
 			license = ll_module_read(argv[optind],module);
 		} else {
 			license = ll_read(argv[optind]);
 		}
 
-		if (license)
+		if (license) {
 			printf("%s is licensed under %s\n",argv[optind],license);
+			if (verbose_flag) {
+				print_license_info(license);
+			}
+		}
 		else {
 			if (set_flag) {
 				printf("Unable to write license to file\n");
