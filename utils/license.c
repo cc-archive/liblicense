@@ -30,8 +30,8 @@ void help() {
 	printf("If options are omitted, assume default license.\n");
 	printf("If file is omitted, assumes system default.\n");
 	printf("\n");
-	printf("   -v  --verbose               Outputs more license information.\n");
-	printf("   -q  --quiet                 Output less.\n");
+	printf("   -v, --verbose               Outputs more license information.\n");
+	printf("   -q, --quiet                 Output less.\n");
 	printf("   -a, --list=JURISDICTION     Lists all available licenses in JURISDICTION\n");
 	printf("                                 or unported licenses by default.\n");
 	printf("       --set                   Sets the license instead of reading it.\n");
@@ -46,8 +46,83 @@ void help() {
 	printf("license does not exist.\n");
 }
 
-void print_license_info(uri_t license) {
-	printf("More.\n");
+void print_license_info(uri_t uri) {
+	char **attrs, **attr;
+	char *string;
+	version_t version;
+	juris_t juris;
+	int i;
+
+	printf("License URI: %s\n",uri);
+
+	string = ll_get_name(uri);
+	printf("Name: %s\n",string);
+	free(string);
+
+	version = ll_get_version(uri);
+	printf("Version: ");
+	if (version) {
+		for (i=1; i<=version[0]; ++i) {
+			if (i!=1) printf(".");
+			printf("%d",version[i]);
+		}
+		printf("\n");
+	} else {
+		printf("(unversioned)\n");
+	}
+	free(version);
+
+	juris = ll_get_jurisdiction(uri);
+	if (juris) {
+		string = ll_jurisdiction_name(juris);
+	} else {
+		string = strdup("Unported");
+		juris = strdup("unported");
+	}
+	printf("Jurisdiction: %s (%s)\n",string,juris);
+	free(string);
+	free(juris);
+
+	attrs = ll_get_attribute(uri,"http://purl.org/dc/elements/1.1/creator",0);
+	if (*attrs) {
+		printf("Creator: %s\n",*attrs);
+	}
+	ll_free_list(attrs);
+
+	attrs = ll_get_attribute(uri,"http://purl.org/dc/elements/1.1/publisher",0);
+	if (*attrs) {
+		printf("Publisher: %s\n",*attrs);
+	}
+	ll_free_list(attrs);
+
+	printf("Rights:\n");
+
+	attrs = ll_get_permits(uri);
+	if (*attrs) {
+		printf("   Permits\n");
+		for (attr=attrs; *attr; ++attr) {
+			printf("      %s\n",*attr);
+		}
+	}
+	ll_free_list(attrs);
+
+	attrs = ll_get_requires(uri);
+	if (*attrs) {
+		printf("   Requires\n");
+		for (attr=attrs; *attr; ++attr) {
+			printf("      %s\n",*attr);
+		}
+	}
+	ll_free_list(attrs);
+
+	attrs = ll_get_prohibits(uri);
+	if (*attrs) {
+		printf("   Prohibits\n");
+		for (attr=attrs; *attr; ++attr) {
+			printf("      %s\n",*attr);
+		}
+	}
+	ll_free_list(attrs);
 }
 
 int list_juris(juris_t j) {
@@ -137,6 +212,9 @@ int main(int argc, char** argv) {
 	if (argc==optind) { /* No more arguments, assume default. */
 		if (set_flag) {
 			ll_set_default(license);
+		} else if (license) {
+			print_license_info(license);
+			return 0;
 		} else {
 			license = ll_get_default();
 		}
