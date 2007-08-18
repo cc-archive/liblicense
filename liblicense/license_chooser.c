@@ -1,5 +1,21 @@
+/* Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely 
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Jason Kivlighn
+ */
 
-#include <math.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,15 +25,37 @@
 struct _ll_license_chooser_t {
 	char **attributes;
 	int num_attributes;
+
+	/* This is the meat of the license chooser.  It is an array of linked-lists of licenses, where each slot holds all the licenses which match a given combination of license flags.  The array holds all possible combinations of attributes.
+	 *
+	 * Finding the matching index based on a set of flags involves traversing this structure in a tree-like manner.  A tree built for searching based on the Attribution and CommercialUse attributes is structured like this example:
+	 *
+	 *                                                  root
+	 *                           /               |            |              \
+	 * Attribution  :          P                 R           Pr              U
+	 *                    /  |   |   \      / |   |  \    / |  |  \       / |  |  \
+	 * CommercialUse:    P   R   Pr  U     P  R  Pr  U   P  R  Pr  U     P  R  Pr  U
+	 * Indices in
+	 *  license_list:    0   1   2   3    4   5  6   7   8  9  10  11   12 13  14 15 
+	 *
+	 * In the example above, the list of licenses that require (R) Attribution and prohibit (Pr) CommercialUse
+	 * is found at license_list[6].
+	 *
+	 * Such a structure allows easy hierarchical traversion.  Ignore the indices above and instead
+	 * index the tree as a d-heap (where d=N_STATES). A node's left-most child is always (node_index-N_STATES+2)*N_STATES.
+	 * N_STATES is 4 for P, R Pr, and U.
+	 */
 	ll_license_list_t **license_list;
-	uri_t *all_licenses; 	//to avoid copying each license, store the license entire license list
-												//and free them all in one go when we destroy the license_chooser
+
+	uri_t *all_licenses; 	/* to avoid copying each license, store the license entire license list
+												 * and free them all in one go when we destroy the license_chooser
+												 */
 };
 
-#define LL_PERMITS 			0
-#define LL_REQUIRES 		1
-#define LL_PROHIBITS 		2
-#define LL_UNSPECIFIED 	3
+#define LL_ATTR_PERMITS 			0
+#define LL_ATTR_REQUIRES 		1
+#define LL_ATTR_PROHIBITS 		2
+#define LL_ATTR_UNSPECIFIED 	3
 
 /* Note: if N_STATES changes, lines like these also need to be adapted:
  * 1 << (num_attributes * 2)
@@ -26,6 +64,7 @@ struct _ll_license_chooser_t {
  */
 #define N_STATES 4
 
+/* Returns the index of the first node of the heap at the given height */
 int indexAt( int height )
 {
 	int h = 0;
@@ -40,7 +79,8 @@ int indexAt( int height )
 	return i - counter;
 }
 
-int size( int num_attributes )
+/* Returns the total number of nodes in the heap built for searching on the given number of attributes */
+int heap_size( int num_attributes )
 {
 	int h = 0;
 	int i = N_STATES;
@@ -54,11 +94,15 @@ int size( int num_attributes )
 	return i;
 }
 
-void iterate_children( int *license_hits, uri_t license, int index, int height, int num_attributes )
+/* Recursively traverse the license heap, increasing the appropriate index in license_hits.  When the traversal is complete, the license which has <num_attribute> hits is the matched license.
+ *
+ * For example, one call of iterate_children will increase license_hits[] for all licenses that prohibit CommercialUse.  On the next call to iterate_children, all licenses that require Attribution are increased.  Using the above tree in this example, first, license_hits[2,6,10,14] are all increased to 1.  Then the second call increases license_hits[4,5,6,7].  license_hits[6] is now 2, meaning we've matched the licenses at that index.
+ */
+void iterate_children( int *license_hits, int index, int height, int heap_size )
 {
 	int leftChild = (index-N_STATES+2)*N_STATES;
 
-	if (leftChild >= size(num_attributes)) {
+	if (leftChild >= heap_size) { /* we've hit a leaf node, where the licenses are */
 		/* the array tracks leaf nodes, while the heap tracks all nodes */
 		int arrayIndex = index-indexAt(height);
 		license_hits[arrayIndex] += 1;
@@ -67,7 +111,7 @@ void iterate_children( int *license_hits, uri_t license, int index, int height, 
 
 	int i = 0;
 	while ( i<N_STATES ) {
-		iterate_children( license_hits, license, leftChild+i, height+1, num_attributes );
+		iterate_children( license_hits, leftChild+i, height+1, heap_size );
 		i++;
 	}
 }
@@ -95,21 +139,23 @@ int ll_attribute_flag( ll_license_chooser_t *license_chooser, const char *attr )
 
 const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
 {
-	/* traverse the down the tree until we get to the right leaf */
+	/* Traverse the down the tree until we get to the right leaf.  Each pass in the for-loop traverses down one level
+	 * of the tree.
+	 */
 	int curr = N_STATES - 1;
 	int i;
 	for (i=1; i<(1<<license_chooser->num_attributes); i <<= 1) {
 		if ( permits & i ) {
-			curr = (curr-N_STATES+2)*N_STATES+LL_PERMITS;
+			curr = (curr-N_STATES+2)*N_STATES+LL_ATTR_PERMITS;
 		}
 		else if ( requires & i ) {
-			curr = (curr-N_STATES+2)*N_STATES+LL_REQUIRES;
+			curr = (curr-N_STATES+2)*N_STATES+LL_ATTR_REQUIRES;
 		}
 		else if ( prohibits & i ) {
-			curr = (curr-N_STATES+2)*N_STATES+LL_PROHIBITS;
+			curr = (curr-N_STATES+2)*N_STATES+LL_ATTR_PROHIBITS;
 		}
 		else {
-			curr = (curr-N_STATES+2)*N_STATES+LL_UNSPECIFIED;
+			curr = (curr-N_STATES+2)*N_STATES+LL_ATTR_UNSPECIFIED;
 		}
 	}
 	int arrayIndex = curr-indexAt(license_chooser->num_attributes);
@@ -139,6 +185,8 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 		license_heap[i] = (ll_license_list_t*)calloc(1,sizeof(ll_license_list_t));
 	}
 
+	int size = heap_size(num_attributes);
+
 	int used_attrs;
 	char **attr;
 	char **attrs;
@@ -154,7 +202,7 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 			used_attrs |= 1 << attr_index;
 
 			for (i=0; i<(1 << (attr_index * 2 - 2)); ++i) {
-				iterate_children( license_hits, *license, indexAt(attr_index)+i*N_STATES+LL_PERMITS, attr_index, num_attributes );
+				iterate_children( license_hits, indexAt(attr_index)+i*N_STATES+LL_ATTR_PERMITS, attr_index, size );
 			}
 		}
 		ll_free_list(attrs);
@@ -167,7 +215,7 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 			used_attrs |= 1 << attr_index;
 
 			for (i=0; i<(1 << (attr_index * 2 - 2)); ++i) {
-				iterate_children( license_hits, *license, indexAt(attr_index)+i*N_STATES+LL_REQUIRES, attr_index, num_attributes );
+				iterate_children( license_hits, indexAt(attr_index)+i*N_STATES+LL_ATTR_REQUIRES, attr_index, size );
 			}
 		}
 		ll_free_list(attrs);
@@ -180,7 +228,7 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 			used_attrs |= 1 << attr_index;
 
 			for (i=0; i<(1 << (attr_index * 2 - 2)); ++i) {
-				iterate_children( license_hits, *license, indexAt(attr_index)+i*N_STATES+LL_PROHIBITS, attr_index, num_attributes );
+				iterate_children( license_hits, indexAt(attr_index)+i*N_STATES+LL_ATTR_PROHIBITS, attr_index, size );
 			}
 		}
 
@@ -189,7 +237,7 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char *
 				int attr_index = i;
 				int j;
 				for (j=0; j<(1 << (attr_index * 2 - 2)); ++j) {
-					iterate_children( license_hits, *license, indexAt(attr_index)+j*N_STATES+LL_UNSPECIFIED, attr_index, num_attributes );
+					iterate_children( license_hits, indexAt(attr_index)+j*N_STATES+LL_ATTR_UNSPECIFIED, attr_index, size );
 				}
 			}
 		}
