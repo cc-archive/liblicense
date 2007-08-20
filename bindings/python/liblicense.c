@@ -265,7 +265,7 @@ LicenseChooser_init(LicenseChooser *self, PyObject *args, PyObject *kwds)
 	if (!PyList_Check(attrs))
 		return -1;
 
-	char *attributes[PyList_Size(attrs)+1];
+	const char *attributes[PyList_Size(attrs)+1];
 	attributes[PyList_Size(attrs)] = NULL;
 
 	int i;
