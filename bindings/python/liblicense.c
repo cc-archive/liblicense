@@ -176,6 +176,8 @@ static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, uri_
 			result = ll_write(f,u);
 	else
 		return NULL;
+	if (result==-1) // just in case PyBool_FromLong thinks its true
+		result = 0;
 	return PyBool_FromLong((long) result);
 }
 
