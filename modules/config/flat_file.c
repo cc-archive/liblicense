@@ -57,7 +57,9 @@ int set_default(char* u) {
     }
     FILE* file = fopen(path,"w");
     free(path);
-    int result = fprintf(file,"%s",u);
+    int result = true;
+    if (u!=NULL && u[0]!='\0')
+        result = fprintf(file,"%s",u);
     fclose(file);
     return result;
 }

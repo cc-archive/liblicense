@@ -199,14 +199,14 @@ static PyObject* py_read(PyObject* self, PyObject* args)  { // filename_t[,modul
 
 static PyObject* py_set_default(PyObject* self, PyObject* args)  { // uri_t
 	uri_t u;
-	if(!PyArg_ParseTuple(args,"s",&u))
+	if(!PyArg_ParseTuple(args,"z",&u))
 		return NULL;
 	return PyBool_FromLong((long) ll_set_default(u));
 }
 
 static PyObject* py_get_default(PyObject* self, PyObject* args)  {
 	uri_t u = ll_get_default();
-	PyObject* result = Py_BuildValue("s",u);
+	PyObject* result = Py_BuildValue("z",u);
 	free(u);
 	return result;
 }

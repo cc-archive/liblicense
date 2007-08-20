@@ -31,5 +31,9 @@ int main(int argc,char** argv) {
 	char* response = ll_get_default();
 	printf("Getting the default: %s\n",response);
 	free(response);
+	printf("Setting default to '%s': %d\n","",ll_set_default(""));
+	response = ll_get_default();
+	printf("Getting the default: %s\n",response);
+	free(response);
 	return 0;
 }

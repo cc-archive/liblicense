@@ -56,7 +56,6 @@ uri_t ll_get_default() {
 	uri_t final_answer = ll_list_mode(responses,"");
 	ll_free_list(modules);
 	if (final_answer==NULL) {
-		fprintf(stderr,"No system default set.\n");
 		ll_free_list(responses);
 		return NULL;
 	}
