@@ -175,7 +175,7 @@ typedef struct node {
 
 #define LL_UNSPECIFIED 0
 
-ll_license_chooser_t* ll_new_license_chooser( const juris_t, char **attributes );
+ll_license_chooser_t* ll_new_license_chooser( const juris_t, const char **attributes );
 void ll_free_license_chooser(ll_license_chooser_t *);
 const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *, int permits, int requires, int prohibits );
 int ll_attribute_flag( ll_license_chooser_t *, const char *attr );

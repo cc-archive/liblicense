@@ -116,7 +116,7 @@ void iterate_children( int *license_hits, int index, int height, int heap_size )
 	}
 }
 
-int attribute_index( char **attributes, char *attr, int num_attributes )
+int attribute_index( const char **attributes, char *attr, int num_attributes )
 {
 	int i;
 	for (i=0; i<num_attributes; ++i) {
@@ -166,7 +166,7 @@ void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, 
 {
 }
 
-ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, char **attributes )
+ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, const char **attributes )
 {
 	ll_license_chooser_t *chooser = (ll_license_chooser_t*)malloc(sizeof(ll_license_chooser_t));
 
