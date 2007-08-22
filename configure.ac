@@ -278,7 +278,7 @@ AC_DEFINE_UNQUOTED(LIBLICENSE_IO_MODULE_DIR,"${LIBDIR}/liblicense/io/",[Location
 AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/config/"],[Location of liblicense config modules.])
 
 USE_NLS=yes
-GMSGFMT=gmsgfmt
+GMSGFMT=msgfmt
 GETTEXT_PACKAGE=$PACKAGE
 DATADIRNAME=share
 AC_SUBST(USE_NLS)
