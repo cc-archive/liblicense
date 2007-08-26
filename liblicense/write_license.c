@@ -32,12 +32,12 @@
              0 if all available embedders failed
              1 on success
  */
-int ll_write(filename_t f,uri_t u) {
+int ll_write(ll_filename_t f, ll_uri_t u) {
 	assert(_module_list);
 
 	int result = -1;
 
-	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
+	const ll_mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
 
 	int embedded = 0;
 
@@ -69,7 +69,7 @@ int ll_write(filename_t f,uri_t u) {
 	return result;
 }
 
-int ll_module_write(filename_t f,uri_t u,module_t m) {
+int ll_module_write(ll_filename_t f, ll_uri_t u, ll_module_t m) {
 	assert(_module_list);
 
 	int result = -1;

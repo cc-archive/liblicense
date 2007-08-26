@@ -47,7 +47,7 @@ struct _ll_license_chooser_t {
 	 */
 	ll_license_list_t **license_list;
 
-	uri_t *all_licenses; 	/* to avoid copying each license, store the license entire license list
+	ll_uri_t *all_licenses; 	/* to avoid copying each license, store the license entire license list
 												 * and free them all in one go when we destroy the license_chooser
 												 */
 };
@@ -166,11 +166,11 @@ void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, 
 {
 }
 
-ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, const char **attributes )
+ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, const char **attributes )
 {
 	ll_license_chooser_t *chooser = (ll_license_chooser_t*)malloc(sizeof(ll_license_chooser_t));
 
-	uri_t *licenses = ll_get_licenses(jurisdiction);
+	ll_uri_t *licenses = ll_get_licenses(jurisdiction);
 	
 	int num_attributes;
 	for (num_attributes = 0; attributes[num_attributes]; ++num_attributes);
@@ -190,7 +190,7 @@ ll_license_chooser_t* ll_new_license_chooser( const juris_t jurisdiction, const 
 	int used_attrs;
 	char **attr;
 	char **attrs;
-	uri_t *license;
+	ll_uri_t *license;
 	for ( license = licenses; *license; ++license ) {
 		used_attrs = 0x0000;
 

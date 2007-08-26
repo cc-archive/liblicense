@@ -26,15 +26,15 @@
 #include "config.h"
 #endif
 
-uri_t ll_read(filename_t f) {
+ll_uri_t ll_read(ll_filename_t f) {
 	assert(_module_list);
 
 	int i, length = 0;
 	while (_module_list[length]) {length++;}
 
-	uri_t* results = ll_new_list(length);
+	ll_uri_t* results = ll_new_list(length);
 
-	const mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
+	const ll_mime_type_t mt = xdg_mime_get_mime_type_for_file(f,NULL);
 
 	i = 0;
 	LLModuleDesc **curr_module = _module_list;
@@ -60,7 +60,7 @@ uri_t ll_read(filename_t f) {
 	return license;
 }
 
-uri_t ll_module_read(filename_t f,module_t m) {
+ll_uri_t ll_module_read(ll_filename_t f, ll_module_t m) {
 	assert(_module_list);
 
 	char *license = NULL;

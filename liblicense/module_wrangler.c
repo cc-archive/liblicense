@@ -89,14 +89,14 @@ void ll_stop_modules() {
 	_module_list = NULL;
 }
 
-module_t* ll_get_config_modules() {
+ll_module_t* ll_get_config_modules() {
   struct dirent **namelist;
   int n = scandir(LIBLICENSE_CONFIG_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
   if (n==-1) {
   	fprintf(stderr,"No config modules found.");
   	return ll_new_list(0);
   }
-	module_t* result = ll_new_list(n);
+	ll_module_t* result = ll_new_list(n);
   int i;
   for (i=0;i<n;++i) {
     result[i] = strdup(namelist[i]->d_name);
@@ -105,13 +105,13 @@ module_t* ll_get_config_modules() {
   free(namelist);
 	return result;
 }
-module_t* ll_get_io_modules() {
+ll_module_t* ll_get_io_modules() {
 	assert(_module_list);
 
 	int length = 0;
 	while (_module_list[length]) {length++;}
 
-	module_t* result = ll_new_list(length);
+	ll_module_t* result = ll_new_list(length);
 
 	int i;
 	for (i = 0; i < length; i++) {
@@ -121,7 +121,7 @@ module_t* ll_get_io_modules() {
 	return result;
 }
 
-int ll_module_init(char* directory,module_t m) {// create file to open
+int ll_module_init(char* directory,ll_module_t m) {// create file to open
 	char reg_file[strlen(directory)+strlen(m)+1];
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
@@ -136,7 +136,7 @@ int ll_module_init(char* directory,module_t m) {// create file to open
 	return 0;
 }
 
-int ll_module_shutdown(char* directory,module_t m) {// create file to open
+int ll_module_shutdown(char* directory,ll_module_t m) {// create file to open
 	char lib_file[strlen(directory)+strlen(m)+1];
 	lib_file[0]='\0';
 	strcat(lib_file,directory);
@@ -155,7 +155,7 @@ int ll_module_shutdown(char* directory,module_t m) {// create file to open
 	return 0;
 }
 
-void* ll_get_module_symbol(char* directory, module_t m, symbol_t s) {
+void* ll_get_module_symbol(char* directory, ll_module_t m, ll_symbol_t s) {
 	// create file to open
 	char reg_file[strlen(directory)+strlen(m)+1];
 	reg_file[0]='\0';

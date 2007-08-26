@@ -19,18 +19,18 @@
 
 #include <liblicense.h>
 
-static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (uri_t);
-	const uri_t u;
+static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (ll_uri_t);
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
-	juris_t j = ll_get_jurisdiction(u);
+	ll_juris_t j = ll_get_jurisdiction(u);
 	PyObject* result = Py_BuildValue("s",j);
 	free(j);
 	return result;
 }
 
-static PyObject* py_get_name(PyObject* self, PyObject* args) { //(uri_t)
-	const uri_t u;
+static PyObject* py_get_name(PyObject* self, PyObject* args) { //(ll_uri_t)
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	char* name = ll_get_name(u);
@@ -39,11 +39,11 @@ static PyObject* py_get_name(PyObject* self, PyObject* args) { //(uri_t)
 	return result;
 }
 
-static PyObject* py_get_version(PyObject* self, PyObject* args) { //(uri_t)
-	const uri_t u;
+static PyObject* py_get_version(PyObject* self, PyObject* args) { //(ll_uri_t)
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
-	version_t v = ll_get_version(u);
+	ll_version_t v = ll_get_version(u);
 	int i=1;
 	PyObject* list = PyList_New(0);
 	while (v!=NULL && i <= v[0]) {
@@ -54,8 +54,8 @@ static PyObject* py_get_version(PyObject* self, PyObject* args) { //(uri_t)
 	return list;
 }
 
-static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)
-	const uri_t u;
+static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(ll_uri_t)
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_locale_t* l = ll_get_permits(u);
@@ -68,8 +68,8 @@ static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(uri_t)
 	ll_free_list(l);
 	return list;
 }
-static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(uri_t)
-	const uri_t u;
+static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(ll_uri_t)
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_locale_t* l = ll_get_prohibits(u);
@@ -82,8 +82,8 @@ static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(uri_t)
 	ll_free_list(l);
 	return list;
 }
-static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(uri_t)
-	const uri_t u;
+static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(ll_uri_t)
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_locale_t* l = ll_get_requires(u);
@@ -96,16 +96,16 @@ static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(uri_t)
 	ll_free_list(l);
 	return list;
 }
-static PyObject* py_verify_uri(PyObject* self, PyObject* args) { // uri_t
-	const uri_t u;
+static PyObject* py_verify_uri(PyObject* self, PyObject* args) { // ll_uri_t
+	const ll_uri_t u;
 	if (!PyArg_ParseTuple(args,"s",&u))
 		return NULL;
 	int b = ll_verify_uri(u);
 	return PyBool_FromLong((long) b);
 }
-static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // uri_t,attribute_t
-	const uri_t u;
-	const attribute_t a;
+static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // ll_uri_t,ll_attribute_t
+	const ll_uri_t u;
+	const ll_attribute_t a;
 	int b;
 	if (!PyArg_ParseTuple(args,"ssi",&u,&a,&b))
 		return NULL;
@@ -120,9 +120,9 @@ static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // uri_t,at
 	return list;
 }
 
-static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // juris_t
-	juris_t j=NULL;
-	uri_t* us;
+static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // ll_juris_t
+	ll_juris_t j=NULL;
+	ll_uri_t* us;
 	if (PyArg_ParseTuple(args,"|s",&j)) {
 		if (j==NULL)
 			us = ll_get_licenses(NULL);
@@ -142,7 +142,7 @@ static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // juris_t
 }
 
 static PyObject* py_get_jurisdictions(PyObject* self)  {
-	juris_t *j = ll_get_jurisdictions();
+	ll_juris_t *j = ll_get_jurisdictions();
 
 	int i =0;
 	PyObject* list = PyList_New(0);
@@ -154,8 +154,8 @@ static PyObject* py_get_jurisdictions(PyObject* self)  {
 	return list;
 }
 
-static PyObject* py_jurisdiction_name(PyObject* self, PyObject* args) { //(juris_t)
-	const juris_t j;
+static PyObject* py_jurisdiction_name(PyObject* self, PyObject* args) { //(ll_juris_t)
+	const ll_juris_t j;
 	if (!PyArg_ParseTuple(args, "s", &j))
 		return NULL;
 	char* name = ll_jurisdiction_name(j);
@@ -164,10 +164,10 @@ static PyObject* py_jurisdiction_name(PyObject* self, PyObject* args) { //(juris
 	return result;
 }
 
-static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, uri_t[,module_t]
-	const filename_t f;
-	const uri_t u;
-	const module_t m = NULL;
+static PyObject* py_write(PyObject* self, PyObject* args)  { // ll_filename_t, ll_uri_t[,ll_module_t]
+	const ll_filename_t f;
+	const ll_uri_t u;
+	const ll_module_t m = NULL;
 	int result;
 	if (PyArg_ParseTuple(args,"sz|s",&f,&u,&m))
 		if (m!=NULL)
@@ -181,10 +181,10 @@ static PyObject* py_write(PyObject* self, PyObject* args)  { // filename_t, uri_
 	return PyBool_FromLong((long) result);
 }
 
-static PyObject* py_read(PyObject* self, PyObject* args)  { // filename_t[,module_t]
-	const filename_t f;
-	const module_t m = NULL;
-	juris_t j;
+static PyObject* py_read(PyObject* self, PyObject* args)  { // ll_filename_t[,ll_module_t]
+	const ll_filename_t f;
+	const ll_module_t m = NULL;
+	ll_juris_t j;
 	if (PyArg_ParseTuple(args,"s|s",&f,&m))
 		if (m!=NULL)
 			j = ll_module_read(f,m);
@@ -197,22 +197,22 @@ static PyObject* py_read(PyObject* self, PyObject* args)  { // filename_t[,modul
 	return result;
 }
 
-static PyObject* py_set_default(PyObject* self, PyObject* args)  { // uri_t
-	uri_t u;
+static PyObject* py_set_default(PyObject* self, PyObject* args)  { // ll_uri_t
+	ll_uri_t u;
 	if(!PyArg_ParseTuple(args,"z",&u))
 		return NULL;
 	return PyBool_FromLong((long) ll_set_default(u));
 }
 
 static PyObject* py_get_default(PyObject* self, PyObject* args)  {
-	uri_t u = ll_get_default();
+	ll_uri_t u = ll_get_default();
 	PyObject* result = Py_BuildValue("z",u);
 	free(u);
 	return result;
 }
 
 static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
-	module_t* ms = ll_get_config_modules();
+	ll_module_t* ms = ll_get_config_modules();
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (ms!=NULL && ms[i]!=NULL) {
@@ -224,7 +224,7 @@ static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
 }
 
 static PyObject* py_get_io_modules(PyObject* self, PyObject* args)  {
-	module_t* ms = ll_get_io_modules();
+	ll_module_t* ms = ll_get_io_modules();
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (ms!=NULL && ms[i]!=NULL) {
@@ -256,7 +256,7 @@ LicenseChooser_dealloc(LicenseChooser* self)
 static int
 LicenseChooser_init(LicenseChooser *self, PyObject *args, PyObject *kwds)
 {
-	juris_t j = NULL;
+	ll_juris_t j = NULL;
 	PyObject *attrs = NULL;
 
 	if (! PyArg_ParseTuple(args,"zO",&j,&attrs))

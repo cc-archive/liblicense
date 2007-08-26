@@ -46,11 +46,11 @@ void help() {
 	printf("license does not exist.\n");
 }
 
-void print_license_info(uri_t uri) {
+void print_license_info(ll_uri_t uri) {
 	char **attrs, **attr;
 	char *string;
-	version_t version;
-	juris_t juris;
+	ll_version_t version;
+	ll_juris_t juris;
 	int i;
 
 	printf("License URI: %s\n",uri);
@@ -125,8 +125,8 @@ void print_license_info(uri_t uri) {
 	ll_free_list(attrs);
 }
 
-int list_juris(juris_t j) {
-	uri_t* licenses;
+int list_juris(ll_juris_t j) {
+	ll_uri_t* licenses;
 	if(j!=NULL && strcmp(j,"")==0)
 		j=NULL;
 	licenses = ll_get_licenses(j);
@@ -153,8 +153,8 @@ int main(int argc, char** argv) {
 	};
 	int c;
 	int option_index;
-	uri_t license = NULL;
-	module_t module = NULL;
+	ll_uri_t license = NULL;
+	ll_module_t module = NULL;
 	ll_init();
 	while((c = getopt_long(argc,argv,"vqhmu:l:a::",long_options,&option_index))!=-1) {
 		switch(c) {

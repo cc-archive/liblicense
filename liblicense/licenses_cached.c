@@ -35,7 +35,7 @@
 sqlite3 *db;
 
 int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
-	uri_t* results = (uri_t*) list;
+	ll_uri_t* results = (ll_uri_t*) list;
 	if (results!=NULL)
 		if (argv[0]) {
 			results[ll_list_length(results)]=strdup(argv[0]);
@@ -45,9 +45,9 @@ int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
 	return 0;
 }
 
-uri_t* _ll_query(char* query, int max) {
+ll_uri_t* _ll_query(char* query, int max) {
 	char *zErrMsg = 0;
-	uri_t* values = ll_new_list(max);
+	ll_uri_t* values = ll_new_list(max);
 	int rc = sqlite3_exec(db, query, _ll_sql_callback, values, &zErrMsg);
 	if (rc!=SQLITE_OK) {
 		printf("Query \"%s\" failed: %s\n",query,zErrMsg);
@@ -125,8 +125,8 @@ int ll_update_cache() {
 	int i;
 	time_t last_cache = _ll_last_cache_time();
 	for (i=0;i<n;++i) {
-		uri_t u = ll_filename_to_uri(namelist[i]->d_name);
-		filename_t fn = ll_uri_to_filename(u);
+		ll_uri_t u = ll_filename_to_uri(namelist[i]->d_name);
+		ll_filename_t fn = ll_uri_to_filename(u);
 		struct stat fileinfo;
 		if (stat(fn,&fileinfo)==-1) {
 			printf("error failed to stat %s, skipping\n",fn);
@@ -137,8 +137,8 @@ int ll_update_cache() {
 		}
 		if (fileinfo.st_mtime>last_cache) {
 			/* Get data */
-			juris_t j = ll_get_jurisdiction(u);
-			uri_t *successor = ll_get_attribute(u,"http://purl.org/dc/elements/1.1/isReplacedBy",0);
+			ll_juris_t j = ll_get_jurisdiction(u);
+			ll_uri_t *successor = ll_get_attribute(u,"http://purl.org/dc/elements/1.1/isReplacedBy",0);
 			int obsolete = ll_list_length(successor);
 			ll_free_list(successor);
 			char* query;
@@ -203,14 +203,14 @@ int ll_stop() {
 }
 
 // returns a null-terminated list of all general licenses available.
-uri_t* ll_get_all_licenses() {
-  uri_t* result = _ll_query("SELECT uri FROM licenses LIMIT 500;",500);
+ll_uri_t* ll_get_all_licenses() {
+  ll_uri_t* result = _ll_query("SELECT uri FROM licenses LIMIT 500;",500);
   return result;
 }
 
 // returns a null-terminated list of all general licenses in a family.
-uri_t* ll_get_licenses(const juris_t _j) {
-	juris_t j = _j;
+ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
+	ll_juris_t j = _j;
 	if (j && strcmp(j,"unported") == 0) j = NULL;
 
 	char* query;
@@ -221,14 +221,14 @@ uri_t* ll_get_licenses(const juris_t _j) {
 	} else {
 		query = strdup("SELECT uri FROM licenses WHERE jurisdiction ISNULL AND obsolete=0 LIMIT 15");
 	}
-	uri_t* result = _ll_query(query,15);
+	ll_uri_t* result = _ll_query(query,15);
 	free(query);
   	return result;
 }
 
 // returns a null-terminated list of all jurisdictions in use
-juris_t* ll_get_jurisdictions() {
-	juris_t* result = _ll_query("SELECT DISTINCT(jurisdiction) FROM licenses ORDER BY jurisdiction LIMIT 50",50);
+ll_juris_t* ll_get_jurisdictions() {
+	ll_juris_t* result = _ll_query("SELECT DISTINCT(jurisdiction) FROM licenses ORDER BY jurisdiction LIMIT 50",50);
 
 	int i;
 	int len = ll_list_length(result);
@@ -243,8 +243,8 @@ juris_t* ll_get_jurisdictions() {
 }
 
 // returns whether or not the given uri is recognized by the system.
-int ll_verify_uri(const uri_t u) {
-	uri_t* licenses = ll_get_all_licenses();
+int ll_verify_uri(const ll_uri_t u) {
+	ll_uri_t* licenses = ll_get_all_licenses();
 	int result = ll_list_contains(licenses,u);
 	ll_free_list(licenses);
 	return result;

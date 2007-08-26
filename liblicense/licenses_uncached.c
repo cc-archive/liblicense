@@ -51,10 +51,10 @@ int _ll_rdf_filter(const struct dirent * d) {
 }
 
 // returns a null-terminated list of all general licenses available.
-uri_t* ll_get_all_licenses() {
+ll_uri_t* ll_get_all_licenses() {
   struct dirent **namelist;
   int n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
-	uri_t* result = (uri_t*) malloc((n+1)*sizeof(uri_t));
+	ll_uri_t* result = (ll_uri_t*) malloc((n+1)*sizeof(ll_uri_t));
 	result[n]=NULL;
   int i;
   for (i=0;i<n;++i) {
@@ -66,16 +66,16 @@ uri_t* ll_get_all_licenses() {
 }
 
 // returns a null-terminated list of all general licenses in a family.
-uri_t* ll_get_licenses(const juris_t _j) {
-	juris_t j = _j;
+ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
+	ll_juris_t j = _j;
 	if (j && strcmp(j,"unported") == 0) j = NULL;
 
-	uri_t* licenses = ll_get_all_licenses();
+	ll_uri_t* licenses = ll_get_all_licenses();
 	int z=0;
 	int keep=0;
 	while(licenses[z]!=NULL) {
-		juris_t tmp_j = ll_get_jurisdiction(licenses[z]);
-		uri_t *successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
+		ll_juris_t tmp_j = ll_get_jurisdiction(licenses[z]);
+		ll_uri_t *successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
 		if(((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0)) && successor[0]==NULL)
 			keep++;
 		else {
@@ -86,7 +86,7 @@ uri_t* ll_get_licenses(const juris_t _j) {
 		free(tmp_j);
 		z++;
 	}
-	uri_t* result = ll_new_list(keep);
+	ll_uri_t* result = ll_new_list(keep);
 	z=0;
 	int pos = 0;
 	while(licenses[z]!=NULL && pos<keep) {
@@ -98,15 +98,15 @@ uri_t* ll_get_licenses(const juris_t _j) {
 	return result;
 }
 
-juris_t* ll_get_jurisdictions() {
-	uri_t* licenses = ll_get_all_licenses();
+ll_juris_t* ll_get_jurisdictions() {
+	ll_uri_t* licenses = ll_get_all_licenses();
 
-	juris_t* result = ll_new_list(50);
+	ll_juris_t* result = ll_new_list(50);
 	int count = 0;
 
 	result[count++] = strdup("unported");
 
-	juris_t juris;
+	ll_juris_t juris;
 	int i;
 	int len = ll_list_length(licenses);
 	for (i=0; i<len; ++i) {
@@ -133,7 +133,7 @@ juris_t* ll_get_jurisdictions() {
 	int j;
 	for (i = 2; i < count; ++i) {
 		for (j = i; ( j >= 2 ) && (strcmp(result[j],result[j-1]) < 0); --j ) {
-			juris_t tmp = result[j];
+			ll_juris_t tmp = result[j];
 			result[j] = result[j-1];
 			result[j-1] = tmp;
 		}
@@ -143,8 +143,8 @@ juris_t* ll_get_jurisdictions() {
 }
 
 // returns whether or not the given uri is recognized by the system.
-int ll_verify_uri(const uri_t u) {
-	uri_t* licenses = ll_get_all_licenses();
+int ll_verify_uri(const ll_uri_t u) {
+	ll_uri_t* licenses = ll_get_all_licenses();
 	int result = ll_list_contains(licenses,u);
 	ll_free_list(licenses);
 	return result;

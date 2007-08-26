@@ -24,9 +24,9 @@ VALUE cLiblicense;
  * Ruby friendly variables
  */
 static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
-	juris_t j;
-	uri_t u;
-	version_t v;
+	ll_juris_t j;
+	ll_uri_t u;
+	ll_version_t v;
 	ll_locale_t* l;
 	
 	int i;
@@ -178,7 +178,7 @@ static VALUE rbll_initialize_copy(VALUE copy, VALUE orig) {
 static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
 	VALUE obj;
 	VALUE file, module;
-	uri_t uri;
+	ll_uri_t uri;
 	ruby_liblicense *license;
 
 	rb_scan_args(argc, argv, "11", &file, &module);
@@ -212,7 +212,7 @@ static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
  */
 static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
 	VALUE licenses, juris;
-	uri_t *l;
+	ll_uri_t *l;
 	int i;
 	
 	rb_scan_args(argc, argv, "01", &juris);
@@ -267,7 +267,7 @@ static VALUE rbll_modules(VALUE self) {
  * Returns array of all configuration modules
  */
 static VALUE rbll_modules_config(VALUE self) {
-	module_t *m = ll_get_config_modules();
+	ll_module_t *m = ll_get_config_modules();
 	VALUE modules;
 	int i;
 	
@@ -289,7 +289,7 @@ static VALUE rbll_modules_config(VALUE self) {
  * Returns array of all IO modules
  */
 static VALUE rbll_modules_io(VALUE self) {
-	module_t *m = ll_get_io_modules();
+	ll_module_t *m = ll_get_io_modules();
 	VALUE modules;
 	int i;
 	
