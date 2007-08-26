@@ -7,13 +7,14 @@
  * distribution in the file COPYING.
  *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely 
+ * terms of that license. You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
  *
  * Copyright 2007, Creative Commons, www.creativecommons.org.
  * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
  */
 
 #ifndef LIBLICENSE_H
@@ -100,7 +101,7 @@ int _ll_contains_token(char *string, const char *token);
 
 typedef struct _LLModuleDesc LLModuleDesc;
 
-extern LLModuleDesc **_module_list;
+extern LLModuleDesc **_ll_module_list;
 
 typedef void (*LLModuleInitFunc) (void);
 typedef char* (*LLModuleReadFunc) (const char*);

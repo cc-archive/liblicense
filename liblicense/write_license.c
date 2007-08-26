@@ -34,7 +34,7 @@
              1 on success
  */
 int ll_write(ll_filename_t f, ll_uri_t u) {
-	assert(_module_list);
+	assert(_ll_module_list);
 
 	int result = -1;
 
@@ -42,7 +42,7 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
 
 	int embedded = 0;
 
-	LLModuleDesc **curr_module = _module_list;
+	LLModuleDesc **curr_module = _ll_module_list;
 	while (*curr_module) {
 		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
 			if ((*curr_module)->features & LL_FEATURES_EMBED) {
@@ -56,7 +56,7 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
 	}
 
 	if (!embedded) {
-		curr_module = _module_list;
+		curr_module = _ll_module_list;
 		while (*curr_module) {
 			if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
 				if ((*curr_module)->write) {
@@ -71,11 +71,11 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
 }
 
 int ll_module_write(ll_filename_t f, ll_uri_t u, ll_module_t m) {
-	assert(_module_list);
+	assert(_ll_module_list);
 
 	int result = -1;
 
-	LLModuleDesc **curr_module = _module_list;
+	LLModuleDesc **curr_module = _ll_module_list;
 	while (*curr_module) {
 		if ( strcmp((*curr_module)->name,m) == 0 ) {
 			if ((*curr_module)->write) {
