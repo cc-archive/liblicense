@@ -5,15 +5,16 @@
 //
 // A copy of the full license can be found as part of this
 // distribution in the file COPYING.
-// 
+//
 // You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
+// terms of that license. You agree that you are solely
 // responsible for your use of the liblicense software and you
 // represent and warrant to Creative Commons that your use
 // of the liblicense software will comply with the CC-GNU-LGPL.
 //
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
+// Copyright (C) 2007 Peter Miller
 
 #include <Python.h>
 
@@ -21,6 +22,7 @@
 
 static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (ll_uri_t);
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_juris_t j = ll_get_jurisdiction(u);
@@ -31,6 +33,7 @@ static PyObject* py_get_jurisdiction(PyObject* self, PyObject* args) { // (ll_ur
 
 static PyObject* py_get_name(PyObject* self, PyObject* args) { //(ll_uri_t)
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	char* name = ll_get_name(u);
@@ -41,6 +44,7 @@ static PyObject* py_get_name(PyObject* self, PyObject* args) { //(ll_uri_t)
 
 static PyObject* py_get_version(PyObject* self, PyObject* args) { //(ll_uri_t)
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_version_t v = ll_get_version(u);
@@ -56,6 +60,7 @@ static PyObject* py_get_version(PyObject* self, PyObject* args) { //(ll_uri_t)
 
 static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(ll_uri_t)
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_locale_t* l = ll_get_permits(u);
@@ -70,6 +75,7 @@ static PyObject* py_get_permits(PyObject* self, PyObject* args) { //(ll_uri_t)
 }
 static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(ll_uri_t)
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_locale_t* l = ll_get_prohibits(u);
@@ -84,6 +90,7 @@ static PyObject* py_get_prohibits(PyObject* self, PyObject* args) { //(ll_uri_t)
 }
 static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(ll_uri_t)
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &u))
 		return NULL;
 	ll_locale_t* l = ll_get_requires(u);
@@ -98,6 +105,7 @@ static PyObject* py_get_requires(PyObject* self, PyObject* args) { //(ll_uri_t)
 }
 static PyObject* py_verify_uri(PyObject* self, PyObject* args) { // ll_uri_t
 	const ll_uri_t u;
+        (void)self;
 	if (!PyArg_ParseTuple(args,"s",&u))
 		return NULL;
 	int b = ll_verify_uri(u);
@@ -107,6 +115,7 @@ static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // ll_uri_t
 	const ll_uri_t u;
 	const ll_attribute_t a;
 	int b;
+        (void)self;
 	if (!PyArg_ParseTuple(args,"ssi",&u,&a,&b))
 		return NULL;
 	char** avs = ll_get_attribute(u,a,b);
@@ -123,6 +132,7 @@ static PyObject* py_get_attribute(PyObject* self, PyObject* args)  { // ll_uri_t
 static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // ll_juris_t
 	ll_juris_t j=NULL;
 	ll_uri_t* us;
+        (void)self;
 	if (PyArg_ParseTuple(args,"|s",&j)) {
 		if (j==NULL)
 			us = ll_get_licenses(NULL);
@@ -141,9 +151,11 @@ static PyObject* py_get_licenses(PyObject* self, PyObject* args)  { // ll_juris_
 	return list;
 }
 
-static PyObject* py_get_jurisdictions(PyObject* self)  {
+static PyObject* py_get_jurisdictions(PyObject* self, PyObject* args)  {
 	ll_juris_t *j = ll_get_jurisdictions();
 
+        (void)self;
+        (void)args;
 	int i =0;
 	PyObject* list = PyList_New(0);
 	while (j!=NULL && j[i]!=NULL) {
@@ -156,6 +168,7 @@ static PyObject* py_get_jurisdictions(PyObject* self)  {
 
 static PyObject* py_jurisdiction_name(PyObject* self, PyObject* args) { //(ll_juris_t)
 	const ll_juris_t j;
+        (void)self;
 	if (!PyArg_ParseTuple(args, "s", &j))
 		return NULL;
 	char* name = ll_jurisdiction_name(j);
@@ -169,6 +182,7 @@ static PyObject* py_write(PyObject* self, PyObject* args)  { // ll_filename_t, l
 	const ll_uri_t u;
 	const ll_module_t m = NULL;
 	int result;
+        (void)self;
 	if (PyArg_ParseTuple(args,"sz|s",&f,&u,&m))
 		if (m!=NULL)
 			result = ll_module_write(f,u,m);
@@ -185,6 +199,7 @@ static PyObject* py_read(PyObject* self, PyObject* args)  { // ll_filename_t[,ll
 	const ll_filename_t f;
 	const ll_module_t m = NULL;
 	ll_juris_t j;
+        (void)self;
 	if (PyArg_ParseTuple(args,"s|s",&f,&m))
 		if (m!=NULL)
 			j = ll_module_read(f,m);
@@ -199,12 +214,15 @@ static PyObject* py_read(PyObject* self, PyObject* args)  { // ll_filename_t[,ll
 
 static PyObject* py_set_default(PyObject* self, PyObject* args)  { // ll_uri_t
 	ll_uri_t u;
+        (void)self;
 	if(!PyArg_ParseTuple(args,"z",&u))
 		return NULL;
 	return PyBool_FromLong((long) ll_set_default(u));
 }
 
 static PyObject* py_get_default(PyObject* self, PyObject* args)  {
+        (void)self;
+        (void)args;
 	ll_uri_t u = ll_get_default();
 	PyObject* result = Py_BuildValue("z",u);
 	free(u);
@@ -212,6 +230,8 @@ static PyObject* py_get_default(PyObject* self, PyObject* args)  {
 }
 
 static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
+        (void)self;
+        (void)args;
 	ll_module_t* ms = ll_get_config_modules();
 	int i =0;
 	PyObject* list = PyList_New(0);
@@ -224,6 +244,8 @@ static PyObject* py_get_config_modules(PyObject* self, PyObject* args)  {
 }
 
 static PyObject* py_get_io_modules(PyObject* self, PyObject* args)  {
+        (void)self;
+        (void)args;
 	ll_module_t* ms = ll_get_io_modules();
 	int i =0;
 	PyObject* list = PyList_New(0);
@@ -236,6 +258,8 @@ static PyObject* py_get_io_modules(PyObject* self, PyObject* args)  {
 }
 
 static PyObject* py_print_module_info(PyObject* self, PyObject* args)  {
+        (void)self;
+        (void)args;
 	ll_print_module_info();
 	return Py_BuildValue("");
 }
@@ -256,11 +280,12 @@ LicenseChooser_dealloc(LicenseChooser* self)
 static int
 LicenseChooser_init(LicenseChooser *self, PyObject *args, PyObject *kwds)
 {
+        (void)kwds;
 	ll_juris_t j = NULL;
 	PyObject *attrs = NULL;
 
 	if (! PyArg_ParseTuple(args,"zO",&j,&attrs))
-			return -1; 
+			return -1;
 
 	if (!PyList_Check(attrs))
 		return -1;
@@ -321,7 +346,7 @@ static PyMethodDef LicenseChooser_methods[] = {
 	{"attribute_flag", (PyCFunction)LicenseChooser_attribute_flag, METH_VARARGS,
 		"Return the appropriate permits/requires/prohibits flag to be passed to get_licenses"
 	},
-	{NULL}  /* Sentinel */
+	{ NULL, 0, 0, 0 }  /* Sentinel */
 };
 
 static PyTypeObject LicenseChooserType = {
@@ -362,6 +387,16 @@ static PyTypeObject LicenseChooserType = {
 	0,                         /* tp_descr_set */
 	0,                         /* tp_dictoffset */
 	(initproc)LicenseChooser_init,      /* tp_init */
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
 };
 
 static PyMethodDef LicenseMethods[] = {
@@ -414,5 +449,5 @@ PyMODINIT_FUNC initliblicense(void) {
 			return;
 
 	Py_INCREF(&LicenseChooserType);
-	PyModule_AddObject(m, "LicenseChooser", (PyObject*)&LicenseChooserType);
+	PyModule_AddObject(m, "LicenseChooser", (void *)&LicenseChooserType);
 }

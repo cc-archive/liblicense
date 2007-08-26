@@ -5,15 +5,16 @@
 //
 // A copy of the full license can be found as part of this
 // distribution in the file COPYING.
-// 
+//
 // You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
+// terms of that license. You agree that you are solely
 // responsible for your use of the liblicense software and you
 // represent and warrant to Creative Commons that your use
 // of the liblicense software will comply with the CC-GNU-LGPL.
 //
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Scott Shawcroft.
+// Copyright (C) 2007 Peter Miller
 
 #include "liblicense.h"
 
@@ -124,7 +125,7 @@ ll_version_t ll_get_version(const ll_uri_t u) {
 	if (version) {
 		int c;
 		int divisions = 1;
-		for (c=0; c<strlen(version); ++c) {
+		for (c = 0; c < (int)strlen(version); ++c) {
 			if (version[c] == '.') {
 				++divisions;
 			}
@@ -141,7 +142,7 @@ ll_version_t ll_get_version(const ll_uri_t u) {
 			} else {
 				position++;
 			}
-			c++;			
+			c++;
 		}
 		free(version);
 		return result;
@@ -208,7 +209,7 @@ void _ll_triple_handler(void* user_data, const raptor_statement* triple) {
 		// Store value if wanted.
 		if ((search_data->predicate==NULL || strcmp(search_data->predicate,(char*)triple->predicate)==0)  //Any predicate or the given.
 		  && search_data->num_values<MAX_TRIPLES // We have space for more results.
-		  && (search_data->type==-1 || search_data->type==triple->object_type) //Any type or the given.
+		  && (search_data->type == -1 || search_data->type == (int)triple->object_type) //Any type or the given.
 		  && (search_data->locale==NULL || triple->object_literal_language==NULL || strcmp((char*)triple->object_literal_language,"x-default")==0 || strcmp((char*)triple->object_literal_language,search_data->locale)==0)) { //locale stuff
 			search_data->values[search_data->num_values] = strdup((char*)triple->object);
 			if (triple->object_literal_language!=NULL)
@@ -270,7 +271,7 @@ ll_attribute_search_t* _ll_get_triple(const ll_uri_t u, const char* subject, con
 		helper->predicate = NULL;
 	helper->type = type;
 	char * fn = ll_uri_to_filename(u);
-	
+
 	// BREAKS_WINDOWS
 	if(access(fn,R_OK)==0) {
 		// Run the parser.
@@ -348,7 +349,7 @@ char** ll_get_attribute(ll_uri_t u,ll_attribute_t a, int locale) {
 	ll_attribute_search_t* helper = _ll_get_triple(u,u,a,-1,locale);
 
   char* further_search = NULL;
-  
+
   char** result = _ll_build_list(helper, &further_search);
   // Free the helper struct
   _ll_free_attribute_search_t(helper);

@@ -6,15 +6,16 @@
 #
 # A copy of the full license can be found as part of this
 # distribution in the file COPYING.
-# 
+#
 # You may use the liblicense software in accordance with the
-# terms of that license. You agree that you are solely 
+# terms of that license. You agree that you are solely
 # responsible for your use of the liblicense software and you
 # represent and warrant to Creative Commons that your use
 # of the liblicense software will comply with the CC-GNU-LGPL.
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
+# Copyright (C) 2007 Peter Miller
 # Process this file with autoconf to produce a configure script.
 # This file is part of Liblicense.
 
@@ -54,7 +55,7 @@ if test "x$enable_ruby" = "xyes"; then
 	  RUBY_LIBDIR=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["sitelibdir"]]'`
 	  RUBY_LIBS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["LIBS"]]; puts " -l" + Config::CONFIG[["RUBY_SO_NAME"]]'`
 	  RUBY_CFLAGS=`"$RUBY" -rrbconfig -e 'print Config::CONFIG[["CFLAGS"]]; puts " -I" + Config::CONFIG[["archdir"]]'`
-	  RUBY_LDFLAGS=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["LDFLAGS"]]'` 
+	  RUBY_LDFLAGS=`"$RUBY" -rrbconfig -e 'puts Config::CONFIG[["LDFLAGS"]]'`
 	else
 	  RUBY="none"
 	  AC_MSG_WARN([The detected Ruby is too old, or no development files installed.])
@@ -74,6 +75,9 @@ CFLAGS="$CFLAGS"
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h string.h])
 
+# xdgmime needs mmap
+AC_CHECK_FUNCS(mmap)
+
 dnl Library Checks
 RAPTOR_REQUIRED=1.0
 
@@ -89,13 +93,15 @@ AC_ARG_ENABLE(warnings,
 			  [enable_warnings=yes])
 
 if test "x$enable_warnings" = "xyes"; then
-   CFLAGS="\
-   -Wall \
-   -Wchar-subscripts \
-   -Wnested-externs \
-   -Wpointer-arith \
-   -Wsign-compare \
-   $CFLAGS"
+   AC_ADD_CFLAGS([-Wall])
+   AC_ADD_CFLAGS([-Wextra])
+# FIXME: Enable this when upstream xdgmime's code compiles without warning
+#   AC_ADD_CFLAGS([-Werror])
+   AC_ADD_CFLAGS([-Wchar-subscripts])
+   AC_ADD_CFLAGS([-Wnested-externs])
+   AC_ADD_CFLAGS([-Wpointer-arith])
+   AC_ADD_CFLAGS([-Wsign-compare])
+   AC_ADD_CFLAGS([-Wshadow])
 fi
 
 ####################################################################

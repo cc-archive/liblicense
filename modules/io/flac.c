@@ -5,15 +5,16 @@
  *
  * A copy of the full license can be found as part of this
  * distribution in the file COPYING.
- * 
+ *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely 
+ * terms of that license. You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
  *
  * Copyright 2007, Creative Commons, www.creativecommons.org.
  * Copyright 2007, Jason Kivlighn.
+ * Copyright (C) 2007 Peter Miller
  */
 
 #include <stdio.h>
@@ -34,9 +35,9 @@ char* flac_read( const char* filename )
 
 	FLAC__StreamMetadata *vc;
 	if ( FLAC__metadata_get_tags(filename,&vc) ) {
-		int index = FLAC__metadata_object_vorbiscomment_find_entry_from(vc, 0, "LICENSE");
-		if (index != -1) {
-			license = strdup((char*)&vc->data.vorbis_comment.comments[index].entry[8]);
+		int idx = FLAC__metadata_object_vorbiscomment_find_entry_from(vc, 0, "LICENSE");
+		if (idx != -1) {
+			license = strdup((char*)&vc->data.vorbis_comment.comments[idx].entry[8]);
 		}
 		FLAC__metadata_object_delete(vc);
 	}
@@ -72,7 +73,7 @@ int flac_write( const char* filename, const char* uri )
 				break;
 			}
 		} while (FLAC__metadata_simple_iterator_next(iter));
-		
+
 		if (!found_vc && uri) {
 			FLAC__StreamMetadata *vc = FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT);
 

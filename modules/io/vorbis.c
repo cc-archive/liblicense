@@ -5,15 +5,16 @@
  *
  * A copy of the full license can be found as part of this
  * distribution in the file COPYING.
- * 
+ *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely 
+ * terms of that license. You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
  *
  * Copyright 2007, Creative Commons, www.creativecommons.org.
  * Copyright 2007, Jason Kivlighn.
+ * Copyright (C) 2007 Peter Miller
  */
 
 #include <stdlib.h>
@@ -51,7 +52,7 @@ char* vorbis_read( const char* filename )
 		fprintf(stderr,"Unable to open file for reading.\n");
 		return NULL;
 	}
-	
+
 	char *license = NULL;
 	char **comments = ov_comment(&vf,-1)->user_comments;
 	for (; *comments; ++comments ) {
@@ -93,7 +94,9 @@ int vorbis_write( const char* filename, const char* uri )
 				}
 
 				if (uri) {
-					vorbis_comment_add_tag(&vc_new, "LICENSE", uri);
+                                        // The vorbis prototypes need
+                                        // const correctness work.
+					vorbis_comment_add_tag(&vc_new, "LICENSE", (char *)uri);
 				}
 
 				vorbis_comment_clear(vc);
@@ -110,16 +113,16 @@ int vorbis_write( const char* filename, const char* uri )
 				struct stat st;
 				stat (filename, &st);
 				#endif
-				
+
 				if(output_written) {
-					/* Some platforms fail to rename a file if the new name already 
+					/* Some platforms fail to rename a file if the new name already
 					* exists, so we need to remove, then rename. How stupid.
 					*/
 					if(rename(outfilename, filename)) {
 						if(remove(filename))
 							fprintf(stderr, "Error removing old file %s\n", filename);
 						else if(rename(outfilename, filename))
-							fprintf(stderr, "Error renaming %s to %s\n", outfilename, 
+							fprintf(stderr, "Error renaming %s to %s\n", outfilename,
 							filename);
 						else {
 							ret = 1;
@@ -133,7 +136,7 @@ int vorbis_write( const char* filename, const char* uri )
 				}
 				else {
 					if(remove(outfilename)) {
-						fprintf(stderr, "Error removing erroneous temporary file %s\n", 
+						fprintf(stderr, "Error removing erroneous temporary file %s\n",
 							outfilename);
 					}
 				}
@@ -142,7 +145,7 @@ int vorbis_write( const char* filename, const char* uri )
 			}
 			free(outfilename);
 		}
-		
+
 		vcedit_clear(state);
 		fclose(fh_in);
 	} else {

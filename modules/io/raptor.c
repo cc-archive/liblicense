@@ -5,15 +5,16 @@
  *
  * A copy of the full license can be found as part of this
  * distribution in the file COPYING.
- * 
+ *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely 
+ * terms of that license. You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
  *
  * Copyright 2007, Creative Commons, www.creativecommons.org.
  * Copyright 2007, Jason Kivlighn.
+ * Copyright (C) 2007 Peter Miller
  */
 
 #include <stdlib.h>
@@ -40,7 +41,7 @@ typedef struct {
 void triple_handler(void* user_data, const raptor_statement* triple) {
 	match_t *match = (match_t*)user_data;
 
-	if (strcmp(match->subject,(char*)triple->subject)==0 && 
+	if (strcmp(match->subject,(char*)triple->subject)==0 &&
 			(strcmp("http://creativecommons.org/ns#license",(char*)triple->predicate)==0 ||
 			 strcmp("http://web.resource.org/cc/license",(char*)triple->predicate)==0)) {
 		*match->license = malloc(sizeof(char)*(strlen((char*)triple->object)+1));
@@ -143,16 +144,16 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_uri *permits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#permits":"http://web.resource.org/cc/permits"));
 	curr = list = ll_get_permits((char*)raptor_uri_as_string(license_uri));
 	while (*curr) {
-		raptor_statement license_triple;
-		license_triple.subject=(void*)license_uri;
-		license_triple.subject_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		license_triple.predicate=(void*)permits_uri;
-		license_triple.predicate_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		license_triple.object=(void*)raptor_new_uri((const unsigned char*)*curr);
-		license_triple.object_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		raptor_serialize_statement(serializer, &license_triple);
+		raptor_statement rs;
+		rs.subject = (void*)license_uri;
+		rs.subject_type = RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		rs.predicate = (void*)permits_uri;
+		rs.predicate_type = RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		rs.object = (void*)raptor_new_uri((const unsigned char*)*curr);
+		rs.object_type = RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		raptor_serialize_statement(serializer, &rs);
 
-		raptor_free_uri((raptor_uri*)license_triple.object);
+		raptor_free_uri((raptor_uri*)rs.object);
 
 		curr++;
 	}
@@ -162,16 +163,16 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_uri *requires_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#requires":"http://web.resource.org/cc/requires"));
 	curr = list = ll_get_requires((char*)raptor_uri_as_string(license_uri));
 	while (*curr) {
-		raptor_statement license_triple;
-		license_triple.subject=(void*)license_uri;
-		license_triple.subject_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		license_triple.predicate=(void*)requires_uri;
-		license_triple.predicate_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		license_triple.object=(void*)raptor_new_uri((unsigned char*)*curr);
-		license_triple.object_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		raptor_serialize_statement(serializer, &license_triple);
+		raptor_statement rs;
+		rs.subject = (void*)license_uri;
+		rs.subject_type = RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		rs.predicate = (void*)requires_uri;
+		rs.predicate_type = RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		rs.object = (void*)raptor_new_uri((unsigned char*)*curr);
+		rs.object_type = RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		raptor_serialize_statement(serializer, &rs);
 
-		raptor_free_uri((raptor_uri*)license_triple.object);
+		raptor_free_uri((raptor_uri*)rs.object);
 
 		curr++;
 	}
@@ -181,16 +182,16 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_uri *prohibits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#prohibits":"http://web.resource.org/cc/prohibits"));
 	curr = list = ll_get_prohibits((char*)raptor_uri_as_string(license_uri));
 	while (*curr) {
-		raptor_statement license_triple;
-		license_triple.subject=(void*)license_uri;
-		license_triple.subject_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		license_triple.predicate=(void*)prohibits_uri;
-		license_triple.predicate_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		license_triple.object=(void*)raptor_new_uri((unsigned char*)*curr);
-		license_triple.object_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
-		raptor_serialize_statement(serializer, &license_triple);
+		raptor_statement rs;
+		rs.subject=(void*)license_uri;
+		rs.subject_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		rs.predicate=(void*)prohibits_uri;
+		rs.predicate_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		rs.object=(void*)raptor_new_uri((unsigned char*)*curr);
+		rs.object_type=RAPTOR_IDENTIFIER_TYPE_RESOURCE;
+		raptor_serialize_statement(serializer, &rs);
 
-		raptor_free_uri((raptor_uri*)license_triple.object);
+		raptor_free_uri((raptor_uri*)rs.object);
 
 		curr++;
 	}
@@ -198,7 +199,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	ll_free_list(list);
 }
 
-void serialize_triple(void* user_data, const raptor_statement* triple) 
+void serialize_triple(void* user_data, const raptor_statement* triple)
 {
 	helper_t *helper = (helper_t*)user_data;
 
@@ -228,12 +229,12 @@ int raptor_write( const char* filename, const char* license_uri_str )
 	raptor_serializer* rdf_serializer;
 	unsigned char *uri_string;
 	raptor_uri *uri, *base_uri, *license_uri;
-	
+
 	uri_string=raptor_uri_filename_to_uri_string(filename);
 	uri=raptor_new_uri(uri_string);
 	base_uri=raptor_uri_copy(uri);
 	license_uri=raptor_new_uri((const unsigned char*)license_uri_str);
-	
+
 	rdf_parser=raptor_new_parser("rdfxml");
 	rdf_serializer=raptor_new_serializer("rdfxml-abbrev");
 
@@ -275,24 +276,24 @@ int raptor_write( const char* filename, const char* license_uri_str )
 
 	raptor_free_serializer(rdf_serializer);
 	raptor_free_parser(rdf_parser);
-	
+
 	raptor_free_uri(base_uri);
 	raptor_free_uri(uri);
 	raptor_free_uri(license_uri);
 	raptor_free_memory(uri_string);
-	
+
 	xmlDoc *doc;
 	xmlDoc *rdf_doc;
 	xmlNode *root_element;
-	
+
 	/*parse the file and get the DOM */
 	doc = xmlReadFile(filename, NULL, 0);
-	
+
 	if (doc == NULL) {
 			fprintf(stderr,"error: could not parse file %s\n", filename);
 			return ret;
 	}
-	
+
 	/*Get the root element node */
 	root_element = xmlDocGetRootElement(doc);
 	rdf_doc = xmlReadMemory(string, length, "noname.xml", NULL, 0);
@@ -313,7 +314,7 @@ int raptor_write( const char* filename, const char* license_uri_str )
 			}
 		}
 	}
-	
+
 	xmlSaveFormatFileEnc(filename, doc, "UTF-8", 1);
 
 	/*free the document */

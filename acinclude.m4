@@ -5,15 +5,16 @@
 #
 # A copy of the full license can be found as part of this
 # distribution in the file COPYING.
-# 
+#
 # You may use the liblicense software in accordance with the
-# terms of that license. You agree that you are solely 
+# terms of that license. You agree that you are solely
 # responsible for your use of the liblicense software and you
 # represent and warrant to Creative Commons that your use
 # of the liblicense software will comply with the CC-GNU-LGPL.
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
+# Copyright (C) 2007 Peter Miller
 
 AC_DEFUN([AM_CHECK_PYTHON_HEADERS],
 [AC_REQUIRE([AM_PATH_PYTHON])
@@ -77,4 +78,20 @@ AC_DEFUN([AS_AC_EXPAND],
   dnl restore prefix and exec_prefix
   prefix=$prefix_save
   exec_prefix=$exec_prefix_save
+])
+
+
+dnl @synopsis AC_ADD_CFLAGS
+dnl
+dnl Add the given option to CFLAGS, if it doesn't break the compiler
+dnl
+AC_DEFUN([AC_ADD_CFLAGS],
+[AC_MSG_CHECKING([if $CC accepts $1])
+    ac_add_cflags__old_cflags="$CFLAGS"
+    CFLAGS="$CFLAGS $1"
+    AC_TRY_LINK([#include <stdio.h>],
+        [printf("Hello, World!\n"); return 0;],
+        AC_MSG_RESULT([yes]),
+        AC_MSG_RESULT([no])
+        CFLAGS="$ac_add_cflags__old_cflags")
 ])

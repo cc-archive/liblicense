@@ -7,13 +7,14 @@
  * distribution in the file COPYING.
  *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely 
+ * terms of that license. You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
  *
  * Copyright 2007, Creative Commons, www.creativecommons.org.
  * Copyright 2007, Jason Kivlighn
+ * Copyright (C) 2007 Peter Miller
  */
 
 #include <string.h>
@@ -36,7 +37,7 @@ struct _ll_license_chooser_t {
 	 *                    /  |   |   \      / |   |  \    / |  |  \       / |  |  \
 	 * CommercialUse:    P   R   Pr  U     P  R  Pr  U   P  R  Pr  U     P  R  Pr  U
 	 * Indices in
-	 *  license_list:    0   1   2   3    4   5  6   7   8  9  10  11   12 13  14 15 
+	 *  license_list:    0   1   2   3    4   5  6   7   8  9  10  11   12 13  14 15
 	 *
 	 * In the example above, the list of licenses that require (R) Attribution and prohibit (Pr) CommercialUse
 	 * is found at license_list[6].
@@ -98,20 +99,20 @@ static int heap_size( int num_attributes )
  *
  * For example, one call of iterate_children will increase license_hits[] for all licenses that prohibit CommercialUse.  On the next call to iterate_children, all licenses that require Attribution are increased.  Using the above tree in this example, first, license_hits[2,6,10,14] are all increased to 1.  Then the second call increases license_hits[4,5,6,7].  license_hits[6] is now 2, meaning we've matched the licenses at that index.
  */
-static void iterate_children( int *license_hits, int index, int height, int heap_size )
+static void iterate_children( int *license_hits, int idx, int height, int heap_sz )
 {
-	int leftChild = (index-N_STATES+2)*N_STATES;
+	int leftChild = (idx - N_STATES + 2) * N_STATES;
 
-	if (leftChild >= heap_size) { /* we've hit a leaf node, where the licenses are */
+	if (leftChild >= heap_sz) { /* we've hit a leaf node, where the licenses are */
 		/* the array tracks leaf nodes, while the heap tracks all nodes */
-		int arrayIndex = index-indexAt(height);
+		int arrayIndex = idx - indexAt(height);
 		license_hits[arrayIndex] += 1;
 		return;
 	}
 
 	int i = 0;
 	while ( i<N_STATES ) {
-		iterate_children( license_hits, leftChild+i, height+1, heap_size );
+		iterate_children( license_hits, leftChild+i, height+1, heap_sz );
 		i++;
 	}
 }
@@ -164,6 +165,10 @@ const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *licen
 
 void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, int *requires, int *prohibits )
 {
+    (void)license_chooser;
+    (void)permits;
+    (void)requires;
+    (void)prohibits;
 }
 
 ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, const char **attributes )
@@ -171,7 +176,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 	ll_license_chooser_t *chooser = (ll_license_chooser_t*)malloc(sizeof(ll_license_chooser_t));
 
 	ll_uri_t *licenses = ll_get_licenses(jurisdiction);
-	
+
 	int num_attributes;
 	for (num_attributes = 0; attributes[num_attributes]; ++num_attributes);
 	int num_nodes = 1 << (num_attributes * 2);
