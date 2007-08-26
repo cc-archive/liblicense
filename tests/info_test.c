@@ -22,8 +22,8 @@
 
 int main(int argc,char** argv) {
 	ll_init();
-	uri_t license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
-	juris_t j = ll_get_jurisdiction(license);
+	ll_uri_t license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
+	ll_juris_t j = ll_get_jurisdiction(license);
 	printf("get_jurisdiction: '%s'\n",j);
 	free(j);
 	char* name = ll_get_name(license);
@@ -44,7 +44,7 @@ int main(int argc,char** argv) {
 		printf("unversioned\n");
 	}
 	
-	uri_t* p = ll_get_prohibits(license);
+	ll_uri_t* p = ll_get_prohibits(license);
 	printf("get_prohibits: ");
 	ll_list_print(p);
 	ll_free_list(p);

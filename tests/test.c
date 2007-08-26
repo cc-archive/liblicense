@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 	free(result);
 
 	printf("\tget_version: ");
-	version_t version = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
+	ll_version_t version = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
 	if (version) {
 		int i;
 		for (i=1; i<=version[0]; ++i) {
