@@ -18,6 +18,7 @@
 
 #include "liblicense.h"
 
+#include <errno.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
@@ -46,7 +47,8 @@ void ll_init_modules() {
 	struct dirent **namelist;
 	int n = scandir(LIBLICENSE_IO_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
 	if (n==-1) {
-		fprintf(stderr,"No io modules found.");
+		fprintf(stderr, "scandir(\"%s\"): %s\n",
+                        LIBLICENSE_IO_MODULE_DIR, strerror(errno));
 		return;
 	}
 
@@ -73,7 +75,8 @@ void ll_init_modules() {
 			*curr_module = module_desc;
 			curr_module++;
 		} else {
-			fprintf(stderr,"Unable to dlopen() '%s'\n",reg_file);
+			fprintf(stderr, "dlopen(\"%s\"): %s\n", reg_file,
+                            dlerror());
 		}
 		free(namelist[i]);
 	}
@@ -94,7 +97,8 @@ ll_module_t* ll_get_config_modules() {
   struct dirent **namelist;
   int n = scandir(LIBLICENSE_CONFIG_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
   if (n==-1) {
-  	fprintf(stderr,"No config modules found.");
+  	fprintf(stderr, "scandir(\"%s\"): %s", LIBLICENSE_CONFIG_MODULE_DIR,
+            strerror(errno));
   	return ll_new_list(0);
   }
 	ll_module_t* result = ll_new_list(n);
@@ -106,6 +110,7 @@ ll_module_t* ll_get_config_modules() {
   free(namelist);
 	return result;
 }
+
 ll_module_t* ll_get_io_modules() {
 	assert(_ll_module_list);
 
@@ -122,7 +127,7 @@ ll_module_t* ll_get_io_modules() {
 	return result;
 }
 
-int ll_module_init(char* directory,ll_module_t m) {// create file to open
+int ll_module_init(char* directory, ll_module_t m) {// create file to open
 	char reg_file[strlen(directory)+strlen(m)+1];
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
@@ -131,13 +136,19 @@ int ll_module_init(char* directory,ll_module_t m) {// create file to open
 
 	if (handle) {
 		void (*function_init)() = dlsym(handle,"init");
-		(*function_init)();
+                if (function_init)
+                    (*function_init)();
+                /*
+                 * Note that we did not call dlclose, this will be done
+                 * later in the ll_module_shutdown function.
+                 */
 		return 1;
 	}
 	return 0;
 }
 
-int ll_module_shutdown(char* directory,ll_module_t m) {// create file to open
+int ll_module_shutdown(char *directory, ll_module_t m) {
+        // create file to open
 	char lib_file[strlen(directory)+strlen(m)+1];
 	lib_file[0]='\0';
 	strcat(lib_file,directory);
@@ -145,10 +156,18 @@ int ll_module_shutdown(char* directory,ll_module_t m) {// create file to open
 
 	//Get the handle without skewing the number open.
 	void* handle = dlopen(lib_file,RTLD_LAZY);
+        if (!handle)
+            return -1;
 
 	void (*function_shutdown)() = dlsym(handle,"shutdown");
-	(*function_shutdown)();
+        if (function_shutdown)
+            (*function_shutdown)();
 
+        /*
+         * We deliberately call dlclose twice.  The reference count
+         * must reach zero, once for this function, and once for the
+         * ll_module_init function.
+         */
 	dlclose(handle);
 
 	//close
@@ -164,7 +183,7 @@ void* ll_get_module_symbol(char* directory, ll_module_t m, ll_symbol_t s) {
 	strcat(reg_file,m);
 	void* handle = dlopen(reg_file,RTLD_LAZY);
 	if (!handle) {
-	  fprintf(stderr, "%s\n", dlerror());
+	  fprintf(stderr, "dlopen(\"%s\"): %s\n", reg_file, dlerror());
 	  exit(EXIT_FAILURE);
   }
 	void* symbol = dlsym(handle,s);
