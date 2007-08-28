@@ -127,7 +127,7 @@ ll_module_t* ll_get_io_modules() {
 	return result;
 }
 
-int ll_module_init(char* directory, ll_module_t m) {// create file to open
+int ll_module_init(const char* directory, ll_module_t m) {// create file to open
 	char reg_file[strlen(directory)+strlen(m)+1];
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
@@ -147,7 +147,7 @@ int ll_module_init(char* directory, ll_module_t m) {// create file to open
 	return 0;
 }
 
-int ll_module_shutdown(char *directory, ll_module_t m) {
+int ll_module_shutdown(const char *directory, ll_module_t m) {
         // create file to open
 	char lib_file[strlen(directory)+strlen(m)+1];
 	lib_file[0]='\0';
@@ -175,7 +175,7 @@ int ll_module_shutdown(char *directory, ll_module_t m) {
 	return 0;
 }
 
-void* ll_get_module_symbol(char* directory, ll_module_t m, ll_symbol_t s) {
+void* ll_get_module_symbol(const char* directory, ll_module_t m, ll_symbol_t s) {
 	// create file to open
 	char reg_file[strlen(directory)+strlen(m)+1];
 	reg_file[0]='\0';
@@ -211,7 +211,7 @@ void ll_print_module_info() {
 	}
 }
 
-int _ll_contains_token(char *string, const char *token)
+int _ll_contains_token(const char *string, const char *token)
 {
 	char *copy = strdup(string);
 

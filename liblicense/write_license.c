@@ -29,10 +29,6 @@
 #include "config.h"
 #endif
 
-/** Returns -1 if no embedders are available for this file type
-             0 if all available embedders failed
-             1 on success
- */
 int ll_write(ll_filename_t f, ll_uri_t u) {
 	assert(_ll_module_list);
 
