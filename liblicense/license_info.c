@@ -151,7 +151,7 @@ ll_version_t ll_get_version(const ll_uri_t u) {
 		position = 1;
 		result = (ll_version_t) calloc(divisions+1,sizeof(int));
 		result[0] = divisions;
-		while(version!=NULL && version[c]!='\0' && position<3) {
+		while(version!=NULL && version[c]!='\0' && position<=divisions) {
 			if (version[c]!='.') {
 				result[position] *= 10;
 				result[position] += atoi(&version[c]);
