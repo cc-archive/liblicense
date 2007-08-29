@@ -1,20 +1,22 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-//
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
-// Copyright (C) 2007 Peter Miller
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include "liblicense.h"
 
@@ -42,10 +44,13 @@ int _ll_so_filter(const struct dirent * d) {
 }
 
 void ll_init_modules() {
-	if (_ll_module_list) return;
-
 	struct dirent **namelist;
-	int n = scandir(LIBLICENSE_IO_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
+        int n;
+	LLModuleDesc **curr_module;
+	int i;
+
+	if (_ll_module_list) return;
+	n = scandir(LIBLICENSE_IO_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
 	if (n==-1) {
 		fprintf(stderr, "scandir(\"%s\"): %s\n",
                         LIBLICENSE_IO_MODULE_DIR, strerror(errno));
@@ -53,16 +58,17 @@ void ll_init_modules() {
 	}
 
 	_ll_module_list = (LLModuleDesc**)calloc(n+1,sizeof(LLModuleDesc*));
-	LLModuleDesc **curr_module = _ll_module_list;
+	curr_module = _ll_module_list;
 
-	int i;
 	for (i=0;i<n;++i) {
 		char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen(namelist[i]->d_name)+1];
+		void *handle;
+
 		reg_file[0]='\0';
 		strcat(reg_file,LIBLICENSE_IO_MODULE_DIR);
 		strcat(reg_file,namelist[i]->d_name);
 
-		void *handle = dlopen(reg_file,RTLD_LAZY);
+		handle = dlopen(reg_file,RTLD_LAZY);
 		if (handle) {
 			LLModuleDesc *module_desc = dlsym(handle,"ll_module_desc");
 			if (!module_desc) {
@@ -95,31 +101,36 @@ void ll_stop_modules() {
 
 ll_module_t* ll_get_config_modules() {
   struct dirent **namelist;
-  int n = scandir(LIBLICENSE_CONFIG_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
+  int n;
+  ll_module_t* result;
+  int i;
+
+  n = scandir(LIBLICENSE_CONFIG_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
   if (n==-1) {
   	fprintf(stderr, "scandir(\"%s\"): %s", LIBLICENSE_CONFIG_MODULE_DIR,
             strerror(errno));
   	return ll_new_list(0);
   }
-	ll_module_t* result = ll_new_list(n);
-  int i;
+  result = ll_new_list(n);
   for (i=0;i<n;++i) {
     result[i] = strdup(namelist[i]->d_name);
     free(namelist[i]);
   }
   free(namelist);
-	return result;
+  return result;
 }
 
 ll_module_t* ll_get_io_modules() {
-	assert(_ll_module_list);
+	int length;
+	ll_module_t* result;
+	int i;
 
-	int length = 0;
+	assert(_ll_module_list);
+	length = 0;
 	while (_ll_module_list[length]) {length++;}
 
-	ll_module_t* result = ll_new_list(length);
+	result = ll_new_list(length);
 
-	int i;
 	for (i = 0; i < length; i++) {
 		result[i] = strdup(_ll_module_list[i]->name);
 	}
@@ -127,15 +138,22 @@ ll_module_t* ll_get_io_modules() {
 	return result;
 }
 
-int ll_module_init(const char* directory, ll_module_t m) {// create file to open
+int ll_module_init(const char* directory, ll_module_t m) {
 	char reg_file[strlen(directory)+strlen(m)+1];
+	void *handle;
+
+        /*
+         * create file to open
+         */
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
 	strcat(reg_file,m);
-	void *handle = dlopen(reg_file,RTLD_LAZY);
+	handle = dlopen(reg_file,RTLD_LAZY);
 
 	if (handle) {
-		void (*function_init)() = dlsym(handle,"init");
+		void (*function_init)(void);
+
+		function_init = dlsym(handle, "init");
                 if (function_init)
                     (*function_init)();
                 /*
@@ -148,18 +166,25 @@ int ll_module_init(const char* directory, ll_module_t m) {// create file to open
 }
 
 int ll_module_shutdown(const char *directory, ll_module_t m) {
-        // create file to open
 	char lib_file[strlen(directory)+strlen(m)+1];
+	void* handle;
+	void (*function_shutdown)(void);
+
+        /*
+         * create file to open
+         */
 	lib_file[0]='\0';
 	strcat(lib_file,directory);
 	strcat(lib_file,m);
 
-	//Get the handle without skewing the number open.
-	void* handle = dlopen(lib_file,RTLD_LAZY);
+	/*
+         * Get the handle without skewing the number open.
+         */
+	handle = dlopen(lib_file,RTLD_LAZY);
         if (!handle)
             return -1;
 
-	void (*function_shutdown)() = dlsym(handle,"shutdown");
+	function_shutdown = dlsym(handle, "shutdown");
         if (function_shutdown)
             (*function_shutdown)();
 
@@ -170,32 +195,42 @@ int ll_module_shutdown(const char *directory, ll_module_t m) {
          */
 	dlclose(handle);
 
-	//close
+	/*
+         * close
+         */
 	dlclose(handle);
 	return 0;
 }
 
 void* ll_get_module_symbol(const char* directory, ll_module_t m, ll_symbol_t s) {
-	// create file to open
+	void* handle;
+	void* symbol;
+
+	/*
+         * create file to open
+         */
 	char reg_file[strlen(directory)+strlen(m)+1];
 	reg_file[0]='\0';
 	strcat(reg_file,directory);
 	strcat(reg_file,m);
-	void* handle = dlopen(reg_file,RTLD_LAZY);
+	handle = dlopen(reg_file,RTLD_LAZY);
 	if (!handle) {
 	  fprintf(stderr, "dlopen(\"%s\"): %s\n", reg_file, dlerror());
 	  exit(EXIT_FAILURE);
-  }
-	void* symbol = dlsym(handle,s);
+        }
+	symbol = dlsym(handle,s);
 	dlclose(handle);
 	return symbol;
 }
 
-// IO module functions.
+/*
+ * IO module functions.
+ */
 void ll_print_module_info() {
-	assert(_ll_module_list);
+	LLModuleDesc **curr_module;
 
-	LLModuleDesc **curr_module = _ll_module_list;
+	assert(_ll_module_list);
+	curr_module = _ll_module_list;
 	while (*curr_module) {
 		printf("%s - %s\n",(*curr_module)->name,(*curr_module)->description);
 		printf("\tSupported formats: %s\n",(*curr_module)->mime_types ? (*curr_module)->mime_types : "any");

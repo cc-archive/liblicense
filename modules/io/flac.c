@@ -54,8 +54,10 @@ int flac_write( const char* filename, const char* uri )
 		FLAC__bool found_vc = false;
 		do {
 			if (FLAC__metadata_simple_iterator_get_block_type(iter) == FLAC__METADATA_TYPE_VORBIS_COMMENT) {
+				FLAC__StreamMetadata *vc;
+
 				found_vc = true;
-				FLAC__StreamMetadata *vc = FLAC__metadata_simple_iterator_get_block(iter);
+				vc = FLAC__metadata_simple_iterator_get_block(iter);
 
 				if (uri) {
 					FLAC__StreamMetadata_VorbisComment_Entry entry;

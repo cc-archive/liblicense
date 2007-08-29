@@ -1,19 +1,22 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-// 
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include <liblicense/liblicense.h>
 
@@ -22,10 +25,17 @@
 #include <locale.h>
 
 int main(int argc, char** argv) {
+	char** result1;
+	int i;
+	ll_version_t version;
+	char* result;
+
+  (void)argc;
+  (void)argv;
   printf("Starting ll:\n");
   ll_init();
 	printf("Test system_licenses:\n");
-	char* result = ll_get_jurisdiction("http://creativecommons.org/licenses/by-nd/2.0/");
+	result = ll_get_jurisdiction("http://creativecommons.org/licenses/by-nd/2.0/");
 	printf("\tget_jurisdiction: %s\n",result);
 	free(result);
 	result = ll_get_name("http://creativecommons.org/licenses/by-nd/2.0/");
@@ -33,9 +43,8 @@ int main(int argc, char** argv) {
 	free(result);
 
 	printf("\tget_version: ");
-	ll_version_t version = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
+	version = ll_get_version("http://creativecommons.org/licenses/by-nd/2.0/");
 	if (version) {
-		int i;
 		for (i=1; i<=version[0]; ++i) {
 			if (i!=1) printf(".");
 			printf("%d",version[i]);
@@ -48,13 +57,13 @@ int main(int argc, char** argv) {
 
 	printf("\tverify_uri: %d\n", ll_verify_uri("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_attribute:\n");
-	char** result1 = ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title",1);
-	int i =0;
+	result1 = ll_get_attribute("http://creativecommons.org/licenses/by-nd/2.0/za/","http://purl.org/dc/elements/1.1/title",1);
+	i = 0;
 	while(result1[i]!=NULL)
 		printf("\t\t%s\n",result1[i++]);
 	printf("\tget_all_licenses:\n");
 	result1 = ll_get_all_licenses();
-	i =0;
+	i = 0;
 	while(result1[i]!=NULL)
 		printf("\t\t%s\n",result1[i++]);
 	printf("\tget_licenses: \n");
@@ -63,15 +72,15 @@ int main(int argc, char** argv) {
 	i =0;
 	while(result1[i]!=NULL)
 		printf("\t\t%s\n",result1[i++]);
-	
+
 	printf("Test write_license:\n");
 	printf("\twrite: %d\n",ll_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/"));
-	//printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","sidecar_xmp.so"));
-	
+	/* printf("\tmodule_write: %d\n",ll_module_write("license_me.txt","creativecommons.org/licenses/by/2.5/au/","sidecar_xmp.so")); */
+
 	printf("Test read_license:\n");
 	printf("\tread: %s\n",ll_read("license_me.txt"));
-	//printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/sidecar_xmp.so"));
-	
+	/* printf("\tmodule_read: %s\n",ll_module_read("license_me.txt",".libs/sidecar_xmp.so")); */
+
 	printf("Test system_default:\n");
 	printf("\tset_default: %d\n",ll_set_default("creativecommons.org/licenses/by/2.5/au/"));
 	printf("\tget_default: %s\n",ll_get_default());

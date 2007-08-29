@@ -5,15 +5,16 @@
 //
 // A copy of the full license can be found as part of this
 // distribution in the file COPYING.
-// 
+//
 // You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
+// terms of that license. You agree that you are solely
 // responsible for your use of the liblicense software and you
 // represent and warrant to Creative Commons that your use
 // of the liblicense software will comply with the CC-GNU-LGPL.
 //
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Jason Kivlighn.
+// Copyright (C) 2007 Peter Miller
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -30,17 +31,22 @@
 
 char *sidecar_filename( const char *filename )
 {
-	const char *base_sep = strrchr(filename,LL_DIR_SEPARATOR);
+	const char *base_sep;
+	const char *ext_sep;
+	size_t len;
+	char *sidecar;
+
+	base_sep = strrchr(filename,LL_DIR_SEPARATOR);
 	if ( !base_sep )
 		base_sep = filename;
 
-	const char *ext_sep = strrchr(filename,'.');
+	ext_sep = strrchr(filename,'.');
 	if ( !ext_sep ) {
 		ext_sep = &filename[strlen(filename)];
 	}
-	size_t len = ext_sep - filename;
+	len = ext_sep - filename;
 
-	char *sidecar = (char*)malloc(sizeof(char)*(len+4+1));
+	sidecar = (char*)malloc(sizeof(char)*(len+4+1));
 	strncpy(sidecar,filename,len);
 	strcpy(&sidecar[len],".xmp");
 
@@ -106,7 +112,7 @@ get_contents_stdio (FILE        *f,
 	error:
 		free (str);
 		fclose (f);
-	
+
 		return false;
 }
 
@@ -126,15 +132,18 @@ char* sidecar_xmp_read( const char* filename )
 		char *buffer;
 		size_t len;
 		if ( get_contents_stdio(f,&buffer,&len) ) {
-			XmpPtr xmp = xmp_new(buffer,len);
+			XmpPtr xmp;
+			char *uri_string;
+			XmpStringPtr license_uri;
+
+			xmp = xmp_new(buffer,len);
 			free(buffer);
-	
-			char *uri_string = NULL;
-			XmpStringPtr license_uri = xmp_string_new();
+			uri_string = NULL;
+			license_uri = xmp_string_new();
 			if ( xmp_get_property(xmp, NS_CC, "license", license_uri) ) {
 				uri_string = strdup(xmp_string_cstr(license_uri));
 			}
-	
+
 			xmp_string_free(license_uri);
 			xmp_free(xmp);
 			return uri_string;
@@ -152,6 +161,8 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 
 	XmpPtr xmp = NULL;
 	FILE *f = fopen(sidecar, "rb");
+	XmpStringPtr xmp_string;
+	const char *xmp_cstr;
 
 	if ( !f && !uri ) { //no file to remove license info from
 		return 1;
@@ -165,7 +176,7 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 			free(buffer);
 		}
 	}
-	
+
 	if ( !xmp ) {
 		xmp = xmp_new_empty();
 	}
@@ -176,10 +187,10 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 
 	xmp_set_property(xmp, NS_CC, "license", uri);
 
-	XmpStringPtr xmp_string = xmp_string_new();
+	xmp_string = xmp_string_new();
 	xmp_serialize(xmp,xmp_string,XMP_SERIAL_OMITPACKETWRAPPER,2);
 
-	const char *xmp_cstr = xmp_string_cstr(xmp_string);
+	xmp_cstr = xmp_string_cstr(xmp_string);
 	f = fopen(sidecar, "w");
 	if (f) {
 		fprintf(f,xmp_cstr);

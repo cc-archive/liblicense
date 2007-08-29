@@ -1,19 +1,22 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-// 
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include <liblicense/liblicense.h>
 #include <stdio.h>
@@ -127,10 +130,12 @@ void print_license_info(ll_uri_t uri) {
 
 int list_juris(ll_juris_t j) {
 	ll_uri_t* licenses;
+        int i;
+
 	if(j!=NULL && strcmp(j,"")==0)
 		j=NULL;
 	licenses = ll_get_licenses(j);
-	int i = 0;
+	i = 0;
 	while (licenses[i]!=NULL) {
 		printf("%s - %s\n",ll_get_name(licenses[i]), licenses[i]);
 		i++;
@@ -206,7 +211,7 @@ int main(int argc, char** argv) {
 				fprintf(stderr,"Error: No default license set.\n");
 				ll_stop();
 				return 1;
-			}			
+			}
 		}
 	}
 	if (argc==optind) { /* No more arguments, assume default. */

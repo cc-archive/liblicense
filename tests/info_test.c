@@ -1,19 +1,22 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-// 
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include <liblicense/liblicense.h>
 
@@ -21,16 +24,25 @@
 #include <stdio.h>
 
 int main(int argc,char** argv) {
+        ll_uri_t license;
+        ll_juris_t j;
+        char* name;
+        int* version;
+        ll_uri_t* p;
+        int b;
+
+        (void)argc;
+        (void)argv;
 	ll_init();
-	ll_uri_t license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
-	ll_juris_t j = ll_get_jurisdiction(license);
+	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
+	j = ll_get_jurisdiction(license);
 	printf("get_jurisdiction: '%s'\n",j);
 	free(j);
-	char* name = ll_get_name(license);
+	name = ll_get_name(license);
 	printf("get_name: '%s'\n",name);
 	free(name);
 	
-	int* version = ll_get_version(license);
+	version = ll_get_version(license);
 	printf("get_version: ");
 	if (version) {
 		int i;
@@ -44,7 +56,7 @@ int main(int argc,char** argv) {
 		printf("unversioned\n");
 	}
 	
-	ll_uri_t* p = ll_get_prohibits(license);
+	p = ll_get_prohibits(license);
 	printf("get_prohibits: ");
 	ll_list_print(p);
 	ll_free_list(p);
@@ -59,7 +71,7 @@ int main(int argc,char** argv) {
 	ll_list_print(p);
 	ll_free_list(p);
 	
-	int b = ll_verify_uri(license);
+	b = ll_verify_uri(license);
 	printf("verify_uri: %d\n",b);
 	
 	p = ll_get_all_licenses();

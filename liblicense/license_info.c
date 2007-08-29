@@ -1,20 +1,22 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-//
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
-// Copyright (C) 2007 Peter Miller
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include "liblicense.h"
 
@@ -34,15 +36,19 @@
 #include "config.h"
 #endif
 
-// returns the first element of a list and frees the rest.
+/**
+ * returns the first element of a list and frees the rest.
+ */
 char* _ll_get_first(char** list) {
+	char* result;
+
 	if (list==NULL)
 		return NULL;
 	else if (list[0]==NULL) {
 		ll_free_list(list);
 		return NULL;
 	}
-	char* result = strdup(list[0]);
+	result = strdup(list[0]);
 	ll_free_list(list);
 	return result;
 }
@@ -109,22 +115,32 @@ char *ll_jurisdiction_name(const ll_juris_t juris) {
 	return strdup(juris);
 }
 
-//returns the jurisdiction for the given license.
+/**
+ * returns the jurisdiction for the given license.
+ */
 ll_juris_t ll_get_jurisdiction(const ll_uri_t uri) {
 	return _ll_get_first(ll_get_attribute(uri,"http://purl.org/dc/elements/1.1/coverage",false));
 }
 
-// returns the name of the license.
+/**
+ * returns the name of the license.
+ */
 char* ll_get_name(const ll_uri_t u) {
 	return _ll_get_first(ll_get_attribute(u,"http://purl.org/dc/elements/1.1/title",true));
 }
 
-// returns the version of the license.
+/**
+ * returns the version of the license.
+ */
 ll_version_t ll_get_version(const ll_uri_t u) {
 	char* version = _ll_get_first(ll_get_attribute(u,"http://purl.org/dc/elements/1.1/hasVersion",false));
 	if (version) {
 		int c;
-		int divisions = 1;
+		int divisions;
+		int position;
+		ll_version_t result;
+
+		divisions = 1;
 		for (c = 0; c < (int)strlen(version); ++c) {
 			if (version[c] == '.') {
 				++divisions;
@@ -132,8 +148,8 @@ ll_version_t ll_get_version(const ll_uri_t u) {
 		}
 
 		c = 0;
-		int position = 1;
-		ll_version_t result = (ll_version_t) calloc(divisions+1,sizeof(int));
+		position = 1;
+		result = (ll_version_t) calloc(divisions+1,sizeof(int));
 		result[0] = divisions;
 		while(version!=NULL && version[c]!='\0' && position<3) {
 			if (version[c]!='.') {
@@ -150,30 +166,41 @@ ll_version_t ll_get_version(const ll_uri_t u) {
 	return NULL;
 }
 
-// returns a list of uris which the license prohibits
+/**
+ * returns a list of uris which the license prohibits
+ */
 char** ll_get_prohibits(const ll_uri_t u) {
 	return ll_get_attribute(u,"http://creativecommons.org/ns#prohibits",false);
 }
 
-// returns a list of uris which the license permits
+/**
+ * returns a list of uris which the license permits
+ */
 char** ll_get_permits(const ll_uri_t u) {
 	return ll_get_attribute(u,"http://creativecommons.org/ns#permits",false);
 }
 
-// returns a list of uris which the license requires
+/**
+ * returns a list of uris which the license requires
+ */
 char** ll_get_requires(const ll_uri_t u) {
 	return ll_get_attribute(u,"http://creativecommons.org/ns#requires",false);
 }
 
-// converts a filename string to a uri
+/**
+ * converts a filename string to a uri
+ */
 ll_uri_t ll_filename_to_uri(const ll_filename_t f) {
-	ll_uri_t result = (ll_uri_t) malloc((strlen(f)-3+7)*sizeof(char));
+	ll_uri_t result;
+        int i;
+
+        result = (ll_uri_t) malloc((strlen(f)-3+7)*sizeof(char));
 
 	strcpy(result,"http://");
 	strncpy(&result[7],f,(strlen(f)-4));
 	result[strlen(f)-3+7-1]='\0';
 
-	int i =0 ;
+	i = 0;
 	while(result[i]!='\0') {
 		if (result[i]=='_')
 			result[i] = '/';
@@ -182,14 +209,20 @@ ll_uri_t ll_filename_to_uri(const ll_filename_t f) {
 	return result;
 }
 
-// converts a uri string to a filename
+/**
+ * converts a uri string to a filename
+ */
 ll_filename_t ll_uri_to_filename(const ll_uri_t u) {
+	char* tmp_u;
+	char* result;
+	int i;
+
 	assert( strncmp(u,"http://",7) == 0 );
 
-	char* tmp_u = strdup(&u[7]);
-	char* result = (char*) malloc((strlen(LICENSE_DIR)+strlen(tmp_u)+4+1)*sizeof(char));
+	tmp_u = strdup(&u[7]);
+	result = (char*) malloc((strlen(LICENSE_DIR)+strlen(tmp_u)+4+1)*sizeof(char));
 	result[0] = '\0';
-	int i =0 ;
+	i =0 ;
 	while(tmp_u[i]!='\0') {
 		if (tmp_u[i]=='/')
 			tmp_u[i] = '_';
@@ -202,15 +235,19 @@ ll_filename_t ll_uri_to_filename(const ll_uri_t u) {
 	return result;
 }
 
-// triple callback which stores the desired values in a struct.
+/**
+ * triple callback which stores the desired values in a struct.
+ */
 void _ll_triple_handler(void* user_data, const raptor_statement* triple) {
 	ll_attribute_search_t* search_data = (ll_attribute_search_t*) user_data;
 	if (strcmp(search_data->subject,(char*)triple->subject)==0) {
-		// Store value if wanted.
-		if ((search_data->predicate==NULL || strcmp(search_data->predicate,(char*)triple->predicate)==0)  //Any predicate or the given.
-		  && search_data->num_values<MAX_TRIPLES // We have space for more results.
-		  && (search_data->type == -1 || search_data->type == (int)triple->object_type) //Any type or the given.
-		  && (search_data->locale==NULL || triple->object_literal_language==NULL || strcmp((char*)triple->object_literal_language,"x-default")==0 || strcmp((char*)triple->object_literal_language,search_data->locale)==0)) { //locale stuff
+		/*
+                 * Store value if wanted.
+                 */
+		if ((search_data->predicate==NULL || strcmp(search_data->predicate,(char*)triple->predicate)==0)  /* Any predicate or the given. */
+		  && search_data->num_values<MAX_TRIPLES /*  We have space for more results. */
+		  && (search_data->type == -1 || search_data->type == (int)triple->object_type) /* Any type or the given. */
+		  && (search_data->locale==NULL || triple->object_literal_language==NULL || strcmp((char*)triple->object_literal_language,"x-default")==0 || strcmp((char*)triple->object_literal_language,search_data->locale)==0)) { /* locale stuff */
 			search_data->values[search_data->num_values] = strdup((char*)triple->object);
 			if (triple->object_literal_language!=NULL)
 				search_data->locales[search_data->num_values++] = strdup((char*)triple->object_literal_language);
@@ -220,7 +257,9 @@ void _ll_triple_handler(void* user_data, const raptor_statement* triple) {
 	}
 }
 
-// converts a string to lowercase
+/**
+ * converts a string to lowercase
+ */
 char* _ll_lowercase(char* string) {
 	int pos;
 	char* new_string = strdup(string);
@@ -234,14 +273,18 @@ char* _ll_lowercase(char* string) {
 
 /* Normalizes a locale to compare against the xml:lang attribute */
 char* _ll_normalize_locale(char* string) {
-	char* new_string = _ll_lowercase(string);
+	char* new_string;
+	char *codeset;
+	char *territory;
 
-	char *codeset = strchr(new_string,'.');
+	new_string = _ll_lowercase(string);
+
+	codeset = strchr(new_string,'.');
 	if (codeset) {
 		*codeset = '\0';
 	}
 
-	char *territory = strchr(new_string,'_');
+	territory = strchr(new_string,'_');
 	if (territory) {
 		if ( strncmp(new_string,territory+1,strlen(territory+1)) == 0 ) {
 			*territory = '\0';
@@ -252,9 +295,15 @@ char* _ll_normalize_locale(char* string) {
 	return new_string;
 }
 
-// helper function which runs the parser
+/**
+ * helper function which runs the parser
+ */
 ll_attribute_search_t* _ll_get_triple(const ll_uri_t u, const char* subject, const char* predicate, raptor_identifier_type type, int locale) {
-	// create the helper struct
+	char *fn;
+
+	/*
+         * create the helper struct
+         */
 	ll_attribute_search_t* helper = (ll_attribute_search_t*) malloc(sizeof(ll_attribute_search_t));
 	helper->values = ll_new_list(MAX_TRIPLES);
 	helper->locales = ll_new_list(MAX_TRIPLES);
@@ -270,20 +319,27 @@ ll_attribute_search_t* _ll_get_triple(const ll_uri_t u, const char* subject, con
 	else
 		helper->predicate = NULL;
 	helper->type = type;
-	char * fn = ll_uri_to_filename(u);
+	fn = ll_uri_to_filename(u);
 
-	// BREAKS_WINDOWS
-	if(access(fn,R_OK)==0) {
-		// Run the parser.
-		raptor_parser* rdf_parser;
+	/*
+         * BREAKS_WINDOWS
+         */
+	if (access(fn,R_OK)==0) {
+          raptor_parser* rdf_parser;
+	  unsigned char* fnu;
+	  raptor_uri* fn_uri;
+
+          /*
+           * Run the parser.
+           */
 	  rdf_parser = raptor_new_parser("rdfxml");
 	  if (rdf_parser==NULL) {
 	  	fprintf(stderr,"New parser failed.\n");
 	  	exit(1);
 	  }
 	  raptor_set_statement_handler(rdf_parser, helper, _ll_triple_handler);
-	  unsigned char* fnu = raptor_uri_filename_to_uri_string(fn);
-	  raptor_uri* fn_uri = raptor_new_uri(fnu);
+	  fnu = raptor_uri_filename_to_uri_string(fn);
+	  fn_uri = raptor_new_uri(fnu);
 	  free(fnu);
 	  raptor_parse_file(rdf_parser, fn_uri, fn_uri);
 	  raptor_free_uri(fn_uri);
@@ -293,7 +349,9 @@ ll_attribute_search_t* _ll_get_triple(const ll_uri_t u, const char* subject, con
   return helper;
 }
 
-// frees the search helper struct
+/**
+ * frees the search helper struct
+ */
 void _ll_free_attribute_search_t(ll_attribute_search_t* ast) {
 	free(ast->uri);
 	free(ast->subject);
@@ -305,18 +363,27 @@ void _ll_free_attribute_search_t(ll_attribute_search_t* ast) {
 	ll_free_list(ast->values);
 	free(ast);
 }
-// create the list to return from a attribute_search struct
+
+/**
+ * create the list to return from a attribute_search struct
+ */
 char** _ll_build_list(ll_attribute_search_t * ast, char** fsi) {
-	// check for generics
 	int i;
+	char** result;
+
+	/*
+         * check for generics
+         */
 	for (i=0;i<ast->num_values;++i) {
 	  	if(strstr(ast->values[i],"genid")!=NULL) {
 	  		*fsi = strdup(ast->values[i]);
 	  		return NULL;
 	  	}
 	}
-	char** result;
-	// create the list to return
+
+	/*
+         * create the list to return
+         */
 	if (ast->locale==NULL) {
 	  result = ll_new_list(ast->num_values);
 	  i=0;
@@ -324,9 +391,11 @@ char** _ll_build_list(ll_attribute_search_t * ast, char** fsi) {
 	  	result[i]=strdup(ast->values[i]);
 	  }
 	} else {
-		result = ll_new_list(1);
+          int match;
+
+          result = ll_new_list(1);
 	  i=0;
-	  int match = false;
+	  match = false;
 	  for (i=0;i<ast->num_values;++i) {
 	  	if (!match && strcmp(ast->locales[i],"x-default")==0) {
 	  		if (result[0]!=NULL)
@@ -342,16 +411,25 @@ char** _ll_build_list(ll_attribute_search_t * ast, char** fsi) {
 	}
 	return result;
 }
-// calls the helper parser function to get nodes with a depth of 1 or 2
+
+/**
+ * calls the helper parser function to get nodes with a depth of 1 or 2
+ */
 char** ll_get_attribute(ll_uri_t u,ll_attribute_t a, int locale) {
-	if ( strncmp(u,"http://",7) != 0 ) return NULL;
+  ll_attribute_search_t* helper;
+  char* further_search;
+  char** result;
 
-	ll_attribute_search_t* helper = _ll_get_triple(u,u,a,-1,locale);
+  if ( strncmp(u,"http://",7) != 0 ) return NULL;
 
-  char* further_search = NULL;
+  helper = _ll_get_triple(u,u,a,-1,locale);
 
-  char** result = _ll_build_list(helper, &further_search);
-  // Free the helper struct
+  further_search = NULL;
+
+  result = _ll_build_list(helper, &further_search);
+  /*
+   * Free the helper struct
+   */
   _ll_free_attribute_search_t(helper);
 
   if(result==NULL) {

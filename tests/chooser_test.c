@@ -1,11 +1,32 @@
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org
+ * Copyright (C) 2007 Peter Miller
+ */
+
 #include <stdio.h>
 
 #include <liblicense.h>
 
 void print_licenses( const ll_license_list_t *list )
 {
+	const ll_license_list_t *curr;
+
 	printf("Matching licenses:\n");
-	const ll_license_list_t *curr = list;
+	curr = list;
 	while (curr) {
 		printf("\t%s\n",curr->license);
 		curr = curr->next;
@@ -13,7 +34,7 @@ void print_licenses( const ll_license_list_t *list )
 	printf("\n");
 }
 
-void print_attributes( char **attributes )
+void print_attributes(const char **attributes )
 {
 	printf("Selected attributes: \n");
 	while (*attributes) {
@@ -23,10 +44,12 @@ void print_attributes( char **attributes )
 	printf("\n");
 }
 
-void print_flags( char **attributes, int p, int r, int pr )
+void print_flags(const char **attributes, int p, int r, int pr )
 {
+	int i;
+
 	printf("Selected flags:\n");
-	int i = 0;
+	i = 0;
 	while (attributes[i]) {
 		if (p & (1<<i)) {
 			printf("\tPERMITS   : %s\n",attributes[i]);
@@ -42,9 +65,7 @@ void print_flags( char **attributes, int p, int r, int pr )
 
 int main(int argc, char *argv[])
 {
-	ll_init();
-
-	char *attributes[] = {
+	static const char *attributes[] = {
 			"http://creativecommons.org/ns#Distribution",
 			"http://creativecommons.org/ns#CommercialUse",
 			"http://creativecommons.org/ns#DerivativeWorks",
@@ -52,22 +73,35 @@ int main(int argc, char *argv[])
 			"http://creativecommons.org/ns#Attribution",
 			NULL
 	};
+	static const char *attributes2[] = {
+			"http://creativecommons.org/ns#DerivativeWorks",
+			NULL
+	};
+	ll_license_chooser_t *license_chooser;
+	int permits_flags;
+        int requires_flags;
+        int prohibits_flags;
+
+        (void)argc;
+        (void)argv;
+	ll_init();
+
 	print_attributes(attributes);
 
-	ll_license_chooser_t *license_chooser = ll_new_license_chooser(NULL,attributes);
-	
-	int permits_flags, requires_flags, prohibits_flags;
-	
+	license_chooser = ll_new_license_chooser(NULL,attributes);
+
 	permits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Distribution") |
 	 ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#DerivativeWorks");
 	requires_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#ShareAlike");
 	prohibits_flags = LL_UNSPECIFIED;
-	
-	//Attribution and CommercialUse must be unspecified in the license RDF.
-	//If you don't want this to be the case, leave these two attributes out of the list that is
-	//passed to ll_new_license_chooser()
-	
-	//returns GPL and LGPL
+
+	/*
+         * Attribution and CommercialUse must be unspecified in the license RDF.
+	 * If you don't want this to be the case, leave these two attributes out of the list that is
+	 * passed to ll_new_license_chooser()
+         */
+
+	/* returns GPL and LGPL */
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
 
@@ -75,21 +109,16 @@ int main(int argc, char *argv[])
 	requires_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Attribution");
 	prohibits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#CommercialUse");
 
-	//returns by-nc-nd
+	/* returns by-nc-nd */
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
 
 	ll_free_license_chooser(license_chooser);
 
-
-	char *attributes2[] = {
-			"http://creativecommons.org/ns#DerivativeWorks",
-			NULL
-	};
 	print_attributes(attributes2);
 	license_chooser = ll_new_license_chooser("us",attributes2);
 
-	//returns all the licenses that don't specify DerivativeWorks
+	/* returns all the licenses that don't specify DerivativeWorks */
 	permits_flags = LL_UNSPECIFIED;
 	requires_flags = LL_UNSPECIFIED;
 	prohibits_flags = LL_UNSPECIFIED;

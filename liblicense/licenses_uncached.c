@@ -1,19 +1,23 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-// 
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
+/*
+ * Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
+
 #include "liblicense.h"
 
 #include <stdlib.h>
@@ -30,7 +34,9 @@
 #include "config.h"
 #endif
 
-// initializes the library and its dependencies.
+/**
+ * initializes the library and its dependencies.
+ */
 int ll_init() {
 	raptor_init();
 	setlocale(LC_ALL,"");
@@ -38,44 +44,65 @@ int ll_init() {
 	return 0;
 }
 
-// stops the library and its dependencies.
+/**
+ * stops the library and its dependencies.
+ */
 int ll_stop() {
 	raptor_finish();
 	ll_stop_modules();
 	return 0;
 }
 
-// helper which returns whether a file ands in .rdf
+/**
+ * helper which returns whether a file ands in .rdf
+ */
 int _ll_rdf_filter(const struct dirent * d) {
 	return strstr(d->d_name,".rdf")!=NULL;
 }
 
-// returns a null-terminated list of all general licenses available.
+/**
+ * returns a null-terminated list of all general licenses available.
+ */
 ll_uri_t* ll_get_all_licenses() {
   struct dirent **namelist;
-  int n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
-	ll_uri_t* result = (ll_uri_t*) malloc((n+1)*sizeof(ll_uri_t));
-	result[n]=NULL;
+  int n;
+  ll_uri_t* result;
   int i;
+
+  n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
+  result = (ll_uri_t*) malloc((n+1)*sizeof(ll_uri_t));
+  result[n]=NULL;
   for (i=0;i<n;++i) {
     result[i] = ll_filename_to_uri(namelist[i]->d_name);
     free(namelist[i]);
   }
   free(namelist);
-	return result;
+  return result;
 }
 
-// returns a null-terminated list of all general licenses in a family.
+/**
+ * returns a null-terminated list of all general licenses in a family.
+ */
 ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
-	ll_juris_t j = _j;
+	ll_juris_t j;
+	ll_uri_t* licenses;
+	int z;
+	int pos;
+	int keep;
+	ll_uri_t* result;
+
+	j = _j;
 	if (j && strcmp(j,"unported") == 0) j = NULL;
 
-	ll_uri_t* licenses = ll_get_all_licenses();
-	int z=0;
-	int keep=0;
+	licenses = ll_get_all_licenses();
+	z = 0;
+	keep = 0;
 	while(licenses[z]!=NULL) {
-		ll_juris_t tmp_j = ll_get_jurisdiction(licenses[z]);
-		ll_uri_t *successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
+		ll_juris_t tmp_j;
+		ll_uri_t *successor;
+
+		tmp_j = ll_get_jurisdiction(licenses[z]);
+		successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
 		if(((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0)) && successor[0]==NULL)
 			keep++;
 		else {
@@ -86,9 +113,9 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 		free(tmp_j);
 		z++;
 	}
-	ll_uri_t* result = ll_new_list(keep);
+	result = ll_new_list(keep);
 	z=0;
-	int pos = 0;
+	pos = 0;
 	while(licenses[z]!=NULL && pos<keep) {
 		if(strcmp(licenses[z],"remove")!=0)
 			result[pos++] = strdup(licenses[z]);
@@ -99,16 +126,20 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 }
 
 ll_juris_t* ll_get_jurisdictions() {
-	ll_uri_t* licenses = ll_get_all_licenses();
+	ll_uri_t* licenses;
+	ll_juris_t* result;
+	int count;
+	ll_juris_t juris;
+	int i;
+        int len;
 
-	ll_juris_t* result = ll_new_list(50);
-	int count = 0;
+	licenses = ll_get_all_licenses();
+	result = ll_new_list(50);
+	count = 0;
 
 	result[count++] = strdup("unported");
 
-	ll_juris_t juris;
-	int i;
-	int len = ll_list_length(licenses);
+	len = ll_list_length(licenses);
 	for (i=0; i<len; ++i) {
 		juris = ll_get_jurisdiction(licenses[i]);
 		if (!juris) continue;
@@ -126,12 +157,14 @@ ll_juris_t* ll_get_jurisdictions() {
 		}
 	}
 
-	/* Do an insertion sort.  We can get away with O(n^2) since we're guaranteed n<50
+	/*
+         * Do an insertion sort.  We can get away with O(n^2) since we're guaranteed n<50
 	 * This works well since it's done in-place.
 	 * Keep the first element in the list alone; we want 'unported' first
 	 */
-	int j;
 	for (i = 2; i < count; ++i) {
+                int j;
+
 		for (j = i; ( j >= 2 ) && (strcmp(result[j],result[j-1]) < 0); --j ) {
 			ll_juris_t tmp = result[j];
 			result[j] = result[j-1];
@@ -142,7 +175,9 @@ ll_juris_t* ll_get_jurisdictions() {
 	return result;
 }
 
-// returns whether or not the given uri is recognized by the system.
+/**
+ * returns whether or not the given uri is recognized by the system.
+ */
 int ll_verify_uri(const ll_uri_t u) {
 	ll_uri_t* licenses = ll_get_all_licenses();
 	int result = ll_list_contains(licenses,u);

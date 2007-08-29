@@ -5,15 +5,16 @@
 //
 // A copy of the full license can be found as part of this
 // distribution in the file COPYING.
-// 
+//
 // You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
+// terms of that license. You agree that you are solely
 // responsible for your use of the liblicense software and you
 // represent and warrant to Creative Commons that your use
 // of the liblicense software will comply with the CC-GNU-LGPL.
 //
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Jason Kivlighn.
+// Copyright (C) 2007 Peter Miller
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -33,11 +34,13 @@ void exempi_init()
 char* exempi_read( const char* filename )
 {
 	XmpFilePtr f;
+	XmpPtr xmp;
+	char *uri_string;
 
 	f = xmp_files_open_new(filename, XMP_OPEN_OPNLYXMP);
-	XmpPtr xmp = xmp_files_get_new_xmp(f);
+	xmp = xmp_files_get_new_xmp(f);
 
-	char *uri_string = NULL;
+	uri_string = NULL;
 
 	if ( xmp ) {
 		XmpStringPtr license_uri = xmp_string_new();
@@ -46,7 +49,7 @@ char* exempi_read( const char* filename )
 		}
 
 		xmp_string_free(license_uri);
-	
+
 		xmp_free(xmp);
 	}
 
@@ -58,12 +61,12 @@ char* exempi_read( const char* filename )
 int exempi_write( const char* filename, const char* uri )
 {
 	int success = true;
-
 	XmpFilePtr f;
-	
+	XmpPtr xmp;
+
 	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_OPNLYXMP);
-	XmpPtr xmp = xmp_files_get_new_xmp(f);
-	
+	xmp = xmp_files_get_new_xmp(f);
+
 	if ( xmp == NULL ) {
 		if (uri == NULL) return 1;
 
@@ -74,7 +77,7 @@ int exempi_write( const char* filename, const char* uri )
 	if ( uri == NULL ) {
 		uri = "";
 	}
-	
+
 	if ( xmp_files_can_put_xmp(f, xmp) ) {
 		xmp_set_property(xmp, NS_CC, "license", uri);
 		xmp_files_put_xmp(f, xmp);
@@ -82,7 +85,7 @@ int exempi_write( const char* filename, const char* uri )
 		fprintf(stderr,"Unable to write XMP to this file.\n");
 		success = false;
 	}
-	
+
 	xmp_files_close(f, XMP_CLOSE_SAFEUPDATE);
 	xmp_free(xmp);
 

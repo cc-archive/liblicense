@@ -51,9 +51,13 @@ void triple_handler(void* user_data, const raptor_statement* triple) {
 
 char* raptor_read( const char* filename )
 {
-	char *license = NULL;
-
+	char *license;
 	raptor_parser* rdf_parser;
+	unsigned char* fnu;
+	raptor_uri* fn_uri;
+	match_t match;
+
+	license = NULL;
 	rdf_parser = raptor_new_parser("rdfxml");
 	if (rdf_parser==NULL) {
 		fprintf(stderr,"New parser failed.\n");
@@ -62,11 +66,12 @@ char* raptor_read( const char* filename )
 
 	raptor_set_feature(rdf_parser, RAPTOR_FEATURE_SCANNING, 1);
 
-	unsigned char* fnu = raptor_uri_filename_to_uri_string(filename);
-	match_t match = { (char*)fnu, &license };
+	fnu = raptor_uri_filename_to_uri_string(filename);
+	match.subject = (char *)fnu;
+	match.license = &license;
 	raptor_set_statement_handler(rdf_parser, &match, triple_handler);
 
-	raptor_uri* fn_uri = raptor_new_uri(fnu);
+	fn_uri = raptor_new_uri(fnu);
 	raptor_parse_file(rdf_parser, fn_uri, fn_uri);
 
 	free(fnu);
@@ -128,6 +133,9 @@ int write_smil( xmlNode *root, xmlNode *rdf_element )
 void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, int new_ns )
 {
 	char **list, **curr;
+	raptor_uri *permits_uri;
+	raptor_uri *requires_uri;
+	raptor_uri *prohibits_uri;
 
 	raptor_statement license_triple;
 	license_triple.subject=(void*)license_uri;
@@ -141,7 +149,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_free_uri((raptor_uri*)license_triple.predicate);
 	raptor_free_uri((raptor_uri*)license_triple.object);
 
-	raptor_uri *permits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#permits":"http://web.resource.org/cc/permits"));
+	permits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#permits":"http://web.resource.org/cc/permits"));
 	curr = list = ll_get_permits((char*)raptor_uri_as_string(license_uri));
 	while (*curr) {
 		raptor_statement rs;
@@ -160,7 +168,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_free_uri(permits_uri);
 	ll_free_list(list);
 
-	raptor_uri *requires_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#requires":"http://web.resource.org/cc/requires"));
+	requires_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#requires":"http://web.resource.org/cc/requires"));
 	curr = list = ll_get_requires((char*)raptor_uri_as_string(license_uri));
 	while (*curr) {
 		raptor_statement rs;
@@ -179,7 +187,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_free_uri(requires_uri);
 	ll_free_list(list);
 
-	raptor_uri *prohibits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#prohibits":"http://web.resource.org/cc/prohibits"));
+	prohibits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#prohibits":"http://web.resource.org/cc/prohibits"));
 	curr = list = ll_get_prohibits((char*)raptor_uri_as_string(license_uri));
 	while (*curr) {
 		raptor_statement rs;
@@ -223,13 +231,25 @@ void declare_namespace(void* user_data, raptor_namespace *nspace)
 
 int raptor_write( const char* filename, const char* license_uri_str )
 {
-	int ret = 0;
-
-	raptor_parser* rdf_parser=NULL;
+	int ret;
+	raptor_parser* rdf_parser;
 	raptor_serializer* rdf_serializer;
 	unsigned char *uri_string;
-	raptor_uri *uri, *base_uri, *license_uri;
+	raptor_uri *uri;
+        raptor_uri *base_uri;
+        raptor_uri *license_uri;
+	helper_t helper;
+	void *string;  /* destination for string */
+	size_t length; /* length of constructed string */
+	raptor_statement license_triple;
+	xmlDoc *doc;
+	xmlDoc *rdf_doc;
+	xmlNode *root_element;
+	xmlNode *rdf_element;
+	xmlNode *cur_node;
 
+	ret = 0;
+	rdf_parser = NULL;
 	uri_string=raptor_uri_filename_to_uri_string(filename);
 	uri=raptor_new_uri(uri_string);
 	base_uri=raptor_uri_copy(uri);
@@ -240,19 +260,16 @@ int raptor_write( const char* filename, const char* license_uri_str )
 
 	raptor_set_feature(rdf_parser, RAPTOR_FEATURE_SCANNING, 1);
 
-	helper_t helper = {rdf_serializer, NULL, 1};
+        helper.serializer = rdf_serializer;
+        helper.old_license = NULL;
+        helper.new_ns = 1;
 	raptor_set_statement_handler(rdf_parser, &helper, serialize_triple);
 	raptor_set_namespace_handler(rdf_parser, rdf_serializer, declare_namespace);
 
 	free(helper.old_license);
 
-	void *string;  /* destination for string */
-	size_t length; /* length of constructed string */
-
 	raptor_serialize_start_to_string(rdf_serializer, base_uri, &string, &length);
 	raptor_parse_file(rdf_parser, uri, base_uri);
-
-	raptor_statement license_triple;
 
 	if (license_uri_str) {
 		license_triple.subject=(void*)raptor_uri_copy(uri);
@@ -282,10 +299,6 @@ int raptor_write( const char* filename, const char* license_uri_str )
 	raptor_free_uri(license_uri);
 	raptor_free_memory(uri_string);
 
-	xmlDoc *doc;
-	xmlDoc *rdf_doc;
-	xmlNode *root_element;
-
 	/*parse the file and get the DOM */
 	doc = xmlReadFile(filename, NULL, 0);
 
@@ -300,9 +313,9 @@ int raptor_write( const char* filename, const char* license_uri_str )
 
 	raptor_free_memory(string);
 
-	xmlNode *rdf_element = xmlDocCopyNode(rdf_doc->children, doc, 1);
+	rdf_element = xmlDocCopyNode(rdf_doc->children, doc, 1);
 
-	xmlNode *cur_node = NULL;
+	cur_node = NULL;
 	for (cur_node = root_element; cur_node; cur_node = cur_node->next) {
 		if (cur_node->type == XML_ELEMENT_NODE) {
 			if (strcmp((char*)cur_node->name,"svg") == 0) {

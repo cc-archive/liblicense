@@ -102,6 +102,8 @@ if test "x$enable_warnings" = "xyes"; then
    AC_ADD_CFLAGS([-Wpointer-arith])
    AC_ADD_CFLAGS([-Wsign-compare])
    AC_ADD_CFLAGS([-Wshadow])
+   AC_ADD_CFLAGS([-std=gnu89])
+   AC_ADD_CFLAGS([-Wdeclaration-after-statement])
 fi
 
 ####################################################################
