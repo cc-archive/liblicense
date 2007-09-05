@@ -7,7 +7,7 @@
  * distribution in the file COPYING.
  *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely
+ * terms of that license.  You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
@@ -23,6 +23,259 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+ * @mainpage
+ *
+ * A library for managing license metadata, in particular Creative
+ * Commons (CC) licensing information.
+ *
+ * The idea of this library started out on the IRC channel, in a
+ * discussion on how to best help boost the community of software
+ * developers working with things related to CC - mostly the metadata
+ * format.
+ *
+ * Basically, the idea is to write a portable C library that manages
+ * metadata for CC licenses, and a bunch of other licenses of interest
+ * to the community.
+ *
+ * The library will produce licensing information based on the
+ * specifications of calling libraries and programs.  In addition
+ * to generating text for specific licenses, it will also allow an
+ * application to enumerate which licenses are currently available
+ * and provide descriptive text for each license, and for license
+ * features.  It should also provide an easy way to specify "verify at"
+ * URLs.
+ *
+ * The benefit of this library is that applications linking to it
+ * can correctly offer licensing choices, and these choices can
+ * be transparently updated through package managers as license
+ * versions are updated.  Human readable descriptions will also be
+ * internationalized, preferably using the same .po files used by the CC
+ * web site.  Hence liblicense will take advantage of package updating
+ * and i18n systems to allow applications to always provide current
+ * and correct licensing choices and license text.
+ *
+ * Part of the project is also to provide wrappers for the library for
+ * other languages, and to help external developers add metadata support
+ * to their projects.  A good start will probably be to wrap the library
+ * for Python, and use it for ccpublisher.
+ *
+ * We will also integrate a module system so that libraries can be used
+ * to embed and extract metadata in/from common formats.
+ *
+ * As liblicense itself deals only with text strings, we can also make
+ * GUI libraries to provide dialogs which present these strings to the
+ * user in desktop or web applications.  This layering ensures that such
+ * dialogs present consistent licensing choices.
+ *
+ * @section N01 Getting Started
+ *
+ * Before you can call the library, it is mandatory to call the #ll_init
+ * function.  This is required to initialize internal databases and
+ * indexes.
+ *
+ * Once you are done with the library, it is import and to call the
+ * #ll_stop function.  This ensures that library resources are free()ed,
+ * but more importantly it ensures that caches that need to be have been
+ * flushed.
+ *
+ *
+ * @section N02 Discovering Available Licenses
+ *
+ * To obtain a list of available licenses, you use the #ll_get_licenses
+ * function.  This returns a list of license URIs.  This is the most
+ * important thing to understand about liblicense, it works entirely
+ * with URIs, for everyting, including license references.
+ *
+ * For example, the Public Domain license URI looks like this:
+ * http://creativecommons.org/licenses/sampling+/1.0/
+ *
+ * The <i>license -a</i> command uses code very similar to the following
+ * to list all of the available licenses:
+ *
+ * \code
+ *   #include <liblicense.h>
+ *
+ *   int
+ *   main (int argc, char **argv)
+ *   {
+ *     ll_uri_t *licenses;
+ *     int i;
+ *
+ *     licenses = ll_get_licenses (NULL);
+ *     i = 0;
+ *     while (licenses[i] != NULL)
+ *       {
+ *         printf ("%s - %s\n", ll_get_name (licenses[i]), licenses[i]);
+ *         i++;
+ *       }
+ *     ll_free_list (licenses);
+ *     ll_stop ();
+ *     return 0;
+ *   }
+ * \endcode
+ *
+ * The #ll_get_name function is used to obtain a human-friendly license
+ * name.  You <b>can not</b> pass a human-friendly name to any of the
+ * functions which expect a license URI, they simply will not work.  You
+ * will have to use #ll_get_licenses and walk the list to translate a
+ * human-friendly name into a license URI.
+ *
+ * There is some logic behind all of this: the human-fiendly names are
+ * internationalized, and will be appropriately translated for the
+ * current locale.  This means the human-fiendly names are not constant
+ * from one country to the next, but the license URIs are the same the
+ * world over.
+ *
+ *
+ * @section N03 Getting a License from a File
+ *
+ * There is one thing you will want to do over and over again:
+ * read the license of a file.  Once you have the license URI, you can
+ * query the license for the various rights you have.
+ * First things first: reading the license.
+ *
+ * \code
+ *   #include <liblicense.h>
+ *   #include <stdio.h>
+ *
+ *   int
+ *   main (int argc, char **argv)
+ *   {
+ *     ll_uri_t uri;
+ *
+ *     ll_init ();
+ *     uri = ll_read (argv[1]);
+ *     if (uri == 0)
+ *       printf ("No license found\n");
+ *     else
+ *       printf ("%s\n", uri);
+ *     ll_stop ();
+ *     return 0;
+ *   }
+ * \endcode
+ *
+ * Some file formats are capable of holding a license within their other
+ * application data.  For example, PNG files have optional text comment
+ * blocks, and the license data could be stored in them.  For formats
+ * which cannot carry license data, is is also possible to a have a
+ * companion ".xmp" license file.  The ll_read function checks for both
+ * possibilities.
+ *
+ *
+ * @section N04 Getting the Attributes of a License
+ *
+ * Having read the license of a file, you want to know what conditions
+ * it imposes.  There are several functions used for this purpose.
+ * We have already seen the #ll_get_name function.  The others to
+ * use are #ll_get_version, #ll_get_jurisdiction, #ll_get_permits,
+ * #ll_get_requires, and #ll_get_prohibits.
+ *
+ * \code
+ *   void
+ *   print_license_info (ll_uri_t uri)
+ *   {
+ *     char **attrs, **attr;
+ *     char *string;
+ *     ll_version_t version;
+ *     ll_juris_t juris;
+ *     int i;
+ *
+ *     printf ("License URI: %s\n", uri);
+ *
+ *     string = ll_get_name (uri);
+ *     printf ("Name: %s\n", string);
+ *     free (string);
+ *
+ *     version = ll_get_version (uri);
+ *     printf ("Version: ");
+ *     if (version)
+ *       {
+ *         for (i = 1; i <= version[0]; ++i)
+ *           {
+ *             if (i != 1)
+ *               printf (".");
+ *             printf ("%d", version[i]);
+ *           }
+ *         printf ("\n");
+ *         free (version);
+ *       }
+ *
+ *     juris = ll_get_jurisdiction (uri);
+ *     if (juris)
+ *       {
+ *         string = ll_jurisdiction_name (juris);
+ *         printf ("Jurisdiction: %s (%s)\n", string, juris);
+ *         free (string);
+ *         free (juris);
+ *       }
+ *
+ *     printf ("Rights:\n");
+ *
+ *     attrs = ll_get_permits (uri);
+ *     if (*attrs)
+ *       {
+ *         printf ("   Permits:\n");
+ *         for (attr = attrs; *attr; ++attr)
+ *           {
+ *             printf ("      %s\n", *attr);
+ *           }
+ *       }
+ *     ll_free_list (attrs);
+ *
+ *     attrs = ll_get_requires (uri);
+ *     if (*attrs)
+ *       {
+ *         printf ("   Requires:\n");
+ *         for (attr = attrs; *attr; ++attr)
+ *           {
+ *             printf ("      %s\n", *attr);
+ *           }
+ *       }
+ *     ll_free_list (attrs);
+ *
+ *     attrs = ll_get_prohibits (uri);
+ *     if (*attrs)
+ *       {
+ *         printf ("   Prohibits:\n");
+ *         for (attr = attrs; *attr; ++attr)
+ *           {
+ *             printf ("      %s\n", *attr);
+ *           }
+ *       }
+ *     ll_free_list (attrs);
+ *   }
+ * \endcode
+ *
+ * When you actually compile and run this code, you will see that once
+ * again there are URIs for each of the rights, rather than simple
+ * strings.
+ *
+ *
+ * @section N99 Discovering Supported Formats
+ *
+ * The easiest way to see a list of supported formats is to use the
+ * <b>-m</b> option of the <i>license</i>(1) command which is part of
+ * the liblicense package.  This program uses the liblicense API to
+ * obtain this information as follows:
+ *
+ * \code
+ *   #include <liblicense.h>
+ *
+ *   int
+ *   main (int argc, char **argv)
+ *   {
+ *     ll_init ();
+ *     ll_print_module_info ();
+ *     ll_stop ();
+ *     return 0;
+ *   }
+ * \endcode
+ *
+ * The results are printed on the standard output.  (This section needs
+ * to be expanded for folks who need pick lists for GUIs._
+ */
 
 #ifndef WIN32
 #define LL_DIR_SEPARATOR '/'
@@ -134,9 +387,9 @@ char **ll_get_attribute (ll_uri_t license_uri, ll_attribute_t attr_val,
 
 /**
  * The ll_filename_to_uri function is used to convert a filename string
- * to a URI.  The last four characters (the 3 charcter extension and
- * the dot, assumine ".rdf") are ignored.  Underscore characters (_)
- * are mapped to slash (/). It is happed to a http:// style URI, it is
+ * to a URI.  The last four characters (the 3 character extension and
+ * the dot, assuming ".xmp") are ignored.  Underscore characters (_)
+ * are mapped to slash (/).  It is happed to a http:// style URI, it is
  * <b>not</b> mapped into a file:/// style URI.
  *
  * @param filename
@@ -149,7 +402,7 @@ ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
 /**
  * The ll_uri_to_filename function is used to convert a URI string to
  * a filename.  The http:// prefix is removed, and a ".rdf" extension
- * is added.  The slash (/) charcatres are mapped to underscore (_)
+ * is added.  The slash (/) characters are mapped to underscore (_)
  * characters.
  *
  * @param uri
@@ -360,6 +613,9 @@ void ll_print_module_info (void);
  *     If an error occurs reading the modules directory, an error will
  *     be reported on stderr, and this function will return without
  *     doing anything.
+ * @note
+ *     Clients of this API should never need to call this function
+ *     directly, as the #ll_init functions calls it for you.
  */
 void ll_init_modules (void);
 
@@ -369,6 +625,10 @@ void ll_init_modules (void);
  *
  * It is mostly safe to call this function more than once.  See the note
  * on #ll_init_modules for more information.
+ *
+ * @note
+ *     Clients of this API should never need to call this function
+ *     directly, as the #ll_stop functions calls it for you.
  */
 void ll_stop_modules (void);
 
@@ -473,6 +733,7 @@ ll_uri_t ll_get_default (void);
  * @param filename
  *     The name of the file for which the license is desired.
  * @returns
+ *     NULL if the file cannot be read, or no license can be found; otherwise
  *     a string containing the URI of the license corresponding to the file.
  *     (sort of: it actually returns the license with the highest count)
  * @note
@@ -565,7 +826,7 @@ struct ll_license_list_t
  * @param jurisdiction
  *     The two letter country code of the jurisdiction of interest
  * @param attributes
- *     a (null terminated?) list of attribute names
+ *     a NULL terminated list of attribute names
  * @returns
  *     an opaque pointer to a result.
  *     Free with #ll_free_license_chooser when you are done with it.
@@ -585,7 +846,7 @@ void ll_free_license_chooser (ll_license_chooser_t *choo);
 /**
  * The ll_get_licenses_from_flags function is used to extract a
  * linked-list of matching licenses from the result returned by a call
- * to #ll_new_license_chooser. The flags given should be OR'ed together
+ * to #ll_new_license_chooser.  The flags given should be OR'ed together
  * and come from the result of ll_attribute_flag()
  *
  * @param choo
