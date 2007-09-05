@@ -24,8 +24,8 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
-        char* file;
-        ll_uri_t license;
+	char* file;
+	ll_uri_t license;
 
         (void)argc;
         (void)argv;

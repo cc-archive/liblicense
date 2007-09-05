@@ -5,6 +5,7 @@
  *
  * Copyright (C) 2003  Red Hat, Inc.
  * Copyright (C) 2003  Jonathan Blandford <jrb@alum.mit.edu>
+ * Copyright (C) 2007 Peter Miller
  *
  * Licensed under the Academic Free License version 2.0
  * Or under the following terms:
@@ -21,8 +22,8 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -404,7 +405,7 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
       return XDG_MIME_MAGIC_ERROR;
     }
   bytes_read = fread (matchlet->value, 1, matchlet->value_length, magic_file);
-  if (bytes_read != matchlet->value_length)
+  if (bytes_read != (int)matchlet->value_length)
     {
       _xdg_mime_magic_matchlet_free (matchlet);
       if (feof (magic_file))
@@ -424,7 +425,7 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
 	  return XDG_MIME_MAGIC_ERROR;
 	}
       bytes_read = fread (matchlet->mask, 1, matchlet->value_length, magic_file);
-      if (bytes_read != matchlet->value_length)
+      if (bytes_read != (int)matchlet->value_length)
 	{
 	  _xdg_mime_magic_matchlet_free (matchlet);
 	  if (feof (magic_file))
@@ -462,7 +463,7 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
 	  _xdg_mime_magic_matchlet_free (matchlet);
 	  return XDG_MIME_MAGIC_EOF;
 	}
-      if (matchlet->range_length == -1)
+      if (matchlet->range_length == (unsigned)(-1))
 	{
 	  _xdg_mime_magic_matchlet_free (matchlet);
 	  return XDG_MIME_MAGIC_ERROR;
@@ -477,7 +478,7 @@ _xdg_mime_magic_parse_magic_line (FILE              *magic_file,
       if (matchlet->word_size > 1)
 	{
 #if LITTLE_ENDIAN
-	  int i;
+	  unsigned i;
 #endif
 	  if (matchlet->value_length % matchlet->word_size != 0)
 	    {
@@ -523,7 +524,7 @@ _xdg_mime_magic_matchlet_compare_to_data (XdgMimeMagicMatchlet *matchlet,
 					  const void           *data,
 					  size_t                len)
 {
-  int i, j;
+  unsigned i;
   for (i = matchlet->offset; i < matchlet->offset + matchlet->range_length; i++)
     {
       int valid_matchlet = TRUE;
@@ -533,6 +534,7 @@ _xdg_mime_magic_matchlet_compare_to_data (XdgMimeMagicMatchlet *matchlet,
 
       if (matchlet->mask)
 	{
+          unsigned j;
 	  for (j = 0; j < matchlet->value_length; j++)
 	    {
 	      if ((matchlet->value[j] & matchlet->mask[j]) !=
@@ -545,6 +547,7 @@ _xdg_mime_magic_matchlet_compare_to_data (XdgMimeMagicMatchlet *matchlet,
 	}
       else
 	{
+          unsigned j;
 	  for (j = 0; j <  matchlet->value_length; j++)
 	    {
 	      if (matchlet->value[j] != ((unsigned char *) data)[j + i])
@@ -688,11 +691,11 @@ _xdg_mime_magic_lookup_data (XdgMimeMagic *mime_magic,
 
 	  had_match = 1;
 	}
-      else 
+      else
 	{
 	  for (n = 0; n < n_mime_types; n++)
 	    {
-	      if (mime_types[n] && 
+	      if (mime_types[n] &&
 		  _xdg_mime_mime_type_equal (mime_types[n], match->mime_type))
 		mime_types[n] = NULL;
 	    }

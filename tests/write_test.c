@@ -24,15 +24,15 @@
 #include <stdio.h>
 
 int main(int argc, char** argv) {
-        char* file;
-        ll_uri_t license;
-        int result;
+	char* file;
+	ll_uri_t license;
+	int result;
 
         (void)argc;
         (void)argv;
 	ll_init();
 
-	file="license_me.txt";
+	file = "license_me.txt";
 	license = "creativecommons.org/licenses/by/2.5/au/";
 	result = ll_write(file,license);
 	printf("Write result: %d\n",result);

@@ -26,8 +26,11 @@
 #include <stdio.h>
 
 char** ll_new_list(int length) {
+        if (length < 0)
+            length = 0;
 	return (char**) calloc(length+1,sizeof(char*));
 }
+
 void ll_free_list(char** list) {
         int i;
 

@@ -5,6 +5,7 @@
  *
  * Copyright (C) 2003  Red Hat, Inc.
  * Copyright (C) 2003  Jonathan Blandford <jrb@alum.mit.edu>
+ * Copyright (C) 2007 Peter Miller
  *
  * Licensed under the Academic Free License version 2.0
  * Or under the following terms:
@@ -21,8 +22,8 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301 USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -134,6 +135,7 @@ int
 _xdg_utf8_validate (const char *source)
 {
   /* FIXME: actually write */
+  (void)source;
   return TRUE;
 }
 

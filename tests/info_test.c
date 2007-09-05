@@ -24,12 +24,12 @@
 #include <stdio.h>
 
 int main(int argc,char** argv) {
-        ll_uri_t license;
-        ll_juris_t j;
-        char* name;
-        int* version;
-        ll_uri_t* p;
-        int b;
+	ll_uri_t license;
+	ll_juris_t j;
+	char* name;
+	int* version;
+	ll_uri_t* p;
+	int b;
 
         (void)argc;
         (void)argv;
@@ -41,7 +41,7 @@ int main(int argc,char** argv) {
 	name = ll_get_name(license);
 	printf("get_name: '%s'\n",name);
 	free(name);
-	
+
 	version = ll_get_version(license);
 	printf("get_version: ");
 	if (version) {
@@ -55,35 +55,35 @@ int main(int argc,char** argv) {
 	} else {
 		printf("unversioned\n");
 	}
-	
+
 	p = ll_get_prohibits(license);
 	printf("get_prohibits: ");
 	ll_list_print(p);
 	ll_free_list(p);
-	
+
 	p = ll_get_permits(license);
 	printf("get_permits: ");
 	ll_list_print(p);
 	ll_free_list(p);
-	
+
 	p = ll_get_requires(license);
 	printf("get_requires: ");
 	ll_list_print(p);
 	ll_free_list(p);
-	
+
 	b = ll_verify_uri(license);
 	printf("verify_uri: %d\n",b);
-	
+
 	p = ll_get_all_licenses();
 	printf("get_all_licenses: ");
 	ll_list_print(p);
 	ll_free_list(p);
-	
+
 	p = ll_get_licenses("us");
 	printf("get_licenses: ");
 	ll_list_print(p);
 	ll_free_list(p);
-	
+
 	ll_stop();
 	return 0;
 }

@@ -1,19 +1,21 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-// 
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely 
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Scott Shawcroft.
+/* Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Scott Shawcroft.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include "liblicense.h"
 #include <sqlite3.h>
@@ -35,10 +37,11 @@
 sqlite3 *db;
 
 int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
+        ll_uri_t* results;
+
 	(void)argc;
 	(void)colNames;
-
-	ll_uri_t* results = (ll_uri_t*) list;
+	results = (ll_uri_t*) list;
 	if (results!=NULL) {
 		if (argv[0]) {
 			results[ll_list_length(results)]=strdup(argv[0]);
@@ -108,14 +111,14 @@ int _ll_update_cache_time() {
     }
     FILE* file = fopen(path,"w");
     free(path);
-    /*int result = */fprintf(file,"%d",(int) time(NULL));
+    fprintf(file,"%d",(int) time(NULL));
     fclose(file);
     return true;
 }
 
 int ll_update_cache() {
 	/* check last update time versus license file update */
-	
+
 	/* create table if it doesn't exist. */
 	char *zErrMsg = 0;
 	int rc = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS licenses( uri TEXT UNIQUE ON CONFLICT IGNORE, jurisdiction TEXT, obsolete INTEGER);" , _ll_sql_callback, 0, &zErrMsg);
@@ -150,11 +153,11 @@ int ll_update_cache() {
 			if (j!=NULL){
 				size_t buf_size = sizeof(char)*(strlen("INSERT INTO licenses VALUES ('','',)")+strlen(u)+strlen(j)+2);
 				query = (char*) malloc(buf_size);
-				/*int num_printed = */snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s','%s',%d)",u,j,obsolete);
+				snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s','%s',%d)",u,j,obsolete);
 			} else {
 				size_t buf_size = sizeof(char)*(strlen("INSERT INTO licenses VALUES ('',NULL,)")+strlen(u)+2);
 				query = (char*) malloc(buf_size);
-				/*int num_printed = */snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s',NULL,%d)",u,obsolete);
+				snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s',NULL,%d)",u,obsolete);
 			}
 			_ll_query(query,0);
 			free(query);
@@ -171,7 +174,7 @@ int ll_update_cache() {
 int ll_init() {
 	raptor_init();
 	setlocale(LC_ALL,"");
-	
+
 	/* get the filename for the cache */
 	char* home = getenv("HOME");
     char* path = (char*) calloc((strlen(home)+strlen("/.license/license_cache.db")+1),sizeof(char));
@@ -190,8 +193,8 @@ int ll_init() {
         return 1;
     }
     strcat(path,"license_cache.db");
-    
-    /*int rc = */sqlite3_open(path, &db);
+
+    sqlite3_open(path, &db);
 	if (!ll_update_cache())
 	    printf("Failed to update cache.");
 	ll_init_modules();

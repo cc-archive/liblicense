@@ -33,24 +33,12 @@ extern "C" {
 #endif
 
 /******************* license_info *******************/
-typedef char* ll_juris_t;
-typedef char* ll_uri_t;
-typedef char* ll_locale_t;
-typedef int* ll_version_t;
-typedef char* ll_attribute_t;
-typedef char* ll_filename_t;
-
-struct ll_attribute_search_t {
-	ll_uri_t uri;
-	char* subject;
-	char* predicate;
-	char* locale;
-	int type;
-	char** values;
-	char** locales;
-	int num_values;
-};
-typedef struct ll_attribute_search_t ll_attribute_search_t;
+typedef char *ll_juris_t;
+typedef char *ll_uri_t;
+typedef char *ll_locale_t;
+typedef int *ll_version_t;
+typedef char *ll_attribute_t;
+typedef char *ll_filename_t;
 
 /**
  * The ll_get_jurisdiction function is used to obtain the jurisdiction
@@ -62,22 +50,23 @@ typedef struct ll_attribute_search_t ll_attribute_search_t;
  *     a string containing the code of the jusrisdiction,
  *     or NULL on failure
  */
-ll_juris_t ll_get_jurisdiction(const ll_uri_t license_uri);
+ll_juris_t ll_get_jurisdiction (const ll_uri_t license_uri);
 
 /**
- * The ll_get_name function is used to obtain the name of a license.
+ * The ll_get_name function is used to obtain the name of a license
+ * (specifically, it gets the "title" attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
  * @returns
- *     the name of the license (use free() when done with),
- *     or NULL on failure
+ *      the name of the license (use free() when done with),
+ *      or NULL on failure
  */
-char *ll_get_name(const ll_uri_t license_uri);
+char *ll_get_name (const ll_uri_t license_uri);
 
 /**
  * The ll_get_version functions is used to obtain the version of the
- * license of interest.
+ * license of interest (the "hasVersion" attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
@@ -87,33 +76,134 @@ char *ll_get_name(const ll_uri_t license_uri);
  *     that follow, and the rest are the actual version numbers.
  *     Use free() when you are done with it.
  */
-ll_version_t ll_get_version(const ll_uri_t license_uri);
+ll_version_t ll_get_version (const ll_uri_t license_uri);
 
-char** ll_get_prohibits(const ll_uri_t);
-char** ll_get_permits(const ll_uri_t);
-char** ll_get_requires(const ll_uri_t);
-char** ll_get_attribute(ll_uri_t, ll_attribute_t, int);
-ll_uri_t ll_filename_to_uri(const ll_filename_t);
-ll_filename_t ll_uri_to_filename(const ll_uri_t);
+/**
+ * The ll_get_prohibits function is used to determine the attributes
+ * prohibited by a license.
+ *
+ * @param license_uri
+ *     The license of interest
+ * @returns
+ *     a list of attribute URIs the license prohibits.
+ *     Use #ll_free_list when you are done with it.
+ */
+char **ll_get_prohibits (const ll_uri_t license_uri);
+
+/**
+ * The ll_get_permits function is used to determine the attributes
+ * permitted by a license.
+ *
+ * @param license_uri
+ *     The license of interest
+ * @returns
+ *     a list of attribute URIs the license prohibits.
+ *     Use #ll_free_list when you are done with it.
+ */
+char **ll_get_permits (const ll_uri_t license_uri);
+
+/**
+ * The ll_get_requires function is used to determine the attributes
+ * required by a license.
+ *
+ * @param license_uri
+ *     The license of interest
+ * @returns
+ *     a list of attribute URIs the license prohibits.
+ *     use #ll_free_list when you are done with it.
+ */
+char **ll_get_requires (const ll_uri_t license_uri);
+
+/**
+ * The ll_get_attribute function is used to obtain the names of all
+ * attributes of the given license which havre the given value.
+ *
+ * @param license_uri
+ *     The license of interest
+ * @param attr_val
+ *     The attribute value of interest (permitted, required, prohibited)
+ * @param locale
+ *     non-zero if $LANG to be used,
+ *     zero if not relevant
+ * @returns
+ *     a list of attribute URIs of the license with matching values.
+ *     Use #ll_free_list when you are done with it.
+ */
+char **ll_get_attribute (ll_uri_t license_uri, ll_attribute_t attr_val,
+                         int locale);
+
+/**
+ * The ll_filename_to_uri function is used to convert a filename string
+ * to a URI.  The last four characters (the 3 charcter extension and
+ * the dot, assumine ".rdf") are ignored.  Underscore characters (_)
+ * are mapped to slash (/). It is happed to a http:// style URI, it is
+ * <b>not</b> mapped into a file:/// style URI.
+ *
+ * @param filename
+ *     The file name to be converted to a URI.
+ * @returns
+ *     a new string.  use free() when you are done with it.
+ */
+ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
+
+/**
+ * The ll_uri_to_filename function is used to convert a URI string to
+ * a filename.  The http:// prefix is removed, and a ".rdf" extension
+ * is added.  The slash (/) charcatres are mapped to underscore (_)
+ * characters.
+ *
+ * @param uri
+ *     The uri to be converted
+ * @returns
+ *     a new string.  Use free() when you are done with it.
+ *
+ * @note
+ *     this function and the #ll_filename_to_uri function are not
+ *     completely symmetric.  Don't expect
+ *         strcmp(ll_uri_to_filename(ll_filename_to_uri(x)), x) == 0
+ *     and do not expect
+ *         strcmp(ll_filename_to_uri(ll_uri_to_filename(x)), x) == 0
+ */
+ll_filename_t ll_uri_to_filename (const ll_uri_t uri);
 
 /**
  * The ll_jurisdiction_name functions is used to map a jusrisdiction
- * code (two letter country code) to a jusrisdiction name (country
- * name).
+ * code (two letter country code, usually) to a jusrisdiction name
+ * (country name).
  *
  * @param jurisdiction
  *     The justisdiction code of interest
  * @returns
- *     a string containing the jurisdiction name (countery name),
- *     or NULL on error.
+ *     a string containing the jurisdiction name (country name),
+ *     or NULL on error.  Use free when you are done with it.
  */
-char *ll_jurisdiction_name(const ll_juris_t jurisdiction);
+char *ll_jurisdiction_name (const ll_juris_t jurisdiction);
 
 /*******************************************************/
 
 /************** licenses_{cached,uncached} *************/
-int ll_init(void);
-int ll_stop(void);
+
+/**
+ * The ll_init function is used to prepare the liblicense library for
+ * use.  This function is to be called before any other use of the
+ * library.
+ *
+ * @returns
+ *     0 on success,
+ *     1 if there was a problem (printed on stderr)
+ */
+int ll_init (void);
+
+/**
+ * The ll_stop function is used to release all resources held by
+ * the library.  It must be used after all uses of the library are
+ * completed... there may be writes and updates to perform before the
+ * program completes.
+ *
+ * @returns
+ *     0 on success
+ */
+int ll_stop (void);
 
 /**
  * The ll_verify_uri function is used to determine whether or not the
@@ -125,18 +215,17 @@ int ll_stop(void);
  *     1 if recognized,
  *     0 if not
  */
-int ll_verify_uri(const ll_uri_t license_uri);
+int ll_verify_uri (const ll_uri_t license_uri);
 
 /**
  * The ll_get_all_licenses function is used to obtain a list of all
  * general license URIs available for new works.
  *
  * @returns
- *     a list of strings.
- *     A list is a null terminated array.
- *     Use ll_free_list to free it.
+ *     a NULL terminated list of strings.
+ *     Use #ll_free_list when you are done with it.
  */
-ll_uri_t* ll_get_all_licenses(void);
+ll_uri_t *ll_get_all_licenses (void);
 
 /**
  * The ll_get_licenses function is used to obtain a list of all general
@@ -145,53 +234,51 @@ ll_uri_t* ll_get_all_licenses(void);
  * @param justrisdiction
  *     A string naming the jurisdiction code of interest.
  * @returns
- *     a list of strings containing URIs of licenses
- *     A list is a null terminated array.
- *     Use #ll_free_list to free it.
+ *     a NULL terminated list of strings containing URIs of licenses.
+ *     Use #ll_free_list when you are done with it.
  */
-ll_uri_t* ll_get_licenses(const ll_juris_t justrisdiction);
+ll_uri_t *ll_get_licenses (const ll_juris_t justrisdiction);
 
 /**
  * The ll_get_jurisdictions function is used to obtain a list of all
  * jurisdiction codes.
  *
  * @returns
- *     a list of strings containing available juristriction codes (as
- *     opposed to all possible jurisdiction codes)
- *     A list is a null terminated array.
- *     Use #ll_free_list to free it.
+ *     a NULL terminated list of strings containing available
+ *     juristriction codes (as opposed to all possible jurisdiction
+ *     codes).  Use #ll_free_list when you are done with it.
  */
-ll_juris_t* ll_get_jurisdictions(void);
+ll_juris_t *ll_get_jurisdictions (void);
 
 /*******************************************************/
 
 /******************* module_wrangler *******************/
 
-typedef char* ll_module_t;
-typedef char* ll_symbol_t;
-typedef char* ll_mime_type_t;
+typedef char *ll_module_t;
+typedef char *ll_symbol_t;
+typedef char *ll_mime_type_t;
 
 /**
  * The ll_get_config_modules function may be used to obtain a list of
  * available configuration modules.
  *
  * @returns
- *     a list of config module filenames (strings), terminated with a NULL pointer.
+ *     a NULL terminated list of config module filenames (strings).
  *     Use #ll_free_list when you are done with it.
  */
-ll_module_t* ll_get_config_modules(void);
+ll_module_t *ll_get_config_modules (void);
 
 /**
  * The ll_get_io_modules function may be used to obtain a list of
  * available I/O modules.
  *
  * @returns
- *     a list of I/O module filenames (strings), terminated with a NULL
- *     pointer.  Use #ll_free_list when you are done with it.
+ *     a NULL terminated list of I/O module filenames (strings).
+ *     Use #ll_free_list when you are done with it.
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-ll_module_t* ll_get_io_modules(void);
+ll_module_t *ll_get_io_modules (void);
 
 /**
  * The ll_module_init function may be used to load a module and call
@@ -212,7 +299,7 @@ ll_module_t* ll_get_io_modules(void);
  *     0 if the module can't be opened with dlopen,
  *     1 if it can.
  */
-int ll_module_init(const char *directory, ll_module_t module);
+int ll_module_init (const char *directory, ll_module_t module);
 
 /**
  * The ll_get_module_symbol function may be used to obtain a pointer to
@@ -232,8 +319,8 @@ int ll_module_init(const char *directory, ll_module_t module);
  *     This function will exit with a fatal error if it is not possble
  *     to dlopen the module.
  */
-void* ll_get_module_symbol(const char *directory, ll_module_t module,
-    ll_symbol_t symbol);
+void *ll_get_module_symbol (const char *directory, ll_module_t module,
+                            ll_symbol_t symbol);
 
 /**
  * The ll_module_shutdown function may be used to call the shutdown
@@ -250,7 +337,7 @@ void* ll_get_module_symbol(const char *directory, ll_module_t module,
  *     -1 on error (the module cannot be dlopen()ed),
  *     0 on success
  */
-int ll_module_shutdown(const char *directory, ll_module_t module);
+int ll_module_shutdown (const char *directory, ll_module_t module);
 
 /**
  * The ll_print_module_info function is used to print a human readable
@@ -259,7 +346,7 @@ int ll_module_shutdown(const char *directory, ll_module_t module);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-void ll_print_module_info(void);
+void ll_print_module_info (void);
 
 /**
  * The ll_init_modules function is used to initialize the I/O module
@@ -274,7 +361,7 @@ void ll_print_module_info(void);
  *     be reported on stderr, and this function will return without
  *     doing anything.
  */
-void ll_init_modules(void);
+void ll_init_modules (void);
 
 /**
  * The ll_stop_modules function is used to finalize the I/O module
@@ -283,7 +370,7 @@ void ll_init_modules(void);
  * It is mostly safe to call this function more than once.  See the note
  * on #ll_init_modules for more information.
  */
-void ll_stop_modules(void);
+void ll_stop_modules (void);
 
 /**
  * The _ll_contains_token function is used to look for a given token in
@@ -297,33 +384,35 @@ void ll_stop_modules(void);
  *     1 if the needle is found in the haystack,
  *     0 if not found.
  */
-int _ll_contains_token(const char *haystack, const char *needle);
+int _ll_contains_token (const char *haystack, const char *needle);
 
 typedef struct _LLModuleDesc LLModuleDesc;
 
 extern LLModuleDesc **_ll_module_list;
 
 typedef void (*LLModuleInitFunc) (void);
-typedef char* (*LLModuleReadFunc) (const char*);
-typedef int (*LLModuleWriteFunc) (const char*,const char*);
+typedef char *(*LLModuleReadFunc) (const char *);
+typedef int (*LLModuleWriteFunc) (const char *, const char *);
 typedef void (*LLModuleShutdownFunc) (void);
 
-enum ll_features {
-	LL_FEATURES_NONE = 		0x000000,
-	LL_FEATURES_EMBED = 	0x000001
+enum ll_features
+{
+  LL_FEATURES_NONE = 0x000000,
+  LL_FEATURES_EMBED = 0x000001
 };
 typedef enum ll_features ll_features;
 
-struct _LLModuleDesc {
-	char *name;
-	char *description;
-	char *version;
-	int features;
-	char *mime_types;
-	LLModuleInitFunc module_init;
-	LLModuleReadFunc read;
-	LLModuleWriteFunc write;
-	void *handle;
+struct _LLModuleDesc
+{
+  char *name;
+  char *description;
+  char *version;
+  int features;
+  char *mime_types;
+  LLModuleInitFunc module_init;
+  LLModuleReadFunc read;
+  LLModuleWriteFunc write;
+  void *handle;
 };
 
 #ifdef _MSC_VER
@@ -334,23 +423,43 @@ struct _LLModuleDesc {
 
 #define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write)	\
 LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {	\
-  name,							\
-  description,						\
-  version,						\
-  features,							\
-  mime_types,							\
-  init,							\
-  read,							\
-  write,							\
-  0											\
+name,							\
+description,						\
+version,						\
+features,							\
+mime_types,							\
+init,							\
+read,							\
+write,							\
+0											\
 };
 
 /*******************************************************/
 
 /******************** system_default *******************/
 
-int ll_set_default(const ll_uri_t);
-ll_uri_t ll_get_default(void);
+
+/**
+ * The ll_set_default function is used to set a specific license as the
+ * default license.
+ *
+ * @param license_uri
+ *     the URL of the license to be remembered as the default license
+ * @returns
+ *     1 on succes, or
+ *     0 on failure
+ */
+int ll_set_default (const ll_uri_t license_uri);
+
+/**
+ * The ll_get_default function is used to obtain the URI of the default
+ * license.
+ *
+ * @returns
+ *     NULL if there is no default, or
+ *     a pointer to a new string.  Use free() when you are done with it.
+ */
+ll_uri_t ll_get_default (void);
 
 /*******************************************************/
 
@@ -369,7 +478,7 @@ ll_uri_t ll_get_default(void);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-ll_uri_t ll_read(ll_filename_t filename);
+ll_uri_t ll_read (ll_filename_t filename);
 
 /**
  * The ll_module_read function may be used to obtain the URI of the
@@ -384,7 +493,7 @@ ll_uri_t ll_read(ll_filename_t filename);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-ll_uri_t ll_module_read(ll_filename_t filename, ll_module_t module);
+ll_uri_t ll_module_read (ll_filename_t filename, ll_module_t module);
 
 /*******************************************************/
 
@@ -409,10 +518,11 @@ ll_uri_t ll_module_read(ll_filename_t filename, ll_module_t module);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-int ll_write(ll_filename_t filename, ll_uri_t license_uri);
+int ll_write (ll_filename_t filename, ll_uri_t license_uri);
 
 /**
- * Writes the given license to the given file using the given module.
+ * The ll_module write function is used to write the given license to
+ * the given file using the given module.
  *
  * @param filename
  *     The name of the file the license is about
@@ -426,21 +536,25 @@ int ll_write(ll_filename_t filename, ll_uri_t license_uri);
  *     1 on success
  * @note
  *     The #ll_init_modules function shall be called before this function.
- * @note
- *     The #ll_init_modules function shall be called before this function.
  */
-int ll_module_write(ll_filename_t filename, ll_uri_t license_uri,
-    ll_module_t module);
+int ll_module_write (ll_filename_t filename, ll_uri_t license_uri,
+                     ll_module_t module);
 
 /*******************************************************/
 
 /******************* license_chooser *******************/
 
+/**
+ * This is an opaque type, used to remember the results of a license query.
+ */
 typedef struct _ll_license_chooser_t ll_license_chooser_t;
-typedef struct ll_license_list_t {
-	struct ll_license_list_t *next;
-	const char *license;
-} ll_license_list_t;
+
+typedef struct ll_license_list_t ll_license_list_t;
+struct ll_license_list_t
+{
+  struct ll_license_list_t *next;
+  const char *license;
+};
 
 #define LL_UNSPECIFIED 0
 
@@ -456,10 +570,17 @@ typedef struct ll_license_list_t {
  *     an opaque pointer to a result.
  *     Free with #ll_free_license_chooser when you are done with it.
  */
-ll_license_chooser_t* ll_new_license_chooser(const ll_juris_t jurisdiction,
-    const char **attributes);
+ll_license_chooser_t *ll_new_license_chooser (const ll_juris_t jurisdiction,
+                                              const char **attributes);
 
-void ll_free_license_chooser(ll_license_chooser_t *);
+/**
+ * The ll_free_license_chooser function is used to release the resources
+ * used by the result of a #ll_new_license_chooser function call.
+ *
+ * @param choo
+ *     the license chooser results to be released
+ */
+void ll_free_license_chooser (ll_license_chooser_t *choo);
 
 /**
  * The ll_get_licenses_from_flags function is used to extract a
@@ -478,12 +599,13 @@ void ll_free_license_chooser(ll_license_chooser_t *);
  * @returns
  *     list of URIs of compatible licenses
  */
-const ll_license_list_t* ll_get_licenses_from_flags(ll_license_chooser_t *choo,
-    int permits, int requires, int prohibits);
+const ll_license_list_t *ll_get_licenses_from_flags (ll_license_chooser_t *choo,
+                                                     int permits, int requires,
+                                                     int prohibits);
 
 /**
  * The ll_attribute_flag function is used to obtain the bit map bit
- * corresponding to the named attribute in the ll_free_license_chooser
+ * corresponding to the named attribute in the #ll_free_license_chooser
  * result.  This is used to query the result for licenses.
  *
  * @param choo
@@ -493,19 +615,110 @@ const ll_license_list_t* ll_get_licenses_from_flags(ll_license_chooser_t *choo,
  * @returns
  *     integer with single bit set
  */
-int ll_attribute_flag(ll_license_chooser_t *choo, const char *attr);
+int ll_attribute_flag (ll_license_chooser_t * choo, const char *attr);
 
 /*******************************************************/
 
 /************************* list ************************/
 
-char** ll_new_list(int);
-void ll_free_list(char**);
-int ll_list_contains(char**, char*);
-int ll_list_index(char**, char*);
-int ll_list_length(char**);
-char* ll_list_mode(char**, char*);
-void ll_list_print(char**);
+/**
+ * The ll_new_list function is used to allocate a list large enough to
+ * hold the given number of strings.  It will be created empty.
+ *
+ * When you add strings to the list, make sure you use the strdup()
+ * function, or any other method which directly or indirectly uses
+ * malloc.  This is because the #ll_free_list function will pass it to
+ * free().
+ *
+ * @param length
+ *     the size of the new list (>= 0)
+ * @returns
+ *     a ponter to the new list.  Use #ll_free_list when you are done
+ *     with it.
+ */
+char **ll_new_list (int length);
+
+/**
+ * The ll_free_list function is used to release memory used by a string
+ * list created by the @ll_new_list function.
+ *
+ * @param list
+ *     The list of strings to be free()ed.  Nothing bad happens if it is
+ *     NULL.  Very bad things happen if you call it too many time for
+ *     the same list.
+ */
+void ll_free_list (char **list);
+
+/**
+ * The ll_list_contains function is used to examine a list of strings to
+ * determine whether or not it contains a specific string.
+ *
+ * @param haystack
+ *     The list of strings to be searched
+ * @param needle
+ *     The string being searched for.
+ * @returns
+ *     false if haystack is NULL,
+ *     false if needle is NULL,
+ *     false if the needle is not present in the haystack,
+ *     true only if the needle <b>is</b> present in the haystack,
+ */
+int ll_list_contains (char **haystack, char *needle);
+
+/**
+ * The ll_list_index function is used to determine the index of a string
+ * in a list of strings.
+ *
+ * @param haystack
+ *     The list of strings to be searched
+ *     <b>Must not</b> be NULL.
+ * @param needle
+ *     The string being searched for.
+ *     <b>Must not</b> be NULL.
+ * @returns
+ *     the index of the needle within the haystack, or
+ *     -1 if not present at all
+ */
+int ll_list_index (char **haystack, char *needle);
+
+/**
+ * The ll_list_length function is used to
+ * determine the length of a list of strings.
+ *
+ * @param list
+ *     The list of strings to measure.
+ *     <b>Must not</b> be NULL.
+ * @returns
+ *     The number of strings in the list.
+ */
+int ll_list_length (char **list);
+
+/**
+ * The ll_list_mode function is used to determine the string which
+ * appears most often in the list.
+ *
+ * @param list
+ *     The list of strings to obtain the commonest string from
+ *     <b>Must not</b> be NULL.
+ * @param ignore
+ *     string value to ignore.
+ *     <b>Must not</b> be NULL.
+ * @returns
+ *     The commonest string (one of the instances).  It has <i>not</i>
+ *     been copied, so do not free() it.
+ */
+char *ll_list_mode (char **list, char *ignore);
+
+/**
+ * The ll_list_print function is used to print a list of strings to
+ * the standard output.  If lptr is NULL, "(null)" will be printed,
+ * otherwise the list contents will be printed within square brackets.
+ * Each string will be printed in single quotes.
+ *
+ * @param lptr
+ *     pointer to the list to be printed
+ */
+void ll_list_print (char **lptr);
 
 /*******************************************************/
 
@@ -513,4 +726,4 @@ void ll_list_print(char**);
 }
 #endif
 
-#endif /* LIBLICENSE_H */
+#endif                          /* LIBLICENSE_H */
