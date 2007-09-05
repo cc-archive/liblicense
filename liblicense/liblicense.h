@@ -750,13 +750,19 @@ write,                                                  \
 0                                                       \
 };
 
+#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1))
+#define LL_DEPRECATED __attribute__((deprecated))
+#else
+#define LL_DEPRECATED
+#endif
+
 
 /******************** system_default *******************/
 
 
 /**
- * The ll_set_default function is used to set a specific license as the
- * default license.
+ * The ll_license_default_set function is used to set a specific license
+ * as the default license.
  *
  * @param license_uri
  *     the URL of the license to be remembered as the default license
@@ -764,17 +770,29 @@ write,                                                  \
  *     1 on succes, or
  *     0 on failure
  */
-int ll_set_default (const ll_uri_t license_uri);
+int ll_license_default_set (const ll_uri_t license_uri);
 
 /**
- * The ll_get_default function is used to obtain the URI of the default
- * license.
+ * The ll_set_default function is deprecated, please use the
+ * #ll_license_default_set function instead.
+ */
+int ll_set_default (const ll_uri_t license_uri) LL_DEPRECATED;
+
+/**
+ * The ll_license_default_get function is used to obtain the URI of the
+ * default license.
  *
  * @returns
  *     NULL if there is no default, or
  *     a pointer to a new string.  Use free() when you are done with it.
  */
-ll_uri_t ll_get_default (void);
+ll_uri_t ll_license_default_get (void);
+
+/**
+ * The ll_get_default function is deprecated, please use the
+ * #ll_license_default_get function instead.
+ */
+ll_uri_t ll_get_default (void) LL_DEPRECATED;
 
 /********************* read_license ********************/
 

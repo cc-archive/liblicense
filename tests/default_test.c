@@ -24,24 +24,29 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int main(int argc,char** argv) {
-	char* license;
-	char* response;
+int
+main (int argc, char **argv)
+{
+  char *license;
+  char *response;
 
-        (void)argc;
-        (void)argv;
-	printf("Warning: this test will overwrite system-wide defaults if run.  To stop hit control-c.  You have 3 seconds.\n\n");
-	fflush(stdout);
-	/* BREAKS_WINDOWS */
-	sleep(3);
-	license = "http://creativecommons.org/licenses/by-nd/2.0/";
-	printf("Setting default to '%s': %d\n",license,ll_set_default(license));
-	response = ll_get_default();
-	printf("Getting the default: %s\n",response);
-	free(response);
-	printf("Setting default to '%s': %d\n","",ll_set_default(""));
-	response = ll_get_default();
-	printf("Getting the default: %s\n",response);
-	free(response);
-	return 0;
+  (void) argc;
+  (void) argv;
+  printf
+    ("Warning: this test will overwrite system-wide defaults if run.  "
+    "To stop hit control-C.  You have 3 seconds.\n\n");
+  fflush (stdout);
+  /* BREAKS_WINDOWS */
+  sleep (3);
+  license = "http://creativecommons.org/licenses/by-nd/2.0/";
+  printf ("Setting default to '%s': %d\n", license,
+          ll_license_default_set (license));
+  response = ll_license_default_get ();
+  printf ("Getting the default: %s\n", response);
+  free (response);
+  printf ("Setting default to '%s': %d\n", "", ll_license_default_set (""));
+  response = ll_license_default_get ();
+  printf ("Getting the default: %s\n", response);
+  free (response);
+  return 0;
 }

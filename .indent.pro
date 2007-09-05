@@ -13,3 +13,6 @@
 -Tll_symbol_t
 -Tll_uri_t
 -Tll_version_t
+-TPyObject
+-TLicenseChooser
+-TPyMODINIT_FUNC

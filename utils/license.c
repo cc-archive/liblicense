@@ -156,7 +156,7 @@ main (int argc, char **argv)
     {
       if (license == NULL)
         {
-          license = ll_get_default ();
+          license = ll_license_default_get ();
           if (license == NULL)
             {
               fprintf (stderr, "Error: No default license set.\n");
@@ -170,7 +170,7 @@ main (int argc, char **argv)
       /* No more arguments, assume default. */
       if (set_flag)
         {
-          ll_set_default (license);
+          ll_license_default_set (license);
         }
       else if (license)
         {
@@ -179,7 +179,7 @@ main (int argc, char **argv)
         }
       else
         {
-          license = ll_get_default ();
+          license = ll_license_default_get ();
         }
       printf ("The system default license is %s.\n", license);
       if (verbose_flag)
