@@ -357,13 +357,37 @@ char *ll_get_name (const ll_uri_t license_uri);
 ll_version_t ll_get_version (const ll_uri_t license_uri);
 
 /**
+ * The ll_license_get_creator function is used to obtain the creator of
+ * the license of interest (the "creator" attribute).
+ *
+ * @param license_uri
+ *     The URI of the license of interest
+ * @returns
+ *     a NULL terminated list of license creators.
+ *     Use #ll_free_list when you are done with it.
+ */
+char **ll_license_get_creator (const ll_uri_t license_uri);
+
+/**
+ * The ll_license_get_publisher function is used to obtain the publisher
+ * of the license of interest (the "publisher" attribute).
+ *
+ * @param license_uri
+ *     The URI of the license of interest
+ * @returns
+ *     a NULL terminated list of license creators.
+ *     Use #ll_free_list when you are done with it.
+ */
+char **ll_license_get_publisher (const ll_uri_t license_uri);
+
+/**
  * The ll_get_prohibits function is used to determine the attributes
  * prohibited by a license.
  *
  * @param license_uri
  *     The license of interest
  * @returns
- *     a list of attribute URIs the license prohibits.
+ *     a NULL terminated list of attribute URIs the license prohibits.
  *     Use #ll_free_list when you are done with it.
  */
 char **ll_get_prohibits (const ll_uri_t license_uri);

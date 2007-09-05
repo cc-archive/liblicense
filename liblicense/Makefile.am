@@ -38,14 +38,16 @@ endif
 # smaller executables.  It makes no difference for shared libraries.
 #
 liblicense_la_SOURCES = \
-	read_license.c \
-	write_license.c \
-	system_default.c \
-	module_wrangler.c \
-	license_info.c \
 	license_chooser.c \
+	license_get_creator.c \
+	license_get_publisher.c \
+	license_info.c \
 	license_print_info.c \
-	$(licenses) \
-	list.c
+	list.c \
+	module_wrangler.c \
+	read_license.c \
+	system_default.c \
+	write_license.c \
+	$(licenses)
 
 include_HEADERS = liblicense.h

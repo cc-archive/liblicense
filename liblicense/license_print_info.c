@@ -30,7 +30,8 @@
 void
 ll_license_print_info (ll_uri_t uri)
 {
-  char **attrs, **attr;
+  char **attrs;
+  char **attr;
   char *string;
   ll_version_t version;
   ll_juris_t juris;
@@ -77,16 +78,14 @@ ll_license_print_info (ll_uri_t uri)
   free (string);
   free (juris);
 
-  attrs =
-    ll_get_attribute (uri, "http://purl.org/dc/elements/1.1/creator", 0);
+  attrs = ll_license_get_creator (uri);
   if (*attrs)
     {
       printf ("Creator: %s\n", *attrs);
     }
   ll_free_list (attrs);
 
-  attrs =
-    ll_get_attribute (uri, "http://purl.org/dc/elements/1.1/publisher", 0);
+  attrs = ll_license_get_publisher (uri);
   if (*attrs)
     {
       printf ("Publisher: %s\n", *attrs);
