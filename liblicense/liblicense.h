@@ -252,6 +252,31 @@ extern "C" {
  * again there are URIs for each of the rights, rather than simple
  * strings.
  *
+ * The above code is a shortened version of the #ll_license_print_info
+ * function, which you may prefer to use for consistency.
+ *
+ * \code
+ *   #include <liblicense.h>
+ *   #include <stdio.h>
+ *
+ *   int
+ *   main (int argc, char **argv)
+ *   {
+ *     ll_uri_t uri;
+ *
+ *     ll_init ();
+ *     uri = ll_read (argv[1]);
+ *     if (uri == 0)
+ *       printf ("No license found\n");
+ *     else
+ *       ll_license_print_info (uri);
+ *     ll_stop ();
+ *     return 0;
+ * \endcode
+ *
+ * And, as you can see, the amount of code you need to write is much
+ * smaller, as well.
+ *
  *
  * @section N99 Discovering Supported Formats
  *
@@ -503,7 +528,14 @@ ll_uri_t *ll_get_licenses (const ll_juris_t justrisdiction);
  */
 ll_juris_t *ll_get_jurisdictions (void);
 
-/*******************************************************/
+/**
+ * The ll_license_print_info function is used to print all available
+ * details of a license on the standard output.
+ *
+ * @param license_uri
+ *     The URI of the license who's details are to be printed.
+ */
+void ll_license_print_info (ll_uri_t license_uri);
 
 /******************* module_wrangler *******************/
 
@@ -681,20 +713,19 @@ struct _LLModuleDesc
 #define LL_MODULE_EXPORT
 #endif
 
-#define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write)	\
-LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {	\
-name,							\
-description,						\
-version,						\
-features,							\
-mime_types,							\
-init,							\
-read,							\
-write,							\
-0											\
+#define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write)  \
+LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {        \
+name,                                                   \
+description,                                            \
+version,                                                \
+features,                                               \
+mime_types,                                             \
+init,                                                   \
+read,                                                   \
+write,                                                  \
+0                                                       \
 };
 
-/*******************************************************/
 
 /******************** system_default *******************/
 
@@ -720,8 +751,6 @@ int ll_set_default (const ll_uri_t license_uri);
  *     a pointer to a new string.  Use free() when you are done with it.
  */
 ll_uri_t ll_get_default (void);
-
-/*******************************************************/
 
 /********************* read_license ********************/
 
@@ -755,8 +784,6 @@ ll_uri_t ll_read (ll_filename_t filename);
  *     The #ll_init_modules function shall be called before this function.
  */
 ll_uri_t ll_module_read (ll_filename_t filename, ll_module_t module);
-
-/*******************************************************/
 
 /******************** write_license ********************/
 
@@ -800,8 +827,6 @@ int ll_write (ll_filename_t filename, ll_uri_t license_uri);
  */
 int ll_module_write (ll_filename_t filename, ll_uri_t license_uri,
                      ll_module_t module);
-
-/*******************************************************/
 
 /******************* license_chooser *******************/
 
@@ -877,8 +902,6 @@ const ll_license_list_t *ll_get_licenses_from_flags (ll_license_chooser_t *choo,
  *     integer with single bit set
  */
 int ll_attribute_flag (ll_license_chooser_t * choo, const char *attr);
-
-/*******************************************************/
 
 /************************* list ************************/
 
@@ -981,10 +1004,8 @@ char *ll_list_mode (char **list, char *ignore);
  */
 void ll_list_print (char **lptr);
 
-/*******************************************************/
-
 #ifdef __cplusplus
 }
 #endif
 
-#endif                          /* LIBLICENSE_H */
+#endif /* LIBLICENSE_H */
