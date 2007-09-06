@@ -75,7 +75,7 @@ extern "C" {
  * function.  This is required to initialize internal databases and
  * indexes.
  *
- * Once you are done with the library, it is import and to call the
+ * Once you are done with the library, it is important to call the
  * #ll_stop function.  This ensures that library resources are free()ed,
  * but more importantly it ensures that caches that need to be have been
  * flushed.
@@ -85,10 +85,10 @@ extern "C" {
  *
  * To obtain a list of available licenses, you use the #ll_get_licenses
  * function.  This returns a list of license URIs.  This is the most
- * important thing to understand about liblicense, it works entirely
- * with URIs, for everyting, including license references.
+ * important thing to understand about liblicense: it uses
+ * URIs to name everything, including license references.
  *
- * For example, the Public Domain license URI looks like this:
+ * For example, the Sampling Plus license URI looks like this:
  * http://creativecommons.org/licenses/sampling+/1.0/
  *
  * The <i>license -a</i> command uses code very similar to the following
