@@ -822,6 +822,7 @@ ll_uri_t ll_read (ll_filename_t filename);
  *     The name of the module to scan the file with
  * @returns
  *     a string containing the URI of the license corresponding to the file.
+ *     CHECKME: Probably could also return NULL, just like ll_read().
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */

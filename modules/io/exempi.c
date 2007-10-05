@@ -38,6 +38,17 @@ char* exempi_read( const char* filename )
 	char *uri_string;
 
 	f = xmp_files_open_new(filename, XMP_OPEN_OPNLYXMP);
+	if (f == NULL) {
+	  // Golly gee whiz, you can't open that file.  xmp_err() or
+	  // something like it could tell us why, if only we wanted to
+	  // now.  We'll return NULL as allowed in liblicense.h's
+	  // doxygen for ll_read().
+
+	  return NULL; // again, magic return value.  Sucks.  FIXME.
+	}
+
+	// Otherwise, it's okay to continue.
+	  
 	xmp = xmp_files_get_new_xmp(f);
 
 	uri_string = NULL;
@@ -65,6 +76,14 @@ int exempi_write( const char* filename, const char* uri )
 	XmpPtr xmp;
 
 	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_OPNLYXMP);
+	if (f == NULL) {
+	  // Then we're doomed.
+	  // WTF is with the magic-number return codes?  Maybe it's 1,
+	  // maybe it's 0.  I don't remember.
+	  
+	  // FIXME!
+	  return 1;
+	}
 	xmp = xmp_files_get_new_xmp(f);
 
 	if ( xmp == NULL ) {
@@ -74,6 +93,7 @@ int exempi_write( const char* filename, const char* uri )
 	}
 
 	//FIXME: I think exempi needs a xmp_del_property().  For now, set the uri to ""
+	// FIXME: It just got one recently, curiously enough!
 	if ( uri == NULL ) {
 		uri = "";
 	}
