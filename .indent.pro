@@ -16,3 +16,8 @@
 -TPyObject
 -TLicenseChooser
 -TPyMODINIT_FUNC
+-Tsqlite3
+-Traptor_statement
+-Traptor_serializer
+-Traptor_uri
+-TxmlNode

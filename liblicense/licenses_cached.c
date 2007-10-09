@@ -145,7 +145,7 @@ int ll_update_cache() {
 		if (fileinfo.st_mtime>last_cache) {
 			/* Get data */
 			ll_juris_t j = ll_get_jurisdiction(u);
-			ll_uri_t *successor = ll_get_attribute(u,"http://purl.org/dc/elements/1.1/isReplacedBy",0);
+			ll_uri_t *successor = ll_get_attribute(u, LL_ATTRIBUTE_URI_REPLACED_BY,0);
 			int obsolete = ll_list_length(successor);
 			ll_free_list(successor);
 			char* query;

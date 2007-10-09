@@ -36,6 +36,30 @@
 #include "config.h"
 #endif
 
+const char LL_RIGHTS_URI_ATTRIBUTION[] =
+  "http://creativecommons.org/ns#Attribution";
+const char LL_RIGHTS_URI_REPRODUCTION[] =
+  "http://creativecommons.org/ns#Reproduction";
+const char LL_RIGHTS_URI_DISTRIBUTION[] =
+  "http://creativecommons.org/ns#Distribution";
+const char LL_RIGHTS_URI_DERIVATIVE_WORKS[] =
+  "http://creativecommons.org/ns#DerivativeWorks";
+const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[] =
+  "http://creativecommons.org/ns#HighIncomeNationUse";
+const char LL_RIGHTS_URI_SHARING[] =
+  "http://creativecommons.org/ns#Sharing";
+const char LL_RIGHTS_URI_NOTICE[] =
+  "http://creativecommons.org/ns#Notice";
+const char LL_RIGHTS_URI_SHARE_ALIKE[] =
+  "http://creativecommons.org/ns#ShareAlike";
+const char LL_RIGHTS_URI_SOURCE_CODE[] =
+  "http://creativecommons.org/ns#SourceCode";
+const char LL_RIGHTS_URI_COMMERCIAL_USE[] =
+  "http://creativecommons.org/ns#CommercialUse";
+
+const char LL_ATTRIBUTE_URI_REPLACED_BY[] =
+  "http://purl.org/dc/elements/1.1/isReplacedBy";
+
 /**
  * The _ll_get_first function is used to extract the first elment of a
  * list and the free the list.
@@ -132,28 +156,34 @@ ll_jurisdiction_name (const ll_juris_t juris)
   return strdup (juris);
 }
 
+const char LL_ATTRIBUTE_URI_JURISDICTION[] =
+  "http://purl.org/dc/elements/1.1/coverage";
+
 ll_juris_t
 ll_get_jurisdiction (const ll_uri_t uri)
 {
   return
-    _ll_get_first (ll_get_attribute
-                   (uri, "http://purl.org/dc/elements/1.1/coverage", false));
+    _ll_get_first (ll_get_attribute (uri, LL_ATTRIBUTE_URI_JURISDICTION,
+                                     false));
 }
+
+const char LL_ATTRIBUTE_URI_NAME[] =
+  "http://purl.org/dc/elements/1.1/title";
 
 char *
 ll_get_name (const ll_uri_t u)
 {
-  return
-    _ll_get_first (ll_get_attribute
-                   (u, "http://purl.org/dc/elements/1.1/title", true));
+  return _ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_NAME, true));
 }
+
+const char LL_ATTRIBUTE_URI_VERSION[] =
+  "http://purl.org/dc/elements/1.1/hasVersion";
 
 ll_version_t
 ll_get_version (const ll_uri_t u)
 {
   char *version =
-    _ll_get_first (ll_get_attribute
-                   (u, "http://purl.org/dc/elements/1.1/hasVersion", false));
+    _ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false));
   if (version)
     {
       int c;
@@ -193,24 +223,31 @@ ll_get_version (const ll_uri_t u)
   return NULL;
 }
 
+const char LL_ATTRIBUTE_URI_PROHIBITS[] =
+  "http://creativecommons.org/ns#prohibits";
+
 char **
 ll_get_prohibits (const ll_uri_t u)
 {
-  return ll_get_attribute (u, "http://creativecommons.org/ns#prohibits",
-                           false);
+  return ll_get_attribute (u, LL_ATTRIBUTE_URI_PROHIBITS, false);
 }
+
+const char  LL_ATTRIBUTE_URI_PERMITS[] =
+  "http://creativecommons.org/ns#permits";
 
 char **
 ll_get_permits (const ll_uri_t u)
 {
-  return ll_get_attribute (u, "http://creativecommons.org/ns#permits", false);
+  return ll_get_attribute (u, LL_ATTRIBUTE_URI_PERMITS, false);
 }
+
+const char  LL_ATTRIBUTE_URI_REQUIRES[] =
+  "http://creativecommons.org/ns#requires";
 
 char **
 ll_get_requires (const ll_uri_t u)
 {
-  return ll_get_attribute (u, "http://creativecommons.org/ns#requires",
-                           false);
+  return ll_get_attribute (u, LL_ATTRIBUTE_URI_REQUIRES, false);
 }
 
 ll_uri_t
@@ -577,7 +614,7 @@ _ll_build_list (ll_attribute_search_t *ast, char **fsi)
 }
 
 char **
-ll_get_attribute (ll_uri_t u, ll_attribute_t a, int locale)
+ll_get_attribute (ll_uri_t u, const char *a, int locale)
 {
   ll_attribute_search_t *helper;
   char *further_search;

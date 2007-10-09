@@ -20,10 +20,11 @@
 
 #include <liblicense/liblicense.h>
 
+const char LL_ATTRIBUTE_URI_PUBLISHER[] =
+   "http://purl.org/dc/elements/1.1/publisher";
 
 char **
 ll_license_get_publisher (ll_uri_t uri)
 {
-  return ll_get_attribute (uri, "http://purl.org/dc/elements/1.1/publisher",
-                           0);
+  return ll_get_attribute (uri, LL_ATTRIBUTE_URI_PUBLISHER, 0);
 }

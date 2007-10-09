@@ -102,7 +102,8 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 		ll_uri_t *successor;
 
 		tmp_j = ll_get_jurisdiction(licenses[z]);
-		successor = ll_get_attribute(licenses[z],"http://purl.org/dc/elements/1.1/isReplacedBy",0);
+		successor = ll_get_attribute(licenses[z],
+                                             LL_ATTRIBUTE_URI_REPLACED_BY,0);
 		if(((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0)) && successor[0]==NULL)
 			keep++;
 		else {

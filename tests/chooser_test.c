@@ -66,15 +66,15 @@ void print_flags(const char **attributes, int p, int r, int pr )
 int main(int argc, char *argv[])
 {
 	static const char *attributes[] = {
-			"http://creativecommons.org/ns#Distribution",
-			"http://creativecommons.org/ns#CommercialUse",
-			"http://creativecommons.org/ns#DerivativeWorks",
-			"http://creativecommons.org/ns#ShareAlike",
-			"http://creativecommons.org/ns#Attribution",
+                        LL_RIGHTS_URI_DISTRIBUTION,
+                        LL_RIGHTS_URI_COMMERCIAL_USE,
+                        LL_RIGHTS_URI_DERIVATIVE_WORKS,
+                        LL_RIGHTS_URI_SHARE_ALIKE,
+                        LL_RIGHTS_URI_ATTRIBUTION,
 			NULL
 	};
 	static const char *attributes2[] = {
-			"http://creativecommons.org/ns#DerivativeWorks",
+                        LL_RIGHTS_URI_DERIVATIVE_WORKS,
 			NULL
 	};
 	ll_license_chooser_t *license_chooser;
@@ -90,9 +90,11 @@ int main(int argc, char *argv[])
 
 	license_chooser = ll_new_license_chooser(NULL,attributes);
 
-	permits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Distribution") |
-	 ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#DerivativeWorks");
-	requires_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#ShareAlike");
+	permits_flags = ll_attribute_flag(license_chooser,
+                       LL_RIGHTS_URI_DISTRIBUTION) |
+	 ll_attribute_flag(license_chooser, LL_RIGHTS_URI_DERIVATIVE_WORKS);
+	requires_flags = ll_attribute_flag(license_chooser,
+                                           LL_RIGHTS_URI_SHARE_ALIKE);
 	prohibits_flags = LL_UNSPECIFIED;
 
 	/*
@@ -105,9 +107,9 @@ int main(int argc, char *argv[])
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
 
-	permits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Distribution");
-	requires_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#Attribution");
-	prohibits_flags = ll_attribute_flag(license_chooser,"http://creativecommons.org/ns#CommercialUse");
+	permits_flags = ll_attribute_flag(license_chooser, LL_RIGHTS_URI_DISTRIBUTION);
+	requires_flags = ll_attribute_flag(license_chooser, LL_RIGHTS_URI_ATTRIBUTION);
+	prohibits_flags = ll_attribute_flag(license_chooser, LL_RIGHTS_URI_COMMERCIAL_USE);
 
 	/* returns by-nc-nd */
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);

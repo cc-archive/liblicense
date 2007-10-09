@@ -21,8 +21,11 @@
 #include <liblicense/liblicense.h>
 
 
+const char LL_ATTRIBUTE_CREATOR[] =
+  "http://purl.org/dc/elements/1.1/creator";
+
 char **
 ll_license_get_creator (ll_uri_t uri)
 {
-    return ll_get_attribute (uri, "http://purl.org/dc/elements/1.1/creator", 0);
+    return ll_get_attribute (uri, LL_ATTRIBUTE_CREATOR, 0);
 }

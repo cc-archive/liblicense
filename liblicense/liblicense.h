@@ -319,8 +319,104 @@ typedef char *ll_attribute_t;
 typedef char *ll_filename_t;
 
 /**
+ * The LL_RIGHTS_URI_ATTRIBUTION string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * credit be given to copyright holder and/or author
+ */
+extern const char LL_RIGHTS_URI_ATTRIBUTION[];
+
+/**
+ * The LL_RIGHTS_URI_COMMERCIAL_USE string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * exercising rights for commercial purposes
+ */
+extern const char LL_RIGHTS_URI_COMMERCIAL_USE[];
+
+/**
+ * The LL_RIGHTS_URI_DERIVATIVE_WORKS string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * creation and distribution of derivative works
+ */
+extern const char LL_RIGHTS_URI_DERIVATIVE_WORKS[];
+
+/**
+ * The LL_RIGHTS_URI_DISTRIBUTION string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * distribution, public display, and publicly performance
+ */
+extern const char LL_RIGHTS_URI_DISTRIBUTION[];
+
+/**
+ * The LL_RIGHTS_URI_HIGH_INCOME_NATION_USE string may be returned
+ * by the #ll_get_permits, #ll_get_requires and #ll_get_prohibits
+ * functions.
+ *
+ * use in a non-developing country
+ */
+extern const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[];
+
+/**
+ * The LL_RIGHTS_URI_NOTICE string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * copyright and license notices be kept intact
+ */
+extern const char LL_RIGHTS_URI_NOTICE[];
+
+/**
+ * The LL_RIGHTS_URI_REPRODUCTION string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * making multiple copies
+ */
+extern const char LL_RIGHTS_URI_REPRODUCTION[];
+
+/**
+ * The LL_RIGHTS_URI_SHARE_ALIKE string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * derivative works be licensed under the same terms as the original work
+ */
+extern const char LL_RIGHTS_URI_SHARE_ALIKE[];
+
+/**
+ * The LL_RIGHTS_URI_SHARING string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * noncommercial distribution, permits commercial derivatives, but only
+ * non-commercial distribution
+ */
+extern const char LL_RIGHTS_URI_SHARING[];
+
+/**
+ * The LL_RIGHTS_URI_SOURCE_CODE string may be returned by the
+ * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ *
+ * source code (the preferred form for making modifications) must be
+ * provided for all derivative works
+ */
+extern const char LL_RIGHTS_URI_SOURCE_CODE[];
+
+/**
+ * The LL_ATTRIBUTE_URI_REPLACED_BY string can be passed to the
+ * #ll_get_attribute function to obtain a license's successor.
+ */
+extern const char LL_ATTRIBUTE_URI_REPLACED_BY[];
+
+/**
+ * The LL_ATTRIBUTE_URI_JURISDICTION string can be passed to the
+ * #ll_get_attribute function to obtain a license's jurisdiction.  The
+ * #ll_get_jurisdiction function does this very thing.
+ */
+extern const char LL_ATTRIBUTE_URI_JURISDICTION[];
+
+/**
  * The ll_get_jurisdiction function is used to obtain the jurisdiction
- * code for the given license (the "coverage" attribute).
+ * code for the given license (the #LL_ATTRIBUTE_URI_JURISDICTION attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
@@ -331,8 +427,15 @@ typedef char *ll_filename_t;
 ll_juris_t ll_get_jurisdiction (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_NAME string can be passed to the
+ * #ll_get_attribute function to obtain a license's name.  The
+ * #ll_get_name function does this very thing.
+ */
+extern const char LL_ATTRIBUTE_URI_NAME[];
+
+/**
  * The ll_get_name function is used to obtain the name of a license
- * (specifically, it gets the "title" attribute).
+ * (the #LL_ATTRIBUTE_URI_NAME attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
@@ -343,8 +446,15 @@ ll_juris_t ll_get_jurisdiction (const ll_uri_t license_uri);
 char *ll_get_name (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_VERSION string can be passed to the
+ * #ll_get_attribute function to obtain a license's version.  The
+ * #ll_get_version function does this very thing.
+ */
+extern const char LL_ATTRIBUTE_URI_VERSION[];
+
+/**
  * The ll_get_version functions is used to obtain the version of the
- * license of interest (the "hasVersion" attribute).
+ * license of interest (the #LL_ATTRIBUTE_URI_VERSION attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
@@ -357,8 +467,15 @@ char *ll_get_name (const ll_uri_t license_uri);
 ll_version_t ll_get_version (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_CREATOR string can be passed to the
+ * #ll_get_attribute function to obtain a license's creator.  The
+ * #ll_license_get_creator function does this very thing.
+ */
+extern const char LL_ATTRIBUTE_URI_CREATOR[];
+
+/**
  * The ll_license_get_creator function is used to obtain the creator of
- * the license of interest (the "creator" attribute).
+ * the license of interest (the #LL_ATTRIBUTE_URI_CREATOR attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
@@ -369,8 +486,15 @@ ll_version_t ll_get_version (const ll_uri_t license_uri);
 char **ll_license_get_creator (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_PUBLISHER string can be passed to the
+ * #ll_get_attribute function to obtain a license's publisher.  The
+ * #ll_license_get_publisher function does this very thing.
+ */
+extern const char LL_ATTRIBUTE_URI_PUBLISHER[];
+
+/**
  * The ll_license_get_publisher function is used to obtain the publisher
- * of the license of interest (the "publisher" attribute).
+ * of the license of interest (the #LL_ATTRIBUTE_PUBLISHER attribute).
  *
  * @param license_uri
  *     The URI of the license of interest
@@ -381,57 +505,81 @@ char **ll_license_get_creator (const ll_uri_t license_uri);
 char **ll_license_get_publisher (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_PROHIBITS string can be passed to the
+ * #ll_get_attribute function to obtain a list of the rights prohibited
+ * by a license.  The #ll_get_prohibits function does this very
+ * thing.
+ */
+extern const char LL_ATTRIBUTE_URI_PROHIBITS[];
+
+/**
  * The ll_get_prohibits function is used to determine the attributes
- * prohibited by a license.
+ * prohibited by a license (the #LL_ATTRIBUTE_URI_PROHIBITS attribute).
  *
  * @param license_uri
  *     The license of interest
  * @returns
- *     a NULL terminated list of attribute URIs the license prohibits.
+ *     a NULL terminated list of rights URIs the license prohibits.
  *     Use #ll_free_list when you are done with it.
  */
 char **ll_get_prohibits (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_PERMITS string can be passed to the
+ * #ll_get_attribute function to obtain a list of the rights permitted
+ * by a license.  The #ll_get_permits function does this very
+ * thing.
+ */
+extern const char LL_ATTRIBUTE_URI_PERMITS[];
+
+/**
  * The ll_get_permits function is used to determine the attributes
- * permitted by a license.
+ * permitted by a license (the #LL_ATTRIBUTE_URI_PERMITS attribute).
  *
  * @param license_uri
  *     The license of interest
  * @returns
- *     a list of attribute URIs the license prohibits.
+ *     a NULL terminated list of rights URIs the license prohibits.
  *     Use #ll_free_list when you are done with it.
  */
 char **ll_get_permits (const ll_uri_t license_uri);
 
 /**
+ * The LL_ATTRIBUTE_URI_REQUIRES string can be passed to the
+ * #ll_get_attribute function to obtain a list of the rights required
+ * by a license.  The #ll_get_requires function does this very
+ * thing.
+ */
+extern const char LL_ATTRIBUTE_URI_REQUIRES[];
+
+/**
  * The ll_get_requires function is used to determine the attributes
- * required by a license.
+ * required by a license (the #LL_ATTRIBUTE_URI_REQUIRES attribute).
  *
  * @param license_uri
  *     The license of interest
  * @returns
- *     a list of attribute URIs the license prohibits.
+ *     a NULL terminated list of rights URIs the license requires.
  *     use #ll_free_list when you are done with it.
  */
 char **ll_get_requires (const ll_uri_t license_uri);
 
 /**
  * The ll_get_attribute function is used to obtain the names of all
- * attributes of the given license which havre the given value.
+ * attributes of the given license which have the given URI.
  *
  * @param license_uri
  *     The license of interest
- * @param attr_val
- *     The attribute value of interest (permitted, required, prohibited)
+ * @param attribute_uri
+ *     The attribute URI of interest (e.g. #LL_ATTRIBUTE_URI_PERMITS)
  * @param locale
  *     non-zero if $LANG to be used,
  *     zero if not relevant
  * @returns
- *     a list of attribute URIs of the license with matching values.
- *     Use #ll_free_list when you are done with it.
+ *     a NULL terminated list of strings,
+ *     use #ll_free_list when you are done with it.
  */
-char **ll_get_attribute (ll_uri_t license_uri, ll_attribute_t attr_val,
+char **ll_get_attribute (ll_uri_t license_uri, const char *attribute_uri,
                          int locale);
 
 /**
@@ -697,8 +845,8 @@ void ll_stop_modules (void);
  * @param needle
  *     The string to be searched for
  * @returns
- *     1 if the needle is found in the haystack,
- *     0 if not found.
+ *     non-zero (true) if the needle is found in the haystack,
+ *     zero (false) if not found.
  */
 int _ll_contains_token (const char *haystack, const char *needle);
 
@@ -750,6 +898,10 @@ write,                                                  \
 0                                                       \
 };
 
+/**
+ * The LL_DEPRECATED define is used to mark deprecated functions as
+ * such, when compiling woth GCC.  All other compilers unaffected.
+ */
 #if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1))
 #define LL_DEPRECATED __attribute__((deprecated))
 #else
