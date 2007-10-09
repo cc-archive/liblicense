@@ -20,7 +20,6 @@ Copyright 2007, Creative Commons, www.creativecommons.org.
 <rdf:RDF xmlns='http://creativecommons.org/ns#' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:dc='http://purl.org/dc/elements/1.1/' xmlns:dcq='http://purl.org/dc/terms/'>
   <rdf:Description rdf:about='http://creativecommons.org/licenses/by-nc/2.5/nl/'>
     <dc:hasVersion>2.5</dc:hasVersion>
-    <dc:type>License</dc:type>
     <dc:identifier>http://creativecommons.org/licenses/by-nc/2.5/nl/</dc:identifier>
     <dc:creator>Creative Commons</dc:creator>
     <dc:publisher>Creative Commons</dc:publisher>
