@@ -19,6 +19,8 @@
 from rdflib.Graph import Graph
 from rdflib import Namespace, RDF, URIRef, Literal
 
+from babel.messages.pofile import read_po
+
 from urllib2 import *
 import xml.dom.minidom
 import xml.dom.ext
@@ -59,15 +61,39 @@ NS_RDF = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 NS_CC = Namespace("http://creativecommons.org/ns#")
 
 #x-default should be first in the list
-xDefault = "en"
-locales = [xDefault, "af","bg","ca","da","de","de_AT","de_CH","en_CA",
-    "en_GB","en_US","eo","es","es_AR","es_CL","es_CO","es_MX","es_PE",
-    "eu","fi","fr","fr_CA","fr_CH","fr_LU","gl","he","hr","hu","it","it_CH",
-    "ja","ko","mk","ms","nl","nso","pl","pt","pt_PT","sl","st","sv",
-    "zh","zh_TW","zu"]
+# xDefault = "en"
+# locales = [xDefault, "af","bg","ca","da","de","de_AT","de_CH","en_CA",
+#    "en_GB","en_US","eo","es","es_AR","es_CL","es_CO","es_MX","es_PE",
+#    "eu","fi","fr","fr_CA","fr_CH","fr_LU","gl","he","hr","hu","it","it_CH",
+#    "ja","ko","mk","ms","nl","nso","pl","pt","pt_PT","sl","st","sv",
+#    "zh","zh_TW","zu"]
+  
+def loadCatalogs(source_dir):
+    """Load the translation catalogs and return a dictionary mapping
+    the locale code to the PoFile object."""
+
+    langs = {}
     
+    for root, dirnames, filenames in os.walk(source_dir):
+        for fn in filenames:
+            if fn[-3:] == '.po':
+
+                # figure out what locale this is based on pathname
+                locale = root.split(os.sep)[-1]
+                print 'loading catalog for %s...' % locale
+                
+                msg_catalog = read_po(
+                    file(os.path.abspath(os.path.join(root, fn)), 'r'))
+                
+                langs[locale] = msg_catalog
+
+    return langs
+
+LOCALES = loadCatalogs(os.path.join(os.path.dirname(__file__), 'i18n'))
+  
 conn = urlopen(LICENSE_FILE)
 license_xml = xml.dom.minidom.parse(conn)
+
 
 def latest_license( v, acc ):
     if v == None or acc[1] == "-" or float(acc[1]) > float(v[1]):
@@ -167,56 +193,27 @@ for license in licenses:
 
                 store.add((license_node, NS_DC.isBasedOn, basedOnURI))
 
-            print store.serialize(format="pretty-xml")
-            break
-
-            translation_map = {}
-
-            title = doc.createElementNS(NS_DC, "dc:title")
-            title_alt = doc.createElementNS(NS_RDF, "rdf:Alt")
-            title.appendChild( title_alt )
-            description.appendChild(title)
 
             if id == "devnations":
-                translation_map['msgid "util.Developing_Nations"'] = title_alt
+                title_str = "util.Developing_Nations"
             else:
-                translation_map['msgid "licenses.pretty_%s"' % id] = title_alt
+                title_str = "licenses.pretty_%s" % id
 
-            dcDescription = doc.createElementNS(NS_DC, "dc:description")
-            dcDescription_alt = doc.createElementNS(NS_RDF, "rdf:Alt")
-            dcDescription.appendChild( dcDescription_alt )
-            translation_map['msgid "char.%s_description"' % id] = dcDescription_alt
+            for locale in LOCALES:
+                # add the dc:title nodes
+                store.add((license_node, NS_DC['title'], 
+                           Literal(LOCALES[locale][title_str].string, 
+                                   lang=locale)
+                           ))
 
-            for locale in locales:
-                try:
-                    #conn = urlopen(PO_DIR+"icommons-%s.po" % locale)
-                    conn = open("i18n/icommons-%s.po" % locale,"r")
-                except:
-                    print "getting po file, %s, failed" % locale
-                else:
-                    lines = conn.readlines()
-                    i = 0
-                    while i < len(lines):
-                        line = lines[i].decode("utf8").strip()
-                        element = translation_map.get(line)
-                        if element:
-                            i += 1
-                            msgstr = lines[i].strip().lstrip('msgstr "').rstrip('"').replace("\\n"," ")
-                            li = doc.createElementNS(NS_RDF,"rdf:li")
-                            if locale == xDefault:
-                                li.setAttributeNS(xml.dom.XML_NAMESPACE,"xml:lang","x-default")
-                            else:
-                                li.setAttributeNS(xml.dom.XML_NAMESPACE,"xml:lang",locale.replace("_","-"))
+                # add the dc:description nodes
+                desc = LOCALES[locale]["char.%s_description" % id]
+                if desc is not None:
+                    store.add((license_node, NS_DC.description, 
+                               Literal(desc.string, lang=locale)
+                              ))
 
-                            if creator_str == "Creative Commons" and line.find("description") == -1:
-                                msgstr = "Creative Commons - "+msgstr
-                            li.appendChild( doc.createTextNode(msgstr) )
-
-                            element.appendChild( li )
-                        i += 1
-
-            if dcDescription_alt.hasChildNodes():
-                description.appendChild(dcDescription)
+            print store.serialize(format="pretty-xml")
 
             output = "licenses/%s.rdf" % uri.lstrip("http://").replace("/","_")
             output_file = open(output,"w")
