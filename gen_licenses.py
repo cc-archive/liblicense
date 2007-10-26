@@ -14,7 +14,9 @@
 # of the liblicense software will comply with the CC-GNU-LGPL.
 #
 # Copyright 2007, Creative Commons, www.creativecommons.org.
-# Copyright 2007, Jason Kivlighn.
+# Contributors: Jason Kivlighn.
+#               Nathan R. Yergler <nathan@creativecommons.org>.
+#
 
 from rdflib.Graph import Graph
 from rdflib import Namespace, RDF, URIRef, Literal
@@ -32,26 +34,6 @@ if not(os.path.exists(
 
     os.mkdir('licenses')
 
-header = """
-Creative Commons has made the contents of this file
-available under a CC-GNU-LGPL license:
-
- http://creativecommons.org/licenses/LGPL/2.1/
-
- A copy of the full license can be found as part of this
- distribution in the file COPYING
-
-You may use the liblicense software in accordance with the
-terms of that license. You agree that you are solely 
-responsible for your use of the liblicense software and you
-represent and warrant to Creative Commons that your use
-of the liblicense software will comply with the CC-GNU-LGPL.
-
-Copyright 2007, Creative Commons, www.creativecommons.org.
-
-"""
-
-PO_DIR="http://cctools.svn.sourceforge.net/svnroot/cctools/i18n/trunk/i18n/"
 LICENSE_FILE="http://cctools.svn.sourceforge.net/svnroot/cctools/license_xsl/trunk/licenses.xml"
 
 NS_DC = Namespace("http://purl.org/dc/elements/1.1/")
@@ -59,14 +41,6 @@ NS_DCQ = Namespace("http://purl.org/dc/terms/")
 NS_RDF = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 
 NS_CC = Namespace("http://creativecommons.org/ns#")
-
-#x-default should be first in the list
-# xDefault = "en"
-# locales = [xDefault, "af","bg","ca","da","de","de_AT","de_CH","en_CA",
-#    "en_GB","en_US","eo","es","es_AR","es_CL","es_CO","es_MX","es_PE",
-#    "eu","fi","fr","fr_CA","fr_CH","fr_LU","gl","he","hr","hu","it","it_CH",
-#    "ja","ko","mk","ms","nl","nso","pl","pt","pt_PT","sl","st","sv",
-#    "zh","zh_TW","zu"]
   
 def loadCatalogs(source_dir):
     """Load the translation catalogs and return a dictionary mapping
@@ -212,8 +186,6 @@ for license in licenses:
                     store.add((license_node, NS_DC.description, 
                                Literal(desc.string, lang=locale)
                               ))
-
-            print store.serialize(format="pretty-xml")
 
             output = "licenses/%s.rdf" % uri.lstrip("http://").replace("/","_")
             output_file = open(output,"w")
