@@ -58,7 +58,7 @@ const char LL_RIGHTS_URI_COMMERCIAL_USE[] =
   "http://creativecommons.org/ns#CommercialUse";
 
 const char LL_ATTRIBUTE_URI_REPLACED_BY[] =
-  "http://purl.org/dc/elements/1.1/isReplacedBy";
+  "http://purl.org/dc/terms/isReplacedBy";
 
 /**
  * The _ll_get_first function is used to extract the first elment of a
@@ -157,7 +157,7 @@ ll_jurisdiction_name (const ll_juris_t juris)
 }
 
 const char LL_ATTRIBUTE_URI_JURISDICTION[] =
-  "http://purl.org/dc/elements/1.1/coverage";
+  "http://creativecommons.org/ns#jurisdiction";
 
 ll_juris_t
 ll_get_jurisdiction (const ll_uri_t uri)
@@ -177,7 +177,7 @@ ll_get_name (const ll_uri_t u)
 }
 
 const char LL_ATTRIBUTE_URI_VERSION[] =
-  "http://purl.org/dc/elements/1.1/hasVersion";
+  "http://purl.org/dc/terms/hasVersion";
 
 ll_version_t
 ll_get_version (const ll_uri_t u)

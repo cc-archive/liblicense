@@ -85,13 +85,6 @@ ll_license_print_info (ll_uri_t uri)
     }
   ll_free_list (attrs);
 
-  attrs = ll_license_get_publisher (uri);
-  if (*attrs)
-    {
-      printf ("Publisher: %s\n", *attrs);
-    }
-  ll_free_list (attrs);
-
   printf ("Rights:\n");
 
   attrs = ll_get_permits (uri);

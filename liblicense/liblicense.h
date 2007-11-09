@@ -486,25 +486,6 @@ extern const char LL_ATTRIBUTE_URI_CREATOR[];
 char **ll_license_get_creator (const ll_uri_t license_uri);
 
 /**
- * The LL_ATTRIBUTE_URI_PUBLISHER string can be passed to the
- * #ll_get_attribute function to obtain a license's publisher.  The
- * #ll_license_get_publisher function does this very thing.
- */
-extern const char LL_ATTRIBUTE_URI_PUBLISHER[];
-
-/**
- * The ll_license_get_publisher function is used to obtain the publisher
- * of the license of interest (the #LL_ATTRIBUTE_PUBLISHER attribute).
- *
- * @param license_uri
- *     The URI of the license of interest
- * @returns
- *     a NULL terminated list of license creators.
- *     Use #ll_free_list when you are done with it.
- */
-char **ll_license_get_publisher (const ll_uri_t license_uri);
-
-/**
  * The LL_ATTRIBUTE_URI_PROHIBITS string can be passed to the
  * #ll_get_attribute function to obtain a list of the rights prohibited
  * by a license.  The #ll_get_prohibits function does this very
