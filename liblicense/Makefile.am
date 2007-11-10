@@ -49,4 +49,5 @@ liblicense_la_SOURCES = \
 	write_license.c \
 	$(licenses)
 
+noinst_HEADERS = modules.h
 include_HEADERS = liblicense.h

@@ -37,6 +37,11 @@
 #include "config.h"
 #endif
 
+#include "modules.h"
+
+const char *liblicense_io_module_dir;
+const char *liblicense_config_module_dir;
+
 LLModuleDesc **_ll_module_list = NULL;
 
 int _ll_so_filter(const struct dirent * d) {
@@ -49,11 +54,14 @@ void ll_init_modules() {
 	LLModuleDesc **curr_module;
 	int i;
 
+	liblicense_io_module_dir = getenv("LL_IO_MODULE_DIR");
+	if (liblicense_io_module_dir == NULL)
+		liblicense_io_module_dir = LIBLICENSE_IO_MODULE_DIR;
 	if (_ll_module_list) return;
-	n = scandir(LIBLICENSE_IO_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
+	n = scandir(liblicense_io_module_dir , &namelist, _ll_so_filter, alphasort);
 	if (n==-1) {
 		fprintf(stderr, "scandir(\"%s\"): %s\n",
-                        LIBLICENSE_IO_MODULE_DIR, strerror(errno));
+                        liblicense_io_module_dir, strerror(errno));
 		return;
 	}
 
@@ -61,11 +69,11 @@ void ll_init_modules() {
 	curr_module = _ll_module_list;
 
 	for (i=0;i<n;++i) {
-		char reg_file[strlen(LIBLICENSE_IO_MODULE_DIR)+strlen(namelist[i]->d_name)+1];
+		char reg_file[strlen(liblicense_io_module_dir)+strlen(namelist[i]->d_name)+1];
 		void *handle;
 
 		reg_file[0]='\0';
-		strcat(reg_file,LIBLICENSE_IO_MODULE_DIR);
+		strcat(reg_file,liblicense_io_module_dir);
 		strcat(reg_file,namelist[i]->d_name);
 
 		handle = dlopen(reg_file,RTLD_LAZY);
@@ -91,12 +99,14 @@ void ll_init_modules() {
 
 void ll_stop_modules() {
 	LLModuleDesc **curr_module = _ll_module_list;
-	while (*curr_module) {
-		dlclose((*curr_module)->handle);
-		++curr_module;
+	if( curr_module ) {
+		while (*curr_module) {
+			dlclose((*curr_module)->handle);
+			++curr_module;
+		}
+		free(_ll_module_list);
+		_ll_module_list = NULL;
 	}
-	free(_ll_module_list);
-	_ll_module_list = NULL;
 }
 
 ll_module_t* ll_get_config_modules() {
@@ -105,9 +115,13 @@ ll_module_t* ll_get_config_modules() {
   ll_module_t* result;
   int i;
 
-  n = scandir(LIBLICENSE_CONFIG_MODULE_DIR , &namelist, _ll_so_filter, alphasort);
+  liblicense_config_module_dir = getenv("LL_CONFIG_MODULE_DIR");
+  if (liblicense_config_module_dir == NULL)
+	  liblicense_config_module_dir = LIBLICENSE_CONFIG_MODULE_DIR;
+
+  n = scandir(liblicense_config_module_dir, &namelist, _ll_so_filter, alphasort);
   if (n==-1) {
-  	fprintf(stderr, "scandir(\"%s\"): %s", LIBLICENSE_CONFIG_MODULE_DIR,
+	  fprintf(stderr, "scandir(\"%s\"): %s", liblicense_config_module_dir,
             strerror(errno));
   	return ll_new_list(0);
   }

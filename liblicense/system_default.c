@@ -30,6 +30,8 @@
 #include "config.h"
 #endif
 
+#include "modules.h"
+
 int
 ll_set_default (const ll_uri_t u)
 {
@@ -47,12 +49,12 @@ ll_license_default_set (const ll_uri_t u)
     {
       int (*set_default) (ll_uri_t);
 
-      ll_module_init (LIBLICENSE_CONFIG_MODULE_DIR, modules[i]);
+      ll_module_init (liblicense_config_module_dir, modules[i]);
       set_default =
-        ll_get_module_symbol (LIBLICENSE_CONFIG_MODULE_DIR, modules[i],
+        ll_get_module_symbol (liblicense_config_module_dir, modules[i],
                               "set_default");
       result = (result && set_default (u));
-      ll_module_shutdown (LIBLICENSE_CONFIG_MODULE_DIR, modules[i]);
+      ll_module_shutdown (liblicense_config_module_dir, modules[i]);
       i++;
     }
   ll_free_list (modules);
@@ -81,12 +83,12 @@ ll_license_default_get ()
     {
       ll_uri_t (*get_default) (void);
 
-      ll_module_init (LIBLICENSE_CONFIG_MODULE_DIR, modules[i]);
+      ll_module_init (liblicense_config_module_dir, modules[i]);
       get_default =
-        ll_get_module_symbol (LIBLICENSE_CONFIG_MODULE_DIR, modules[i],
+        ll_get_module_symbol (liblicense_config_module_dir, modules[i],
                               "get_default");
       responses[i] = get_default ();
-      ll_module_shutdown (LIBLICENSE_CONFIG_MODULE_DIR, modules[i]);
+      ll_module_shutdown (liblicense_config_module_dir, modules[i]);
       i++;
     }
   final_answer = ll_list_mode (responses, "");

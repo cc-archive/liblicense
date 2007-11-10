@@ -18,11 +18,22 @@
 # Copyright (C) 2007 Peter Miller
 
 AM_CFLAGS = -I$(top_builddir)/liblicense
+AM_LDFLAGS=-static
 
+THISDIR = $(shell pwd)
+
+DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
+
+TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/io/ \
+	 LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/config/
 TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
 
-check_PROGRAMS = $(TESTS)
-noinst_PROGRAMS = $(TESTS)
+modules:
+	mkdir -p _prefix
+	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
+
+
+check_PROGRAMS = modules $(TESTS)
 
 test_SOURCES = \
 	test.c
