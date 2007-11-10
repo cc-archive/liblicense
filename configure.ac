@@ -72,7 +72,15 @@ AC_ARG_ENABLE(python,
 if test "x$enable_python" = "xyes"; then
 	AM_CHECK_PYTHON_HEADERS
 	if test "x$PYTHON_INCLUDES" != "x"; then
-	  PYTHON_DIR=python
+		save_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$CPPFLAGS $PYTHON_INCLUDES"
+		AC_CHECK_HEADER([Python.h],
+			[PYTHON_DIR=python],
+			[enable_python="no (Python.h not found)"]
+			)
+		CPPFLAGS="$save_CPPFLAGS"
+	else
+		enable_python="no (Python not found)"
 	fi
 fi
 AC_SUBST(PYTHON_DIR)
