@@ -73,6 +73,7 @@ main (int argc, char **argv)
   while (result1[i] != NULL)
     printf ("\t\t%s\n", result1[i++]);
   printf ("\tget_all_licenses:\n");
+  ll_free_list (result1);
   result1 = ll_get_all_licenses ();
   i = 0;
   while (result1[i] != NULL)
@@ -83,6 +84,7 @@ main (int argc, char **argv)
   i = 0;
   while (result1[i] != NULL)
     printf ("\t\t%s\n", result1[i++]);
+  ll_free_list (result1);
 
   printf ("Test write_license:\n");
   printf ("\twrite: %d\n",
@@ -96,7 +98,11 @@ main (int argc, char **argv)
 #endif
 
   printf ("Test read_license:\n");
-  printf ("\tread: %s\n", ll_read ("license_me.txt"));
+  {
+	  ll_uri_t uri = ll_read ("license_me.txt");
+	  printf ("\tread: %s\n", uri);
+	  free( uri );
+  }
 #if 0
   printf ("\tmodule_read: %s\n",
           ll_module_read ("license_me.txt", ".libs/sidecar_xmp.so"));
@@ -105,7 +111,11 @@ main (int argc, char **argv)
   printf ("Test system_default:\n");
   printf ("\tlicense_default_set: %d\n",
           ll_license_default_set ("creativecommons.org/licenses/by/2.5/au/"));
-  printf ("\tget_default: %s\n", ll_license_default_get ());
+  {
+	  ll_uri_t license_default = ll_license_default_get ();
+	  printf ("\tget_default: %s\n", license_default);
+	  free(license_default);
+  }
 
   printf ("Test module_wrangler:");
   printf ("\tget_config_modules: skipped\n");
