@@ -20,7 +20,7 @@
 AM_CFLAGS = -I$(top_builddir)/liblicense
 AM_LDFLAGS=-static
 
-THISDIR = $(shell pwd)
+THISDIR = $(PWD)
 
 DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
 
