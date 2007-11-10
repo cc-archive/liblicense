@@ -23,6 +23,43 @@ AC_PREREQ(2.57)
 AC_INIT([liblicense],[0.4],[cc-devel@lists.ibiblio.org])
 AM_INIT_AUTOMAKE([dist-bzip2])
 
+dnl ---------------------------------------------------------------------------
+dnl Advanced information about versioning:
+dnl   * "Writing shared libraries" by Mike Hearn
+dnl         http://navi.cx/~mike/writing-shared-libraries.html
+dnl   * libtool.info chapter "Versioning"
+dnl   * libtool.info chapter "Updating library version information"
+dnl ---------------------------------------------------------------------------
+dnl Versioning:
+dnl  - CURRENT (Major):  Increment if the interface has changes. AGE is always
+dnl                      *changed* at the same time.
+dnl  - AGE (Micro):      Increment if any interfaces have been added; set to 0
+dnl                      if any interfaces have been removed. Removal has
+dnl                      precedence over adding, so set to 0 if both happened.
+dnl                      It denotes upward compatibility.
+dnl  - REVISION (Minor): Increment any time the source changes; set to
+dnl                      0 if you incremented CURRENT.
+dnl
+dnl  To summarize. Any interface *change* increment CURRENT. If that interface
+dnl  change does not break upward compatibility (ie it is an addition),
+dnl  increment AGE, Otherwise AGE is reset to 0. If CURRENT has changed,
+dnl  REVISION is set to 0, otherwise REVISION is incremented.
+dnl ---------------------------------------------------------------------------
+dnl TRUNK post-0.4 is the revision 1.0.0
+AC_SUBST([LIBLICENSE_REVISION], [0])
+AC_SUBST([LIBLICENSE_AGE],      [0])
+AC_SUBST([LIBLICENSE_CURRENT],  [1])
+AC_SUBST([LIBLICENSE_CURRENT_MIN],
+         [`expr $LIBLICENSE_CURRENT - $LIBLICENSE_AGE`])
+AC_SUBST([LIBLICENSE_VERSION_INFO],
+         [$LIBLICENSE_CURRENT:$LIBLICENSE_REVISION:$LIBLICENSE_AGE])
+
+dnl the major version. used for package names, etc
+LIBLICENSE_MAJOR_VERSION=1.0
+AC_SUBST(LIBLICENSE_MAJOR_VERSION)
+LIBLICENSE_INCLUDE_BASE=liblicense-$LIBLICENSE_MAJOR_VERSION
+AC_SUBST(LIBLICENSE_INCLUDE_BASE)
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -282,8 +319,8 @@ test "$have_sqlite" = "yes" && AC_DEFINE(HAVE_SQLITE, [], [Define if we have sql
 AS_AC_EXPAND(DATADIR, $datadir)
 AS_AC_EXPAND(LIBDIR, $libdir)
 AC_DEFINE_UNQUOTED([LICENSE_DIR],["${DATADIR}/liblicense/licenses/"],[Location of license rdf files.])
-AC_DEFINE_UNQUOTED(LIBLICENSE_IO_MODULE_DIR,"${LIBDIR}/liblicense/io/",[Location of liblicense io modules.])
-AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/config/"],[Location of liblicense config modules.])
+AC_DEFINE_UNQUOTED(LIBLICENSE_IO_MODULE_DIR,"${LIBDIR}/liblicense/${VERSION}/io/",[Location of liblicense io modules.])
+AC_DEFINE_UNQUOTED([LIBLICENSE_CONFIG_MODULE_DIR],["${LIBDIR}/liblicense/${VERSION}/config/"],[Location of liblicense config modules.])
 
 USE_NLS=yes
 AC_CHECK_PROGS(GMSGFMT, gmsgfmt msgfmt, gmsgfmt)

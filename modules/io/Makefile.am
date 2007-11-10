@@ -85,7 +85,7 @@ endif
 
 AM_CPPFLAGS = -I$(top_builddir)/liblicense
 
-libdir = @libdir@/liblicense/io
+libdir = @libdir@/liblicense/@VERSION@/io
 lib_LTLIBRARIES = \
 	$(EXEMPI_MODULES) \
 	$(ID3LIB_MODULES) \

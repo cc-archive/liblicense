@@ -20,6 +20,8 @@ SUBDIRS = .
 
 lib_LTLIBRARIES = liblicense.la
 
+liblicense_la_LDFLAGS = -version-info @LIBLICENSE_VERSION_INFO@
+
 liblicense_la_CFLAGS = $(RAPTOR_CFLAGS)
 liblicense_la_LIBADD = $(RAPTOR_LIBS) \
 					   $(top_builddir)/xdgmime/libxdgmime.la \
@@ -50,4 +52,6 @@ liblicense_la_SOURCES = \
 	$(licenses)
 
 noinst_HEADERS = modules.h
-include_HEADERS = liblicense.h
+
+liblicensedir=$(includedir)/@LIBLICENSE_INCLUDE_BASE@
+liblicense_HEADERS = liblicense.h
