@@ -31,12 +31,12 @@ void id3_init()
 
 char* id3_read( const char* filename )
 {
+	char *buffer = NULL;
+	ID3Frame *frame;
 	ID3Tag *tag = ID3Tag_New();
 	ID3Tag_Link(tag,filename);
 
-	char *buffer = NULL;
-
-	ID3Frame *frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
+	frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
 	if (frame) {
 		ID3Field *field = ID3Frame_GetField(frame,ID3FN_URL);
 
@@ -50,18 +50,21 @@ char* id3_read( const char* filename )
 
 int id3_write( const char* filename, const char* uri )
 {
+	int err;
+	ID3Frame *frame;
 	ID3Tag *tag = ID3Tag_New();
 	ID3Tag_Link(tag,filename);
 
-	ID3Frame *frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
+	frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
 
 	if ( uri ) {
+		ID3Field * field;
 		if (!frame) {
 			frame = ID3Frame_NewID(ID3FID_WWWCOPYRIGHT);
 			ID3Tag_AttachFrame(tag, frame);
 		}
 	
-		ID3Field *field = ID3Frame_GetField(frame, ID3FN_URL);
+		field = ID3Frame_GetField(frame, ID3FN_URL);
 		ID3Field_SetASCII(field, uri);
 	} else {
 		if (frame) {
@@ -69,7 +72,7 @@ int id3_write( const char* filename, const char* uri )
 		}
 	}
 
-	int err = !ID3Tag_Update(tag);
+	err = !ID3Tag_Update(tag);
 
 	ID3Tag_Delete(tag);
 	return err;

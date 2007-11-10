@@ -849,11 +849,11 @@ typedef enum ll_features ll_features;
 
 struct _LLModuleDesc
 {
-  char *name;
-  char *description;
-  char *version;
+  const char *name;
+  const char *description;
+  const char *version;
   int features;
-  char *mime_types;
+  const char *mime_types;
   LLModuleInitFunc module_init;
   LLModuleReadFunc read;
   LLModuleWriteFunc write;

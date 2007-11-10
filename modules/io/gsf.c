@@ -68,13 +68,14 @@ char* gsf_read( const char* filename )
 
 	stream = gsf_infile_child_by_name (infile, "\05DocumentSummaryInformation");
 	if (stream) {
+		GsfDocProp * prop;
 		md = gsf_doc_meta_data_new();
 	
 		if (gsf_msole_metadata_read (stream, md)) {
 			return NULL;
 		}
 
-		GsfDocProp *prop = gsf_doc_meta_data_lookup(md,"CreativeCommons_LicenseURL");
+		prop = gsf_doc_meta_data_lookup(md,"CreativeCommons_LicenseURL");
 		if (prop) {
 			license = g_value_dup_string(gsf_doc_prop_get_val(prop));
 		}

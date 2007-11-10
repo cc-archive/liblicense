@@ -67,13 +67,13 @@ int _ll_rdf_filter(const struct dirent * d) {
 	return strstr(d->d_name,".rdf")!=NULL;
 }
 char* _ll_cache_time_filename() {
+    struct stat sb;
 	char* home = getenv("HOME");
     char* path = (char*) calloc((strlen(home)+strlen("/.license/last_cache.time")+1),sizeof(char));
     path[0] = '\0';
     strcat(path,home);
     strcat(path,"/.license/");
     /* make directory as needed*/
-    struct stat sb;
     if (stat(path, &sb) == -1) {
         if (mkdir(path,(S_IRWXU | S_IRGRP | S_IROTH))==-1) {
             fprintf(stderr,"Failed to make directory.\n");
@@ -87,29 +87,32 @@ char* _ll_cache_time_filename() {
     return path;
 }
 int _ll_last_cache_time() {
+	FILE* file;
+    char tmp[15] = "";
+	time_t t;
 	char* path = _ll_cache_time_filename();
 	if (path == NULL) {
         free(path);
         return 0;
     }
-    FILE* file = fopen(path,"r");
+    file = fopen(path,"r");
     free(path);
     if (file==NULL)
         return 0;
-    char tmp[15] = "";
     fgets(tmp,15,file);
     fclose(file);
-    time_t t = (time_t) atoi(tmp);
+    t = (time_t) atoi(tmp);
     return t;
 }
 
 int _ll_update_cache_time() {
+	FILE* file;
 	char* path = _ll_cache_time_filename();
 	if (path == NULL) {
         free(path);
         return false;
     }
-    FILE* file = fopen(path,"w");
+    file = fopen(path,"w");
     free(path);
     fprintf(file,"%d",(int) time(NULL));
     fclose(file);
@@ -117,6 +120,10 @@ int _ll_update_cache_time() {
 }
 
 int ll_update_cache() {
+	int i;
+	int n;
+	time_t last_cache;
+	struct dirent **namelist;
 	/* check last update time versus license file update */
 
 	/* create table if it doesn't exist. */
@@ -127,10 +134,8 @@ int ll_update_cache() {
 		return false;
 	}
 	/* insert newly modified files */
-	struct dirent **namelist;
-	int n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
-	int i;
-	time_t last_cache = _ll_last_cache_time();
+	n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
+	last_cache = _ll_last_cache_time();
 	for (i=0;i<n;++i) {
 		ll_uri_t u = ll_filename_to_uri(namelist[i]->d_name);
 		ll_filename_t fn = ll_uri_to_filename(u);
@@ -143,12 +148,12 @@ int ll_update_cache() {
 			continue;
 		}
 		if (fileinfo.st_mtime>last_cache) {
+			char* query;
 			/* Get data */
 			ll_juris_t j = ll_get_jurisdiction(u);
 			ll_uri_t *successor = ll_get_attribute(u, LL_ATTRIBUTE_URI_REPLACED_BY,0);
 			int obsolete = ll_list_length(successor);
 			ll_free_list(successor);
-			char* query;
 			/* build insert query */
 			if (j!=NULL){
 				size_t buf_size = sizeof(char)*(strlen("INSERT INTO licenses VALUES ('','',)")+strlen(u)+strlen(j)+2);
@@ -172,17 +177,20 @@ int ll_update_cache() {
 }
 // initializes the library and its dependencies.
 int ll_init() {
+	char* home;
+	char* path;
+    struct stat sb;
+
 	raptor_init();
 	setlocale(LC_ALL,"");
 
 	/* get the filename for the cache */
-	char* home = getenv("HOME");
-    char* path = (char*) calloc((strlen(home)+strlen("/.license/license_cache.db")+1),sizeof(char));
+	home = getenv("HOME");
+    path = (char*) calloc((strlen(home)+strlen("/.license/license_cache.db")+1),sizeof(char));
     path[0] = '\0';
     strcat(path,home);
     strcat(path,"/.license/");
     /* make directory as needed*/
-    struct stat sb;
     if (stat(path, &sb) == -1) {
         if (mkdir(path,(S_IRWXU | S_IRGRP | S_IROTH))==-1) {
             fprintf(stderr,"Failed to make directory.\n");
@@ -218,9 +226,11 @@ ll_uri_t* ll_get_all_licenses() {
 // returns a null-terminated list of all general licenses in a family.
 ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 	ll_juris_t j = _j;
-	if (j && strcmp(j,"unported") == 0) j = NULL;
-
+	ll_uri_t* result;
 	char* query;
+	if (j && strcmp(j,"unported") == 0) 
+		j = NULL;
+
 	if (j!=NULL){
 		size_t buf_size = sizeof(char)*(strlen("SELECT uri FROM licenses WHERE jurisdiction='' AND obsolete=0 LIMIT 15")+strlen(j)+1);
 		query = (char*) malloc(buf_size);
@@ -228,7 +238,7 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 	} else {
 		query = strdup("SELECT uri FROM licenses WHERE jurisdiction ISNULL AND obsolete=0 LIMIT 15");
 	}
-	ll_uri_t* result = _ll_query(query,15);
+	result = _ll_query(query,15);
 	free(query);
   	return result;
 }

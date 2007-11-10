@@ -19,6 +19,9 @@
 
 #include "license.h"
 
+/* this is a crazy hack to make parameter as unused */
+#define NO_WARN_UNUSED(x) (void)( x )
+
 VALUE cLiblicense;
 
 /*
@@ -60,7 +63,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 			license->version = rb_ary_push(license->version, INT2NUM(v[i]));
 		}
 	} else {
-		license->version = NULL;
+		license->version = 0;
 	}
 
 	/* Permits */
@@ -217,6 +220,8 @@ static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
 	ll_uri_t *l;
 	int i;
 
+	NO_WARN_UNUSED( klass );
+
 	rb_scan_args(argc, argv, "01", &juris);
 
 	if (juris != Qnil)
@@ -243,6 +248,7 @@ static VALUE rbll_licenses_get(int argc, VALUE *argv, VALUE klass) {
  */
 static VALUE rbll_verify(VALUE self, VALUE uri) {
 
+	NO_WARN_UNUSED( self );
 	if (ll_verify_uri(StringValueCStr(uri)))
 		return Qtrue;
 	else
@@ -257,6 +263,7 @@ static VALUE rbll_verify(VALUE self, VALUE uri) {
  */
 static VALUE rbll_modules(VALUE self) {
 
+	NO_WARN_UNUSED( self );
 	ll_print_module_info();
 
 	return Qnil;
@@ -273,6 +280,7 @@ static VALUE rbll_modules_config(VALUE self) {
 	VALUE modules;
 	int i;
 
+	NO_WARN_UNUSED( self );
 	modules = rb_ary_new();
 	i = 0;
 	while (m != NULL && m[i] != NULL) {
@@ -295,6 +303,7 @@ static VALUE rbll_modules_io(VALUE self) {
 	VALUE modules;
 	int i;
 
+	NO_WARN_UNUSED( self );
 	modules = rb_ary_new();
 	i = 0;
 	while (m != NULL && m[i] != NULL) {
