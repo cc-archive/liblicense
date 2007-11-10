@@ -140,7 +140,7 @@ char* sidecar_xmp_read( const char* filename )
 			free(buffer);
 			uri_string = NULL;
 			license_uri = xmp_string_new();
-			if ( xmp_get_property(xmp, NS_CC, "license", license_uri) ) {
+			if ( xmp_get_property(xmp, NS_CC, "license", license_uri, NULL) ) {
 				uri_string = strdup(xmp_string_cstr(license_uri));
 			}
 
@@ -185,7 +185,7 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 		uri = "";
 	}
 
-	xmp_set_property(xmp, NS_CC, "license", uri);
+	xmp_set_property(xmp, NS_CC, "license", uri, 0);
 
 	xmp_string = xmp_string_new();
 	xmp_serialize(xmp,xmp_string,XMP_SERIAL_OMITPACKETWRAPPER,2);

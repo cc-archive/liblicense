@@ -142,7 +142,7 @@ test "$have_libxml2" = "yes" && AC_DEFINE(HAVE_LIBXML2, [], [Define if we have l
 # check for exempi
 ##################################################################
 
-EXEMPI_REQUIRED=1.99.3
+EXEMPI_REQUIRED=1.99.5
 
 AC_ARG_ENABLE(xmp, AC_HELP_STRING([--disable-xmp], [Disable XMP extraction]),,[enable_xmp=yes])
 if test "x$enable_xmp" = "xyes"; then
