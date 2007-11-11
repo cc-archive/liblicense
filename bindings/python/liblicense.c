@@ -20,7 +20,7 @@
 
 #include <Python.h>
 
-#include <liblicense.h>
+#include "liblicense.h"
 
 static PyObject *
 py_get_jurisdiction (PyObject *self, PyObject *args)

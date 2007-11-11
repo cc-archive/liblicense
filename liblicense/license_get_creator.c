@@ -18,7 +18,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
-#include <liblicense/liblicense.h>
+#include "liblicense.h"
 
 
 const char LL_ATTRIBUTE_CREATOR[] =

@@ -25,7 +25,7 @@
 #include <string.h>
 #include <assert.h>
 
-#include "xdgmime/xdgmime.h"
+#include "xdgmime.h"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

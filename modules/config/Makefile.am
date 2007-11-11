@@ -15,6 +15,8 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
+INCLUDES=-I$(top_srcdir)/liblicense
+
 libdir = @libdir@/liblicense/@VERSION@/config
 lib_LTLIBRARIES = \
 	flat_file.la

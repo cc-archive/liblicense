@@ -18,6 +18,8 @@
 
 SUBDIRS = .
 
+INCLUDES = -I$(srcdir) -I$(top_srcdir)/xdgmime
+
 lib_LTLIBRARIES = liblicense.la
 
 liblicense_la_LDFLAGS = -version-info @LIBLICENSE_VERSION_INFO@

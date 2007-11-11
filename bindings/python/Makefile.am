@@ -15,6 +15,8 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
+INCLUDES=-I$(top_srcdir)/liblicense
+
 pkgpyexec_LTLIBRARIES = liblicense.la
 pkgpython_PYTHON = __init__.py
 AM_CPPFLAGS = $(PYTHON_INCLUDES) -I$(top_builddir)/liblicense

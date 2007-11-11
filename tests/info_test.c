@@ -18,7 +18,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
-#include <liblicense/liblicense.h>
+#include "liblicense.h"
 
 #include <stdlib.h>
 #include <stdio.h>

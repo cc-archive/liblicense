@@ -17,7 +17,7 @@
 # Copyright 2007, Jason Kivlighn.
 # Copyright (C) 2007 Peter Miller
 
-AM_CFLAGS = -I$(top_builddir)/liblicense
+AM_CFLAGS = -I$(top_srcdir)/liblicense
 AM_LDFLAGS=-static
 
 THISDIR = $(PWD)

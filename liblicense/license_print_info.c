@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <liblicense/liblicense.h>
+#include "liblicense.h"
 
 
 void

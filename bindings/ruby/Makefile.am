@@ -17,6 +17,8 @@
 
 #rb_LTLIBRARIES = liblicense.la
 
+INCLUDES=-I$(top_srcdir)/liblicense
+
 AM_CPPFLAGS = $(RUBY_CFLAGS)
 AM_LDFLAGS = $(RUBY_LDFLAGS) \
              $(RUBY_LIBS)    \

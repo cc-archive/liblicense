@@ -15,6 +15,9 @@
 # Copyright 2007, Creative Commons, www.creativecommons.org.
 # Copyright 2007, Jason Kivlighn.
 
+
+INCLUDES=-I$(top_srcdir)/liblicense
+
 if HAVE_EXEMPI
 EXEMPI_MODULES = exempi.la sidecar_xmp.la
 

@@ -17,6 +17,8 @@
 # Copyright 2007, Jason Kivlighn.
 
 
+INCLUDES = -I$(top_srcdir)/liblicense
+
 UTILS = license
 
 bin_PROGRAMS = $(UTILS)

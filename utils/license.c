@@ -18,11 +18,11 @@
  * Copyright (C) 2007 Peter Miller
  */
 
-#include <liblicense/liblicense.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <getopt.h>
+#include "liblicense.h"
 static int verbose_flag;
 static int set_flag;
 static int remove_flag;
