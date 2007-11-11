@@ -28,12 +28,12 @@ TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VE
 	 LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/
 TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
 
-modules:
+all-local:
 	mkdir -p _prefix
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
 
 
-check_PROGRAMS = modules $(TESTS)
+check_PROGRAMS = $(TESTS)
 
 test_SOURCES = \
 	test.c
