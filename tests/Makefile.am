@@ -32,6 +32,9 @@ all-local:
 	mkdir -p _prefix
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
 
+clean-local:
+	rm -fr _prefix
+	rm -f license_me.xmp
 
 check_PROGRAMS = $(TESTS)
 
