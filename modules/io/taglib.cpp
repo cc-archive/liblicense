@@ -15,6 +15,8 @@
 // Copyright 2007, Creative Commons, www.creativecommons.org.
 // Copyright 2007, Jason Kivlighn.
 
+#include <string.h>
+
 #include <liblicense.h>
 
 #include <fileref.h>
