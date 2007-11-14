@@ -857,6 +857,7 @@ struct _LLModuleDesc
   LLModuleInitFunc module_init;
   LLModuleReadFunc read;
   LLModuleWriteFunc write;
+  LLModuleShutdownFunc module_shutdown;
   void *handle;
 };
 
@@ -866,7 +867,7 @@ struct _LLModuleDesc
 #define LL_MODULE_EXPORT
 #endif
 
-#define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write)  \
+#define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write,shutdown)	\
 LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {        \
 name,                                                   \
 description,                                            \
@@ -876,6 +877,7 @@ mime_types,                                             \
 init,                                                   \
 read,                                                   \
 write,                                                  \
+shutdown ,                                              \
 0                                                       \
 };
 

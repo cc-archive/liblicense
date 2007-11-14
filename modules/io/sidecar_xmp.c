@@ -122,6 +122,11 @@ void sidecar_xmp_init()
 	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
+void sidecar_xmp_shutdown()
+{
+	xmp_terminate();
+}
+
 char* sidecar_xmp_read( const char* filename )
 {
 	char *sidecar = sidecar_filename( filename );
@@ -210,4 +215,4 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 LL_MODULE_DEFINE("sidecar_xmp.so","Write licenses in sidecar XMP files.","0.1",
   LL_FEATURES_NONE,
   NULL,
-  sidecar_xmp_init,sidecar_xmp_read,sidecar_xmp_write);
+  sidecar_xmp_init,sidecar_xmp_read,sidecar_xmp_write,sidecar_xmp_shutdown);

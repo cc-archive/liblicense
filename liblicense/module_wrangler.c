@@ -101,6 +101,8 @@ void ll_stop_modules() {
 	LLModuleDesc **curr_module = _ll_module_list;
 	if( curr_module ) {
 		while (*curr_module) {
+			if((*curr_module)->module_shutdown != NULL)
+				(*curr_module)->module_shutdown();
 			dlclose((*curr_module)->handle);
 			++curr_module;
 		}
