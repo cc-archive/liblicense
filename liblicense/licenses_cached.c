@@ -123,7 +123,7 @@ int ll_update_cache() {
 	int i;
 	int n;
 	time_t last_cache;
-	struct dirent **namelist;
+	struct dirent **namelist = NULL;
 	/* check last update time versus license file update */
 
 	/* create table if it doesn't exist. */
@@ -206,6 +206,7 @@ int ll_init() {
 	if (!ll_update_cache())
 	    printf("Failed to update cache.");
 	ll_init_modules();
+	free(path);
 	return 0;
 }
 
