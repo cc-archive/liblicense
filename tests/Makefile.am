@@ -25,7 +25,7 @@ THISDIR = $(PWD)
 DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
 
 TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
-	 LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/
+	 LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ valgrind
 TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
 
 all-local:
