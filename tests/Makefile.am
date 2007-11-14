@@ -25,12 +25,15 @@ THISDIR = $(PWD)
 DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
 
 TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
-	 LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ @VALGRIND@
+	LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ \
+	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
+	@VALGRIND@
 TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
 
 all-local:
 	mkdir -p _prefix
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
+	(cd $(top_builddir)/licenses ; DESTDIR=$(THISDIR)/_prefix make install)
 
 clean-local:
 	rm -fr _prefix

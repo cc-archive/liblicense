@@ -34,6 +34,8 @@
 #include "config.h"
 #endif
 
+const char * liblicense_license_dir = NULL;
+
 sqlite3 *db;
 
 int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
@@ -58,6 +60,7 @@ ll_uri_t* _ll_query(char* query, int max) {
 	int rc = sqlite3_exec(db, query, _ll_sql_callback, values, &zErrMsg);
 	if (rc!=SQLITE_OK) {
 		printf("Query \"%s\" failed: %s\n",query,zErrMsg);
+		ll_free_list(values);
 		return NULL;
 	}
 	return values;
@@ -134,7 +137,7 @@ int ll_update_cache() {
 		return false;
 	}
 	/* insert newly modified files */
-	n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
+	n = scandir(liblicense_license_dir, &namelist, _ll_rdf_filter, alphasort);
 	last_cache = _ll_last_cache_time();
 	for (i=0;i<n;++i) {
 		ll_uri_t u = ll_filename_to_uri(namelist[i]->d_name);
@@ -149,6 +152,7 @@ int ll_update_cache() {
 		}
 		if (fileinfo.st_mtime>last_cache) {
 			char* query;
+			ll_uri_t* list;
 			/* Get data */
 			ll_juris_t j = ll_get_jurisdiction(u);
 			ll_uri_t *successor = ll_get_attribute(u, LL_ATTRIBUTE_URI_REPLACED_BY,0);
@@ -164,7 +168,10 @@ int ll_update_cache() {
 				query = (char*) malloc(buf_size);
 				snprintf(query,buf_size,"INSERT INTO licenses VALUES ('%s',NULL,%d)",u,obsolete);
 			}
-			_ll_query(query,0);
+			list = _ll_query(query,0);
+			ll_free_list(list);
+			if(j!=NULL)
+				free(j);
 			free(query);
 		}
 		free(u);
@@ -175,6 +182,7 @@ int ll_update_cache() {
 	_ll_update_cache_time();
 	return true;
 }
+
 // initializes the library and its dependencies.
 int ll_init() {
 	char* home;
@@ -184,6 +192,10 @@ int ll_init() {
 	raptor_init();
 	setlocale(LC_ALL,"");
 
+	liblicense_license_dir = getenv("LL_LICENSE_DIR");
+	if(liblicense_license_dir == NULL) {
+		liblicense_license_dir = LICENSE_DIR;
+	}
 	/* get the filename for the cache */
 	home = getenv("HOME");
     path = (char*) calloc((strlen(home)+strlen("/.license/license_cache.db")+1),sizeof(char));

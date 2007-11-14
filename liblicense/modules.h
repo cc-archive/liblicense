@@ -23,6 +23,6 @@
 
 extern const char *liblicense_io_module_dir;
 extern const char *liblicense_config_module_dir;
-
+extern const char *liblicense_license_dir;
 
 #endif

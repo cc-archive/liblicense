@@ -36,6 +36,9 @@
 #include "config.h"
 #endif
 
+#include "modules.h"
+
+
 const char LL_RIGHTS_URI_ATTRIBUTION[] =
   "http://creativecommons.org/ns#Attribution";
 const char LL_RIGHTS_URI_REPRODUCTION[] =
@@ -286,7 +289,7 @@ ll_uri_to_filename (const ll_uri_t u)
 
   tmp_u = strdup (&u[7]);
   result =
-    (char *) malloc ((strlen (LICENSE_DIR) + strlen (tmp_u) + 4 + 1) *
+    (char *) malloc ((strlen (liblicense_license_dir) + strlen (tmp_u) + 4 + 1) *
                      sizeof (char));
   result[0] = '\0';
   i = 0;
@@ -296,7 +299,7 @@ ll_uri_to_filename (const ll_uri_t u)
         tmp_u[i] = '_';
       ++i;
     }
-  result = strcat (result, LICENSE_DIR);
+  result = strcat (result, liblicense_license_dir);
   result = strcat (result, tmp_u);
   result = strcat (result, ".rdf");
   free (tmp_u);

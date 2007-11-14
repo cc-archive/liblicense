@@ -34,6 +34,9 @@
 #include "config.h"
 #endif
 
+
+const char * liblicense_license_dir = NULL;
+
 /**
  * initializes the library and its dependencies.
  */
@@ -41,6 +44,10 @@ int ll_init() {
 	raptor_init();
 	setlocale(LC_ALL,"");
 	ll_init_modules();
+	liblicense_license_dir = getenv("LL_LICENSE_DIR");
+	if(liblicense_license_dir == NULL) {
+		liblicense_license_dir = LICENSE_DIR;
+	}
 	return 0;
 }
 
@@ -69,7 +76,7 @@ ll_uri_t* ll_get_all_licenses() {
   ll_uri_t* result;
   int i;
 
-  n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
+  n = scandir(liblicense_license_dir, &namelist, _ll_rdf_filter, alphasort);
   if(n == -1) {
 	  perror("ll_get_all_licenses");
 	  return NULL;
