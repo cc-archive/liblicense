@@ -322,6 +322,26 @@ AM_CONDITIONAL(HAVE_SQLITE, test "$have_sqlite" = "yes")
 test "$have_sqlite" = "yes" && AC_DEFINE(HAVE_SQLITE, [], [Define if we have sqlite3])
 
 ##################################################################
+# detect valgrind
+##################################################################
+AC_CHECK_PROG(VALGRIND, valgrind, valgrind)
+dnl don't need that YET
+dnl AC_CHECK_HEADERS(valgrind/memcheck.h)
+if test "x$VALGRIND" = "x"; then
+        AC_MSG_WARN([Valgrind is missing. make check will run without])
+fi
+if test "x$VALGRIND" != "x"; then
+dnl due to stupid m4 I had to double the [ and ] in the regexp
+        vg_ver=`valgrind --version | sed -e  's/.*-\([[0-9]]\)\.[[0-9]].*/\1/'`
+        VALGRIND="$VALGRIND --tool=memcheck --leak-check=yes --num-callers=10"
+        if test "$vg_ver" != "3" ; then
+           VALGRIND="$VALGRIND --logfile-fd=-1"
+        fi
+fi
+AC_SUBST(VALGRIND)
+
+
+##################################################################
 # define paths to licenses and modules
 ##################################################################
 AS_AC_EXPAND(DATADIR, $datadir)
