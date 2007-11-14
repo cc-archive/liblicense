@@ -75,6 +75,11 @@ main (int argc, char **argv)
   printf ("\tget_all_licenses:\n");
   ll_free_list (result1);
   result1 = ll_get_all_licenses ();
+  if(result1 == NULL) {
+	  printf("ERROR: ll_get_all_licenses() failed");
+	  ll_stop();
+	  return 1;
+  }
   i = 0;
   while (result1[i] != NULL)
     printf ("\t\t%s\n", result1[i++]);

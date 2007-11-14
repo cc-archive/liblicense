@@ -70,8 +70,11 @@ ll_uri_t* ll_get_all_licenses() {
   int i;
 
   n = scandir(LICENSE_DIR, &namelist, _ll_rdf_filter, alphasort);
-  result = (ll_uri_t*) malloc((n+1)*sizeof(ll_uri_t));
-  result[n]=NULL;
+  if(n == -1) {
+	  perror("ll_get_all_licenses");
+	  return NULL;
+  }
+  result = (ll_uri_t*)calloc(n+1, sizeof(ll_uri_t));
   for (i=0;i<n;++i) {
     result[i] = ll_filename_to_uri(namelist[i]->d_name);
     free(namelist[i]);
@@ -95,6 +98,9 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 	if (j && strcmp(j,"unported") == 0) j = NULL;
 
 	licenses = ll_get_all_licenses();
+	if(licenses == NULL) {
+		return NULL;
+	}
 	z = 0;
 	keep = 0;
 	while(licenses[z]!=NULL) {

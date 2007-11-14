@@ -239,7 +239,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 
         size = heap_size(num_attributes);
 
-        for ( license = licenses; *license; ++license ) {
+        for ( license = licenses; license && *license; ++license ) {
                 used_attrs = 0x0000;
 
                 attrs = ll_get_permits(*license);
