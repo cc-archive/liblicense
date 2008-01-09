@@ -148,6 +148,9 @@ if test "x$enable_warnings" = "xyes"; then
    AC_ADD_CFLAGS([-Wsign-compare])
    AC_ADD_CFLAGS([-Wshadow])
    AC_ADD_CFLAGS([-std=gnu89])
+   AC_ADD_CFLAGS([-pedantic])
+# Below is for dirent.h include
+   AC_ADD_CFLAGS([-D_SVID_SOURCE])
    AC_ADD_CFLAGS([-Wdeclaration-after-statement])
 fi
 
