@@ -350,8 +350,11 @@ _ll_triple_handler (void *user_data, const raptor_statement *triple)
            search_data->num_values < MAX_TRIPLES
           && (
             /* Any type or the given. */
+	      /* XXX: This comparison, if typecasted away, truncates
+		 the range of triple->object_type from a uint to an
+		 int, losing one bit of range. */
             search_data->type == -1
-            || search_data->type == (int) triple->object_type)
+            || search_data->type == triple->object_type)
           && (
             /* locale stuff */
             search_data->locale == NULL

@@ -11,7 +11,6 @@ Thanks to Hubert for a HUGE amount of work in this release:
 
 * Adds fixes for various, many segfaults (all NULL dereferences, I think)
 * Install licenses in a temporary directory
-* Support LL_LICENSE_DIR environment variable as an alternate license storage path
 * Uses LL_ namespace for constants
 * Add module_shutdown function for modules
 * Detect valgrind, and use it for 'make check' if it is present
@@ -37,10 +36,6 @@ From Peter:
 * Updates to .indent.pro with typenames we use
 * Add extern string constants for ATTRIBUTION, COMMERCIAL_USE, etc.
 
-From Asheesh:
-
-* Fix null pointer dereferences in the case that libexempi failed to open a file we asked for metadata from
-
 From Scott:
 
 * Change configure.ac to use msgfmt, not gmsgfmt, and add RPM .spec
@@ -50,9 +45,17 @@ From Jason, some of which is accepting patches by Peter:
 * Prefix all types with ll_
 * Hack around "unused argument" warnings in Python bindings, change magic zero padding at the end of the Python bindings
 * Improve code style in license_chooser.c
-* Typecast strlen return call to a SIGNED (FIXME) int to avoid a compile warning
+* Typecast strlen return call to a SIGNED int to avoid a compile warning
 * FIXME: The above code strlen()s too often.
 * typecasts to (int) in license_info.c - FIXME - are these sane?
 * Comment out unused variables in licenses_cached.c that caused unused variable warnings
 * Shortened variable names in modules/io/raptor.c
 * Add a note about Vorbis prototypes needing const correctness analysis in mdoules/io/vorbis.c - FIXME
+
+From Asheesh:
+
+* Fix null pointer dereferences in the case that libexempi failed to open a file we asked for metadata from
+* Support LL_LICENSE_DIR environment variable as an alternate license storage path
+* license_info.c: Redo the compile warning for license_info.c fix - use size_t as the storage field for the return from strlen
+* license_info.c: Stop calling strlen() repeatedly, turning O(n^2) search into O(N) 
+* license_info.c: Remove unsigned int warning fix because it truncates data; should be fixed in an API revision
