@@ -189,13 +189,13 @@ ll_get_version (const ll_uri_t u)
     _ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false));
   if (version)
     {
-      int c;
+      size_t c;
       int divisions;
       int position;
       ll_version_t result;
 
       divisions = 1;
-      for (c = 0; c < (int) strlen (version); ++c)
+      for (c = 0; c < strlen (version); ++c)
         {
           if (version[c] == '.')
             {
