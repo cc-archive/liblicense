@@ -51,7 +51,7 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
 		}
 		++curr_module;
 	}
-
+	
 	if (!embedded) {
 		curr_module = _ll_module_list;
 		while (*curr_module) {
@@ -66,6 +66,11 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
 
 	return result;
 }
+
+/**
+ * This function goes through the module list and writes the license
+ * with every module that works, returning the FIXME
+ */
 
 int ll_module_write(ll_filename_t f, ll_uri_t u, ll_module_t m) {
 	int result = -1;
