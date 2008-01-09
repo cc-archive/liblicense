@@ -194,8 +194,10 @@ ll_get_version (const ll_uri_t u)
       int position;
       ll_version_t result;
 
+      size_t version_length = strlen(version);
+
       divisions = 1;
-      for (c = 0; c < strlen (version); ++c)
+      for (c = 0; c < version_length; ++c)
         {
           if (version[c] == '.')
             {
