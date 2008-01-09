@@ -1,0 +1,58 @@
+liblicense 0.5: 
+
+Maintainer: Asheesh Laroia <asheesh@creativecommons.org>
+Contributors: Hubert Figuiere <hub@figuiere.net>
+              Nathan Yergler <nathan@creativecommons.org>
+              Peter Miller <millerp@canb.auug.org.au>
+              Scott Shawcroft <scott.shawcroft@gmail.com>
+              Jason Kivlighn <jkivlighn@gmail.com>
+
+Thanks to Hubert for a HUGE amount of work in this release:
+
+* Adds fixes for various, many segfaults (all NULL dereferences, I think)
+* Install licenses in a temporary directory
+* Support LL_LICENSE_DIR environment variable as an alternate license storage path
+* Uses LL_ namespace for constants
+* Add module_shutdown function for modules
+* Detect valgrind, and use it for 'make check' if it is present
+* Fix missing string.h include in modules/io/taglib.cpp
+* Support building out of tree
+* Install modules in an all-local Makefile target, and support clean-local
+* Detect Python in configure.ac and refuse to build Python module if its headers are missing
+* Automake cleanup: $(shell pwd) -> $(PWD)
+* Do shared object name versioning: This ABI/API is v. 1.0.0
+* Fix a memory leak in the tests
+* Allow 'make check' to run uninstalled
+* Fix compile warnings, including a crazy NO_WARN_UNUSED hack for the Ruby bindings
+* Ask configure.ac to require Exempi 1.99.5 and adjust exempi.c and sidecar_xmp.c for the new Exempi API
+
+From Nathan:
+
+* The RDF generation that was a one-off hack for liblicense is cleaned-up and now part of our infrastructure; as a result, liblicense gets its RDF files from an svn:externals.
+* In particular, the licenses have translated titles and no dc:type = License assertion.
+* (The above includes cleanups to gen_licenses.py, including translationg the license title and treating the RDF as RDF never as raw XML.)
+
+From Peter:
+
+* Updates to .indent.pro with typenames we use
+* Add extern string constants for ATTRIBUTION, COMMERCIAL_USE, etc.
+
+From Asheesh:
+
+* Fix null pointer dereferences in the case that libexempi failed to open a file we asked for metadata from
+
+From Scott:
+
+* Change configure.ac to use msgfmt, not gmsgfmt, and add RPM .spec
+
+From Jason, some of which is accepting patches by Peter:
+* Fix license_chooser.c to not export non-ll_* symbols
+* Prefix all types with ll_
+* Hack around "unused argument" warnings in Python bindings, change magic zero padding at the end of the Python bindings
+* Improve code style in license_chooser.c
+* Typecast strlen return call to a SIGNED (FIXME) int to avoid a compile warning
+* FIXME: The above code strlen()s too often.
+* typecasts to (int) in license_info.c - FIXME - are these sane?
+* Comment out unused variables in licenses_cached.c that caused unused variable warnings
+* Shortened variable names in modules/io/raptor.c
+* Add a note about Vorbis prototypes needing const correctness analysis in mdoules/io/vorbis.c - FIXME
