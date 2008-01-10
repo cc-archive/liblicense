@@ -55,7 +55,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	license->jurisdiction = rb_str_new2(j);
 
 	/* Version info */
-	v = ll_get_version(u);
+	v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false)));
 
 	if (v) {
 		license->version = rb_ary_new();

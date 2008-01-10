@@ -20,6 +20,7 @@
 
 #include "liblicense.h"
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
@@ -47,7 +48,7 @@ main (int argc, char **argv)
   free (result);
 
   printf ("\tget_version: ");
-  version = ll_get_version ("http://creativecommons.org/licenses/by-nd/2.0/");
+  version = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false)));
   if (version)
     {
       for (i = 1; i <= version[0]; ++i)

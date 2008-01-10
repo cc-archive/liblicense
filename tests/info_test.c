@@ -20,6 +20,7 @@
 
 #include "liblicense.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -42,7 +43,7 @@ int main(int argc,char** argv) {
 	printf("get_name: '%s'\n",name);
 	free(name);
 
-	version = ll_get_version(license);
+	version = ll_parse_version(ll_get_first (ll_get_attribute (license, LL_ATTRIBUTE_URI_VERSION, false)));
 	printf("get_version: ");
 	if (version) {
 		int i;

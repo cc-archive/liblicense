@@ -169,7 +169,7 @@ extern "C" {
  * Having read the license of a file, you want to know what conditions
  * it imposes.  There are several attributes liblicense exposes for this purpose.
  * We have already seen the LL_ATTRIBUTE_URI_NAME attribute.  The others to
- * use are #ll_get_version, #ll_get_jurisdiction, LL_ATTRIBUTE_URI_PERMITS,
+ * use are LL_ATTRIBUTE_URI_VERSION, #ll_get_jurisdiction, LL_ATTRIBUTE_URI_PERMITS,
  * LL_ATTRIBUTE_URI_REQUIRES, and LL_ATTRIBUTE_URI_PROHIBITS.
  *
  * \code
@@ -424,7 +424,7 @@ extern const char LL_ATTRIBUTE_URI_NAME[];
 /**
  * The LL_ATTRIBUTE_URI_VERSION string can be passed to the
  * #ll_get_attribute function to obtain a license's version.  The
- * #ll_get_version function does this very thing.
+ * LL_ATTRIBUTE_URI_VERSION function does this very thing.
  */
 extern const char LL_ATTRIBUTE_URI_VERSION[];
 

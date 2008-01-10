@@ -18,6 +18,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -20,6 +20,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,7 +47,7 @@ ll_license_print_info (ll_uri_t uri)
       free (string);
     }
 
-  version = ll_get_version (uri);
+  version = ll_parse_version(ll_get_first (ll_get_attribute (uri, LL_ATTRIBUTE_URI_VERSION, false)));
   printf ("Version: ");
   if (version)
     {

@@ -19,7 +19,7 @@
  */
 
 #include <Python.h>
-
+#include <stdbool.h>
 #include "liblicense.h"
 
 static PyObject *
@@ -68,7 +68,7 @@ py_get_version (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  v = ll_get_version (u);
+  v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false)));
   i = 1;
   list = PyList_New (0);
   while (v != NULL && i <= v[0])
