@@ -415,18 +415,6 @@ extern const char LL_ATTRIBUTE_URI_REPLACED_BY[];
 extern const char LL_ATTRIBUTE_URI_JURISDICTION[];
 
 /**
- * The ll_get_jurisdiction function is used to obtain the jurisdiction
- * code for the given license (the #LL_ATTRIBUTE_URI_JURISDICTION attribute).
- *
- * @param license_uri
- *     The URI of the license of interest
- * @returns
- *     a string containing the code of the jusrisdiction,
- *     or NULL on failure
- */
-ll_juris_t ll_get_jurisdiction (const ll_uri_t license_uri);
-
-/**
  * The LL_ATTRIBUTE_URI_NAME string can be passed to the
  * #ll_get_attribute function to obtain a license's name.  The
  * #ll_get_name function does this very thing.

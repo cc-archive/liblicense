@@ -162,14 +162,6 @@ ll_jurisdiction_name (const ll_juris_t juris)
 const char LL_ATTRIBUTE_URI_JURISDICTION[] =
   "http://creativecommons.org/ns#jurisdiction";
 
-ll_juris_t
-ll_get_jurisdiction (const ll_uri_t uri)
-{
-  return
-    _ll_get_first (ll_get_attribute (uri, LL_ATTRIBUTE_URI_JURISDICTION,
-                                     false));
-}
-
 const char LL_ATTRIBUTE_URI_NAME[] =
   "http://purl.org/dc/elements/1.1/title";
 
