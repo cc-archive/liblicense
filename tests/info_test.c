@@ -57,17 +57,17 @@ int main(int argc,char** argv) {
 		printf("unversioned\n");
 	}
 
-	p = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_PROHIBITS, false));
+	p = ll_get_attribute(license, LL_ATTRIBUTE_URI_PROHIBITS, false);
 	printf("get_prohibits: ");
 	ll_list_print(p);
 	ll_free_list(p);
 
-	p = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_PERMITS, false));
+	p = ll_get_attribute(license, LL_ATTRIBUTE_URI_PERMITS, false);
     printf("get_permits: ");
 	ll_list_print(p);
 	ll_free_list(p);
 
-	p = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_REQUIRES, false));
+	p = ll_get_attribute(license, LL_ATTRIBUTE_URI_REQUIRES, false);
 	printf("get_requires: ");
 	ll_list_print(p);
 	ll_free_list(p);

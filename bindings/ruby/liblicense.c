@@ -67,7 +67,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	}
 
 	/* Permits */
-	l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false));
+	l = ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false);
 	license->permits = rb_ary_new();
 
 	i = 0;
@@ -78,7 +78,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	ll_free_list(l);
 
 	/* Prohibits */
-	l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false));
+	l = ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false);
 	license->prohibits = rb_ary_new();
 
 	i = 0;
@@ -89,7 +89,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	ll_free_list(l);
 
 	/* Requires */
-	l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false));
+	l = ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false);
 	license->requires = rb_ary_new();
 
 	i = 0;

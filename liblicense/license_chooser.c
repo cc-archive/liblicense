@@ -240,10 +240,12 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 
         size = heap_size(num_attributes);
 
-        for ( license = licenses; license && *license; ++license ) {
+	license = licenses[0];
+	i = 0;
+	while (license) {
                 used_attrs = 0x0000;
+                attrs = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_PERMITS, false));
 
-                attrs = ll_get_first(ll_get_attribute(*license, LL_ATTRIBUTE_URI_PERMITS, false));
                 for (attr=attrs; *attr; ++attr) {
                         int attr_index = attribute_index(attributes,*attr,num_attributes);
                         if (attr_index == -1) continue;
@@ -256,7 +258,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
                 }
                 ll_free_list(attrs);
 
-                attrs = ll_get_first(ll_get_attribute(*license, LL_ATTRIBUTE_URI_REQUIRES, false));
+                attrs = ll_get_attribute(*license, LL_ATTRIBUTE_URI_REQUIRES, false);
                 for (attr=attrs; *attr; ++attr) {
                         int attr_index = attribute_index(attributes,*attr,num_attributes);
                         if (attr_index == -1) continue;
@@ -269,7 +271,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
                 }
                 ll_free_list(attrs);
 
-                attrs = ll_get_first(ll_get_attribute(*license, LL_ATTRIBUTE_URI_PROHIBITS, false));
+                attrs = ll_get_attribute(*license, LL_ATTRIBUTE_URI_PROHIBITS, false);
                 for (attr=attrs; *attr; ++attr) {
                         int attr_index = attribute_index(attributes,*attr,num_attributes);
                         if (attr_index == -1) continue;
@@ -305,6 +307,10 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
                         }
                         license_hits[i] = 0;
                 }
+
+	  i += 1;
+	  license = licenses[i];
+
         }
 
         chooser->all_licenses = licenses;

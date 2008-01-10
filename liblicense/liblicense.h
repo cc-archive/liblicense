@@ -213,7 +213,7 @@ extern "C" {
  *
  *     printf ("Rights:\n");
  *
- *     attrs = ll_get_permits (uri);
+ *     attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_REQUIRES, false);
  *     if (*attrs)
  *       {
  *         printf ("   Permits:\n");
@@ -224,7 +224,7 @@ extern "C" {
  *       }
  *     ll_free_list (attrs);
  *
- *     attrs = ll_get_requires (uri);
+ *     attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_REQUIRES, false);
  *     if (*attrs)
  *       {
  *         printf ("   Requires:\n");
@@ -235,7 +235,7 @@ extern "C" {
  *       }
  *     ll_free_list (attrs);
  *
- *     attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_PROHIBITS, false));
+ *     attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_PROHIBITS, false);
  *     if (*attrs)
  *       {
  *         printf ("   Prohibits:\n");

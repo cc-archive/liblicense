@@ -92,7 +92,7 @@ py_get_permits (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false));
+  l = ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false);
   i = 0;
   list = PyList_New (0);
   while (l != NULL && l[i] != NULL)
@@ -116,7 +116,7 @@ py_get_prohibits (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false));
+  l = ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false);
   i = 0;
   list = PyList_New (0);
   while (l != NULL && l[i] != NULL)
@@ -140,7 +140,7 @@ py_get_requires (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false));
+  l = ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false);
   i = 0;
   list = PyList_New (0);
   while (l != NULL && l[i] != NULL)
