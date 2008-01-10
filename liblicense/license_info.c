@@ -169,19 +169,17 @@ const char LL_ATTRIBUTE_URI_VERSION[] =
   "http://purl.org/dc/terms/hasVersion";
 
 ll_version_t
-ll_get_version (const ll_uri_t u)
+ll_parse_version (const char * version)
 {
-  char *version =
-    _ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false));
   if (version)
     {
       size_t c;
       int divisions;
       int position;
       ll_version_t result;
-
+      
       size_t version_length = strlen(version);
-
+      
       divisions = 1;
       for (c = 0; c < version_length; ++c)
         {
@@ -190,7 +188,7 @@ ll_get_version (const ll_uri_t u)
               ++divisions;
             }
         }
-
+      
       c = 0;
       position = 1;
       result = (ll_version_t) calloc (divisions + 1, sizeof (int));
@@ -225,6 +223,9 @@ ll_get_prohibits (const ll_uri_t u)
 
 const char  LL_ATTRIBUTE_URI_PERMITS[] =
   "http://creativecommons.org/ns#permits";
+
+const char LL_ATTRIBUTE_CREATOR[] =
+  "http://purl.org/dc/elements/1.1/creator";
 
 char **
 ll_get_permits (const ll_uri_t u)
