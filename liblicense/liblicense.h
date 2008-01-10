@@ -477,18 +477,6 @@ extern const char LL_ATTRIBUTE_URI_PERMITS[];
 extern const char LL_ATTRIBUTE_URI_REQUIRES[];
 
 /**
- * The ll_get_requires function is used to determine the attributes
- * required by a license (the #LL_ATTRIBUTE_URI_REQUIRES attribute).
- *
- * @param license_uri
- *     The license of interest
- * @returns
- *     a NULL terminated list of rights URIs the license requires.
- *     use #ll_free_list when you are done with it.
- */
-char **ll_get_requires (const ll_uri_t license_uri);
-
-/**
  * The ll_get_attribute function is used to obtain the names of all
  * attributes of the given license which have the given URI.
  *

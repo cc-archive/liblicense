@@ -224,12 +224,6 @@ const char LL_ATTRIBUTE_CREATOR[] =
 const char  LL_ATTRIBUTE_URI_REQUIRES[] =
   "http://creativecommons.org/ns#requires";
 
-char **
-ll_get_requires (const ll_uri_t u)
-{
-  return ll_get_attribute (u, LL_ATTRIBUTE_URI_REQUIRES, false);
-}
-
 ll_uri_t
 ll_filename_to_uri (const ll_filename_t f)
 {
