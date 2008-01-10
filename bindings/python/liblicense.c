@@ -50,7 +50,7 @@ py_get_name (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  name = ll_get_name (u);
+  name = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_NAME, false));
   result = Py_BuildValue ("s", name);
   free (name);
   return result;

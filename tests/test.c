@@ -42,7 +42,7 @@ main (int argc, char **argv)
     ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));
   printf ("\tget_jurisdiction: %s\n", result);
   free (result);
-  result = ll_get_name ("http://creativecommons.org/licenses/by-nd/2.0/");
+  result = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_NAME, false));
   printf ("\tget_name: %s\n", result);
   free (result);
 

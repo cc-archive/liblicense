@@ -74,7 +74,7 @@ list_juris (ll_juris_t j)
   i = 0;
   while (licenses[i] != NULL)
     {
-      printf ("%s - %s\n", ll_get_name (licenses[i]), licenses[i]);
+      printf ("%s - %s\n", ll_get_first(ll_get_attribute(licenses[i], LL_ATTRIBUTE_URI_NAME, false)), licenses[i]);
       i++;
     }
   return 0;

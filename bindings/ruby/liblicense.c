@@ -42,7 +42,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	license->uri = uri;
 
 	/* name */
-	license->name = rb_str_new2(ll_get_name(u));
+	license->name = rb_str_new2(ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_NAME, false)));
 
 	/* Jurisdiction info */
 	j = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));

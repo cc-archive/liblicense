@@ -107,7 +107,7 @@ extern "C" {
  *     i = 0;
  *     while (licenses[i] != NULL)
  *       {
- *         printf ("%s - %s\n", ll_get_name (licenses[i]), licenses[i]);
+ *         printf ("%s - %s\n", ll_get_first(ll_get_attribute(licenses[i], LL_ATTRIBUTE_URI_NAME, false)), licenses[i]);
  *         i++;
  *       }
  *     ll_free_list (licenses);
@@ -116,7 +116,7 @@ extern "C" {
  *   }
  * \endcode
  *
- * The #ll_get_name function is used to obtain a human-friendly license
+ * The LL_ATTRIBUTE_URI_NAME, attribute used to obtain a human-friendly license
  * name.  You <b>can not</b> pass a human-friendly name to any of the
  * functions which expect a license URI, they simply will not work.  You
  * will have to use #ll_get_licenses and walk the list to translate a
@@ -168,7 +168,7 @@ extern "C" {
  *
  * Having read the license of a file, you want to know what conditions
  * it imposes.  There are several functions used for this purpose.
- * We have already seen the #ll_get_name function.  The others to
+ * We have already seen the LL_ATTRIBUTE_URI_NAME attribute.  The others to
  * use are #ll_get_version, #ll_get_jurisdiction, #ll_get_permits,
  * #ll_get_requires, and #ll_get_prohibits.
  *
@@ -184,7 +184,7 @@ extern "C" {
  *
  *     printf ("License URI: %s\n", uri);
  *
- *     string = ll_get_name (uri);
+ *     string = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_NAME, false));
  *     printf ("Name: %s\n", string);
  *     free (string);
  *
@@ -416,8 +416,8 @@ extern const char LL_ATTRIBUTE_URI_JURISDICTION[];
 
 /**
  * The LL_ATTRIBUTE_URI_NAME string can be passed to the
- * #ll_get_attribute function to obtain a license's name.  The
- * #ll_get_name function does this very thing.
+ * #ll_get_attribute function to obtain a license's name.
+ * Example: "Creative Commons Attribution 3.0 Unported"
  */
 extern const char LL_ATTRIBUTE_URI_NAME[];
 

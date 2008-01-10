@@ -38,7 +38,7 @@ int main(int argc,char** argv) {
     j = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_JURISDICTION, false));
 	printf("get_jurisdiction: '%s'\n",j);
 	free(j);
-	name = ll_get_name(license);
+	name = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_NAME, false));
 	printf("get_name: '%s'\n",name);
 	free(name);
 

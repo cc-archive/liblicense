@@ -39,7 +39,7 @@ ll_license_print_info (ll_uri_t uri)
 
   printf ("License URI: %s\n", uri);
 
-  string = ll_get_name (uri);
+  string = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_NAME, false));
   if (string)
     {
       printf ("Name: %s\n", string);
