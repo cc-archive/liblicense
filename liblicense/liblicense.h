@@ -429,18 +429,21 @@ extern const char LL_ATTRIBUTE_URI_NAME[];
 extern const char LL_ATTRIBUTE_URI_VERSION[];
 
 /**
- * The ll_get_version functions is used to obtain the version of the
- * license of interest (the #LL_ATTRIBUTE_URI_VERSION attribute).
+ * The ll_parse_version function is used to parse a version string
+ * into a heap-allocated array of integers.
+ * 
+ * Typically this follows a call to ll_get_attribute() requesting
+ * the #LL_ATTRIBUTE_URI_VERSION attribute.
  *
- * @param license_uri
- *     The URI of the license of interest
+ * @param version
+ *     The version number as a string
  * @returns
  *     an array of integers representing each division.  The first
  *     element of the array specifies the number of version divisions
  *     that follow, and the rest are the actual version numbers.
  *     Use free() when you are done with it.
  */
-ll_version_t ll_get_version (const ll_uri_t license_uri);
+ll_version_t ll_parse_version (const char * version);
 
 /**
  * The LL_ATTRIBUTE_URI_CREATOR string can be passed to the
