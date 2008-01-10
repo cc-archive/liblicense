@@ -38,3 +38,8 @@ Optional for embedding and extracting licenses:
  * libvorbis
  * TagLib
  * libgsf
+
+== Included software ==
+
+liblicense bundles a copy of xdgmime, a module for MIME parsing.  More 
+information about xdgmime is available at http://webcvs.freedesktop.org/mime/xdgmime/README?revision=1.2&view=markup .
