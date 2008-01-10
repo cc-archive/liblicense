@@ -140,7 +140,7 @@ py_get_requires (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  l = ll_get_requires (u);
+  l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false));
   i = 0;
   list = PyList_New (0);
   while (l != NULL && l[i] != NULL)

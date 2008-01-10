@@ -89,7 +89,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	ll_free_list(l);
 
 	/* Requires */
-	l = ll_get_requires(u);
+	l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false));
 	license->requires = rb_ary_new();
 
 	i = 0;

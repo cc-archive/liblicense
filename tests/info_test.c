@@ -66,7 +66,7 @@ int main(int argc,char** argv) {
 	ll_list_print(p);
 	ll_free_list(p);
 
-	p = ll_get_requires(license);
+	p = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_REQUIRES, false));
 	printf("get_requires: ");
 	ll_list_print(p);
 	ll_free_list(p);

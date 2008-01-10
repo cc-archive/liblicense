@@ -170,7 +170,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	ll_free_list(list);
 
 	requires_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#requires":"http://web.resource.org/cc/requires"));
-	curr = list = ll_get_requires((char*)raptor_uri_as_string(license_uri));
+	curr = list = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false));
 	while (*curr) {
 		raptor_statement rs;
 		rs.subject = (void*)license_uri;
