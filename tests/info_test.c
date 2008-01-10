@@ -61,8 +61,8 @@ int main(int argc,char** argv) {
 	ll_list_print(p);
 	ll_free_list(p);
 
-	p = ll_get_permits(license);
-	printf("get_permits: ");
+	p = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_PERMITS, false));
+    printf("get_permits: ");
 	ll_list_print(p);
 	ll_free_list(p);
 

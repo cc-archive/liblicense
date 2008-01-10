@@ -242,7 +242,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
         for ( license = licenses; license && *license; ++license ) {
                 used_attrs = 0x0000;
 
-                attrs = ll_get_permits(*license);
+                attrs = ll_get_first(ll_get_attribute(*license, LL_ATTRIBUTE_URI_PERMITS, false));
                 for (attr=attrs; *attr; ++attr) {
                         int attr_index = attribute_index(attributes,*attr,num_attributes);
                         if (attr_index == -1) continue;

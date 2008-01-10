@@ -87,7 +87,7 @@ ll_license_print_info (ll_uri_t uri)
 
   printf ("Rights:\n");
 
-  attrs = ll_get_permits (uri);
+  attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_PERMITS, false));
   if (*attrs)
     {
       printf ("   Permits\n");

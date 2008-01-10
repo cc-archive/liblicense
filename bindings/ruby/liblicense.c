@@ -67,7 +67,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	}
 
 	/* Permits */
-	l = ll_get_permits(u);
+	l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false));
 	license->permits = rb_ary_new();
 
 	i = 0;
