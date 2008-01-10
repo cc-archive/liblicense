@@ -43,7 +43,6 @@ endif
 #
 liblicense_la_SOURCES = \
 	license_chooser.c \
-	license_get_creator.c \
 	license_info.c \
 	license_print_info.c \
 	list.c \

@@ -64,7 +64,7 @@ ll_license_print_info (ll_uri_t uri)
       printf ("(unversioned)\n");
     }
 
-  juris = ll_get_jurisdiction (uri);
+  juris = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_JURISDICTION, false));
   if (juris)
     {
       string = ll_jurisdiction_name (juris);

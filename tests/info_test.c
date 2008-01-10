@@ -35,7 +35,7 @@ int main(int argc,char** argv) {
         (void)argv;
 	ll_init();
 	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
-	j = ll_get_jurisdiction(license);
+    j = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_JURISDICTION, false));
 	printf("get_jurisdiction: '%s'\n",j);
 	free(j);
 	name = ll_get_name(license);

@@ -9,7 +9,7 @@ require 'mkmf'
 
 dir_config('liblicense')
 
-unless have_library('license', 'll_get_jurisdiction') and have_header('liblicense.h')
+unless have_library('license', 'll_get_attribute') and have_header('liblicense.h')
 	fail <<-EOM
   Can't find liblicense or liblicense.h
   

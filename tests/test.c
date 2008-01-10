@@ -31,6 +31,7 @@ main (int argc, char **argv)
   int i;
   ll_version_t version;
   char *result;
+  char *u = "http://creativecommons.org/licenses/by-nd/2.0/";
 
   (void) argc;
   (void) argv;
@@ -38,7 +39,7 @@ main (int argc, char **argv)
   ll_init ();
   printf ("Test system_licenses:\n");
   result =
-    ll_get_jurisdiction ("http://creativecommons.org/licenses/by-nd/2.0/");
+    ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));
   printf ("\tget_jurisdiction: %s\n", result);
   free (result);
   result = ll_get_name ("http://creativecommons.org/licenses/by-nd/2.0/");

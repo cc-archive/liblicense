@@ -73,8 +73,8 @@ const char LL_ATTRIBUTE_URI_REPLACED_BY[] =
  *     the first element of a list,
  *     or NULL if the was null or empty.
  */
-static char *
-_ll_get_first (char **list)
+char *
+ll_get_first (char **list)
 {
   char *result;
 
@@ -144,7 +144,7 @@ jurisdiction_map_t jurisdiction_map[] =
 };
 
 char *
-ll_jurisdiction_name (const ll_juris_t juris)
+ll_jurisdiction_name (const char * juris)
 {
   jurisdiction_map_t *entry = jurisdiction_map;
   while (entry->jurisdiction)

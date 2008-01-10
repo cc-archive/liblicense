@@ -33,7 +33,7 @@ py_get_jurisdiction (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  j = ll_get_jurisdiction (u);
+  j = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));
   result = Py_BuildValue ("s", j);
   free (j);
   return result;

@@ -114,7 +114,7 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 		ll_juris_t tmp_j;
 		ll_uri_t *successor;
 
-		tmp_j = ll_get_jurisdiction(licenses[z]);
+		tmp_j = ll_get_first(ll_get_attribute(licenses[z], LL_ATTRIBUTE_URI_JURISDICTION, false));
 		successor = ll_get_attribute(licenses[z],
                                              LL_ATTRIBUTE_URI_REPLACED_BY,0);
 		if(((!tmp_j && !j) || (tmp_j && j && strcmp(tmp_j,j)==0)) && successor[0]==NULL)
@@ -155,7 +155,7 @@ ll_juris_t* ll_get_jurisdictions() {
 
 	len = ll_list_length(licenses);
 	for (i=0; i<len; ++i) {
-		juris = ll_get_jurisdiction(licenses[i]);
+		juris = ll_get_first(ll_get_attribute(licenses[i], LL_ATTRIBUTE_URI_JURISDICTION, false));
 		if (!juris) continue;
 
 		if (!ll_list_contains(result,juris)) {

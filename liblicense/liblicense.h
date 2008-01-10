@@ -202,7 +202,7 @@ extern "C" {
  *         free (version);
  *       }
  *
- *     juris = ll_get_jurisdiction (uri);
+ *     juris = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_JURISDICTION, false));
  *     if (juris)
  *       {
  *         string = ll_jurisdiction_name (juris);
@@ -528,6 +528,9 @@ ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
  */
 ll_filename_t ll_uri_to_filename (const ll_uri_t uri);
 
+
+  char * ll_get_first(char** list);
+
 /**
  * The ll_jurisdiction_name functions is used to map a jusrisdiction
  * code (two letter country code, usually) to a jusrisdiction name
@@ -539,7 +542,7 @@ ll_filename_t ll_uri_to_filename (const ll_uri_t uri);
  *     a string containing the jurisdiction name (country name),
  *     or NULL on error.  Use free when you are done with it.
  */
-char *ll_jurisdiction_name (const ll_juris_t jurisdiction);
+char *ll_jurisdiction_name (const char * jurisdiction);
 
 /*******************************************************/
 
