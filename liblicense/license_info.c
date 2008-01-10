@@ -215,12 +215,6 @@ ll_parse_version (const char * version)
 const char LL_ATTRIBUTE_URI_PROHIBITS[] =
   "http://creativecommons.org/ns#prohibits";
 
-char **
-ll_get_prohibits (const ll_uri_t u)
-{
-  return ll_get_attribute (u, LL_ATTRIBUTE_URI_PROHIBITS, false);
-}
-
 const char  LL_ATTRIBUTE_URI_PERMITS[] =
   "http://creativecommons.org/ns#permits";
 
