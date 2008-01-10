@@ -109,7 +109,7 @@ ll_license_print_info (ll_uri_t uri)
     }
   ll_free_list (attrs);
 
-  attrs = ll_get_prohibits (uri);
+  attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_PROHIBITS, false));
   if (*attrs)
     {
       printf ("   Prohibits\n");

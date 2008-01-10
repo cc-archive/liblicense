@@ -167,10 +167,10 @@ extern "C" {
  * @section N04 Getting the Attributes of a License
  *
  * Having read the license of a file, you want to know what conditions
- * it imposes.  There are several functions used for this purpose.
+ * it imposes.  There are several attributes liblicense exposes for this purpose.
  * We have already seen the LL_ATTRIBUTE_URI_NAME attribute.  The others to
  * use are #ll_get_version, #ll_get_jurisdiction, #ll_get_permits,
- * #ll_get_requires, and #ll_get_prohibits.
+ * #ll_get_requires, and LL_ATTRIBUTE_URI_PROHIBITS.
  *
  * \code
  *   void
@@ -235,7 +235,7 @@ extern "C" {
  *       }
  *     ll_free_list (attrs);
  *
- *     attrs = ll_get_prohibits (uri);
+ *     attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_PROHIBITS, false));
  *     if (*attrs)
  *       {
  *         printf ("   Prohibits:\n");
@@ -320,7 +320,7 @@ typedef char *ll_filename_t;
 
 /**
  * The LL_RIGHTS_URI_ATTRIBUTION string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * credit be given to copyright holder and/or author
  */
@@ -328,7 +328,7 @@ extern const char LL_RIGHTS_URI_ATTRIBUTION[];
 
 /**
  * The LL_RIGHTS_URI_COMMERCIAL_USE string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * exercising rights for commercial purposes
  */
@@ -336,7 +336,7 @@ extern const char LL_RIGHTS_URI_COMMERCIAL_USE[];
 
 /**
  * The LL_RIGHTS_URI_DERIVATIVE_WORKS string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * creation and distribution of derivative works
  */
@@ -344,7 +344,7 @@ extern const char LL_RIGHTS_URI_DERIVATIVE_WORKS[];
 
 /**
  * The LL_RIGHTS_URI_DISTRIBUTION string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * distribution, public display, and publicly performance
  */
@@ -352,7 +352,7 @@ extern const char LL_RIGHTS_URI_DISTRIBUTION[];
 
 /**
  * The LL_RIGHTS_URI_HIGH_INCOME_NATION_USE string may be returned
- * by the #ll_get_permits, #ll_get_requires and #ll_get_prohibits
+ * by the #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS
  * functions.
  *
  * use in a non-developing country
@@ -361,7 +361,7 @@ extern const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[];
 
 /**
  * The LL_RIGHTS_URI_NOTICE string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * copyright and license notices be kept intact
  */
@@ -369,7 +369,7 @@ extern const char LL_RIGHTS_URI_NOTICE[];
 
 /**
  * The LL_RIGHTS_URI_REPRODUCTION string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * making multiple copies
  */
@@ -377,7 +377,7 @@ extern const char LL_RIGHTS_URI_REPRODUCTION[];
 
 /**
  * The LL_RIGHTS_URI_SHARE_ALIKE string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * derivative works be licensed under the same terms as the original work
  */
@@ -385,7 +385,7 @@ extern const char LL_RIGHTS_URI_SHARE_ALIKE[];
 
 /**
  * The LL_RIGHTS_URI_SHARING string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * noncommercial distribution, permits commercial derivatives, but only
  * non-commercial distribution
@@ -394,7 +394,7 @@ extern const char LL_RIGHTS_URI_SHARING[];
 
 /**
  * The LL_RIGHTS_URI_SOURCE_CODE string may be returned by the
- * #ll_get_permits, #ll_get_requires and #ll_get_prohibits functions.
+ * #ll_get_permits, #ll_get_requires and LL_ATTRIBUTE_URI_PROHIBITS functions.
  *
  * source code (the preferred form for making modifications) must be
  * provided for all derivative works
@@ -456,7 +456,7 @@ extern const char LL_ATTRIBUTE_URI_CREATOR[];
 /**
  * The LL_ATTRIBUTE_URI_PROHIBITS string can be passed to the
  * #ll_get_attribute function to obtain a list of the rights prohibited
- * by a license.  The #ll_get_prohibits function does this very
+ * by a license.  The LL_ATTRIBUTE_URI_PROHIBITS function does this very
  * thing.
  */
 extern const char LL_ATTRIBUTE_URI_PROHIBITS[];

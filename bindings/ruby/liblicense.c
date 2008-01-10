@@ -78,7 +78,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	ll_free_list(l);
 
 	/* Prohibits */
-	l = ll_get_prohibits(u);
+	l = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false));
 	license->prohibits = rb_ary_new();
 
 	i = 0;
