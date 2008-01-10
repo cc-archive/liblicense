@@ -165,12 +165,6 @@ const char LL_ATTRIBUTE_URI_JURISDICTION[] =
 const char LL_ATTRIBUTE_URI_NAME[] =
   "http://purl.org/dc/elements/1.1/title";
 
-char *
-ll_get_name (const ll_uri_t u)
-{
-  return _ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_NAME, true));
-}
-
 const char LL_ATTRIBUTE_URI_VERSION[] =
   "http://purl.org/dc/terms/hasVersion";
 

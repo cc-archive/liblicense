@@ -422,18 +422,6 @@ extern const char LL_ATTRIBUTE_URI_JURISDICTION[];
 extern const char LL_ATTRIBUTE_URI_NAME[];
 
 /**
- * The ll_get_name function is used to obtain the name of a license
- * (the #LL_ATTRIBUTE_URI_NAME attribute).
- *
- * @param license_uri
- *     The URI of the license of interest
- * @returns
- *      the name of the license (use free() when done with),
- *      or NULL on failure
- */
-char *ll_get_name (const ll_uri_t license_uri);
-
-/**
  * The LL_ATTRIBUTE_URI_VERSION string can be passed to the
  * #ll_get_attribute function to obtain a license's version.  The
  * #ll_get_version function does this very thing.
