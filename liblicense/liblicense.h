@@ -447,8 +447,9 @@ ll_version_t ll_parse_version (const char * version);
 
 /**
  * The LL_ATTRIBUTE_URI_CREATOR string can be passed to the
- * #ll_get_attribute function to obtain a license's creator.  The
- * #ll_license_get_creator function does this very thing.
+ * #ll_get_attribute function to obtain a license's creator.
+ *
+ * Example: "Creative Commons"
  */
 extern const char LL_ATTRIBUTE_URI_CREATOR[];
 
