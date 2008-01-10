@@ -218,7 +218,7 @@ const char LL_ATTRIBUTE_URI_PROHIBITS[] =
 const char  LL_ATTRIBUTE_URI_PERMITS[] =
   "http://creativecommons.org/ns#permits";
 
-const char LL_ATTRIBUTE_CREATOR[] =
+const char LL_ATTRIBUTE_URI_CREATOR[] =
   "http://purl.org/dc/elements/1.1/creator";
 
 const char  LL_ATTRIBUTE_URI_REQUIRES[] =

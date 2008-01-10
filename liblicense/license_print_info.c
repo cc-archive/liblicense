@@ -78,7 +78,7 @@ ll_license_print_info (ll_uri_t uri)
   free (string);
   free (juris);
 
-  attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_CREATOR, false));
+  attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_CREATOR, false));
   if (*attrs)
     {
       printf ("Creator: %s\n", *attrs);
