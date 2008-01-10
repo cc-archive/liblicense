@@ -469,18 +469,6 @@ extern const char LL_ATTRIBUTE_URI_PROHIBITS[];
 extern const char LL_ATTRIBUTE_URI_PERMITS[];
 
 /**
- * The ll_get_permits function is used to determine the attributes
- * permitted by a license (the #LL_ATTRIBUTE_URI_PERMITS attribute).
- *
- * @param license_uri
- *     The license of interest
- * @returns
- *     a NULL terminated list of rights URIs the license prohibits.
- *     Use #ll_free_list when you are done with it.
- */
-char **ll_get_permits (const ll_uri_t license_uri);
-
-/**
  * The LL_ATTRIBUTE_URI_REQUIRES string can be passed to the
  * #ll_get_attribute function to obtain a list of the rights required
  * by a license.  The #ll_get_requires function does this very

@@ -221,12 +221,6 @@ const char  LL_ATTRIBUTE_URI_PERMITS[] =
 const char LL_ATTRIBUTE_CREATOR[] =
   "http://purl.org/dc/elements/1.1/creator";
 
-char **
-ll_get_permits (const ll_uri_t u)
-{
-  return ll_get_attribute (u, LL_ATTRIBUTE_URI_PERMITS, false);
-}
-
 const char  LL_ATTRIBUTE_URI_REQUIRES[] =
   "http://creativecommons.org/ns#requires";
 
