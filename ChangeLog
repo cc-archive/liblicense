@@ -46,11 +46,10 @@ From Jason, some of which is accepting patches by Peter:
 * Hack around "unused argument" warnings in Python bindings, change magic zero padding at the end of the Python bindings
 * Improve code style in license_chooser.c
 * Typecast strlen return call to a SIGNED int to avoid a compile warning
-* FIXME: The above code strlen()s too often.
-* typecasts to (int) in license_info.c - FIXME - are these sane?
+* typecasts to (int) in license_info.c
 * Comment out unused variables in licenses_cached.c that caused unused variable warnings
 * Shortened variable names in modules/io/raptor.c
-* Add a note about Vorbis prototypes needing const correctness analysis in mdoules/io/vorbis.c - FIXME
+* Add a note about Vorbis prototypes needing const correctness analysis in mdoules/io/vorbis.c
 
 From Asheesh:
 
