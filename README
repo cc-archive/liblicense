@@ -42,4 +42,7 @@ Optional for embedding and extracting licenses:
 == Included software ==
 
 liblicense bundles a copy of xdgmime, a module for MIME parsing.  More 
-information about xdgmime is available at http://webcvs.freedesktop.org/mime/xdgmime/README?revision=1.2&view=markup .
+information about xdgmime is available at 
+http://webcvs.freedesktop.org/mime/xdgmime/README?revision=1.2&view=markup ,
+and information about our use of it can be found at http://lists.ibiblio.org/pipermail/cc-devel/2008-January/000841.html .
+
