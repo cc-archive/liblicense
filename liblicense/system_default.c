@@ -33,13 +33,6 @@
 #include "modules.h"
 
 int
-ll_set_default (const ll_uri_t u)
-{
-  /* This function is DEPRECATED.  It will be removed, eventually. */
-  return ll_license_default_set (u);
-}
-
-int
 ll_license_default_set (const ll_uri_t u)
 {
   ll_module_t *modules = ll_get_config_modules ();
@@ -59,13 +52,6 @@ ll_license_default_set (const ll_uri_t u)
     }
   ll_free_list (modules);
   return result;
-}
-
-ll_uri_t
-ll_get_default ()
-{
-  /* This function is DEPRECATED.  It will be removed, eventually. */
-  return ll_license_default_get ();
 }
 
 ll_uri_t

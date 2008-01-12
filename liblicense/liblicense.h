@@ -816,17 +816,6 @@ shutdown ,                                              \
 0                                                       \
 };
 
-/**
- * The LL_DEPRECATED define is used to mark deprecated functions as
- * such, when compiling woth GCC.  All other compilers unaffected.
- */
-#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1))
-#define LL_DEPRECATED __attribute__((deprecated))
-#else
-#define LL_DEPRECATED
-#endif
-
-
 /******************** system_default *******************/
 
 
@@ -843,12 +832,6 @@ shutdown ,                                              \
 int ll_license_default_set (const ll_uri_t license_uri);
 
 /**
- * The ll_set_default function is deprecated, please use the
- * #ll_license_default_set function instead.
- */
-int ll_set_default (const ll_uri_t license_uri) LL_DEPRECATED;
-
-/**
  * The ll_license_default_get function is used to obtain the URI of the
  * default license.
  *
@@ -857,12 +840,6 @@ int ll_set_default (const ll_uri_t license_uri) LL_DEPRECATED;
  *     a pointer to a new string.  Use free() when you are done with it.
  */
 ll_uri_t ll_license_default_get (void);
-
-/**
- * The ll_get_default function is deprecated, please use the
- * #ll_license_default_get function instead.
- */
-ll_uri_t ll_get_default (void) LL_DEPRECATED;
 
 /********************* read_license ********************/
 
