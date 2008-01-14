@@ -42,10 +42,10 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	license->uri = uri;
 
 	/* name */
-	license->name = rb_str_new2(ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_NAME, false)));
+	license->name = rb_str_new2(ll_get_first(ll_get_attribute(u, LL_NAME, false)));
 
 	/* Jurisdiction info */
-	j = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));
+	j = ll_get_first(ll_get_attribute(u, LL_JURISDICTION, false));
 
 	/* in the event of no jurisdiction. */
 	if (j == NULL) {
@@ -55,7 +55,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	license->jurisdiction = rb_str_new2(j);
 
 	/* Version info */
-	v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false)));
+	v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, false)));
 
 	if (v) {
 		license->version = rb_ary_new();
@@ -67,7 +67,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	}
 
 	/* Permits */
-	l = ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false);
+	l = ll_get_attribute(u, LL_PERMITS, false);
 	license->permits = rb_ary_new();
 
 	i = 0;
@@ -78,7 +78,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	ll_free_list(l);
 
 	/* Prohibits */
-	l = ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false);
+	l = ll_get_attribute(u, LL_PROHIBITS, false);
 	license->prohibits = rb_ary_new();
 
 	i = 0;
@@ -89,7 +89,7 @@ static void _rbll_cache_info(ruby_liblicense *license, VALUE uri) {
 	ll_free_list(l);
 
 	/* Requires */
-	l = ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false);
+	l = ll_get_attribute(u, LL_REQUIRES, false);
 	license->requires = rb_ary_new();
 
 	i = 0;

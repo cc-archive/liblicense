@@ -40,14 +40,14 @@ ll_license_print_info (ll_uri_t uri)
 
   printf ("License URI: %s\n", uri);
 
-  string = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_NAME, false));
+  string = ll_get_first(ll_get_attribute(uri, LL_NAME, false));
   if (string)
     {
       printf ("Name: %s\n", string);
       free (string);
     }
 
-  version = ll_parse_version(ll_get_first (ll_get_attribute (uri, LL_ATTRIBUTE_URI_VERSION, false)));
+  version = ll_parse_version(ll_get_first (ll_get_attribute (uri, LL_VERSION, false)));
   printf ("Version: ");
   if (version)
     {
@@ -65,7 +65,7 @@ ll_license_print_info (ll_uri_t uri)
       printf ("(unversioned)\n");
     }
 
-  juris = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_JURISDICTION, false));
+  juris = ll_get_first(ll_get_attribute(uri, LL_JURISDICTION, false));
   if (juris)
     {
       string = ll_jurisdiction_name (juris);
@@ -79,7 +79,7 @@ ll_license_print_info (ll_uri_t uri)
   free (string);
   free (juris);
 
-  attrs = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_CREATOR, false));
+  attrs = ll_get_first(ll_get_attribute(uri, LL_CREATOR, false));
   if (*attrs)
     {
       printf ("Creator: %s\n", *attrs);
@@ -88,7 +88,7 @@ ll_license_print_info (ll_uri_t uri)
 
   printf ("Rights:\n");
 
-  attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_PERMITS, false);
+  attrs = ll_get_attribute(uri, LL_PERMITS, false);
   if (*attrs)
     {
       printf ("   Permits\n");
@@ -99,7 +99,7 @@ ll_license_print_info (ll_uri_t uri)
     }
   ll_free_list (attrs);
 
-  attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_REQUIRES, false);
+  attrs = ll_get_attribute(uri, LL_REQUIRES, false);
 
   if (*attrs)
     {
@@ -111,7 +111,7 @@ ll_license_print_info (ll_uri_t uri)
     }
   ll_free_list (attrs);
 
-  attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_PROHIBITS, false);
+  attrs = ll_get_attribute(uri, LL_PROHIBITS, false);
   if (*attrs)
     {
       printf ("   Prohibits\n");

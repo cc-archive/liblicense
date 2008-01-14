@@ -60,7 +60,7 @@ const char LL_RIGHTS_URI_SOURCE_CODE[] =
 const char LL_RIGHTS_URI_COMMERCIAL_USE[] =
   "http://creativecommons.org/ns#CommercialUse";
 
-const char LL_ATTRIBUTE_URI_REPLACED_BY[] =
+const char LL_REPLACED_BY[] =
   "http://purl.org/dc/terms/isReplacedBy";
 
 /**
@@ -159,13 +159,13 @@ ll_jurisdiction_name (const char * juris)
   return strdup (juris);
 }
 
-const char LL_ATTRIBUTE_URI_JURISDICTION[] =
+const char LL_JURISDICTION[] =
   "http://creativecommons.org/ns#jurisdiction";
 
-const char LL_ATTRIBUTE_URI_NAME[] =
+const char LL_NAME[] =
   "http://purl.org/dc/elements/1.1/title";
 
-const char LL_ATTRIBUTE_URI_VERSION[] =
+const char LL_VERSION[] =
   "http://purl.org/dc/terms/hasVersion";
 
 ll_version_t
@@ -212,16 +212,16 @@ ll_parse_version (const char * version)
   return NULL;
 }
 
-const char LL_ATTRIBUTE_URI_PROHIBITS[] =
+const char LL_PROHIBITS[] =
   "http://creativecommons.org/ns#prohibits";
 
-const char  LL_ATTRIBUTE_URI_PERMITS[] =
+const char  LL_PERMITS[] =
   "http://creativecommons.org/ns#permits";
 
-const char LL_ATTRIBUTE_URI_CREATOR[] =
+const char LL_CREATOR[] =
   "http://purl.org/dc/elements/1.1/creator";
 
-const char  LL_ATTRIBUTE_URI_REQUIRES[] =
+const char  LL_REQUIRES[] =
   "http://creativecommons.org/ns#requires";
 
 ll_uri_t

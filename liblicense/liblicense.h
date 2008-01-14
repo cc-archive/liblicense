@@ -107,7 +107,7 @@ extern "C" {
  *     i = 0;
  *     while (licenses[i] != NULL)
  *       {
- *         printf ("%s - %s\n", ll_get_first(ll_get_attribute(licenses[i], LL_ATTRIBUTE_URI_NAME, false)), licenses[i]);
+ *         printf ("%s - %s\n", ll_get_first(ll_get_attribute(licenses[i], LL_NAME, false)), licenses[i]);
  *         i++;
  *       }
  *     ll_free_list (licenses);
@@ -116,7 +116,7 @@ extern "C" {
  *   }
  * \endcode
  *
- * The LL_ATTRIBUTE_URI_NAME, attribute used to obtain a human-friendly license
+ * The LL_NAME, attribute used to obtain a human-friendly license
  * name.  You <b>can not</b> pass a human-friendly name to any of the
  * functions which expect a license URI, they simply will not work.  You
  * will have to use #ll_get_licenses and walk the list to translate a
@@ -168,9 +168,9 @@ extern "C" {
  *
  * Having read the license of a file, you want to know what conditions
  * it imposes.  There are several attributes liblicense exposes for this purpose.
- * We have already seen the LL_ATTRIBUTE_URI_NAME attribute.  The others to
- * use are LL_ATTRIBUTE_URI_VERSION, #ll_get_jurisdiction, LL_ATTRIBUTE_URI_PERMITS,
- * LL_ATTRIBUTE_URI_REQUIRES, and LL_ATTRIBUTE_URI_PROHIBITS.
+ * We have already seen the LL_NAME attribute.  The others to
+ * use are LL_VERSION, #ll_get_jurisdiction, LL_PERMITS,
+ * LL_REQUIRES, and LL_PROHIBITS.
  *
  * \code
  *   void
@@ -184,7 +184,7 @@ extern "C" {
  *
  *     printf ("License URI: %s\n", uri);
  *
- *     string = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_NAME, false));
+ *     string = ll_get_first(ll_get_attribute(uri, LL_NAME, false));
  *     printf ("Name: %s\n", string);
  *     free (string);
  *
@@ -202,7 +202,7 @@ extern "C" {
  *         free (version);
  *       }
  *
- *     juris = ll_get_first(ll_get_attribute(uri, LL_ATTRIBUTE_URI_JURISDICTION, false));
+ *     juris = ll_get_first(ll_get_attribute(uri, LL_JURISDICTION, false));
  *     if (juris)
  *       {
  *         string = ll_jurisdiction_name (juris);
@@ -213,7 +213,7 @@ extern "C" {
  *
  *     printf ("Rights:\n");
  *
- *     attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_REQUIRES, false);
+ *     attrs = ll_get_attribute(uri, LL_REQUIRES, false);
  *     if (*attrs)
  *       {
  *         printf ("   Permits:\n");
@@ -224,7 +224,7 @@ extern "C" {
  *       }
  *     ll_free_list (attrs);
  *
- *     attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_REQUIRES, false);
+ *     attrs = ll_get_attribute(uri, LL_REQUIRES, false);
  *     if (*attrs)
  *       {
  *         printf ("   Requires:\n");
@@ -235,7 +235,7 @@ extern "C" {
  *       }
  *     ll_free_list (attrs);
  *
- *     attrs = ll_get_attribute(uri, LL_ATTRIBUTE_URI_PROHIBITS, false);
+ *     attrs = ll_get_attribute(uri, LL_PROHIBITS, false);
  *     if (*attrs)
  *       {
  *         printf ("   Prohibits:\n");
@@ -320,7 +320,7 @@ typedef char *ll_filename_t;
 
 /**
  * The LL_RIGHTS_URI_ATTRIBUTION string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * credit be given to copyright holder and/or author
  */
@@ -328,7 +328,7 @@ extern const char LL_RIGHTS_URI_ATTRIBUTION[];
 
 /**
  * The LL_RIGHTS_URI_COMMERCIAL_USE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * exercising rights for commercial purposes
  */
@@ -336,7 +336,7 @@ extern const char LL_RIGHTS_URI_COMMERCIAL_USE[];
 
 /**
  * The LL_RIGHTS_URI_DERIVATIVE_WORKS string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * creation and distribution of derivative works
  */
@@ -344,7 +344,7 @@ extern const char LL_RIGHTS_URI_DERIVATIVE_WORKS[];
 
 /**
  * The LL_RIGHTS_URI_DISTRIBUTION string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * distribution, public display, and publicly performance
  */
@@ -352,7 +352,7 @@ extern const char LL_RIGHTS_URI_DISTRIBUTION[];
 
 /**
  * The LL_RIGHTS_URI_HIGH_INCOME_NATION_USE string may be returned
- * by the LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS
+ * by the LL_PERMITS, LL_REQUIRES and LL_PROHIBITS
  * functions.
  *
  * use in a non-developing country
@@ -361,7 +361,7 @@ extern const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[];
 
 /**
  * The LL_RIGHTS_URI_NOTICE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * copyright and license notices be kept intact
  */
@@ -369,7 +369,7 @@ extern const char LL_RIGHTS_URI_NOTICE[];
 
 /**
  * The LL_RIGHTS_URI_REPRODUCTION string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * making multiple copies
  */
@@ -377,7 +377,7 @@ extern const char LL_RIGHTS_URI_REPRODUCTION[];
 
 /**
  * The LL_RIGHTS_URI_SHARE_ALIKE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * derivative works be licensed under the same terms as the original work
  */
@@ -385,7 +385,7 @@ extern const char LL_RIGHTS_URI_SHARE_ALIKE[];
 
 /**
  * The LL_RIGHTS_URI_SHARING string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * noncommercial distribution, permits commercial derivatives, but only
  * non-commercial distribution
@@ -394,7 +394,7 @@ extern const char LL_RIGHTS_URI_SHARING[];
 
 /**
  * The LL_RIGHTS_URI_SOURCE_CODE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
+ * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * source code (the preferred form for making modifications) must be
  * provided for all derivative works
@@ -402,38 +402,38 @@ extern const char LL_RIGHTS_URI_SHARING[];
 extern const char LL_RIGHTS_URI_SOURCE_CODE[];
 
 /**
- * The LL_ATTRIBUTE_URI_REPLACED_BY string can be passed to the
+ * The LL_REPLACED_BY string can be passed to the
  * #ll_get_attribute function to obtain a license's successor.
  */
-extern const char LL_ATTRIBUTE_URI_REPLACED_BY[];
+extern const char LL_REPLACED_BY[];
 
 /**
- * The LL_ATTRIBUTE_URI_JURISDICTION string can be passed to the
+ * The LL_JURISDICTION string can be passed to the
  * #ll_get_attribute function to obtain a license's jurisdiction.  The
  * #ll_get_jurisdiction function does this very thing.
  */
-extern const char LL_ATTRIBUTE_URI_JURISDICTION[];
+extern const char LL_JURISDICTION[];
 
 /**
- * The LL_ATTRIBUTE_URI_NAME string can be passed to the
+ * The LL_NAME string can be passed to the
  * #ll_get_attribute function to obtain a license's name.
  * Example: "Creative Commons Attribution 3.0 Unported"
  */
-extern const char LL_ATTRIBUTE_URI_NAME[];
+extern const char LL_NAME[];
 
 /**
- * The LL_ATTRIBUTE_URI_VERSION string can be passed to the
+ * The LL_VERSION string can be passed to the
  * #ll_get_attribute function to obtain a license's version.  The
- * LL_ATTRIBUTE_URI_VERSION function does this very thing.
+ * LL_VERSION function does this very thing.
  */
-extern const char LL_ATTRIBUTE_URI_VERSION[];
+extern const char LL_VERSION[];
 
 /**
  * The ll_parse_version function is used to parse a version string
  * into a heap-allocated array of integers.
  * 
  * Typically this follows a call to ll_get_attribute() requesting
- * the #LL_ATTRIBUTE_URI_VERSION attribute.
+ * the #LL_VERSION attribute.
  *
  * @param version
  *     The version number as a string
@@ -446,36 +446,36 @@ extern const char LL_ATTRIBUTE_URI_VERSION[];
 ll_version_t ll_parse_version (const char * version);
 
 /**
- * The LL_ATTRIBUTE_URI_CREATOR string can be passed to the
+ * The LL_CREATOR string can be passed to the
  * #ll_get_attribute function to obtain a license's creator.
  *
  * Example: "Creative Commons"
  */
-extern const char LL_ATTRIBUTE_URI_CREATOR[];
+extern const char LL_CREATOR[];
 
 /**
- * The LL_ATTRIBUTE_URI_PROHIBITS string can be passed to the
+ * The LL_PROHIBITS string can be passed to the
  * #ll_get_attribute function to obtain a list of the rights prohibited
- * by a license.  The LL_ATTRIBUTE_URI_PROHIBITS function does this very
+ * by a license.  The LL_PROHIBITS function does this very
  * thing.
  */
-extern const char LL_ATTRIBUTE_URI_PROHIBITS[];
+extern const char LL_PROHIBITS[];
 
 /**
- * The LL_ATTRIBUTE_URI_PERMITS string can be passed to the
+ * The LL_PERMITS string can be passed to the
  * #ll_get_attribute function to obtain a list of the rights permitted
- * by a license.  The LL_ATTRIBUTE_URI_PERMITS function does this very
+ * by a license.  The LL_PERMITS function does this very
  * thing.
  */
-extern const char LL_ATTRIBUTE_URI_PERMITS[];
+extern const char LL_PERMITS[];
 
 /**
- * The LL_ATTRIBUTE_URI_REQUIRES string can be passed to the
+ * The LL_REQUIRES string can be passed to the
  * #ll_get_attribute function to obtain a list of the rights required
- * by a license.  The LL_ATTRIBUTE_URI_REQUIRES function does this very
+ * by a license.  The LL_REQUIRES function does this very
  * thing.
  */
-extern const char LL_ATTRIBUTE_URI_REQUIRES[];
+extern const char LL_REQUIRES[];
 
 /**
  * The ll_get_attribute function is used to obtain the names of all
@@ -484,7 +484,7 @@ extern const char LL_ATTRIBUTE_URI_REQUIRES[];
  * @param license_uri
  *     The license of interest
  * @param attribute_uri
- *     The attribute URI of interest (e.g. #LL_ATTRIBUTE_URI_PERMITS)
+ *     The attribute URI of interest (e.g. #LL_PERMITS)
  * @param locale
  *     non-zero if $LANG to be used,
  *     zero if not relevant

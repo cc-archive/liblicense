@@ -40,15 +40,15 @@ main (int argc, char **argv)
   ll_init ();
   printf ("Test system_licenses:\n");
   result =
-    ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));
+    ll_get_first(ll_get_attribute(u, LL_JURISDICTION, false));
   printf ("\tget_jurisdiction: %s\n", result);
   free (result);
-  result = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_NAME, false));
+  result = ll_get_first(ll_get_attribute(u, LL_NAME, false));
   printf ("\tget_name: %s\n", result);
   free (result);
 
   printf ("\tget_version: ");
-  version = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_ATTRIBUTE_URI_VERSION, false)));
+  version = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, false)));
   if (version)
     {
       for (i = 1; i <= version[0]; ++i)

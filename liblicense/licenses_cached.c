@@ -154,8 +154,8 @@ int ll_update_cache() {
 			char* query;
 			ll_uri_t* list;
 			/* Get data */
-			ll_juris_t j = ll_get_first(ll_get_attribute(u, LL_ATTRIBUTE_URI_JURISDICTION, false));
-			ll_uri_t *successor = ll_get_attribute(u, LL_ATTRIBUTE_URI_REPLACED_BY,0);
+			ll_juris_t j = ll_get_first(ll_get_attribute(u, LL_JURISDICTION, false));
+			ll_uri_t *successor = ll_get_attribute(u, LL_REPLACED_BY,0);
 			int obsolete = ll_list_length(successor);
 			ll_free_list(successor);
 			/* build insert query */

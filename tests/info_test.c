@@ -36,14 +36,14 @@ int main(int argc,char** argv) {
         (void)argv;
 	ll_init();
 	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
-    j = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_JURISDICTION, false));
+    j = ll_get_first(ll_get_attribute(license, LL_JURISDICTION, false));
 	printf("get_jurisdiction: '%s'\n",j);
 	free(j);
-	name = ll_get_first(ll_get_attribute(license, LL_ATTRIBUTE_URI_NAME, false));
+	name = ll_get_first(ll_get_attribute(license, LL_NAME, false));
 	printf("get_name: '%s'\n",name);
 	free(name);
 
-	version = ll_parse_version(ll_get_first (ll_get_attribute (license, LL_ATTRIBUTE_URI_VERSION, false)));
+	version = ll_parse_version(ll_get_first (ll_get_attribute (license, LL_VERSION, false)));
 	printf("get_version: ");
 	if (version) {
 		int i;
@@ -57,17 +57,17 @@ int main(int argc,char** argv) {
 		printf("unversioned\n");
 	}
 
-	p = ll_get_attribute(license, LL_ATTRIBUTE_URI_PROHIBITS, false);
+	p = ll_get_attribute(license, LL_PROHIBITS, false);
 	printf("get_prohibits: ");
 	ll_list_print(p);
 	ll_free_list(p);
 
-	p = ll_get_attribute(license, LL_ATTRIBUTE_URI_PERMITS, false);
+	p = ll_get_attribute(license, LL_PERMITS, false);
     printf("get_permits: ");
 	ll_list_print(p);
 	ll_free_list(p);
 
-	p = ll_get_attribute(license, LL_ATTRIBUTE_URI_REQUIRES, false);
+	p = ll_get_attribute(license, LL_REQUIRES, false);
 	printf("get_requires: ");
 	ll_list_print(p);
 	ll_free_list(p);

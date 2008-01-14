@@ -152,7 +152,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	raptor_free_uri((raptor_uri*)license_triple.object);
 
 	permits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#permits":"http://web.resource.org/cc/permits"));
-	curr = list = ll_get_attribute(u, LL_ATTRIBUTE_URI_PERMITS, false);
+	curr = list = ll_get_attribute(u, LL_PERMITS, false);
 	while (*curr) {
 		raptor_statement rs;
 		rs.subject = (void*)license_uri;
@@ -171,7 +171,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	ll_free_list(list);
 
 	requires_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#requires":"http://web.resource.org/cc/requires"));
-	curr = list = ll_get_attribute(u, LL_ATTRIBUTE_URI_REQUIRES, false);
+	curr = list = ll_get_attribute(u, LL_REQUIRES, false);
 	while (*curr) {
 		raptor_statement rs;
 		rs.subject = (void*)license_uri;
@@ -190,7 +190,7 @@ void serialize_license( raptor_serializer *serializer, raptor_uri *license_uri, 
 	ll_free_list(list);
 
 	prohibits_uri = raptor_new_uri((const unsigned char*)((new_ns)?"http://creativecommons.org/ns#prohibits":"http://web.resource.org/cc/prohibits"));
-	curr = list = ll_get_attribute(u, LL_ATTRIBUTE_URI_PROHIBITS, false);
+	curr = list = ll_get_attribute(u, LL_PROHIBITS, false);
 	while (*curr) {
 		raptor_statement rs;
 		rs.subject=(void*)license_uri;
