@@ -39,25 +39,25 @@
 #include "modules.h"
 
 
-const char LL_RIGHTS_URI_ATTRIBUTION[] =
+const char LL_ATTRIBUTION[] =
   "http://creativecommons.org/ns#Attribution";
-const char LL_RIGHTS_URI_REPRODUCTION[] =
+const char LL_REPRODUCTION[] =
   "http://creativecommons.org/ns#Reproduction";
-const char LL_RIGHTS_URI_DISTRIBUTION[] =
+const char LL_DISTRIBUTION[] =
   "http://creativecommons.org/ns#Distribution";
-const char LL_RIGHTS_URI_DERIVATIVE_WORKS[] =
+const char LL_DERIVATIVE_WORKS[] =
   "http://creativecommons.org/ns#DerivativeWorks";
-const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[] =
+const char LL_HIGH_INCOME_NATION_USE[] =
   "http://creativecommons.org/ns#HighIncomeNationUse";
-const char LL_RIGHTS_URI_SHARING[] =
+const char LL_SHARING[] =
   "http://creativecommons.org/ns#Sharing";
-const char LL_RIGHTS_URI_NOTICE[] =
+const char LL_NOTICE[] =
   "http://creativecommons.org/ns#Notice";
-const char LL_RIGHTS_URI_SHARE_ALIKE[] =
+const char LL_SHARE_ALIKE[] =
   "http://creativecommons.org/ns#ShareAlike";
-const char LL_RIGHTS_URI_SOURCE_CODE[] =
+const char LL_SOURCE_CODE[] =
   "http://creativecommons.org/ns#SourceCode";
-const char LL_RIGHTS_URI_COMMERCIAL_USE[] =
+const char LL_COMMERCIAL_USE[] =
   "http://creativecommons.org/ns#CommercialUse";
 
 const char LL_REPLACED_BY[] =

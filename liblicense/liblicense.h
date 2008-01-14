@@ -319,87 +319,87 @@ typedef char *ll_attribute_t;
 typedef char *ll_filename_t;
 
 /**
- * The LL_RIGHTS_URI_ATTRIBUTION string may be returned by the
+ * The LL_ATTRIBUTION string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * credit be given to copyright holder and/or author
  */
-extern const char LL_RIGHTS_URI_ATTRIBUTION[];
+extern const char LL_ATTRIBUTION[];
 
 /**
- * The LL_RIGHTS_URI_COMMERCIAL_USE string may be returned by the
+ * The LL_COMMERCIAL_USE string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * exercising rights for commercial purposes
  */
-extern const char LL_RIGHTS_URI_COMMERCIAL_USE[];
+extern const char LL_COMMERCIAL_USE[];
 
 /**
- * The LL_RIGHTS_URI_DERIVATIVE_WORKS string may be returned by the
+ * The LL_DERIVATIVE_WORKS string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * creation and distribution of derivative works
  */
-extern const char LL_RIGHTS_URI_DERIVATIVE_WORKS[];
+extern const char LL_DERIVATIVE_WORKS[];
 
 /**
- * The LL_RIGHTS_URI_DISTRIBUTION string may be returned by the
+ * The LL_DISTRIBUTION string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * distribution, public display, and publicly performance
  */
-extern const char LL_RIGHTS_URI_DISTRIBUTION[];
+extern const char LL_DISTRIBUTION[];
 
 /**
- * The LL_RIGHTS_URI_HIGH_INCOME_NATION_USE string may be returned
+ * The LL_HIGH_INCOME_NATION_USE string may be returned
  * by the LL_PERMITS, LL_REQUIRES and LL_PROHIBITS
  * functions.
  *
  * use in a non-developing country
  */
-extern const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[];
+extern const char LL_HIGH_INCOME_NATION_USE[];
 
 /**
- * The LL_RIGHTS_URI_NOTICE string may be returned by the
+ * The LL_NOTICE string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * copyright and license notices be kept intact
  */
-extern const char LL_RIGHTS_URI_NOTICE[];
+extern const char LL_NOTICE[];
 
 /**
- * The LL_RIGHTS_URI_REPRODUCTION string may be returned by the
+ * The LL_REPRODUCTION string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * making multiple copies
  */
-extern const char LL_RIGHTS_URI_REPRODUCTION[];
+extern const char LL_REPRODUCTION[];
 
 /**
- * The LL_RIGHTS_URI_SHARE_ALIKE string may be returned by the
+ * The LL_SHARE_ALIKE string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * derivative works be licensed under the same terms as the original work
  */
-extern const char LL_RIGHTS_URI_SHARE_ALIKE[];
+extern const char LL_SHARE_ALIKE[];
 
 /**
- * The LL_RIGHTS_URI_SHARING string may be returned by the
+ * The LL_SHARING string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * noncommercial distribution, permits commercial derivatives, but only
  * non-commercial distribution
  */
-extern const char LL_RIGHTS_URI_SHARING[];
+extern const char LL_SHARING[];
 
 /**
- * The LL_RIGHTS_URI_SOURCE_CODE string may be returned by the
+ * The LL_SOURCE_CODE string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
  * source code (the preferred form for making modifications) must be
  * provided for all derivative works
  */
-extern const char LL_RIGHTS_URI_SOURCE_CODE[];
+extern const char LL_SOURCE_CODE[];
 
 /**
  * The LL_REPLACED_BY string can be passed to the
