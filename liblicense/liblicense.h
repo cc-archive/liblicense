@@ -320,7 +320,7 @@ typedef char *ll_filename_t;
 
 /**
  * The LL_RIGHTS_URI_ATTRIBUTION string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * credit be given to copyright holder and/or author
  */
@@ -328,7 +328,7 @@ extern const char LL_RIGHTS_URI_ATTRIBUTION[];
 
 /**
  * The LL_RIGHTS_URI_COMMERCIAL_USE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * exercising rights for commercial purposes
  */
@@ -336,7 +336,7 @@ extern const char LL_RIGHTS_URI_COMMERCIAL_USE[];
 
 /**
  * The LL_RIGHTS_URI_DERIVATIVE_WORKS string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * creation and distribution of derivative works
  */
@@ -344,7 +344,7 @@ extern const char LL_RIGHTS_URI_DERIVATIVE_WORKS[];
 
 /**
  * The LL_RIGHTS_URI_DISTRIBUTION string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * distribution, public display, and publicly performance
  */
@@ -361,7 +361,7 @@ extern const char LL_RIGHTS_URI_HIGH_INCOME_NATION_USE[];
 
 /**
  * The LL_RIGHTS_URI_NOTICE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * copyright and license notices be kept intact
  */
@@ -369,7 +369,7 @@ extern const char LL_RIGHTS_URI_NOTICE[];
 
 /**
  * The LL_RIGHTS_URI_REPRODUCTION string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * making multiple copies
  */
@@ -377,7 +377,7 @@ extern const char LL_RIGHTS_URI_REPRODUCTION[];
 
 /**
  * The LL_RIGHTS_URI_SHARE_ALIKE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * derivative works be licensed under the same terms as the original work
  */
@@ -385,7 +385,7 @@ extern const char LL_RIGHTS_URI_SHARE_ALIKE[];
 
 /**
  * The LL_RIGHTS_URI_SHARING string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * noncommercial distribution, permits commercial derivatives, but only
  * non-commercial distribution
@@ -394,7 +394,7 @@ extern const char LL_RIGHTS_URI_SHARING[];
 
 /**
  * The LL_RIGHTS_URI_SOURCE_CODE string may be returned by the
- * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS functions.
+ * LL_ATTRIBUTE_URI_PERMITS, LL_ATTRIBUTE_URI_REQUIRES and LL_ATTRIBUTE_URI_PROHIBITS attributes.
  *
  * source code (the preferred form for making modifications) must be
  * provided for all derivative works
