@@ -206,7 +206,6 @@ ll_parse_version (const char * version)
             }
           c++;
         }
-      free (version);
       return result;
     }
   return NULL;
