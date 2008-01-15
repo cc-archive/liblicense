@@ -102,8 +102,10 @@ static int heap_size( int num_attributes )
  */
 static void iterate_children( int *license_hits, int index, int height, int heap_sz )
 {
-	int leftChild = (index-N_STATES+2)*N_STATES;
+	int leftChild;
+        int i;
 
+	leftChild = (index-N_STATES+2)*N_STATES;
 	if (leftChild >= heap_sz) { /* we've hit a leaf node, where the licenses are */
 		/* the array tracks leaf nodes, while the heap tracks all nodes */
 		int arrayIndex = index-indexAt(height);
@@ -111,7 +113,7 @@ static void iterate_children( int *license_hits, int index, int height, int heap
 		return;
 	}
 
-	int i = 0;
+	i = 0;
 	while ( i<N_STATES ) {
 		iterate_children( license_hits, leftChild+i, height+1, heap_sz );
 		i++;
@@ -141,6 +143,8 @@ int ll_attribute_flag( ll_license_chooser_t *license_chooser, const char *attr )
 
 const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *license_chooser, int permits, int requires, int prohibits )
 {
+        int arrayIndex;
+
 	/* Traverse the down the tree until we get to the right leaf.  Each pass in the for-loop traverses down one level
 	 * of the tree.
 	 */
@@ -160,7 +164,7 @@ const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *licen
 			curr = (curr-N_STATES+2)*N_STATES+LL_ATTR_UNSPECIFIED;
 		}
 	}
-	int arrayIndex = curr-indexAt(license_chooser->num_attributes);
+	arrayIndex = curr-indexAt(license_chooser->num_attributes);
 	return license_chooser->license_list[arrayIndex]->next;
 }
 
@@ -174,36 +178,43 @@ void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, 
 
 ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, const char **attributes )
 {
-	ll_license_chooser_t *chooser = (ll_license_chooser_t*)malloc(sizeof(ll_license_chooser_t));
-
-	char* *licenses = ll_get_licenses(jurisdiction);
-	
+	ll_license_chooser_t *chooser;
+	char **licenses;
 	int num_attributes;
-	for (num_attributes = 0; attributes[num_attributes]; ++num_attributes);
-	int num_nodes = 1 << (num_attributes * 2);
+        int num_nodes;
+        int *license_hits;
+	ll_license_list_t **license_heap;
+        int i;
+        int size;
+	int used_attrs;
+	char **attr;
+	char **attrs;
+	char **license;
 
-	int license_hits[num_nodes];
-	ll_license_list_t **license_heap = (ll_license_list_t**)malloc(sizeof(ll_license_list_t*)*num_nodes);
+	chooser = (ll_license_chooser_t*)malloc(sizeof(ll_license_chooser_t));
+	licenses = ll_get_licenses(jurisdiction);
+	for (num_attributes = 0; attributes[num_attributes]; ++num_attributes)
+          ;
+	num_nodes = 1 << (num_attributes * 2);
 
-	int i;
+	license_hits = (int *)malloc(num_nodes * sizeof(int));
+	license_heap = (ll_license_list_t**)malloc(sizeof(ll_license_list_t*)*num_nodes);
+
 	for (i=0; i<num_nodes; ++i) {
 		license_hits[i] = 0;
 		license_heap[i] = (ll_license_list_t*)calloc(1,sizeof(ll_license_list_t));
 	}
 
-	int size = heap_size(num_attributes);
+	size = heap_size(num_attributes);
 
-	int used_attrs;
-	char **attr;
-	char **attrs;
-	char* *license;
 	for ( license = licenses; license && *license; ++license ) {
 		used_attrs = 0x0000;
 
 		attrs = ll_get_attribute(*license, LL_PERMITS, false);
 		for (attr=attrs; *attr; ++attr) {
 			int attr_index = attribute_index(attributes,*attr,num_attributes);
-			if (attr_index == -1) continue;
+			if (attr_index == -1)
+                            continue;
 
 			used_attrs |= 1 << attr_index;
 
@@ -251,10 +262,12 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 
 		for (i=0; i<num_nodes; ++i) {
 			if ( license_hits[i] == num_attributes ) {
+				ll_license_list_t *tmp;
+
 				ll_license_list_t *new_license_list = (ll_license_list_t*)malloc(sizeof(ll_license_list_t));
 				new_license_list->license = *license;
 
-				ll_license_list_t *tmp = license_heap[i]->next;
+				tmp = license_heap[i]->next;
 				license_heap[i]->next = new_license_list;
 				new_license_list->next = tmp;
 			}
@@ -270,6 +283,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 	}
 	chooser->license_list = license_heap;
 
+        free(license_hits);
 	return chooser;
 }
 
