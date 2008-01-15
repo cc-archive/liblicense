@@ -17,6 +17,8 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+#include <stdbool.h>
+
 #include "license.h"
 
 /* this is a crazy hack to make parameter as unused */
