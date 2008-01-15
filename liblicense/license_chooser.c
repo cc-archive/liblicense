@@ -66,7 +66,7 @@ struct _ll_license_chooser_t {
 #define N_STATES 4
 
 /* Returns the index of the first node of the heap at the given height */
-int indexAt( int height )
+static int indexAt( int height )
 {
 	int h = 0;
 	int i = N_STATES;
@@ -81,7 +81,7 @@ int indexAt( int height )
 }
 
 /* Returns the total number of nodes in the heap built for searching on the given number of attributes */
-int heap_size( int num_attributes )
+static int heap_size( int num_attributes )
 {
 	int h = 0;
 	int i = N_STATES;
@@ -99,7 +99,7 @@ int heap_size( int num_attributes )
  *
  * For example, one call of iterate_children will increase license_hits[] for all licenses that prohibit CommercialUse.  On the next call to iterate_children, all licenses that require Attribution are increased.  Using the above tree in this example, first, license_hits[2,6,10,14] are all increased to 1.  Then the second call increases license_hits[4,5,6,7].  license_hits[6] is now 2, meaning we've matched the licenses at that index.
  */
-void iterate_children( int *license_hits, int index, int height, int heap_sz )
+static void iterate_children( int *license_hits, int index, int height, int heap_sz )
 {
 	int leftChild = (index-N_STATES+2)*N_STATES;
 
@@ -117,7 +117,7 @@ void iterate_children( int *license_hits, int index, int height, int heap_sz )
 	}
 }
 
-int attribute_index( const char **attributes, char *attr, int num_attributes )
+static int attribute_index( const char **attributes, char *attr, int num_attributes )
 {
 	int i;
 	for (i=0; i<num_attributes; ++i) {
