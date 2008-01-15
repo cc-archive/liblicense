@@ -197,7 +197,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 	char **attr;
 	char **attrs;
 	char* *license;
-	for ( license = licenses; *license; ++license ) {
+	for ( license = licenses; license && *license; ++license ) {
 		used_attrs = 0x0000;
 
 		attrs = ll_get_attribute(*license, LL_PERMITS, false);
