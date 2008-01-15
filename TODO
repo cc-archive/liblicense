@@ -1,0 +1,6 @@
+* Fix memory leaks related to ll_parse_version
+* Add a test in 'make check' to examine memory-leakiness or not of:
+    v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, false)));
+
+* (does the return value of ll_get_attribute get freed?)
+
