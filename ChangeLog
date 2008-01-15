@@ -1,3 +1,8 @@
+liblicense 0.5.1:
+
+* fix Ruby bindings to compile - add stdbool.h include (hub)
+* fix license_info.c's ll_parse_version to not free user-provided data (paulproteus)
+
 liblicense 0.5: 
 
 Maintainer: Asheesh Laroia <asheesh@creativecommons.org>

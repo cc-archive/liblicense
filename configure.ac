@@ -20,7 +20,7 @@
 # This file is part of Liblicense.
 
 AC_PREREQ(2.57)
-AC_INIT([liblicense],[0.5],[cc-devel@lists.ibiblio.org])
+AC_INIT([liblicense],[0.5.1],[cc-devel@lists.ibiblio.org])
 AM_INIT_AUTOMAKE([dist-bzip2])
 
 dnl ---------------------------------------------------------------------------
@@ -45,8 +45,8 @@ dnl  change does not break upward compatibility (ie it is an addition),
 dnl  increment AGE, Otherwise AGE is reset to 0. If CURRENT has changed,
 dnl  REVISION is set to 0, otherwise REVISION is incremented.
 dnl ---------------------------------------------------------------------------
-dnl TRUNK post-0.4 is the revision 1.0.0
-AC_SUBST([LIBLICENSE_REVISION], [0])
+dnl 0.5 and after is the revision 1.0.0
+AC_SUBST([LIBLICENSE_REVISION], [1])
 AC_SUBST([LIBLICENSE_AGE],      [0])
 AC_SUBST([LIBLICENSE_CURRENT],  [1])
 AC_SUBST([LIBLICENSE_CURRENT_MIN],
