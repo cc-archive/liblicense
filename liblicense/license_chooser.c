@@ -7,13 +7,14 @@
  * distribution in the file COPYING.
  *
  * You may use the liblicense software in accordance with the
- * terms of that license. You agree that you are solely 
+ * terms of that license. You agree that you are solely
  * responsible for your use of the liblicense software and you
  * represent and warrant to Creative Commons that your use
  * of the liblicense software will comply with the CC-GNU-LGPL.
  *
  * Copyright 2007, Creative Commons, www.creativecommons.org.
  * Copyright 2007, Jason Kivlighn
+ * Copyright (C) 2007 Peter Miller
  */
 
 #include <stdbool.h>
@@ -37,7 +38,7 @@ struct _ll_license_chooser_t {
 	 *                    /  |   |   \      / |   |  \    / |  |  \       / |  |  \
 	 * CommercialUse:    P   R   Pr  U     P  R  Pr  U   P  R  Pr  U     P  R  Pr  U
 	 * Indices in
-	 *  license_list:    0   1   2   3    4   5  6   7   8  9  10  11   12 13  14 15 
+	 *  license_list:    0   1   2   3    4   5  6   7   8  9  10  11   12 13  14 15
 	 *
 	 * In the example above, the list of licenses that require (R) Attribution and prohibit (Pr) CommercialUse
 	 * is found at license_list[6].
@@ -165,6 +166,10 @@ const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *licen
 
 void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, int *requires, int *prohibits )
 {
+    (void)license_chooser;
+    (void)permits;
+    (void)requires;
+    (void)prohibits;
 }
 
 ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, const char **attributes )
