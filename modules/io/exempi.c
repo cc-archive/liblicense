@@ -37,6 +37,13 @@ void exempi_shutdown()
 	xmp_terminate();
 }
 
+/* this is a work around a bad bug in exempi 1.99.8 
+ * should be retro compatible. Remove when you require
+ * exempi 1.99.8 and up
+ */
+#ifndef XMP_OPEN_ONLYXMP
+#define XMP_OPEN_ONLYXMP XMP_OPEN_OPNLYXMP
+#endif
 
 char* exempi_read( const char* filename )
 {
@@ -44,7 +51,7 @@ char* exempi_read( const char* filename )
 	XmpPtr xmp;
 	char *uri_string;
 
-	f = xmp_files_open_new(filename, XMP_OPEN_OPNLYXMP);
+	f = xmp_files_open_new(filename, XMP_OPEN_ONLYXMP);
 	if (f == NULL) {
 	  // Golly gee whiz, you can't open that file.  xmp_err() or
 	  // something like it could tell us why, if only we wanted to
@@ -82,7 +89,7 @@ int exempi_write( const char* filename, const char* uri )
 	XmpFilePtr f;
 	XmpPtr xmp;
 
-	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_OPNLYXMP);
+	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_ONLYXMP);
 	if (f == NULL) {
 	  // Then we're doomed.
 	  // WTF is with the magic-number return codes?  Maybe it's 1,
