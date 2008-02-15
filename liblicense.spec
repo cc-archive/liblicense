@@ -1,5 +1,5 @@
 Name: liblicense
-Version: 0.4
+Version: 0.6
 Release: 1
 License: LGPL
 Summary: Content License Library
@@ -33,7 +33,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 The liblicense package contains the library, bindings, CLI utilities and license files.
 
 %prep
-%setup -n liblicense-0.4
+%setup -n liblicense-0.6
 %patch -p1
 ./configure --prefix=/usr
 
