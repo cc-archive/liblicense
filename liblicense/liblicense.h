@@ -319,6 +319,14 @@ typedef char *ll_attribute_t;
 typedef char *ll_filename_t;
 
 /**
+ * The LL_WEBSTATEMENT attribute is the URL
+ * to a web page making a license assertion about
+ * a document.  See http://wiki.creativecommons.org/Embedded_Metadata
+ * for a comic!
+ */
+const char LL_WEBSTATEMENT[];
+
+/**
  * The LL_ATTRIBUTION string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
  *
