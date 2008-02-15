@@ -38,7 +38,8 @@
 
 #include "modules.h"
 
-
+const char LL_WEBSTATEMENT[] =
+  "http://ns.adobe.com/xap/1.0/rights/WebStatement";
 const char LL_ATTRIBUTION[] =
   "http://creativecommons.org/ns#Attribution";
 const char LL_REPRODUCTION[] =
