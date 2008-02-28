@@ -39,7 +39,7 @@ typedef struct {
 } ruby_liblicense;
 
 
-void Init_liblicense();
+void Init_liblicense(void);
 
 
 #endif /* __LICENSE_H__ */

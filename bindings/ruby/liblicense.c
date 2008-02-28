@@ -502,7 +502,7 @@ static VALUE rbll_write(int argc, VALUE *argv, VALUE self) {
 	return INT2NUM(result);
 }
 
-void Init_liblicense() {
+void Init_liblicense(void) {
 	ll_init();
 
 	cLiblicense = rb_define_class("Liblicense", rb_cObject);
