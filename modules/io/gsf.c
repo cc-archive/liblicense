@@ -225,7 +225,7 @@ int gsf_write( const char* filename, const char* uri )
 }
 
 const char * gsf_supported_predicates[] = {NULL};
-const char * gsf_mime_tpes[] = {"application/msword",
+const char * gsf_mime_types[] = {"application/msword",
 				NULL};
 
 
