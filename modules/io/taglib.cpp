@@ -123,6 +123,10 @@ int taglib_write( const char* filename, const char* uri )
 }
 
 const char * taglib_supported_predicates[] = {NULL};
+const char * taglib_mime_types[] = {"audio/x-musepack",
+				    "audio/x-vorbis+ogg",
+				    "application/ogg",
+				    "audio/x-flac"};
 
 void taglib_shutdown()
 {
@@ -134,7 +138,7 @@ LL_MODULE_DEFINE("taglib.so", // name
 		 "0.1", // version
 		 LL_FEATURES_EMBED, // features
 		 taglib_supported_predicates, // supported predicates
-		 "audio/x-musepack audio/x-vorbis+ogg application/ogg audio/x-flac", // supported MIME types
+		 taglib_mime_types, // supported MIME types
 		 taglib_init,
 		 taglib_read,
 		 taglib_write,

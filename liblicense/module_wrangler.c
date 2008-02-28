@@ -252,6 +252,7 @@ void ll_print_module_info(void) {
 		printf("\tSupported formats: %s\n",(*curr_module)->mime_types ? (*curr_module)->mime_types : "any");
 		printf("\tRead support: %s\n",(*curr_module)->read ? "yes" : "no");
 		printf("\tWrite support: %s\n",(*curr_module)->write ? "yes" : "no");
+		printf("\tSupported prdicates: %s\n", (*curr_module)->supported_predicates
 		if ((*curr_module)->features) {
 			printf("\tOther features:");
 			if ((*curr_module)->features & LL_FEATURES_EMBED) {
@@ -262,20 +263,16 @@ void ll_print_module_info(void) {
 	}
 }
 
-int _ll_contains_token(const char *string, const char *token)
+int _ll_contains_token(const char **haystack, const char *needle)
 {
-	char *copy = strdup(string);
-
-	char * pch = strtok (copy," ");
-	while (pch != NULL)
-	{
-		if ( strcmp(pch,token) == 0 ) {
-			free(copy);
-			return 1;
-		}
-		pch = strtok (NULL, " ");
-	}
-
-	free(copy);
-	return 0;
+  char * looking_at_this_one = haystack;
+  while(looking_at_this_one != NULL) {
+    // Then check
+    if (strcmp(looking_at_this_one, token) == 0) {
+      return 1;
+    }
+    // Otherwise bump up to the next one
+    looking_at_this_one++;
+  }
+  return 0; // If we get here, we've failed.
 }

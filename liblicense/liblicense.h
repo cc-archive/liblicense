@@ -318,12 +318,6 @@ typedef int *ll_version_t;
 typedef char *ll_attribute_t;
 typedef char *ll_filename_t;
 
-  /**
-   * LL_PREDICATE_ANY is a string meaning that a module can store
-   * any URI as a predicate.
-   */
-extern const char LL_PREDICATE_ANY[];
-
 /**
  * The LL_WEBSTATEMENT attribute is the URL
  * to a web page making a license assertion about
@@ -641,6 +635,12 @@ void ll_license_print_info (ll_uri_t license_uri);
 
 /******************* module_wrangler *******************/
 
+  /**
+   * LL_PREDICATE_ANY is a string meaning that a module can store
+   * any URI as a predicate.
+   */
+extern const char LL_PREDICATE_ANY[];
+
 typedef char *ll_module_t;
 typedef char *ll_symbol_t;
 typedef char *ll_mime_type_t;
@@ -778,7 +778,7 @@ void ll_stop_modules (void);
  *     non-zero (true) if the needle is found in the haystack,
  *     zero (false) if not found.
  */
-int _ll_contains_token (const char *haystack, const char *needle);
+int _ll_contains_token (const char **haystack, const char *needle);
 
 typedef struct _LLModuleDesc LLModuleDesc;
 
@@ -803,6 +803,7 @@ struct _LLModuleDesc
   const char *version;
   int features;
   const char **supported_predicates;
+
   const char *mime_types;
   LLModuleInitFunc module_init;
   LLModuleReadFunc read;
