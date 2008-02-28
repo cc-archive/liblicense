@@ -36,7 +36,7 @@
 
 const char * liblicense_license_dir = NULL;
 
-sqlite3 *db;
+static sqlite3 *db;
 
 static int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
         ll_uri_t* results;
