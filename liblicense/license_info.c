@@ -141,7 +141,7 @@ jurisdiction_map_t jurisdiction_map[] =
   {"uk", _("UK Englands and Wales")},
   {"us", _("United States")},
   {"za", _("South Africa")},
-  {0, 0}
+  {NULL, NULL}
 };
 
 char *
