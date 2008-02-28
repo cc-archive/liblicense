@@ -20,6 +20,7 @@
 #include <stdbool.h>
 
 #include "license.h"
+#include <stdbool.h>
 
 /* this is a crazy hack to make parameter as unused */
 #define NO_WARN_UNUSED(x) (void)( x )

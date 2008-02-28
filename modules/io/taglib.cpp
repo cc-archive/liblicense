@@ -122,15 +122,20 @@ int taglib_write( const char* filename, const char* uri )
 	return 0;
 }
 
-const char * taglib_suppoted_predicates = {NULL};
+const char * taglib_supported_predicates[] = {NULL};
 
 void taglib_shutdown()
 {
   // Do nothing!
 }
 
-LL_MODULE_DEFINE("taglib.so","Embeds licenses in tags of formats supported by TagLib.","0.1",
-  LL_FEATURES_EMBED,
-		 taglib_suppoted_predicates,
-  "audio/x-musepack audio/x-vorbis+ogg application/ogg audio/x-flac",
-  taglib_init,taglib_read,taglib_write,taglib_shutdown);
+LL_MODULE_DEFINE("taglib.so", // name
+		 "Embeds licenses in tags of formats supported by TagLib.", // description
+		 "0.1", // version
+		 LL_FEATURES_EMBED, // features
+		 taglib_supported_predicates, // 
+		 "audio/x-musepack audio/x-vorbis+ogg application/ogg audio/x-flac",
+		 taglib_init,
+		 taglib_read,
+		 taglib_write,
+		 taglib_shutdown);

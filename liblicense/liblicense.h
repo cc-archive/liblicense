@@ -322,7 +322,7 @@ typedef char *ll_filename_t;
    * LL_PREDICATE_ANY is a string meaning that a module can store
    * any URI as a predicate.
    */
-  const char LL_PREDICATE_ANY[];
+extern const char LL_PREDICATE_ANY[];
 
 /**
  * The LL_WEBSTATEMENT attribute is the URL
@@ -330,7 +330,7 @@ typedef char *ll_filename_t;
  * a document.  See http://wiki.creativecommons.org/Embedded_Metadata
  * for a comic!
  */
-const char LL_WEBSTATEMENT[];
+extern const char LL_WEBSTATEMENT[];
 
 /**
  * The LL_ATTRIBUTION string may be returned by the
@@ -802,6 +802,7 @@ struct _LLModuleDesc
   const char *description;
   const char *version;
   int features;
+  const char **supported_predicates;
   const char *mime_types;
   LLModuleInitFunc module_init;
   LLModuleReadFunc read;

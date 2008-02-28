@@ -25,8 +25,10 @@
 void stub_init(void) {
 }
 
+const char *stub_supported_predicates[] = {NULL};
+
 LL_MODULE_DEFINE("stub.so","A stupid module that can't read or write a license","infinity",
   LL_FEATURES_NONE,
-		 {NULL},
+		 stub_supported_predicates,
   NULL,
   stub_init,NULL,NULL,NULL);
