@@ -100,7 +100,7 @@ struct jurisdiction_map_t
   const char *name;
 };
 
-jurisdiction_map_t jurisdiction_map[] =
+static jurisdiction_map_t jurisdiction_map[] =
 {
   {"unported", _("Unported")},
   {"ar", _("Argentina")},
