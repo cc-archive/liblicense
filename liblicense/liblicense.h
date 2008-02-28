@@ -816,7 +816,7 @@ struct _LLModuleDesc
 #define LL_MODULE_EXPORT
 #endif
 
-#define LL_MODULE_DEFINE(name,description,version,features,mime_types,init,read,write,shutdown)	\
+#define LL_MODULE_DEFINE(name,description,version,features,supported_predicates,mime_types,init,read,write,shutdown) \
 LL_MODULE_EXPORT LLModuleDesc ll_module_desc = {        \
 name,                                                   \
 description,                                            \

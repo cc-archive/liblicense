@@ -126,8 +126,10 @@ int exempi_write( const char* filename, const char* uri )
 	return success;
 }
 
+const char *exempi_supported_predicates[] = {LL_PREDICATE_ANY, NULL};
+
 LL_MODULE_DEFINE("exempi.so","Embeds licenses in formats recognized by Adobe's SDK.","0.1",
   LL_FEATURES_EMBED,
-		 {LL_PREDICATE_ANY, NULL},
+		 NULL, /* exempi_supported_predicates, */
   "image/jpeg image/png image/tiff application/pdf video/x-msvideo video/quicktime audio/x-wav",
   exempi_init,exempi_read,exempi_write,exempi_shutdown);

@@ -224,8 +224,10 @@ int gsf_write( const char* filename, const char* uri )
 	return TRUE;
 }
 
+const char * gsf_supported_predicates[] = {NULL};
+
 LL_MODULE_DEFINE("gsf.so","Embeds licenses in MS Office (pre-2007).","0.1",
   LL_FEATURES_EMBED,
-		 {NULL},
+		 gsf_supported_predicates,
   "application/msword",
   _gsf_init,gsf_read,gsf_write,_gsf_shutdown);

@@ -27,5 +27,6 @@ void stub_init() {
 
 LL_MODULE_DEFINE("stub.so","A stupid module that can't read or write a license","infinity",
   LL_FEATURES_NONE,
+		 {NULL},
   NULL,
   stub_init,NULL,NULL,NULL);
