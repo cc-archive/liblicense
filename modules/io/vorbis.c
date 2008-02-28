@@ -168,7 +168,7 @@ int vorbis_write( const char* filename, const char* uri )
 }
 
 const char * vorbis_supported_predicates[] = {NULL};
-const char * vorbis_mime_types = {"audio/x-vorbis+ogg",
+const char * vorbis_mime_types[] = {"audio/x-vorbis+ogg",
 				  "audio/x-vorbis",
 				  "application/ogg",
 				  NULL};
