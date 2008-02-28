@@ -39,7 +39,7 @@
 
 #include "modules.h"
 
-const char * LL_PREDICATE_ANY = "This flag string indicates that the module supports any predicate.";
+const char LL_PREDICATE_ANY[] = "This flag string indicates that the module supports any predicate.";
 
 const char *liblicense_io_module_dir;
 const char *liblicense_config_module_dir;
