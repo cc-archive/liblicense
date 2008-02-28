@@ -46,16 +46,17 @@ dnl  increment AGE, Otherwise AGE is reset to 0. If CURRENT has changed,
 dnl  REVISION is set to 0, otherwise REVISION is incremented.
 dnl ---------------------------------------------------------------------------
 dnl 0.5 and after is the revision 1.0.0
-AC_SUBST([LIBLICENSE_REVISION], [1])
+dnl 0.6 is the revision 2.0.0
+AC_SUBST([LIBLICENSE_REVISION], [2])
 AC_SUBST([LIBLICENSE_AGE],      [0])
-AC_SUBST([LIBLICENSE_CURRENT],  [1])
+AC_SUBST([LIBLICENSE_CURRENT],  [0])
 AC_SUBST([LIBLICENSE_CURRENT_MIN],
          [`expr $LIBLICENSE_CURRENT - $LIBLICENSE_AGE`])
 AC_SUBST([LIBLICENSE_VERSION_INFO],
          [$LIBLICENSE_CURRENT:$LIBLICENSE_REVISION:$LIBLICENSE_AGE])
 
 dnl the major version. used for package names, etc
-LIBLICENSE_MAJOR_VERSION=1.0
+LIBLICENSE_MAJOR_VERSION=2.0
 AC_SUBST(LIBLICENSE_MAJOR_VERSION)
 LIBLICENSE_INCLUDE_BASE=liblicense-$LIBLICENSE_MAJOR_VERSION
 AC_SUBST(LIBLICENSE_INCLUDE_BASE)
