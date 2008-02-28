@@ -133,8 +133,8 @@ LL_MODULE_DEFINE("taglib.so", // name
 		 "Embeds licenses in tags of formats supported by TagLib.", // description
 		 "0.1", // version
 		 LL_FEATURES_EMBED, // features
-		 taglib_supported_predicates, // 
-		 "audio/x-musepack audio/x-vorbis+ogg application/ogg audio/x-flac",
+		 taglib_supported_predicates, // supported predicates
+		 "audio/x-musepack audio/x-vorbis+ogg application/ogg audio/x-flac", // supported MIME types
 		 taglib_init,
 		 taglib_read,
 		 taglib_write,
