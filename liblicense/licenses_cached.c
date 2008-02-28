@@ -55,7 +55,7 @@ static int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
 }
 
 static ll_uri_t* _ll_query(char* query, int max) {
-	char *zErrMsg = 0;
+	char *zErrMsg = NULL;
 	ll_uri_t* values = ll_new_list(max);
 	int rc = sqlite3_exec(db, query, _ll_sql_callback, values, &zErrMsg);
 	if (rc!=SQLITE_OK) {
@@ -130,7 +130,7 @@ int ll_update_cache() {
 	/* check last update time versus license file update */
 
 	/* create table if it doesn't exist. */
-	char *zErrMsg = 0;
+	char *zErrMsg = NULL;
 	int rc = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS licenses( uri TEXT UNIQUE ON CONFLICT IGNORE, jurisdiction TEXT, obsolete INTEGER);" , _ll_sql_callback, 0, &zErrMsg);
 	if (rc!=SQLITE_OK) {
 		printf("Table creation failed: %s\n",zErrMsg);
