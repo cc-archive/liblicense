@@ -38,7 +38,7 @@ const char * liblicense_license_dir = NULL;
 
 sqlite3 *db;
 
-int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
+static int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
         ll_uri_t* results;
 
 	(void)argc;
@@ -54,7 +54,7 @@ int _ll_sql_callback(void* list,int argc,char**argv,char**colNames) {
 	return 0;
 }
 
-ll_uri_t* _ll_query(char* query, int max) {
+static ll_uri_t* _ll_query(char* query, int max) {
 	char *zErrMsg = 0;
 	ll_uri_t* values = ll_new_list(max);
 	int rc = sqlite3_exec(db, query, _ll_sql_callback, values, &zErrMsg);
@@ -66,10 +66,10 @@ ll_uri_t* _ll_query(char* query, int max) {
 	return values;
 }
 // helper which returns whether a file ands in .rdf
-int _ll_rdf_filter(const struct dirent * d) {
+static int _ll_rdf_filter(const struct dirent * d) {
 	return strstr(d->d_name,".rdf")!=NULL;
 }
-char* _ll_cache_time_filename() {
+static char* _ll_cache_time_filename() {
     struct stat sb;
 	char* home = getenv("HOME");
     char* path = (char*) calloc((strlen(home)+strlen("/.license/last_cache.time")+1),sizeof(char));
@@ -89,7 +89,7 @@ char* _ll_cache_time_filename() {
     strcat(path,"last_cache.time");
     return path;
 }
-int _ll_last_cache_time() {
+static int _ll_last_cache_time() {
 	FILE* file;
     char tmp[15] = "";
 	time_t t;
