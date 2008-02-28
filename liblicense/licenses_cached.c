@@ -69,7 +69,7 @@ static ll_uri_t* _ll_query(char* query, int max) {
 static int _ll_rdf_filter(const struct dirent * d) {
 	return strstr(d->d_name,".rdf")!=NULL;
 }
-static char* _ll_cache_time_filename() {
+static char* _ll_cache_time_filename(void) {
     struct stat sb;
 	char* home = getenv("HOME");
     char* path = (char*) calloc((strlen(home)+strlen("/.license/last_cache.time")+1),sizeof(char));
@@ -89,7 +89,7 @@ static char* _ll_cache_time_filename() {
     strcat(path,"last_cache.time");
     return path;
 }
-static int _ll_last_cache_time() {
+static int _ll_last_cache_time(void) {
 	FILE* file;
     char tmp[15] = "";
 	time_t t;
@@ -108,7 +108,7 @@ static int _ll_last_cache_time() {
     return t;
 }
 
-int _ll_update_cache_time() {
+int _ll_update_cache_time(void) {
 	FILE* file;
 	char* path = _ll_cache_time_filename();
 	if (path == NULL) {
@@ -122,7 +122,7 @@ int _ll_update_cache_time() {
     return true;
 }
 
-int ll_update_cache() {
+int ll_update_cache(void) {
 	int i;
 	int n;
 	time_t last_cache;
@@ -184,7 +184,7 @@ int ll_update_cache() {
 }
 
 // initializes the library and its dependencies.
-int ll_init() {
+int ll_init(void) {
 	char* home;
 	char* path;
     struct stat sb;
@@ -223,7 +223,7 @@ int ll_init() {
 }
 
 // stops the library and its dependencies.
-int ll_stop() {
+int ll_stop(void) {
 	raptor_finish();
 	ll_stop_modules();
 	sqlite3_close(db);
@@ -231,7 +231,7 @@ int ll_stop() {
 }
 
 // returns a null-terminated list of all general licenses available.
-ll_uri_t* ll_get_all_licenses() {
+ll_uri_t* ll_get_all_licenses(void) {
   ll_uri_t* result = _ll_query("SELECT uri FROM licenses LIMIT 500;",500);
   return result;
 }
@@ -257,7 +257,7 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 }
 
 // returns a null-terminated list of all jurisdictions in use
-ll_juris_t* ll_get_jurisdictions() {
+ll_juris_t* ll_get_jurisdictions(void) {
 	ll_juris_t* result = _ll_query("SELECT DISTINCT(jurisdiction) FROM licenses ORDER BY jurisdiction LIMIT 50",50);
 
 	int i;

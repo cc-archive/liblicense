@@ -40,7 +40,7 @@ const char * liblicense_license_dir = NULL;
 /**
  * initializes the library and its dependencies.
  */
-int ll_init() {
+int ll_init(void) {
 	raptor_init();
 	setlocale(LC_ALL,"");
 	ll_init_modules();
@@ -54,7 +54,7 @@ int ll_init() {
 /**
  * stops the library and its dependencies.
  */
-int ll_stop() {
+int ll_stop(void) {
 	raptor_finish();
 	ll_stop_modules();
 	return 0;
@@ -70,7 +70,7 @@ int _ll_rdf_filter(const struct dirent * d) {
 /**
  * returns a null-terminated list of all general licenses available.
  */
-ll_uri_t* ll_get_all_licenses() {
+ll_uri_t* ll_get_all_licenses(void) {
   struct dirent **namelist;
   int n;
   ll_uri_t* result;
@@ -139,7 +139,7 @@ ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 	return result;
 }
 
-ll_juris_t* ll_get_jurisdictions() {
+ll_juris_t* ll_get_jurisdictions(void) {
 	ll_uri_t* licenses;
 	ll_juris_t* result;
 	int count;

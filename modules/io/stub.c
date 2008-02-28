@@ -22,7 +22,7 @@
 
 #include <stdio.h>
 
-void stub_init() {
+void stub_init(void) {
 }
 
 LL_MODULE_DEFINE("stub.so","A stupid module that can't read or write a license","infinity",

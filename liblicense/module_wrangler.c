@@ -50,7 +50,7 @@ int _ll_so_filter(const struct dirent * d) {
 	return strstr(d->d_name,".so")!=NULL;
 }
 
-void ll_init_modules() {
+void ll_init_modules(void) {
 	struct dirent **namelist;
         int n;
 	LLModuleDesc **curr_module;
@@ -99,7 +99,7 @@ void ll_init_modules() {
 	free(namelist);
 }
 
-void ll_stop_modules() {
+void ll_stop_modules(void) {
 	LLModuleDesc **curr_module = _ll_module_list;
 	if( curr_module ) {
 		while (*curr_module) {
@@ -113,7 +113,7 @@ void ll_stop_modules() {
 	}
 }
 
-ll_module_t* ll_get_config_modules() {
+ll_module_t* ll_get_config_modules(void) {
   struct dirent **namelist;
   int n;
   ll_module_t* result;
@@ -138,7 +138,7 @@ ll_module_t* ll_get_config_modules() {
   return result;
 }
 
-ll_module_t* ll_get_io_modules() {
+ll_module_t* ll_get_io_modules(void) {
 	int length;
 	ll_module_t* result;
 	int i;
@@ -244,7 +244,7 @@ void* ll_get_module_symbol(const char* directory, ll_module_t m, ll_symbol_t s) 
 /*
  * IO module functions.
  */
-void ll_print_module_info() {
+void ll_print_module_info(void) {
 	LLModuleDesc **curr_module;
 
 	assert(_ll_module_list);

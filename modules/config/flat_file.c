@@ -18,6 +18,8 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+/* FIXME: Non-namespaced names! */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,13 +28,13 @@
 #include <sys/types.h>
 
 #define MAX_URI_LENGTH 100
-void init() {
+void init(void) {
 }
 
-void shutdown() {
+void shutdown(void) {
 }
 
-char* get_filename() {
+char* get_filename(void) {
     char* home;
     char* path;
     struct stat sb;
@@ -74,7 +76,7 @@ int set_default(char* u) {
     return result;
 }
 
-char* get_default() {
+char* get_default(void) {
     char* path;
     FILE* file;
     char tmp[MAX_URI_LENGTH];
