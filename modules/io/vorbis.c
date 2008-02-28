@@ -168,9 +168,19 @@ int vorbis_write( const char* filename, const char* uri )
 }
 
 const char * vorbis_supported_predicates[] = {NULL};
+const char * vorbis_mime_types = {"audio/x-vorbis+ogg",
+				  "audio/x-vorbis",
+				  "application/ogg",
+				  NULL};
+  
 
-LL_MODULE_DEFINE("vorbis.so","Write licenses in Vorbiscomments within an OGG stream.","0.1",
-  LL_FEATURES_EMBED,
+LL_MODULE_DEFINE("vorbis.so",
+		 "Write licenses in Vorbiscomments within an OGG stream.",
+		 "0.1",
+		 LL_FEATURES_EMBED,
 		 vorbis_supported_predicates,
-  "audio/x-vorbis+ogg audio/x-vorbis application/ogg",
-  vorbis_init,vorbis_read,vorbis_write,NULL);
+		 vorbis_mime_types,
+		 vorbis_init,
+		 vorbis_read,
+		 vorbis_write,
+		 NULL /* no shutdown */);

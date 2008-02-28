@@ -213,9 +213,16 @@ int sidecar_xmp_write( const char* filename, const char* uri )
 }
 
 const char* sidecar_xmp_supported_predicates[] = {NULL};
+const char* sidecar_xmp_mime_types[] = {NULL};
 
-LL_MODULE_DEFINE("sidecar_xmp.so","Write licenses in sidecar XMP files.","0.1",
-  LL_FEATURES_NONE,
+LL_MODULE_DEFINE("sidecar_xmp.so",
+		 "Write licenses in sidecar XMP files.",
+		 "0.1",
+		 LL_FEATURES_NONE,
 		 sidecar_xmp_supported_predicates,
-  NULL,
-  sidecar_xmp_init,sidecar_xmp_read,sidecar_xmp_write,sidecar_xmp_shutdown);
+		 sidecar_xmp_mime_types,
+		 sidecar_xmp_init,
+		 sidecar_xmp_read,
+		 sidecar_xmp_write,
+		 sidecar_xmp_shutdown);
+

@@ -804,7 +804,7 @@ struct _LLModuleDesc
   int features;
   const char **supported_predicates;
 
-  const char *mime_types;
+  const char **mime_types;
   LLModuleInitFunc module_init;
   LLModuleReadFunc read;
   LLModuleWriteFunc write;

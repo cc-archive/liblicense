@@ -96,9 +96,13 @@ int flac_write( const char* filename, const char* uri )
 }
 
 char * flac_supported_predicates[] = {NULL};
+char * flac_mime_types[] = {"audio/x-flac", NULL};
 
-LL_MODULE_DEFINE("flac.so","Write licenses in a FLAC comment.","0.1",
-  LL_FEATURES_EMBED,
+LL_MODULE_DEFINE("flac.so",
+		 "Write licenses in a FLAC comment.",
+		 "0.1",
+		 LL_FEATURES_EMBED,
 		 flac_supported_predicates,
-  "audio/x-flac",
-  flac_init,flac_read,flac_write,NULL);
+		 flac_mime_types,
+		 flac_init,flac_read,flac_write,
+         NULL /* no shutdown */);

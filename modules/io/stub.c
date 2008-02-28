@@ -22,13 +22,16 @@
 
 #include <stdio.h>
 
-void stub_init(void) {
-}
-
 const char *stub_supported_predicates[] = {NULL};
+const char *stub_mime_types[] = {NULL};
 
-LL_MODULE_DEFINE("stub.so","A stupid module that can't read or write a license","infinity",
-  LL_FEATURES_NONE,
+LL_MODULE_DEFINE("stub.so",
+		 "A stupid module that can't read or write a license",
+		 "0.2",
+		 LL_FEATURES_NONE,
 		 stub_supported_predicates,
-  NULL,
-  stub_init,NULL,NULL,NULL);
+		 stub_mime_types,
+		 NULL /* no init */,
+         NULL /* no read */,
+         NULL /* no write */,
+         NULL /* no shutdown */);

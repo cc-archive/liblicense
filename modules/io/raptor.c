@@ -340,9 +340,18 @@ int raptor_write( const char* filename, const char* license_uri_str )
 }
 
 const char * raptor_supported_predicates[] = {NULL};
+const char * raptor_mime_typesp[] = {"image/svg+xml",
+				     "application/smil",
+				     NULL};
 
-LL_MODULE_DEFINE("raptor.so","Write licenses in RDF embedded in XML.","0.1",
-  LL_FEATURES_EMBED,
+
+LL_MODULE_DEFINE("raptor.so",
+		 "Write licenses in RDF embedded in XML.",
+		 "0.1",
+		 LL_FEATURES_EMBED,
 		 raptor_supported_predicates,
-  "image/svg+xml application/smil",
-  _raptor_init,raptor_read,raptor_write,NULL);
+		 raptor_mime_typesp,
+		 _raptor_init,
+		 raptor_read,
+		 raptor_write,
+		 NULL /* no shutdown */);
