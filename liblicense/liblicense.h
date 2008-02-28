@@ -318,6 +318,12 @@ typedef int *ll_version_t;
 typedef char *ll_attribute_t;
 typedef char *ll_filename_t;
 
+  /**
+   * LL_PREDICATE_ANY is a string meaning that a module can store
+   * any URI as a predicate.
+   */
+  const char LL_PREDICATE_ANY[];
+
 /**
  * The LL_WEBSTATEMENT attribute is the URL
  * to a web page making a license assertion about
@@ -805,7 +811,7 @@ struct _LLModuleDesc
 };
 
 #ifdef _MSC_VER
-#define LL_MODULE_EXPORT __declspec(dllexport) extern
+#define LL_MODULEEXPORT __declspec(dllexport) extern
 #else
 #define LL_MODULE_EXPORT
 #endif
@@ -816,6 +822,7 @@ name,                                                   \
 description,                                            \
 version,                                                \
 features,                                               \
+supported_predicates,                                   \
 mime_types,                                             \
 init,                                                   \
 read,                                                   \

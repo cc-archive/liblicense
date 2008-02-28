@@ -97,5 +97,6 @@ int flac_write( const char* filename, const char* uri )
 
 LL_MODULE_DEFINE("flac.so","Write licenses in a FLAC comment.","0.1",
   LL_FEATURES_EMBED,
+		 {NULL},
   "audio/x-flac",
   flac_init,flac_read,flac_write,NULL);

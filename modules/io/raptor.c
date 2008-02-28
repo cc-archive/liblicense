@@ -341,5 +341,6 @@ int raptor_write( const char* filename, const char* license_uri_str )
 
 LL_MODULE_DEFINE("raptor.so","Write licenses in RDF embedded in XML.","0.1",
   LL_FEATURES_EMBED,
+		 {},
   "image/svg+xml application/smil",
   _raptor_init,raptor_read,raptor_write,NULL);

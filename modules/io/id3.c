@@ -80,5 +80,6 @@ int id3_write( const char* filename, const char* uri )
 
 LL_MODULE_DEFINE("id3.so","Write licenses within ID3 tags.","0.1",
   LL_FEATURES_EMBED,
+		 {NULL},
   "audio/mpeg",
   id3_init,id3_read,id3_write,NULL);

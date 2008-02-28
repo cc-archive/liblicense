@@ -169,5 +169,6 @@ int vorbis_write( const char* filename, const char* uri )
 
 LL_MODULE_DEFINE("vorbis.so","Write licenses in Vorbiscomments within an OGG stream.","0.1",
   LL_FEATURES_EMBED,
+		 {NULL},
   "audio/x-vorbis+ogg audio/x-vorbis application/ogg",
   vorbis_init,vorbis_read,vorbis_write,NULL);

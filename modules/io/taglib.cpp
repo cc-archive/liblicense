@@ -124,5 +124,6 @@ int taglib_write( const char* filename, const char* uri )
 
 LL_MODULE_DEFINE("taglib.so","Embeds licenses in tags of formats supported by TagLib.","0.1",
   LL_FEATURES_EMBED,
+		 {NULL},
   "audio/x-musepack audio/x-vorbis+ogg application/ogg audio/x-flac",
   taglib_init,taglib_read,taglib_write,NULL);
