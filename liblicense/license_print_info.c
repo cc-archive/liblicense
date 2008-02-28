@@ -80,6 +80,9 @@ ll_license_print_info (ll_uri_t uri)
   free (juris);
 
   attrs = ll_get_first(ll_get_attribute(uri, LL_CREATOR, false));
+ /** HORRIBLE FIXME:
+   * Compare type of attrs and ll_get_first.
+   */
   if (*attrs)
     {
       printf ("Creator: %s\n", *attrs);
