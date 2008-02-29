@@ -142,7 +142,7 @@ uninstall:
 check:
 
 mostlyclean:
-	rm -f *.pox $(GETTEXT_PACKAGE).pot *.old.po cat-id-tbl.tmp
+	#rm -f *.pox $(GETTEXT_PACKAGE).pot *.old.po cat-id-tbl.tmp
 	rm -f .intltool-merge-cache
 
 clean: mostlyclean
