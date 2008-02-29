@@ -23,12 +23,12 @@ EXEMPI_MODULES = exempi.la sidecar_xmp.la
 
 exempi_la_SOURCES = exempi.c
 exempi_la_LDFLAGS = -no-undefined -module -avoid-version
-exempi_la_LIBADD = $(EXEMPI_LIBS) $(top_builddir)/liblicense/liblicense.la
+exempi_la_LIBADD = $(EXEMPI_LIBS) 
 exempi_la_CFLAGS = $(EXEMPI_CFLAGS)
 
 sidecar_xmp_la_SOURCES = sidecar_xmp.c
 sidecar_xmp_la_LDFLAGS = -no-undefined -module -avoid-version
-sidecar_xmp_la_LIBADD = $(EXEMPI_LIBS) $(top_builddir)/liblicense/liblicense.la
+sidecar_xmp_la_LIBADD = $(EXEMPI_LIBS) 
 sidecar_xmp_la_CFLAGS = $(EXEMPI_CFLAGS)
 endif
 
@@ -36,7 +36,7 @@ if HAVE_ID3LIB
 ID3LIB_MODULES = id3.la
 
 id3_la_SOURCES = id3.c
-id3_la_LIBADD = $(ID3LIB_LIBS) $(top_builddir)/liblicense/liblicense.la
+id3_la_LIBADD = $(ID3LIB_LIBS) 
 id3_la_LDFLAGS = -no-undefined -module -avoid-version
 endif
 
@@ -44,7 +44,7 @@ if HAVE_VORBIS
 VORBIS_MODULES = vorbis.la
 
 vorbis_la_SOURCES = vorbis.c vcedit.c vcedit.h
-vorbis_la_LIBADD = $(VORBIS_LIBS) $(top_builddir)/liblicense/liblicense.la
+vorbis_la_LIBADD = $(VORBIS_LIBS) 
 vorbis_la_CFLAGS = $(VORBIS_CFLAGS)
 vorbis_la_LDFLAGS = -no-undefined -module -avoid-version
 noinst_HEADERS = vcedit.h
@@ -54,7 +54,7 @@ if HAVE_FLAC
 FLAC_MODULES = flac.la
 
 flac_la_SOURCES = flac.c
-flac_la_LIBADD = $(LIBFLAC_LIBS) $(top_builddir)/liblicense/liblicense.la
+flac_la_LIBADD = $(LIBFLAC_LIBS) 
 flac_la_CFLAGS = $(LIBFLAC_CFLAGS)
 flac_la_LDFLAGS = -no-undefined -module -avoid-version
 endif
@@ -64,7 +64,7 @@ RAPTOR_MODULES = raptor.la
 
 raptor_la_SOURCES = raptor.c
 raptor_la_LDFLAGS = -no-undefined -module -avoid-version
-raptor_la_LIBADD = $(top_builddir)/liblicense/liblicense.la $(RAPTOR_LIBS) $(LIBXML2_LIBS) $(top_builddir)/liblicense/liblicense.la
+raptor_la_LIBADD =  $(RAPTOR_LIBS) $(LIBXML2_LIBS) 
 raptor_la_CFLAGS = $(RAPTOR_CFLAGS) $(LIBXML2_CFLAGS)
 endif
 
@@ -73,7 +73,7 @@ TAGLIB_MODULES = taglib.la
 
 taglib_la_SOURCES = taglib.cpp
 taglib_la_LDFLAGS = -no-undefined -module -avoid-version
-taglib_la_LIBADD = $(TAGLIB_LIBS) $(top_builddir)/liblicense/liblicense.la
+taglib_la_LIBADD = $(TAGLIB_LIBS) 
 taglib_la_CXXFLAGS = $(TAGLIB_CFLAGS)
 endif
 
@@ -82,7 +82,7 @@ LIBGSF_MODULES = gsf.la
 
 gsf_la_SOURCES = gsf.c
 gsf_la_LDFLAGS = -no-undefined -module -avoid-version
-gsf_la_LIBADD = $(LIBGSF_LIBS) $(top_builddir)/liblicense/liblicense.la
+gsf_la_LIBADD = $(LIBGSF_LIBS) 
 gsf_la_CFLAGS = $(LIBGSF_CFLAGS)
 endif
 
@@ -101,4 +101,4 @@ lib_LTLIBRARIES = \
 
 stub_la_SOURCES = stub.c
 stub_la_LDFLAGS = -no-undefined -module -avoid-version
-stub_la_LIBADD  = $(top_builddir)/liblicense/liblicense.la
+stub_la_LIBADD  = 
