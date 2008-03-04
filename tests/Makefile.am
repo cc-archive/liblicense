@@ -18,7 +18,7 @@
 # Copyright (C) 2007 Peter Miller
 
 AM_CFLAGS = -I$(top_srcdir)/liblicense
-AM_LDFLAGS=-static
+AM_LDFLAGS=-static -rdynamic
 
 THISDIR = $(PWD)
 
