@@ -254,7 +254,8 @@ void ll_print_module_info(void) {
 		printf("\tSupported formats: %s\n",(*curr_module)->mime_types ? (*curr_module)->mime_types : "any");
 		printf("\tRead support: %s\n",(*curr_module)->read ? "yes" : "no");
 		printf("\tWrite support: %s\n",(*curr_module)->write ? "yes" : "no");
-		//printf("\tSupported prdicates: %s\n", (*curr_module)->supported_predicates
+		printf("%s", "\tSupported prdicates: \n");
+        _ll_print_char_star_star((*curr_module)->supported_predicates);
 		if ((*curr_module)->features) {
 			printf("\tOther features:");
 			if ((*curr_module)->features & LL_FEATURES_EMBED) {
@@ -263,6 +264,14 @@ void ll_print_module_info(void) {
 		}
 		++curr_module;
 	}
+}
+
+static void _ll_printf_char_star_star(const char** things) {
+    char * one = things[0];
+    while (one) {
+        printf("\t\t%s\n", one);
+        one++;
+    }
 }
 
 int _ll_contains_token(const char **haystack, const char *needle)
