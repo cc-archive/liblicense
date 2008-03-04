@@ -38,6 +38,8 @@
 
 #include "modules.h"
 
+const char LL_PREDICATE_ANY[] = 
+   "#anything_at_all"; /* FIXME: Check for sanity */
 const char LL_WEBSTATEMENT[] =
   "http://ns.adobe.com/xap/1.0/rights/WebStatement";
 const char LL_ATTRIBUTION[] =
