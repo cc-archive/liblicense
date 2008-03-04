@@ -28,10 +28,10 @@
 #include "config.h"
 #endif
 
-ll_uri_t ll_read(ll_filename_t f) {
+ll_uri_t ll_read(ll_filename_t infile) {
 	int i, length = 0;
 	ll_uri_t* results;
-        const char *mt;
+        const char *mime_type;
 	LLModuleDesc **curr_module;
         char *license;
 
@@ -40,14 +40,14 @@ ll_uri_t ll_read(ll_filename_t f) {
 
 	results = ll_new_list(length);
 
-	mt = xdg_mime_get_mime_type_for_file(f,NULL);
+	mime_type = xdg_mime_get_mime_type_for_file(infile,NULL);
 
 	i = 0;
 	curr_module = _ll_module_list;
 	while (*curr_module) {
-		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
+		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mime_type) ) {
 			if ((*curr_module)->read) {
-				char *result = ((*curr_module)->read)(f);
+				char *result = ((*curr_module)->read)(infile);
 				if (result) {
 					results[i++] = result;
 				}
@@ -66,7 +66,7 @@ ll_uri_t ll_read(ll_filename_t f) {
 	return license;
 }
 
-ll_uri_t ll_module_read(ll_filename_t f, ll_module_t m) {
+ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t m) {
         char *license;
 	LLModuleDesc **curr_module;
 
@@ -76,7 +76,7 @@ ll_uri_t ll_module_read(ll_filename_t f, ll_module_t m) {
 	while (*curr_module) {
 		if ( strcmp((*curr_module)->name,m) == 0 ) {
 			if ((*curr_module)->write) {
-				license = ((*curr_module)->read)(f);
+				license = ((*curr_module)->read)(infile);
 				break;
 			}
 		}

@@ -31,19 +31,19 @@
 #include "config.h"
 #endif
 
-int ll_write(ll_filename_t f, ll_uri_t u) {
+int ll_write(ll_filename_t outfile, ll_uri_t value) {
 	int result = -1;
 	const char *mt;
 	int embedded = 0;
 	LLModuleDesc **curr_module;
 
 	assert(_ll_module_list);
-	mt = xdg_mime_get_mime_type_for_file(f,NULL);
+	mt = xdg_mime_get_mime_type_for_file(outfile,NULL);
 	curr_module = _ll_module_list;
 	while (*curr_module) {
 		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
 			if ((*curr_module)->features & LL_FEATURES_EMBED) {
-				result = (*curr_module)->write(f,u);
+				result = (*curr_module)->write(outfile,value);
 				if (result) {
 					embedded = 1;
 				}
@@ -57,7 +57,7 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
 		while (*curr_module) {
 			if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
 				if ((*curr_module)->write) {
-					result = (*curr_module)->write(f,u);
+					result = (*curr_module)->write(outfile,value);
 				}
 			}
 			++curr_module;
@@ -72,16 +72,16 @@ int ll_write(ll_filename_t f, ll_uri_t u) {
  * with every module that works, returning the FIXME
  */
 
-int ll_module_write(ll_filename_t f, ll_uri_t u, ll_module_t m) {
+int ll_module_write(ll_filename_t outfile, ll_uri_t value, ll_module_t module) {
 	int result = -1;
 	LLModuleDesc **curr_module;
 
 	assert(_ll_module_list);
 	curr_module = _ll_module_list;
 	while (*curr_module) {
-		if ( strcmp((*curr_module)->name,m) == 0 ) {
+		if ( strcmp((*curr_module)->name,module) == 0 ) {
 			if ((*curr_module)->write) {
-				result = (*curr_module)->write(f,u);
+				result = (*curr_module)->write(outfile,value);
 			}
 		}
 		++curr_module;
