@@ -44,7 +44,16 @@ const char *liblicense_config_module_dir;
 
 LLModuleDesc **_ll_module_list = NULL;
 
-int _ll_so_filter(const struct dirent * d) {
+static void _ll_print_char_star_star(const char** things) {
+	int i;
+	char * one;
+	for (i = 0 ; things[i] != NULL; i++) {
+		one = things[i];
+		printf("\t\t%s\n", one);
+	}
+}
+
+static int _ll_so_filter(const struct dirent * d) {
 	return strstr(d->d_name,".so")!=NULL;
 }
 
@@ -251,11 +260,17 @@ void ll_print_module_info(void) {
 	curr_module = _ll_module_list;
 	while (*curr_module) {
 		printf("%s - %s\n",(*curr_module)->name,(*curr_module)->description);
-		printf("\tSupported formats: %s\n",(*curr_module)->mime_types ? (*curr_module)->mime_types : "any");
+		printf("%s", "\tSupported formats: ");
+		if ((*curr_module)->mime_types) {
+		  printf("%s", "\n");
+		  _ll_print_char_star_star( (*curr_module)->mime_types);
+		} else {
+		  printf("any\n");
+		}
 		printf("\tRead support: %s\n",(*curr_module)->read ? "yes" : "no");
 		printf("\tWrite support: %s\n",(*curr_module)->write ? "yes" : "no");
-		printf("%s", "\tSupported prdicates: \n");
-        _ll_print_char_star_star((*curr_module)->supported_predicates);
+		printf("%s", "\tSupported predicates: \n");
+		_ll_print_char_star_star((*curr_module)->supported_predicates);
 		if ((*curr_module)->features) {
 			printf("\tOther features:");
 			if ((*curr_module)->features & LL_FEATURES_EMBED) {
@@ -264,14 +279,6 @@ void ll_print_module_info(void) {
 		}
 		++curr_module;
 	}
-}
-
-static void _ll_printf_char_star_star(const char** things) {
-    char * one = things[0];
-    while (one) {
-        printf("\t\t%s\n", one);
-        one++;
-    }
 }
 
 int _ll_contains_token(const char **haystack, const char *needle)
