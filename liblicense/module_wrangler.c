@@ -283,15 +283,13 @@ void ll_print_module_info(void) {
 
 int _ll_contains_token(const char **haystack, const char *needle)
 {
-  char * looking_at_this_one = haystack[0];
-  while(looking_at_this_one != NULL) {
-    // Then check
-    if (strcmp(looking_at_this_one, needle) == 0)
-      {
-	return 1;
-      }
-    // Otherwise bump up to the next one
-    looking_at_this_one++;
-  }
-  return 0; // If we get here, we've failed.
+	int i;
+	for (i = 0; haystack[i] != NULL; i++) {
+		// Then check
+		if (strcmp(haystack[i], needle) == 0)
+		{
+			return 1;
+		}
+	}
+	return 0; // If we get here, we've failed.
 }
