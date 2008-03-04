@@ -276,7 +276,7 @@ static void _ll_printf_char_star_star(const char** things) {
 
 int _ll_contains_token(const char **haystack, const char *needle)
 {
-  char * looking_at_this_one = haystack;
+  char * looking_at_this_one = haystack[0];
   while(looking_at_this_one != NULL) {
     // Then check
     if (strcmp(looking_at_this_one, needle) == 0)
