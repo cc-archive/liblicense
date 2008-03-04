@@ -324,10 +324,7 @@ typedef char *ll_filename_t;
  * a document.  See http://wiki.creativecommons.org/Embedded_Metadata
  * for a comic!
  */
-#ifndef __LL_INTERNAL
-extern
-#endif /* ifndef _LL_INTERNAL */
-const char LL_WEBSTATEMENT[];
+extern const char LL_WEBSTATEMENT[];
 
 /**
  * The LL_ATTRIBUTION string may be returned by the
@@ -335,10 +332,7 @@ const char LL_WEBSTATEMENT[];
  *
  * credit be given to copyright holder and/or author
  */
-#ifndef __LL_INTERNAL
-extern
-#endif /* ifndef _LL_INTERNAL */
-const char LL_ATTRIBUTION[];
+extern const char LL_ATTRIBUTION[];
 
 /**
  * The LL_COMMERCIAL_USE string may be returned by the
@@ -346,10 +340,7 @@ const char LL_ATTRIBUTION[];
  *
  * exercising rights for commercial purposes
  */
-#ifndef __LL_INTERNAL
-extern
-#endif /* ifndef _LL_INTERNAL */
-const char LL_COMMERCIAL_USE[];
+extern const char LL_COMMERCIAL_USE[];
 
 /**
  * The LL_DERIVATIVE_WORKS string may be returned by the
@@ -357,10 +348,7 @@ const char LL_COMMERCIAL_USE[];
  *
  * creation and distribution of derivative works
  */
-#ifndef __LL_INTERNAL
-extern
-#endif /* ifndef _LL_INTERNAL */
-const char LL_DERIVATIVE_WORKS[];
+extern const char LL_DERIVATIVE_WORKS[];
 
 /**
  * The LL_DISTRIBUTION string may be returned by the
@@ -368,10 +356,7 @@ const char LL_DERIVATIVE_WORKS[];
  *
  * distribution, public display, and publicly performance
  */
-#ifndef __LL_INTERNAL
-extern
-#endif /* ifndef _LL_INTERNAL */
-const char LL_DISTRIBUTION[];
+extern const char LL_DISTRIBUTION[];
 
 /**
  * The LL_HIGH_INCOME_NATION_USE string may be returned
@@ -654,10 +639,7 @@ void ll_license_print_info (ll_uri_t license_uri);
    * LL_PREDICATE_ANY is a string meaning that a module can store
    * any URI as a predicate.
    */
-#ifndef __LL_INTERNAL
-extern
-#endif /* ifndef _LL_INTERNAL */
-const char LL_PREDICATE_ANY[];
+extern const char LL_PREDICATE_ANY[];
 
 typedef char *ll_module_t;
 typedef char *ll_symbol_t;
