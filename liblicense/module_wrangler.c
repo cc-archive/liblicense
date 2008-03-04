@@ -85,7 +85,9 @@ void ll_init_modules(void) {
 				continue;
 			}
 			module_desc->handle = handle;
-			module_desc->module_init();
+            if (module_desc->module_init) {
+    			module_desc->module_init();
+            }
 			*curr_module = module_desc;
 			curr_module++;
 		} else {
