@@ -276,16 +276,3 @@ void ll_print_module_info(void) {
 		++curr_module;
 	}
 }
-
-int _ll_contains_token(const char **haystack, const char *needle)
-{
-	int i;
-	for (i = 0; haystack[i] != NULL; i++) {
-		// Then check
-		if (strcmp(haystack[i], needle) == 0)
-		{
-			return 1;
-		}
-	}
-	return 0; // If we get here, we've failed.
-}
