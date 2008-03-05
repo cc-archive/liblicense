@@ -143,7 +143,7 @@ int ll_int_arrays_equal(int* ra1, int* ra2) {
     return 0; // false if they are different sizes
   }
 
-  for (i = 0; i < compare1; i++) {
+  for (i = 0; i <= compare1; i++) {
     if (ra1[i] != ra2[i]) {
       return 0; // false if there is a difference
     }
