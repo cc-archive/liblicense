@@ -45,7 +45,7 @@ ll_uri_t ll_read(ll_filename_t infile) {
 	i = 0;
 	curr_module = _ll_module_list;
 	while (*curr_module) {
-		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mime_type) ) {
+		if ( !(*curr_module)->mime_types || ll_list_contains((*curr_module)->mime_types,mime_type) ) {
 			if ((*curr_module)->read) {
 				char *result = ((*curr_module)->read)(infile);
 				if (result) {

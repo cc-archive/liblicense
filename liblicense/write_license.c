@@ -41,7 +41,7 @@ int ll_write(ll_filename_t outfile, ll_uri_t value) {
 	mt = xdg_mime_get_mime_type_for_file(outfile,NULL);
 	curr_module = _ll_module_list;
 	while (*curr_module) {
-		if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
+		if ( !(*curr_module)->mime_types || ll_list_contains((*curr_module)->mime_types,mt) ) {
 			if ((*curr_module)->features & LL_FEATURES_EMBED) {
 				result = (*curr_module)->write(outfile,value);
 				if (result) {
@@ -55,7 +55,7 @@ int ll_write(ll_filename_t outfile, ll_uri_t value) {
 	if (!embedded) {
 		curr_module = _ll_module_list;
 		while (*curr_module) {
-			if ( !(*curr_module)->mime_types || _ll_contains_token((*curr_module)->mime_types,mt) ) {
+			if ( !(*curr_module)->mime_types || ll_list_contains((*curr_module)->mime_types,mt) ) {
 				if ((*curr_module)->write) {
 					result = (*curr_module)->write(outfile,value);
 				}
