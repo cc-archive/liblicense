@@ -378,6 +378,7 @@ AC_CONFIG_FILES([
 	xdgmime/Makefile
 	utils/Makefile
 	icons/Makefile
+	dynamic_tests/Makefile
 ])
 
 AC_CONFIG_HEADERS([config.h])
