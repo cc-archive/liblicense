@@ -29,7 +29,7 @@ TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VE
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	LD_LIBRARY_PATH=../liblicense/.libs/ \
 	@VALGRIND@
-TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
+TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate
 
 all-local:
 	mkdir -p _prefix
@@ -41,6 +41,9 @@ clean-local:
 	rm -f license_me.xmp
 
 check_PROGRAMS = $(TESTS)
+
+test_predicate_SOURCES = \
+	predicate_test.c
 
 test_SOURCES = \
 	test.c
