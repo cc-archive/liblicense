@@ -27,7 +27,7 @@ DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
 TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
 	LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ \
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
-	LD_LIBRARY_PATH=$(DEBUG_LL_MODULES_PATH)/lib/ \
+	LD_LIBRARY_PATH=../liblicense/.libs/ \
 	@VALGRIND@
 TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser
 
