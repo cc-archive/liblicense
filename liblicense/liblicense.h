@@ -1111,6 +1111,35 @@ char *ll_list_mode (char **list, char *ignore);
  */
 void ll_list_print (char **lptr);
 
+/**
+ * The ll_int_arrays_equal function is used to check if two arrays of
+ * integers are equivalent.  It assumes:
+ * - that the pointers are not NULL
+ * - that the first element of the array is the length of the array
+ *   (not including the size)
+ *   For example, this is valid: {2, 1, 2}
+ *
+ * @param ra1
+ *     Pointer to the first thing to compare
+ * @param ra2
+ *     Pointer to the second thing to compare
+ */
+int ll_int_arrays_equal (int* ra1, int* ra2);
+
+/**
+ * The ll_lists_equal function is used to check if two arrays of
+ * char* elements are equivalent.  It assumes:
+ * - that the pointers are not NULL
+ * - that the lists end in a NULL
+ *   For example, this is valid: {"your", "mom", NULL}
+ *
+ * @param list_one
+ *     Pointer to the first thing to compare
+ * @param list_two
+ *     Pointer to the second thing to compare
+ */
+int ll_lists_equal(char **list_one, char **list_two);
+
 #ifdef __cplusplus
 }
 #endif

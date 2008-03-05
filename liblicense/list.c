@@ -128,3 +128,39 @@ void ll_list_print(char** list) {
 	}
 	printf(" ]\n");
 }
+
+int ll_int_arrays_equal(int* ra1, int* ra2) {
+  /* Assumes the first element is the number
+   * of elements. */
+  int compare1;
+  int compare2;
+  int i;
+
+  compare1 = ra1[0];
+  compare2 = ra2[0];
+
+  if (compare1 != compare2) {
+    return 0; // false if they are different sizes
+  }
+
+  for (i = 0; i < compare1; i++) {
+    if (ra1[i] != ra2[i]) {
+      return 0; // false if there is a difference
+    }
+  }
+  
+  return 1; // true, if we get here!
+}
+
+int ll_lists_equal(char **list_one,
+		   char **list_two) {
+  
+  int i = 0;
+  while(list_one[i] != NULL && 
+	list_two[i] != NULL) {
+    if (strcmp(list_one[i], list_two[i]) != 0) {
+      return 0; // false if there is a difference
+    }
+  }
+  return 1; // True, if you get here!
+}
