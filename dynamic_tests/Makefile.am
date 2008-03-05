@@ -18,7 +18,7 @@
 # Copyright (C) 2007 Peter Miller
 
 AM_CFLAGS = -I$(top_srcdir)/liblicense
-AM_LDFLAGS= -llicense
+AM_LDFLAGS= -L../liblicense/.libs/ -llicense
 
 THISDIR = $(PWD)
 
@@ -42,9 +42,6 @@ clean-local:
 
 check_PROGRAMS = $(TESTS)
 
-test_predicate_SOURCES = \
-	predicate_test.c
-
 test_SOURCES = \
 	test.c
 
@@ -62,3 +59,5 @@ test_info_SOURCES = info_test.c
 test_write_SOURCES = write_test.c
 
 test_chooser_SOURCES = chooser_test.c
+
+test_predicate_SOURCES = predicate_test.c
