@@ -23,20 +23,24 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
 
 int main() {
 	 /* Assert that an MP3 file uses the MP3 module */
 	 
 	 char* file;
 	 LLModuleDesc * module;
+	 LLModuleSearchState state;
 	 
-	 ll_init();
-	
 	 file = "data/empty.flac";
-	 LLModuleSearchState state = {0};
+	 memset(&state, 0, sizeof(LLModuleSearchState));
+
+	 ll_init();
+	 
+	 module = ll_module_search(file, &state);
 	 while(module) {
-		 ll_module_search(file, &state);
 		 printf("%s\n", module->name);
+		 module = ll_module_search(file, &state);
 	 }
 	 
 	 ll_stop();
