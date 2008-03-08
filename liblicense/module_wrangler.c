@@ -301,7 +301,7 @@ static unsigned int _ll_modules_count_available() {
 LLModuleDesc * ll_module_search(ll_filename_t filename,
 				/* out */ LLModuleSearchState * state) {
 	int useful = 0;
-	LLModuleDesc * hope;
+	LLModuleDesc * hope = NULL;
 	assert(_ll_module_list);
 	
 	/* If the state doesn't know how many modules there are,
@@ -321,7 +321,8 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 	}
 	
 	while(state->__index < state->__cached_module_list_length) {
-		useful = 0; // Every module is worthless unless we say otherwise
+		useful = 0; /* Every module is worthless unless we say
+			     * otherwise */
 		hope = _ll_module_list[state->__index];
 		assert(hope); /* If this is NULL, then our 
 				 index count was wrong. */
@@ -350,7 +351,9 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 		}
 
 		if (useful) { 
-			return hope;
+			break; /* We can stop looping having found
+				  a suitable choice. */
+				  
 		}
 		
 		/* else, we try the loop again. */
