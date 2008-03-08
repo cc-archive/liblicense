@@ -892,6 +892,26 @@ ll_uri_t ll_read (ll_filename_t filename);
  */
 ll_uri_t ll_module_read (ll_filename_t filename, ll_module_t module);
 
+typedef struct _LLModuleDesc_and_index {
+	LLModuleDesc desc;
+	unsigned int index;
+	unsigned int cached_module_list_length;
+	char * mime_type;
+} LLModuleSearchState;
+
+/**
+ ** LLModuleSearchState state = {0};
+ ** ll_module_for_file("/your/mom/music.mp3", &state);
+ ** modifies a LLModuleSearchState struct passed in
+ ** so that the search can be resumed
+ ** (without index, searching would be O(N^2)
+ * @param filename The filename to search for. If NULL, then get every module.
+ * @return LLModuleDesc for the currently-found module
+ *         If that is NULL, there are no more matching modules.
+ */
+LLModuleDesc * ll_module_search(ll_filename_t filename,
+				/* out */ LLModuleSearchState * state);
+
 /******************** write_license ********************/
 
 /**
