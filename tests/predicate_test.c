@@ -24,7 +24,13 @@
 #include <stdio.h>
 #include <assert.h>
 
-int main(int argc, char** argv) {
+int main() {
+
+	char * file;
+	ll_uri_t value;
+	int result;
+
+	ll_init();
 
 	/* First, try to store a license URI in
 	   an MP3 file, which should work fine. */
@@ -37,6 +43,8 @@ int main(int argc, char** argv) {
 
 	/* Then assert that cc:morePermissions can fit in a PDF
 	   with exempi. */
+
+	assert (0); /* This test fails because it is not yet written */
 
 	return 0;
 }
