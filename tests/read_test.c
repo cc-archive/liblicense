@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 int main(int argc, char** argv) {
 	char* file;
@@ -34,6 +35,7 @@ int main(int argc, char** argv) {
 	file="license_me.txt";
 	license = ll_read(file);
 	printf("File license: %s\n",license);
+	assert (license != NULL);
 	free(license);
 
 	ll_stop();
