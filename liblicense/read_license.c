@@ -29,59 +29,45 @@
 #endif
 
 ll_uri_t ll_read(ll_filename_t infile) {
-	int i, length = 0;
-	ll_uri_t* results;
-        const char *mime_type;
-	LLModuleDesc **curr_module;
-        char *license;
+	return ll_module_read(infile, NULL);
+}
 
-	assert(_ll_module_list);
-	while (_ll_module_list[length]) {length++;}
+ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
+	char * license = NULL;
+	int result_index = 0;
+	LLModuleSearchState state;
+	LLModuleDesc * module;
+	char * one_result;
+	char ** all_results;
 
-	results = ll_new_list(length);
+	all_results = malloc(sizeof(char) * ll_modules_count_available());
+	memset(&state, 0, sizeof(LLModuleSearchState));
 
-	mime_type = xdg_mime_get_mime_type_for_file(infile,NULL);
+	module = ll_module_search(infile, &state);
+			
+	while (module && module->read) {
+		/* Either if no module is specified,
+		   or if this module is the one specified: */
 
-	i = 0;
-	curr_module = _ll_module_list;
-	while (*curr_module) {
-		if ( !(*curr_module)->mime_types || ll_list_contains((*curr_module)->mime_types,mime_type) ) {
-			if ((*curr_module)->read) {
-				char *result = ((*curr_module)->read)(infile);
-				if (result) {
-					results[i++] = result;
-				}
+		if ( (use_this_module == NULL) ||
+		     (strcmp(module, use_this_module) == 0)) {
+
+			/* Do the read! */
+			one_result = (module->read)(infile);
+			if (one_result) {
+				all_results[result_index] = one_result;
+				result_index++;
 			}
+			module = ll_module_search(infile, &state);
 		}
-		++curr_module;
 	}
-
-	license = ll_list_mode(results,"");
+		
+	license = ll_list_mode(all_results,"");
 	if (license) {
 		license = strdup(license);
 	}
-
-	ll_free_list(results);
-
-	return license;
-}
-
-ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t m) {
-        char *license;
-	LLModuleDesc **curr_module;
-
-	assert(_ll_module_list);
-	license = NULL;
-	curr_module = _ll_module_list;
-	while (*curr_module) {
-		if ( strcmp((*curr_module)->name,m) == 0 ) {
-			if ((*curr_module)->write) {
-				license = ((*curr_module)->read)(infile);
-				break;
-			}
-		}
-		++curr_module;
-	}
-
+	
+	ll_free_list(all_results);
+	
 	return license;
 }

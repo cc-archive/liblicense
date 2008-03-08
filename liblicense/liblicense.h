@@ -900,6 +900,12 @@ typedef struct _LLModuleDesc_and_index {
 } LLModuleSearchState;
 
 /**
+ * Calculates the number of modules available to us.
+ * @return int # of modules available...
+ */
+unsigned int ll_modules_count_available();
+
+/**
  ** LLModuleSearchState state = {0};
  ** ll_module_for_file("/your/mom/music.mp3", &state);
  ** modifies a LLModuleSearchState struct passed in

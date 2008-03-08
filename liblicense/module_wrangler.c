@@ -28,6 +28,7 @@
 #include <dlfcn.h>
 #include <dirent.h>
 #include <assert.h>
+#include "xdgmime.h"
 
 #define MAX_MODULES 10
 #define MAX_MIME_TYPES 20
@@ -281,7 +282,7 @@ void ll_print_module_info(void) {
  * Calculates the number of modules available to us.
  * @return int # of modules available...
  */
-static unsigned int _ll_modules_count_available() {
+unsigned int _ll_modules_count_available() {
 	unsigned int ret = 0;
 	assert(_ll_module_list);
 	while (_ll_module_list[ret]) {ret++;}
@@ -320,7 +321,8 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 		state->__mime_type = xdg_mime_get_mime_type_for_file(filename, NULL);
 	}
 	
-	while(state->__index < state->__cached_module_list_length) {
+	while(state->__index < 
+	      state->__cached_module_list_length) {
 		useful = 0; /* Every module is worthless unless we say
 			     * otherwise */
 		hope = _ll_module_list[state->__index];
