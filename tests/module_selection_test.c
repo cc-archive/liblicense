@@ -26,23 +26,24 @@
 #include <string.h>
 
 int main() {
-	 /* Assert that an MP3 file uses the MP3 module */
+	 /* Assert that a PDF file uses only the Exempi module... */
 	 
 	 char* file;
 	 LLModuleDesc * module;
 	 LLModuleSearchState state;
 	 
-	 file = "data/empty.flac";
+	 file = "data/empty.pdf";
 	 memset(&state, 0, sizeof(LLModuleSearchState));
 
 	 ll_init();
 	 
 	 module = ll_module_search(file, &state);
-	 while(module) {
-		 printf("%s\n", module->name);
-		 module = ll_module_search(file, &state);
-	 }
+	 assert (strcmp("exempi.so", module) == 0); /* Exempi can
+						       toy with PDF */
 	 
+	 module = ll_module_search(file, &state);
+	 assert (module == NULL); /* Only Exempi */
+
 	 ll_stop();
 	 
 	 return 0;
