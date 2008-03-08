@@ -893,10 +893,10 @@ ll_uri_t ll_read (ll_filename_t filename);
 ll_uri_t ll_module_read (ll_filename_t filename, ll_module_t module);
 
 typedef struct _LLModuleDesc_and_index {
-	LLModuleDesc desc;
-	unsigned int index;
-	unsigned int cached_module_list_length;
-	char * mime_type;
+	LLModuleDesc __desc;
+	unsigned int __index;
+	unsigned int __cached_module_list_length;
+	char * __mime_type;
 } LLModuleSearchState;
 
 /**

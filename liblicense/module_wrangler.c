@@ -310,30 +310,30 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 	
 	/* This cache is necessary to avoid calculating the count
 	   every time that this function is called. */
-	if (state->cached_module_list_length == 0) {
-		state->cached_module_list_length = _ll_modules_count_available();
+	if (state->__cached_module_list_length == 0) {
+		state->__cached_module_list_length = _ll_modules_count_available();
 	}
 	
 	/* If we are filtering by a file, and the state doesn't know
 	   the mime type, calculate it. */
-	if (filename != NULL && state->mime_type == NULL) {
-		state->mime_type = xdg_mime_get_mime_type_for_file(filename, NULL);
+	if (filename != NULL && state->__mime_type == NULL) {
+		state->__mime_type = xdg_mime_get_mime_type_for_file(filename, NULL);
 	}
 	
-	while(state->index < state->cached_module_list_length) {
+	while(state->__index < state->__cached_module_list_length) {
 		useful = 0; // Every module is worthless unless we say otherwise
-		hope = _ll_module_list[state->index];
+		hope = _ll_module_list[state->__index];
 		assert(hope); /* If this is NULL, then our 
 				 index count was wrong. */
 
 		/* No matter what, next time, start at the next one. */
-		state->index += 1;
+		state->__index += 1;
 
 		/* If hope's mime_types is NULL, then it can be used
 		 * with this MIME type.  That, or if it actually matches. */
 		/* But only do this searching if we are looking
 		   for a MIME type. */
-		if (state->mime_type == NULL) { /* All modules are good
+		if (state->__mime_type == NULL) { /* All modules are good
 						   if we don't care about
 						   mime type. */
 			useful = 1;
@@ -344,7 +344,7 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 				   it's good for everyone! */
 				useful = 1;
 			} else if (ll_list_contains(hope->mime_types, 
-						    state->mime_type)) {
+						    state->__mime_type)) {
 				useful = 1; /* if the MIME type matches */
 			}
 		}
