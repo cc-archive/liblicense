@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 int main(int argc, char** argv) {
 	char* file;
@@ -36,6 +37,7 @@ int main(int argc, char** argv) {
 	license = "creativecommons.org/licenses/by/2.5/au/";
 	result = ll_write(file,license);
 	printf("Write result: %d\n",result);
+	assert (result > -1);
 
 	ll_stop();
 
