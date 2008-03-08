@@ -155,12 +155,12 @@ int ll_int_arrays_equal(int* ra1, int* ra2) {
 int ll_lists_equal(char **list_one,
 		   char **list_two) {
   
-  int i = 0;
-  while(list_one[i] != NULL && 
-	list_two[i] != NULL) {
+  int i;
+  for (i=0 ; list_one[i] == NULL || list_two[i] != NULL; i++) {
     if (strcmp(list_one[i], list_two[i]) != 0) {
       return 0; // false if there is a difference
     }
   }
+
   return 1; // True, if you get here!
 }
