@@ -38,7 +38,7 @@ int main() {
 	 ll_init();
 	 
 	 module = ll_module_search(file, &state);
-	 assert (strcmp("exempi.so", module) == 0); /* Exempi can
+	 assert (strcmp("exempi.so", module->name) == 0); /* Exempi can
 						       toy with PDF */
 	 
 	 module = ll_module_search(file, &state);

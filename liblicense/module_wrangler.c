@@ -353,13 +353,11 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 		}
 
 		if (useful) { 
-			break; /* We can stop looping having found
-				  a suitable choice. */
-				  
+			return hope; /* We got one! */
 		}
 		
 		/* else, we try the loop again. */
 	}
-	return NULL; /* We're outta possibilities. */
+	return NULL; /* At this point, the search is hopeless. */
 	       
 }
