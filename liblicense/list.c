@@ -24,6 +24,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 char** ll_new_list(int length) {
         if (length < 0)
@@ -156,10 +157,17 @@ int ll_lists_equal(char **list_one,
 		   char **list_two) {
   
   int i;
-  for (i=0 ; list_one[i] == NULL || list_two[i] != NULL; i++) {
+  for (i=0 ; list_one[i] != NULL && list_two[i] != NULL; i++) {
     if (strcmp(list_one[i], list_two[i]) != 0) {
       return 0; /* false if there is a difference */
     }
+  }
+
+  if (list_one[i] != list_two[i]) {
+    assert ( (list_one[i] == NULL) || (list_two[i] == NULL));
+    /* then one has ended and the other continues
+     * so they are not equal. */
+    return 0; /* false - not equal */
   }
 
   return 1; /* True, if you get here! */
