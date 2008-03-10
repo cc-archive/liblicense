@@ -59,8 +59,10 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
 				all_results[result_index] = one_result;
 				result_index++;
 			}
-			module = ll_module_search(infile, &state);
 		}
+		/* Whether or not the module matched, keep searching */
+		module = ll_module_search(infile, &state);
+
 	}
 		
 	license = ll_list_mode(all_results,"");
