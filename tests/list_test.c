@@ -41,6 +41,8 @@ int main(int argc, char** argv) {
 	assert (ll_list_contains(list,"one"));
 	printf("Contains 'three': %d\n", ll_list_contains(list,"three"));
 	assert (! ll_list_contains(list,"three"));
+	printf("List length: %d\n", ll_list_length(list));
+	assert(ll_list_length(list) == 2);
 
 	list[2] = strdup("three");
 	list[3] = strdup("four");
