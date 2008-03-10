@@ -32,7 +32,7 @@ ll_uri_t ll_read(ll_filename_t infile) {
 	return ll_module_read(infile, NULL);
 }
 
-ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
+ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t requested_module_name) {
 	char * license = NULL;
 	int result_index = 0;
 	LLModuleSearchState state;
@@ -50,8 +50,8 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
 		/* Either if no module is specified,
 		   or if this module is the one specified: */
 
-		if ( (use_this_module == NULL) ||
-		     (strcmp(module->name, use_this_module) == 0)) {
+		if ( (requested_module_name == NULL) ||
+		     (strcmp(module->name, requested_module_name) == 0)) {
 
 			/* Do the read! */
 			one_result = (module->read)(infile);

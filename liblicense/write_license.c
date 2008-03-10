@@ -37,7 +37,7 @@ int ll_write(ll_filename_t outfile, ll_uri_t value) {
 
 static int _ll_module_write(ll_filename_t outfile, 
 			    ll_uri_t value,
-			    ll_module_t use_this_module,
+			    ll_module_t requested_module_name,
 			    int embed_or_not) {
 	LLModuleSearchState state;
 	LLModuleDesc * module;
@@ -53,8 +53,8 @@ static int _ll_module_write(ll_filename_t outfile,
 		/* Either if no module is specified,
 		   or if this module is the one specified: */
 
-		if ( (use_this_module == NULL) ||
-		     (strcmp(module->name, use_this_module) == 0)) {
+		if ( (requested_module_name == NULL) ||
+		     (strcmp(module->name, requested_module_name) == 0)) {
 			/* If the module matches our preferences about
 			   embedding */
 			this_one_supports_embed = module->features & 
@@ -81,12 +81,12 @@ static int _ll_module_write(ll_filename_t outfile,
  */
 int ll_module_write(ll_filename_t outfile, 
 			 ll_uri_t value,
-			 ll_module_t use_this_module) {
+			 ll_module_t requested_module_name) {
 	int result = 0;
 	int managed_to_embed = 0;
-	result = managed_to_embed = _ll_module_write(outfile, value, use_this_module, 1);
+	result = managed_to_embed = _ll_module_write(outfile, value, requested_module_name, 1);
 	if (managed_to_embed < 1) {
-		result = _ll_module_write(outfile, value, use_this_module, 0);
+		result = _ll_module_write(outfile, value, requested_module_name, 0);
 	}
 	return result;
 }
