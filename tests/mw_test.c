@@ -20,9 +20,12 @@
 
 #include "liblicense.h"
 
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 int main(int argc, char** argv) {
+	char * known_good_config_modules[] = {"flat_file.so", NULL};
+
 	char** list;
 
         (void)argc;
@@ -33,11 +36,14 @@ int main(int argc, char** argv) {
 	printf("Getting the config modules: ");
 	list = ll_get_config_modules();
 	ll_list_print(list);
+	assert (ll_lists_equal(known_good_config_modules, list));
 	ll_free_list(list);
 
 	printf("Getting the io modules: ");
 	list = ll_get_io_modules();
 	ll_list_print(list);
+	assert (ll_list_contains(list, "stub.so"));
+	assert (ll_list_contains(list, "raptor.so"));
 	ll_free_list(list);
 
 	printf("Getting module info:\n");
