@@ -780,6 +780,12 @@ void ll_stop_modules (void);
  */
 int _ll_contains_token (const char **haystack, const char *needle);
 
+/**
+ * Calculates the number of modules available to us.
+ * @return int # of modules available...
+ */
+unsigned int _ll_modules_count_available();
+
 typedef struct _LLModuleDesc LLModuleDesc;
 
 extern LLModuleDesc **_ll_module_list;

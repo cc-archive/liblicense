@@ -40,7 +40,7 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
 	char * one_result;
 	char ** all_results;
 
-	all_results = malloc(sizeof(char) * ll_modules_count_available());
+	all_results = malloc(sizeof(char) * _ll_modules_count_available());
 	memset(&state, 0, sizeof(LLModuleSearchState));
 
 	module = ll_module_search(infile, &state);
@@ -50,7 +50,7 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
 		   or if this module is the one specified: */
 
 		if ( (use_this_module == NULL) ||
-		     (strcmp(module, use_this_module) == 0)) {
+		     (strcmp(module->name, use_this_module) == 0)) {
 
 			/* Do the read! */
 			one_result = (module->read)(infile);
