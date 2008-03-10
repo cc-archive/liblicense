@@ -24,10 +24,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <assert.h>
 
 int
 main (int argc, char **argv)
 {
+  int verified;
+  int known_good_version[] = {2,2,0};
+  char *known_good_title[] = {"Attribution-NoDerivs", NULL};
+
   char **result1;
   int i;
   ll_version_t version;
@@ -42,13 +47,21 @@ main (int argc, char **argv)
   result =
     ll_get_first(ll_get_attribute(u, LL_JURISDICTION, false));
   printf ("\tget_jurisdiction: %s\n", result);
+  assert (result == NULL);
   free (result);
   result = ll_get_first(ll_get_attribute(u, LL_NAME, false));
   printf ("\tget_name: %s\n", result);
+  assert(strcmp(result, "Nevezd meg! - Ne változtasd!") == 0);
+  /* FIXME
+   * get_name returns Hungarian.
+   * why? 
+   */
   free (result);
 
   printf ("\tget_version: ");
   version = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, false)));
+  assert (ll_int_arrays_equal(version, known_good_version));
+  
   if (version)
     {
       for (i = 1; i <= version[0]; ++i)
@@ -65,18 +78,29 @@ main (int argc, char **argv)
       printf ("unversioned\n");
     }
 
-  printf ("\tverify_uri: %d\n",
-          ll_verify_uri ("creativecommons.org/licenses/by/2.5/au/"));
+  
+  verified = ll_verify_uri ("creativecommons.org/licenses/by/2.5/au/");
+  printf ("\tverify_uri without http prefix: %d\n", verified);
+  assert (! verified);
+
+  verified = ll_verify_uri ("http://creativecommons.org/licenses/by/2.5/au/");
+  printf ("\tverify_uri with http prefix: %d\n", verified);
+  assert (verified);
+
   printf ("\tget_attribute:\n");
   result1 =
     ll_get_attribute ("http://creativecommons.org/licenses/by-nd/2.0/za/",
                       "http://purl.org/dc/elements/1.1/title", 1);
   i = 0;
+  assert(ll_lists_equal(result1, known_good_title));
+
   while (result1[i] != NULL)
     printf ("\t\t%s\n", result1[i++]);
   printf ("\tget_all_licenses:\n");
   ll_free_list (result1);
   result1 = ll_get_all_licenses ();
+  assert (ll_list_contains(result1, "http://creativecommons.org/licenses/by/1.0/"));
+
   if(result1 == NULL) {
 	  printf("ERROR: ll_get_all_licenses() failed");
 	  ll_stop();
@@ -85,49 +109,16 @@ main (int argc, char **argv)
   i = 0;
   while (result1[i] != NULL)
     printf ("\t\t%s\n", result1[i++]);
-  printf ("\tget_licenses: \n");
+  printf ("\tget_licenses: \n"); /* Only ones that are current */
   ll_free_list (result1);
   result1 = ll_get_licenses (NULL);
+  assert (! ll_list_contains(result1, "http://creativecommons.org/licenses/by/1.0/"));
+  assert (ll_list_contains(result1, "http://creativecommons.org/licenses/by/3.0/"));
   i = 0;
   while (result1[i] != NULL)
     printf ("\t\t%s\n", result1[i++]);
   ll_free_list (result1);
 
-  printf ("Test write_license:\n");
-  printf ("\twrite: %d\n",
-          ll_write ("license_me.txt",
-                    "creativecommons.org/licenses/by/2.5/au/"));
-#if 0
-  printf ("\tmodule_write: %d\n",
-          ll_module_write ("license_me.txt",
-                           "creativecommons.org/licenses/by/2.5/au/",
-                           "sidecar_xmp.so"));
-#endif
-
-  printf ("Test read_license:\n");
-  {
-	  ll_uri_t uri = ll_read ("license_me.txt");
-	  printf ("\tread: %s\n", uri);
-	  free( uri );
-  }
-#if 0
-  printf ("\tmodule_read: %s\n",
-          ll_module_read ("license_me.txt", ".libs/sidecar_xmp.so"));
-#endif
-
-  printf ("Test system_default:\n");
-  printf ("\tlicense_default_set: %d\n",
-          ll_license_default_set ("creativecommons.org/licenses/by/2.5/au/"));
-  {
-	  ll_uri_t license_default = ll_license_default_get ();
-	  printf ("\tget_default: %s\n", license_default);
-	  free(license_default);
-  }
-
-  printf ("Test module_wrangler:");
-  printf ("\tget_config_modules: skipped\n");
-  printf ("\tget_io_modules: skipped\n");
-  printf ("\tget_module_symbol: skipped\n");
 
   printf ("Stopping ll:\n");
   ll_stop ();
