@@ -65,7 +65,7 @@ static ll_uri_t* _ll_query(char* query, int max) {
 	}
 	return values;
 }
-// helper which returns whether a file ands in .rdf
+/* helper which returns whether a file ands in .rdf */
 static int _ll_rdf_filter(const struct dirent * d) {
 	return strstr(d->d_name,".rdf")!=NULL;
 }
