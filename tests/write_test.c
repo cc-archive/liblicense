@@ -23,23 +23,62 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <unistd.h>
+#include <string.h>
+
+#define BASENAME "write_test_temporary_file"
+#define FILENAME BASENAME ".txt"
+#define XMPNAME BASENAME ".xmp"
+
+#define MP3FILE "write_test.mp3"
+
+void make_text_file() {
+	FILE* f = fopen(FILENAME, "w");
+	fclose(f);
+}
+
+void clean_up() {
+	unlink(FILENAME);
+	unlink(XMPNAME);
+}
+
+void test_license_readwrite(ll_uri_t license, const char * filename) {
+	ll_uri_t license_read_back;
+	int result;
+
+	result = ll_write(filename,license);
+	
+	license_read_back = ll_read(filename);
+	printf("Write result: %d\n",result);
+	printf("License read bacK: %s\n", license_read_back);
+	
+	assert (result > -1);
+	assert (strcmp(license, license_read_back) == 0);
+
+	ll_stop();
+
+}
 
 int main(int argc, char** argv) {
-	char* file;
-	ll_uri_t license;
-	int result;
+	ll_uri_t license = "http://creativecommons.org/licenses/by/2.5/au/";
 
         (void)argc;
         (void)argv;
 	ll_init();
 
-	file = "license_me.txt";
-	license = "creativecommons.org/licenses/by/2.5/au/";
-	result = ll_write(file,license);
-	printf("Write result: %d\n",result);
-	assert (result > -1);
+	/* Test MP3 */
+	test_license_readwrite(license, MP3FILE);
+	printf("One ok\n");
 
-	ll_stop();
+	/* Test MP3 again to make sure writing 
+	 * a license isn't destructive to ll's internal structures 
+	test_license_readwrite(license, MP3FILE);
+	printf("Two ok\n"); */
 
+	/* Create a "temporary" text file */
+	clean_up();
+	make_text_file();
+
+	/* test_license_readwrite(license, FILENAME); */
 	return 0;
 }
