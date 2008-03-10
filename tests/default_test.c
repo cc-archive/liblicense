@@ -23,30 +23,43 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <assert.h>
+
+static void set_and_check(char * license,
+			  char * expected) {
+  char * response;
+  int status;
+
+  status = ll_license_default_set (license);
+  printf ("Setting default to '%s': %d\n", license, status);
+  assert (status == 1);
+  response = ll_license_default_get ();
+  printf ("Getting the default: %s\n", response);
+  assert ( (response == expected) || 
+	   strcmp(response, expected) == 0);
+  free (response);
+}
+  
 
 int
 main (int argc, char **argv)
 {
-  char *license;
+  char *license = "http://creativecommons.org/licenses/by-nd/2.0/";
   char *response;
+  int status;
 
   (void) argc;
   (void) argv;
   printf
-    ("Warning: this test will overwrite system-wide defaults if run.  "
-    "To stop hit control-C.  You have 3 seconds.\n\n");
+    ("Warning: this test will overwrite system-wide defaults if run."
+     "To stop hit control-C (Control-Break on Windows).  You have 3 seconds."
+     "\n\n");
   fflush (stdout);
   /* BREAKS_WINDOWS */
   sleep (3);
-  license = "http://creativecommons.org/licenses/by-nd/2.0/";
-  printf ("Setting default to '%s': %d\n", license,
-          ll_license_default_set (license));
-  response = ll_license_default_get ();
-  printf ("Getting the default: %s\n", response);
-  free (response);
-  printf ("Setting default to '%s': %d\n", "", ll_license_default_set (""));
-  response = ll_license_default_get ();
-  printf ("Getting the default: %s\n", response);
-  free (response);
+
+  set_and_check(license, license);
+  set_and_check("", NULL);
+
   return 0;
 }
