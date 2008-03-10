@@ -32,60 +32,61 @@
 #endif
 
 int ll_write(ll_filename_t outfile, ll_uri_t value) {
-	int result = -1;
-	const char *mt;
-	int embedded = 0;
-	LLModuleDesc **curr_module;
+	return ll_module_write(outfile, value, NULL);
+}
 
-	assert(_ll_module_list);
-	mt = xdg_mime_get_mime_type_for_file(outfile,NULL);
-	curr_module = _ll_module_list;
-	while (*curr_module) {
-		if ( !(*curr_module)->mime_types || ll_list_contains((*curr_module)->mime_types,mt) ) {
-			if ((*curr_module)->features & LL_FEATURES_EMBED) {
-				result = (*curr_module)->write(outfile,value);
-				if (result) {
-					embedded = 1;
+static int _ll_module_write(ll_filename_t outfile, 
+			    ll_uri_t value,
+			    ll_module_t use_this_module,
+			    int embed_or_not) {
+	LLModuleSearchState state;
+	LLModuleDesc * module;
+	int last_result;
+	int all_results_fused = -1; /* -1 means failure */
+	int this_one_supports_embed;
+
+	memset(&state, 0, sizeof(LLModuleSearchState));
+
+	module = ll_module_search(outfile, &state);
+
+	while (module && module->write) {
+		/* Either if no module is specified,
+		   or if this module is the one specified: */
+
+		if ( (use_this_module == NULL) ||
+		     (strcmp(module->name, use_this_module) == 0)) {
+			/* If the module matches our preferences about
+			   embedding */
+			this_one_supports_embed = module->features & 
+				LL_FEATURES_EMBED;
+			if (this_one_supports_embed == embed_or_not) {
+				/* Do the write! */
+				last_result = (module->write)(outfile, value);
+				if ((last_result > -1) &&
+				    (all_results_fused < 0) ) {
+					all_results_fused = last_result;
 				}
 			}
 		}
-		++curr_module;
+		/* Whether or not the module matched, repeat the search */
+		module = ll_module_search(outfile, &state);
 	}
 	
-	if (!embedded) {
-		curr_module = _ll_module_list;
-		while (*curr_module) {
-			if ( !(*curr_module)->mime_types || ll_list_contains((*curr_module)->mime_types,mt) ) {
-				if ((*curr_module)->write) {
-					result = (*curr_module)->write(outfile,value);
-				}
-			}
-			++curr_module;
-		}
-	}
-
-	return result;
+	return all_results_fused;
 }
 
 /**
  * This function goes through the module list and writes the license
  * with every module that works, returning the FIXME
  */
-
-int ll_module_write(ll_filename_t outfile, ll_uri_t value, ll_module_t module) {
-	int result = -1;
-	LLModuleDesc **curr_module;
-
-	assert(_ll_module_list);
-	curr_module = _ll_module_list;
-	while (*curr_module) {
-		if ( strcmp((*curr_module)->name,module) == 0 ) {
-			if ((*curr_module)->write) {
-				result = (*curr_module)->write(outfile,value);
-			}
-		}
-		++curr_module;
+int ll_module_write(ll_filename_t outfile, 
+			 ll_uri_t value,
+			 ll_module_t use_this_module) {
+	int result = 0;
+	int managed_to_embed = 0;
+	result = managed_to_embed = _ll_module_write(outfile, value, use_this_module, 1);
+	if (managed_to_embed < 1) {
+		result = _ll_module_write(outfile, value, use_this_module, 0);
 	}
-
 	return result;
 }
