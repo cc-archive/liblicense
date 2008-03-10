@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
         (void)argv;
 	ll_init();
 
-	file="license_me.txt";
+	file="data/licensed.mp3";
 	license = ll_read(file);
 	printf("File license: %s\n",license);
 	assert (license != NULL);
