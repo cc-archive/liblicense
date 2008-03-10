@@ -24,21 +24,25 @@
 #include <stdio.h>
 #include <assert.h>
 
-int main(int argc, char** argv) {
-	char* file;
+void do_test() {
+	char *file="data/licensed.mp3";
 	ll_uri_t license;
+	license = ll_read(file);
+	printf("File license: %s\n",license);
+	assert (license != NULL);
+	free(license);
+}
+
+int main(int argc, char** argv) {
 
         (void)argc;
         (void)argv;
 	ll_init();
 
-	file="data/licensed.mp3";
-	license = ll_read(file);
-	printf("File license: %s\n",license);
-	assert (license != NULL);
-	free(license);
-
+	do_test(); /* Separated out into a function
+		      so one can verify that calling
+		      it twice or thrice, it still works. */
+	do_test();
 	ll_stop();
-
 	return 0;
 }
