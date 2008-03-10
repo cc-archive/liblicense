@@ -132,7 +132,8 @@ const char *exempi_mime_types[] = {"image/jpeg",
 				   "image/tiff",
 				   "application/pdf",
 				   "video/x-msvideo",
-				   "video/quicktime audio/x-wav",
+				   "video/quicktime"
+				   "audio/x-wav",
 				   NULL};
 
 
