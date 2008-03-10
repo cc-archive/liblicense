@@ -140,16 +140,16 @@ int ll_int_arrays_equal(int* ra1, int* ra2) {
   compare2 = ra2[0];
 
   if (compare1 != compare2) {
-    return 0; // false if they are different sizes
+    return 0; /* false if they are different sizes */
   }
 
   for (i = 0; i <= compare1; i++) {
     if (ra1[i] != ra2[i]) {
-      return 0; // false if there is a difference
+      return 0; /* false if there is a difference */
     }
   }
   
-  return 1; // true, if we get here!
+  return 1; /* true, if we get here! */
 }
 
 int ll_lists_equal(char **list_one,
@@ -158,9 +158,9 @@ int ll_lists_equal(char **list_one,
   int i;
   for (i=0 ; list_one[i] == NULL || list_two[i] != NULL; i++) {
     if (strcmp(list_one[i], list_two[i]) != 0) {
-      return 0; // false if there is a difference
+      return 0; /* false if there is a difference */
     }
   }
 
-  return 1; // True, if you get here!
+  return 1; /* True, if you get here! */
 }
