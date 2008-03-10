@@ -41,6 +41,7 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t use_this_module) {
 	char ** all_results;
 
 	all_results = malloc(sizeof(char) * _ll_modules_count_available());
+	memset(all_results, 0, sizeof(char) * _ll_modules_count_available());
 	memset(&state, 0, sizeof(LLModuleSearchState));
 
 	module = ll_module_search(infile, &state);
