@@ -23,29 +23,48 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <string.h>
+
+static void search(const char * filename,
+		   const char * predicate,
+		   const char * expected_module_name) {
+	LLModuleDesc * module = NULL;
+	LLModuleSearchState state;
+	memset(&state, 0, sizeof(LLModuleSearchState));
+	/* First, try to store a license URI in
+	   an MP3 file, which should work fine. */
+	module = ll_module_search(filename, predicate, &state);
+	if (expected_module_name != NULL) {
+		assert(module != NULL);
+		assert(strcmp(module->name, expected_module_name) == 0);
+	} else {
+		assert (module == NULL);
+	}
+}
 
 int main() {
-
-	char * file;
-	ll_uri_t value;
-	int result;
-
+	const char * mp3 = "data/empty.mp3";
+	const char * pdf = "data/empty.pdf";
+	
 	ll_init();
 
 	/* First, try to store a license URI in
 	   an MP3 file, which should work fine. */
+	search(mp3, LL_LICENSE, "id3.so");
 	
-
 	/* Then assert that a web statement can
 	   also go in an MP3 file. */
-
+	search(mp3, LL_WEBSTATEMENT, "id3.so");
+	
 	/* Then assert that a cc:morePermissions can't 
 	   go in an MP3 file */
+	search(mp3, LL_MORE_PERMISSIONS, NULL);
 
 	/* Then assert that cc:morePermissions can fit in a PDF
 	   with exempi. */
-
-	assert (0); /* This test fails because it is not yet written */
-
+	search(pdf, LL_MORE_PERMISSIONS, "exempi.so");
+	
+	ll_stop();
+	
 	return 0;
 }

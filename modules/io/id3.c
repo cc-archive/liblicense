@@ -26,18 +26,37 @@
 
 #define MAX_URI_LENGTH 50
 
+static int id3_predicate2field(const char * predicate) {
+	if (strcmp(predicate, LL_LICENSE) == 0) {
+		return ID3FID_WWWCOPYRIGHT /* wcop */;
+	} else if (strcmp(predicate, LL_WEBSTATEMENT) == 0) {
+		return ID3FID_WWWAUDIOFILE /* woaf */;
+	} else {
+		return -1;
+	}
+}
+
+
 void id3_init()
 {
 }
 
 char* id3_read( const char* filename, const ll_uri_t predicate )
 {
+	int woaf_or_wcop;
 	char *buffer = NULL;
 	ID3Frame *frame;
-	ID3Tag *tag = ID3Tag_New();
+	ID3Tag *tag;
+
+	woaf_or_wcop = id3_predicate2field(predicate);
+	if (woaf_or_wcop < 0) {
+		return NULL;
+	}
+
+	tag = ID3Tag_New();
 	ID3Tag_Link(tag,filename);
 
-	frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
+	frame = ID3Tag_FindFrameWithID(tag, woaf_or_wcop);
 	if (frame) {
 		ID3Field *field = ID3Frame_GetField(frame,ID3FN_URL);
 
@@ -51,17 +70,26 @@ char* id3_read( const char* filename, const ll_uri_t predicate )
 
 int id3_write( const char* filename, const char * predicate, const char* uri )
 {
+	/* Figure out which frame to use */
+	int woaf_or_wcop;
 	int err;
 	ID3Frame *frame;
-	ID3Tag *tag = ID3Tag_New();
+	ID3Tag *tag;
+
+	woaf_or_wcop = id3_predicate2field(predicate);
+	if (woaf_or_wcop < 0) {
+		return -1;
+	}
+
+	tag = ID3Tag_New();
 	ID3Tag_Link(tag,filename);
 
-	frame = ID3Tag_FindFrameWithID(tag, ID3FID_WWWCOPYRIGHT);
+	frame = ID3Tag_FindFrameWithID(tag, woaf_or_wcop);
 
 	if ( uri ) {
 		ID3Field * field;
 		if (!frame) {
-			frame = ID3Frame_NewID(ID3FID_WWWCOPYRIGHT);
+			frame = ID3Frame_NewID(woaf_or_wcop);
 			ID3Tag_AttachFrame(tag, frame);
 		}
 	
@@ -79,9 +107,9 @@ int id3_write( const char* filename, const char * predicate, const char* uri )
 	return err;
 }
 
-char * id3_supported_predicates[] = {LL_LICENSE, NULL};
-char * id3_mime_types[] = {"audio/mpeg",
-			   NULL};
+const char * id3_supported_predicates[] = {LL_LICENSE, LL_WEBSTATEMENT, NULL};
+const char * id3_mime_types[] = {"audio/mpeg",
+				 NULL};
 
 LL_MODULE_DEFINE("id3.so",
 		 "Write licenses within ID3 tags.",

@@ -354,7 +354,18 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 		}
 
 		if (useful) { 
-			return hope; /* We got one! */
+			/* If no predicate is required, we can just return. */
+			if (predicate == NULL) {
+				return hope;
+			}
+			/* Otherwise, check for the predicate we need. */
+			if (ll_list_contains(hope->supported_predicates, LL_PREDICATE_ANY) ||
+			    ll_list_contains(hope->supported_predicates,
+					     predicate)) {
+				return hope;
+			}
+			/* Other-otherwise, just keep looping. */
+			useful = 0;
 		}
 		
 		/* else, we try the loop again. */

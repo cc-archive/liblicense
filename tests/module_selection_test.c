@@ -37,11 +37,11 @@ int main() {
 
 	 ll_init();
 	 
-	 module = ll_module_search(file, NULL, &state);
+	 module = ll_module_search(file, LL_LICENSE, &state);
 	 assert (strcmp("exempi.so", module->name) == 0); /* Exempi can
 						       toy with PDF */
 	 
-	 module = ll_module_search(file, NULL, &state);
+	 module = ll_module_search(file, LL_LICENSE, &state);
 	 assert (module == NULL); /* Only Exempi */
 
 	 ll_stop();

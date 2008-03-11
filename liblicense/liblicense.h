@@ -332,6 +332,14 @@ extern const char LL_WEBSTATEMENT[];
    */
   extern const char LL_LICENSE[];
 
+  /**
+   * The LL_MORE_PERMISSIONS attribute is the URI of a web page
+   * indicating how to get more permissions than the embedded license.
+   */
+  extern const char LL_MORE_PERMISSIONS[];
+
+
+
 /**
  * The LL_ATTRIBUTION string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
@@ -929,7 +937,7 @@ unsigned int ll_modules_count_available();
 
 /**
  ** LLModuleSearchState state = {0};
- ** ll_module_for_file("/your/mom/music.mp3", &state);
+ ** ll_module_for_file("/your/mom/music.mp3", LL_LICENSE, &state);
  ** modifies a LLModuleSearchState struct passed in
  ** so that the search can be resumed
  ** (without index, searching would be O(N^2)
