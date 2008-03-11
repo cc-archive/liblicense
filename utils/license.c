@@ -199,11 +199,11 @@ main (int argc, char **argv)
           printf ("uri: %s\n", license);
           if (module)
             {
-              ret = ll_module_write (argv[optind], license, module);
+              ret = ll_module_write (argv[optind], LL_LICENSE, license, module);
             }
           else
             {
-              ret = ll_write (argv[optind], license);
+              ret = ll_write (argv[optind], LL_LICENSE, license);
             }
           if (!ret)
             {
@@ -214,11 +214,11 @@ main (int argc, char **argv)
       /* Even if we wrote a license, read it to make sure it worked */
       if (module)
         {
-          license = ll_module_read (argv[optind], module);
+          license = ll_module_read (argv[optind], LL_LICENSE, module);
         }
       else
         {
-          license = ll_read (argv[optind]);
+          license = ll_read (argv[optind], LL_LICENSE);
         }
 
       if (license)
