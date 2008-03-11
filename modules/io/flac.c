@@ -29,7 +29,7 @@ void flac_init()
 {
 }
 
-char* flac_read( const char* filename )
+char* flac_read( const char* filename, const ll_uri_t predicate )
 {
 	char *license = NULL;
 
@@ -45,7 +45,7 @@ char* flac_read( const char* filename )
 	return license;
 }
 
-int flac_write( const char* filename, const char* uri )
+int flac_write( const char* filename, const char *predicate, const char* uri )
 {
 	int ret = 1;
 

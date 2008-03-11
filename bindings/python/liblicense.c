@@ -273,9 +273,9 @@ py_write (PyObject *self, PyObject *args)
   (void) self;
   if (PyArg_ParseTuple (args, "sz|s", &f, &u, &m))
     if (m != NULL)
-      result = ll_module_write (f, u, m);
+      result = ll_module_write (f, LL_LICENSE, u, m);
     else
-      result = ll_write (f, u);
+      result = ll_write (f, LL_LICENSE, u);
   else
     return NULL;
   /* just in case PyBool_FromLong thinks its true */
@@ -296,9 +296,9 @@ py_read (PyObject *self, PyObject *args)
   (void) self;
   if (PyArg_ParseTuple (args, "s|s", &f, &m))
     if (m != NULL)
-      j = ll_module_read (f, m);
+      j = ll_module_read (f, LL_LICENSE, m);
     else
-      j = ll_read (f);
+      j = ll_read (f, LL_LICENSE);
   else
     return NULL;
   result = Py_BuildValue ("s", j);

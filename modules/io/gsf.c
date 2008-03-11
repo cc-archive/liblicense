@@ -50,7 +50,7 @@ void _gsf_shutdown()
 }
 
 
-char* gsf_read( const char* filename )
+char* gsf_read( const char* filename, const ll_uri_t predicate )
 {
 	char *license = NULL;
 
@@ -179,7 +179,7 @@ clone_dir (GsfInfile *in, GsfOutfile *out, const char *uri)
 	 */
 }
 
-int gsf_write( const char* filename, const char* uri )
+int gsf_write( const char* filename, const char * predicate, const char* uri )
 {
 	GsfInput   *input;
 	GsfInfile  *infile;

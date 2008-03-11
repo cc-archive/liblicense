@@ -27,7 +27,7 @@
 void do_test() {
 	char *file="data/licensed.mp3";
 	ll_uri_t license;
-	license = ll_read(file);
+	license = ll_read(file, LL_LICENSE);
 	printf("File license: %s\n",license);
 	assert (license != NULL);
 	free(license);

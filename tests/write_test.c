@@ -46,16 +46,14 @@ void test_license_readwrite(ll_uri_t license, const char * filename) {
 	ll_uri_t license_read_back;
 	int result;
 
-	result = ll_write(filename,license);
+	result = ll_write(filename,LL_LICENSE, license);
 	
-	license_read_back = ll_read(filename);
+	license_read_back = ll_read(filename, LL_LICENSE);
 	printf("Write result: %d\n",result);
 	printf("License read bacK: %s\n", license_read_back);
 	
 	assert (result > -1);
 	assert (strcmp(license, license_read_back) == 0);
-
-	ll_stop();
 
 }
 
@@ -71,14 +69,16 @@ int main(int argc, char** argv) {
 	printf("One ok\n");
 
 	/* Test MP3 again to make sure writing 
-	 * a license isn't destructive to ll's internal structures 
+	 * a license isn't destructive to ll's internal structures */
 	test_license_readwrite(license, MP3FILE);
-	printf("Two ok\n"); */
+	printf("Two ok\n");
 
 	/* Create a "temporary" text file */
 	clean_up();
 	make_text_file();
 
 	/* test_license_readwrite(license, FILENAME); */
+	ll_stop();
+
 	return 0;
 }

@@ -192,9 +192,9 @@ static VALUE rbll_read(int argc, VALUE *argv, VALUE klass) {
 	rb_scan_args(argc, argv, "11", &file, &module);
 
 	if (module != Qnil)
-		uri = ll_module_read(StringValueCStr(file), StringValueCStr(module));
+		uri = ll_module_read(StringValueCStr(file), LL_LICENSE, StringValueCStr(module));
 	else
-		uri = ll_read(StringValueCStr(file));
+		uri = ll_read(StringValueCStr(file), LL_LICENSE);
 
 	if (uri == NULL)
 		return Qnil;
@@ -490,11 +490,13 @@ static VALUE rbll_write(int argc, VALUE *argv, VALUE self) {
 	if (module != Qnil)
 		result = ll_module_write(
 		                StringValueCStr(file),
+				LL_LICENSE,
 		                StringValueCStr(license->uri),
 		                StringValueCStr(module));
 	else
 		result = ll_write(
 		                StringValueCStr(file),
+				LL_LICENSE,
 		                StringValueCStr(license->uri));
 
 	if (result)

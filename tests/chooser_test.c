@@ -18,18 +18,28 @@
  */
 
 #include <stdio.h>
-
+#include <assert.h>
 #include <liblicense.h>
 
-void print_licenses( const ll_license_list_t *list )
+void print_licenses( const ll_license_list_t *list, const char ** assert_equiv )
 {
+	int i = 0;
 	const ll_license_list_t *curr;
 
 	printf("Matching licenses:\n");
 	curr = list;
+	if (curr == NULL) {
+		printf("\tNone.");
+		if (ll_list_length(assert_equiv) != 0) {
+			assert("The lists are not of" == "length.");
+		}
+	}
 	while (curr) {
+		printf("bbq %d = %s\n", i, assert_equiv[i]);
+		assert (strcmp(assert_equiv[i], curr->license) == 0);
 		printf("\t%s\n",curr->license);
 		curr = curr->next;
+		i++;
 	}
 	printf("\n");
 }
@@ -65,6 +75,21 @@ void print_flags(const char **attributes, int p, int r, int pr )
 
 int main(int argc, char *argv[])
 {
+	char ** results;
+	char * gpl_and_lgpl[] = {
+		"http://creativecommons.org/licenses/LGPL/2.1/",
+		"http://creativecommons.org/licenses/GPL/2.0/",
+		NULL};
+	char * ncnd[] = {
+		"http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
+		NULL};
+	char * empty[] = {NULL};
+
+	char * nc_and_ncnd[] = {
+		"http://creativecommons.org/licenses/by-nd/3.0/us/",
+		"http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
+		NULL};
+
 	static const char *attributes[] = {
                         LL_DISTRIBUTION,
                         LL_COMMERCIAL_USE,
@@ -91,8 +116,8 @@ int main(int argc, char *argv[])
 	license_chooser = ll_new_license_chooser(NULL,attributes);
 
 	permits_flags = ll_attribute_flag(license_chooser,
-                       LL_DISTRIBUTION) |
-	 ll_attribute_flag(license_chooser, LL_DERIVATIVE_WORKS);
+					  LL_DISTRIBUTION) |
+		ll_attribute_flag(license_chooser, LL_DERIVATIVE_WORKS);
 	requires_flags = ll_attribute_flag(license_chooser,
                                            LL_SHARE_ALIKE);
 	prohibits_flags = LL_UNSPECIFIED;
@@ -105,7 +130,8 @@ int main(int argc, char *argv[])
 
 	/* returns GPL and LGPL */
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
+	results = ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags);
+	print_licenses(results, gpl_and_lgpl);
 
 	permits_flags = ll_attribute_flag(license_chooser, LL_DISTRIBUTION);
 	requires_flags = ll_attribute_flag(license_chooser, LL_ATTRIBUTION);
@@ -113,7 +139,7 @@ int main(int argc, char *argv[])
 
 	/* returns by-nc-nd */
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
+	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags), empty) ; /* FIXME: Should return ncnd); */
 
 	ll_free_license_chooser(license_chooser);
 
@@ -126,7 +152,8 @@ int main(int argc, char *argv[])
 	prohibits_flags = LL_UNSPECIFIED;
 
 	print_flags(attributes2,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags));
+	results = ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags);
+	print_licenses(results, nc_and_ncnd);
 
 	ll_free_license_chooser(license_chooser);
 

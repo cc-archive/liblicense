@@ -300,6 +300,7 @@ unsigned int _ll_modules_count_available() {
  *         If that is NULL, there are no more matching modules.
  */
 LLModuleDesc * ll_module_search(ll_filename_t filename,
+				const char* predicate,
 				/* out */ LLModuleSearchState * state) {
 	int useful = 0;
 	LLModuleDesc * hope = NULL;

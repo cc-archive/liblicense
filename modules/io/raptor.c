@@ -50,7 +50,7 @@ void triple_handler(void* user_data, const raptor_statement* triple) {
 	}
 }
 
-char* raptor_read( const char* filename )
+char* raptor_read( const char* filename , const ll_uri_t predicate)
 {
 	char *license;
 	raptor_parser* rdf_parser;
@@ -231,7 +231,8 @@ void declare_namespace(void* user_data, raptor_namespace *nspace)
 	raptor_serialize_set_namespace_from_namespace((raptor_serializer*)user_data, nspace);
 }
 
-int raptor_write( const char* filename, const char* license_uri_str )
+int raptor_write( const char* filename, const char* predicate, 
+		  const char* license_uri_str )
 {
 	int ret;
 	raptor_parser* rdf_parser;

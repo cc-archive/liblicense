@@ -45,7 +45,7 @@ void exempi_shutdown()
 #define XMP_OPEN_ONLYXMP XMP_OPEN_OPNLYXMP
 #endif
 
-char* exempi_read( const char* filename )
+char* exempi_read( const char* filename, const ll_uri_t predicate )
 {
 	XmpFilePtr f;
 	XmpPtr xmp;
@@ -83,7 +83,7 @@ char* exempi_read( const char* filename )
 	return uri_string;
 }
 
-int exempi_write( const char* filename, const char* uri )
+int exempi_write( const char* filename, const char* predicate, const char* uri )
 {
 	int success = true;
 	XmpFilePtr f;

@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #include <liblicense.h>
 
@@ -29,7 +30,7 @@ void id3_init()
 {
 }
 
-char* id3_read( const char* filename )
+char* id3_read( const char* filename, const ll_uri_t predicate )
 {
 	char *buffer = NULL;
 	ID3Frame *frame;
@@ -48,7 +49,7 @@ char* id3_read( const char* filename )
 	return buffer;
 }
 
-int id3_write( const char* filename, const char* uri )
+int id3_write( const char* filename, const char * predicate, const char* uri )
 {
 	int err;
 	ID3Frame *frame;
@@ -78,7 +79,7 @@ int id3_write( const char* filename, const char* uri )
 	return err;
 }
 
-char * id3_supported_predicates[] = {NULL};
+char * id3_supported_predicates[] = {LL_LICENSE, NULL};
 char * id3_mime_types[] = {"audio/mpeg",
 			   NULL};
 

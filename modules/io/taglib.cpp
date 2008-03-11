@@ -49,7 +49,7 @@ char* readXiphComment( Ogg::XiphComment *tag )
 	return NULL;
 }
 
-char* taglib_read( const char* filename )
+char* taglib_read( const char* filename , const char * predicate)
 {
 	FileRef fileref(filename, false);
 
@@ -79,7 +79,7 @@ char* taglib_read( const char* filename )
 	return NULL;
 }
 
-int taglib_write( const char* filename, const char* uri )
+int taglib_write( const char* filename, const char * predicate, const char* uri )
 {
 	FileRef fileref(filename, false);
 	File *file = fileref.file();

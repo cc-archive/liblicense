@@ -42,6 +42,8 @@ const char LL_PREDICATE_ANY[] =
    "?predicate";
 const char LL_WEBSTATEMENT[] =
   "http://ns.adobe.com/xap/1.0/rights/WebStatement";
+const char LL_LICENSE[] =
+  "http://creativecommons.org/ns#License FIXME";
 const char LL_ATTRIBUTION[] =
   "http://creativecommons.org/ns#Attribution";
 const char LL_REPRODUCTION[] =

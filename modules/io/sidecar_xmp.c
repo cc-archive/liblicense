@@ -127,7 +127,7 @@ void sidecar_xmp_shutdown()
 	xmp_terminate();
 }
 
-char* sidecar_xmp_read( const char* filename )
+char* sidecar_xmp_read( const char* filename, const ll_uri_t predicate )
 {
 	char *sidecar = sidecar_filename( filename );
 	FILE *f = fopen(sidecar, "rb");
@@ -158,7 +158,8 @@ char* sidecar_xmp_read( const char* filename )
 	return NULL;
 }
 
-int sidecar_xmp_write( const char* filename, const char* uri )
+int sidecar_xmp_write( const char* filename, const char* predicate,
+		       const char* uri )
 {
 	int success = true;
 

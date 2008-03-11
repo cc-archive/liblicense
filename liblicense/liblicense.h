@@ -326,6 +326,12 @@ typedef char *ll_filename_t;
  */
 extern const char LL_WEBSTATEMENT[];
 
+  /**
+   * The LL_LICENSE attribute is the URI of a license
+   * that permits some sharing of this work.
+   */
+  extern const char LL_LICENSE[];
+
 /**
  * The LL_ATTRIBUTION string may be returned by the
  * LL_PERMITS, LL_REQUIRES and LL_PROHIBITS attributes.
@@ -791,8 +797,8 @@ typedef struct _LLModuleDesc LLModuleDesc;
 extern LLModuleDesc **_ll_module_list;
 
 typedef void (*LLModuleInitFunc) (void);
-typedef char *(*LLModuleReadFunc) (const char *);
-typedef int (*LLModuleWriteFunc) (const char *, const char *);
+typedef char *(*LLModuleReadFunc) (const char *, const char *);
+typedef int (*LLModuleWriteFunc) (const char *, const char *, const char *);
 typedef void (*LLModuleShutdownFunc) (void);
 
 enum ll_features
@@ -873,6 +879,11 @@ ll_uri_t ll_license_default_get (void);
  *
  * @param filename
  *     The name of the file for which the license is desired.
+ * @param predicate 
+ *         Read this predicate from the file.
+ *         NULL is accepted for simplicity;
+ *         it is equivalent to asking for the license of the file.
+ *         Equivalently, you can ask for the LL_LICENSE predicate.
  * @returns
  *     NULL if the file cannot be read, or no license can be found; otherwise
  *     a string containing the URI of the license corresponding to the file.
@@ -880,14 +891,19 @@ ll_uri_t ll_license_default_get (void);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-ll_uri_t ll_read (ll_filename_t filename);
+  ll_uri_t ll_read (ll_filename_t filename, const ll_uri_t predicate);
 
 /**
  * The ll_module_read function may be used to obtain the URI of the
  * license of the given file, as determined by the named module.
  *
  * @param filename
- *     The name of the file for which the license is desired.
+ *     The name of the file for which the license is desired
+ * @param predicate 
+ *         Read this predicate from the file.
+ *         NULL is accepted for simplicity;
+ *         it is equivalent to asking for the license of the file.
+ *         Equivalently, you can ask for the LL_LICENSE predicate.
  * @param module
  *     The name of the module to scan the file with
  * @returns
@@ -896,7 +912,7 @@ ll_uri_t ll_read (ll_filename_t filename);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-ll_uri_t ll_module_read (ll_filename_t filename, ll_module_t module);
+ll_uri_t ll_module_read (ll_filename_t filename, const ll_uri_t predicate, ll_module_t module);
 
 typedef struct _LLModuleDesc_and_index {
 	LLModuleDesc __desc;
@@ -917,12 +933,20 @@ unsigned int ll_modules_count_available();
  ** modifies a LLModuleSearchState struct passed in
  ** so that the search can be resumed
  ** (without index, searching would be O(N^2)
- * @param filename The filename to search for. If NULL, then get every module.
+ * @param filename
+ *         The filename to search for. If NULL, then get every module.
+ * @param predicate 
+ *         Return only modules that support this predicate.  Use
+ *         NULL if you want to find all modules independent
+ *         of which predicate they support.  Using LL_PREDICATE_ANY
+ *         will actually search for modules that literally support any
+ *         predicate.
  * @return LLModuleDesc for the currently-found module
  *         If that is NULL, there are no more matching modules.
  */
-LLModuleDesc * ll_module_search(ll_filename_t filename,
-				/* out */ LLModuleSearchState * state);
+  LLModuleDesc * ll_module_search(ll_filename_t filename, 
+				  const char * predicate,
+				  /* out */ LLModuleSearchState * state);
 
 /******************** write_license ********************/
 
@@ -936,8 +960,10 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
  *
  * @param filename
  *     The name of the file the license is about
- * @param license_uri
- *     The URI of the license of the file
+ * @param predicate
+ *     The exact predicate being stored (NULL is okay if the predicate is license)
+ * @param value
+ *     The value to store (typically a URL/URI for a license)
  * @returns
  *     -1 if no embedders are available for this file type;
  *     0 if all available embedders failed;
@@ -945,7 +971,7 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-int ll_write (ll_filename_t filename, ll_uri_t license_uri);
+  int ll_write (ll_filename_t filename, const ll_uri_t predicate, ll_uri_t value);
 
 /**
  * The ll_module write function is used to write the given license to
@@ -953,8 +979,10 @@ int ll_write (ll_filename_t filename, ll_uri_t license_uri);
  *
  * @param filename
  *     The name of the file the license is about
- * @param license_uri
- *     The URI of the license of the file
+ * @param predicate
+ *     The exact predicate being stored (NULL is okay if the predicate is license)
+ * @param value
+ *     The value to store (typically a URL/URI for a license)
  * @param module
  *     The name of the module to use to write the license to the file.
  * @returns
@@ -964,8 +992,9 @@ int ll_write (ll_filename_t filename, ll_uri_t license_uri);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-int ll_module_write (ll_filename_t filename, ll_uri_t license_uri,
-                     ll_module_t module);
+  int ll_module_write (ll_filename_t filename, ll_uri_t predicate,
+		       const ll_uri_t license_uri,
+		       ll_module_t module);
 
 /******************* license_chooser *******************/
 

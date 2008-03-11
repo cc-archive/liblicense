@@ -38,7 +38,7 @@ void vorbis_init()
 {
 }
 
-char* vorbis_read( const char* filename )
+char* vorbis_read( const char* filename, const ll_uri_t predicate )
 {
 	OggVorbis_File vf;
 	FILE *fh;
@@ -70,7 +70,7 @@ char* vorbis_read( const char* filename )
 	return license;
 }
 
-int vorbis_write( const char* filename, const char* uri )
+int vorbis_write( const char* filename, const char *predicate, const char* uri )
 {
 	int ret = 0;
 

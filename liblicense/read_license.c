@@ -28,11 +28,15 @@
 #include "config.h"
 #endif
 
-ll_uri_t ll_read(ll_filename_t infile) {
-	return ll_module_read(infile, NULL);
+ll_uri_t ll_read(ll_filename_t infile, const ll_uri_t predicate) {
+	ll_uri_t new_predicate = predicate;
+	if (predicate == NULL) {
+		new_predicate = LL_LICENSE;
+	}
+	return ll_module_read(infile, new_predicate, NULL);
 }
 
-ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t requested_module_name) {
+ll_uri_t ll_module_read(ll_filename_t infile, const ll_uri_t predicate, ll_module_t requested_module_name) {
 	char * license = NULL;
 	int result_index = 0;
 	LLModuleSearchState state;
@@ -44,7 +48,7 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t requested_module_name)
 	memset(all_results, 0, sizeof(char) * _ll_modules_count_available());
 	memset(&state, 0, sizeof(LLModuleSearchState));
 
-	module = ll_module_search(infile, &state);
+	module = ll_module_search(infile, NULL, &state);
 			
 	while (module && module->read) {
 		/* Either if no module is specified,
@@ -54,14 +58,14 @@ ll_uri_t ll_module_read(ll_filename_t infile, ll_module_t requested_module_name)
 		     (strcmp(module->name, requested_module_name) == 0)) {
 
 			/* Do the read! */
-			one_result = (module->read)(infile);
+			one_result = (module->read)(infile, predicate);
 			if (one_result) {
 				all_results[result_index] = one_result;
 				result_index++;
 			}
 		}
 		/* Whether or not the module matched, keep searching */
-		module = ll_module_search(infile, &state);
+		module = ll_module_search(infile, NULL, &state);
 
 	}
 		
