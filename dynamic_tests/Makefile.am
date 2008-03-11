@@ -29,7 +29,7 @@ TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VE
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	LD_LIBRARY_PATH=../liblicense/.libs/ \
 	@VALGRIND@
-TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate
+TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection
 
 all-local:
 	mkdir -p _prefix
@@ -61,3 +61,5 @@ test_write_SOURCES = write_test.c
 test_chooser_SOURCES = chooser_test.c
 
 test_predicate_SOURCES = predicate_test.c
+
+test_module_selection_SOURCES = module_selection_test.c
