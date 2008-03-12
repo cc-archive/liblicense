@@ -52,6 +52,9 @@ void _gsf_shutdown()
 
 char* gsf_read( const char* filename, const ll_uri_t predicate )
 {
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return NULL; /* We only know License */
+	}
 	char *license = NULL;
 
 	GsfInput	*input;
@@ -181,6 +184,9 @@ clone_dir (GsfInfile *in, GsfOutfile *out, const char *uri)
 
 int gsf_write( const char* filename, const char * predicate, const char* uri )
 {
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return -1; /* We only know License */
+	}
 	GsfInput   *input;
 	GsfInfile  *infile;
 	GsfOutput  *output;
@@ -224,7 +230,7 @@ int gsf_write( const char* filename, const char * predicate, const char* uri )
 	return TRUE;
 }
 
-const char * gsf_supported_predicates[] = {NULL};
+const char * gsf_supported_predicates[] = {LL_LICENSE, NULL};
 const char * gsf_mime_types[] = {"application/msword",
 				NULL};
 

@@ -34,6 +34,14 @@
 
 #include "vcedit.h"
 
+static int vorbis_verify_predicate(const char * predicate) {
+	if (strcmp(predicate, LL_LICENSE) == 0) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 void vorbis_init()
 {
 }
@@ -44,6 +52,10 @@ char* vorbis_read( const char* filename, const ll_uri_t predicate )
 	FILE *fh;
 	char *license;
 	char **comments;
+
+	if (! vorbis_verify_predicate(predicate)) {
+		return NULL;
+	}
 
 	fh = fopen(filename,"r");
 	if (fh) {
@@ -74,7 +86,13 @@ int vorbis_write( const char* filename, const char *predicate, const char* uri )
 {
 	int ret = 0;
 
-	FILE *fh_in = fopen(filename,"rb");
+	FILE *fh_in;
+
+	if (! vorbis_verify_predicate(predicate)) {
+		return -1;
+	}
+
+	fh_in = fopen(filename,"rb");
 	if (fh_in) {
 		vcedit_state *state = vcedit_new_state();
 		if (vcedit_open(state, fh_in) < 0) {
@@ -167,7 +185,7 @@ int vorbis_write( const char* filename, const char *predicate, const char* uri )
 	return ret;
 }
 
-const char * vorbis_supported_predicates[] = {NULL};
+const char * vorbis_supported_predicates[] = {LL_LICENSE, NULL};
 const char * vorbis_mime_types[] = {"audio/x-vorbis+ogg",
 				  "audio/x-vorbis",
 				  "application/ogg",

@@ -52,6 +52,9 @@ void triple_handler(void* user_data, const raptor_statement* triple) {
 
 char* raptor_read( const char* filename , const ll_uri_t predicate)
 {
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return NULL; /* We only know License */
+	}
 	char *license;
 	raptor_parser* rdf_parser;
 	unsigned char* fnu;
@@ -251,6 +254,10 @@ int raptor_write( const char* filename, const char* predicate,
 	xmlNode *rdf_element;
 	xmlNode *cur_node;
 
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return -1; /* We only know License */
+	}
+
 	ret = 0;
 	rdf_parser = NULL;
 	uri_string=raptor_uri_filename_to_uri_string(filename);
@@ -340,7 +347,7 @@ int raptor_write( const char* filename, const char* predicate,
 	return ret;
 }
 
-const char * raptor_supported_predicates[] = {NULL};
+const char * raptor_supported_predicates[] = {LL_LICENSE, NULL};
 const char * raptor_mime_typesp[] = {"image/svg+xml",
 				     "application/smil",
 				     NULL};

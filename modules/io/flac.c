@@ -31,6 +31,9 @@ void flac_init()
 
 char* flac_read( const char* filename, const ll_uri_t predicate )
 {
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return -1; /* We only know License */
+	}
 	char *license = NULL;
 
 	FLAC__StreamMetadata *vc;
@@ -47,6 +50,9 @@ char* flac_read( const char* filename, const ll_uri_t predicate )
 
 int flac_write( const char* filename, const char *predicate, const char* uri )
 {
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return -1; /* We only know License */
+	}
 	int ret = 1;
 
 	FLAC__Metadata_SimpleIterator *iter = FLAC__metadata_simple_iterator_new();
@@ -95,7 +101,7 @@ int flac_write( const char* filename, const char *predicate, const char* uri )
 	return ret;
 }
 
-char * flac_supported_predicates[] = {NULL};
+char * flac_supported_predicates[] = {LL_LICENSE, NULL};
 char * flac_mime_types[] = {"audio/x-flac", NULL};
 
 LL_MODULE_DEFINE("flac.so",
