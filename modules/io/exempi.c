@@ -25,9 +25,12 @@
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
 
+#include "shared_xmp.h"
+
 void exempi_init()
 {
 	xmp_init();
+	/* FIXME: This should check return value, etc. */
 	xmp_register_namespace(NS_CC, "cc", NULL);
 }
 
@@ -50,6 +53,12 @@ char* exempi_read( const char* filename, const ll_uri_t predicate )
 	XmpFilePtr f;
 	XmpPtr xmp;
 	char *uri_string;
+	struct _ll_shared_xmp_ns_and_rest namespace_etc;
+
+	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
+	if (namespace_etc.namespace == NULL) {
+		return NULL;
+	}
 
 	f = xmp_files_open_new(filename, XMP_OPEN_ONLYXMP);
 	if (f == NULL) {
@@ -88,6 +97,13 @@ int exempi_write( const char* filename, const char* predicate, const char* uri )
 	int success = true;
 	XmpFilePtr f;
 	XmpPtr xmp;
+
+	struct _ll_shared_xmp_ns_and_rest namespace_etc;
+
+	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
+	if (namespace_etc.namespace == NULL) {
+		return -1;
+	}
 
 	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_ONLYXMP);
 	if (f == NULL) {

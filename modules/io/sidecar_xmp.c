@@ -1,20 +1,21 @@
-// Creative Commons has made the contents of this file
-// available under a CC-GNU-LGPL license:
-//
-// http://creativecommons.org/licenses/LGPL/2.1/
-//
-// A copy of the full license can be found as part of this
-// distribution in the file COPYING.
-//
-// You may use the liblicense software in accordance with the
-// terms of that license. You agree that you are solely
-// responsible for your use of the liblicense software and you
-// represent and warrant to Creative Commons that your use
-// of the liblicense software will comply with the CC-GNU-LGPL.
-//
-// Copyright 2007, Creative Commons, www.creativecommons.org.
-// Copyright 2007, Jason Kivlighn.
-// Copyright (C) 2007 Peter Miller
+/* Creative Commons has made the contents of this file
+ * available under a CC-GNU-LGPL license:
+ *
+ * http://creativecommons.org/licenses/LGPL/2.1/
+ *
+ * A copy of the full license can be found as part of this
+ * distribution in the file COPYING.
+ *
+ * You may use the liblicense software in accordance with the
+ * terms of that license. You agree that you are solely
+ * responsible for your use of the liblicense software and you
+ * represent and warrant to Creative Commons that your use
+ * of the liblicense software will comply with the CC-GNU-LGPL.
+ *
+ * Copyright 2007, Creative Commons, www.creativecommons.org.
+ * Copyright 2007, Jason Kivlighn.
+ * Copyright (C) 2007 Peter Miller
+ */
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -26,6 +27,8 @@
 
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
+
+#include "shared_xmp.h"
 
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -129,8 +132,17 @@ void sidecar_xmp_shutdown()
 
 char* sidecar_xmp_read( const char* filename, const ll_uri_t predicate )
 {
-	char *sidecar = sidecar_filename( filename );
-	FILE *f = fopen(sidecar, "rb");
+	struct _ll_shared_xmp_ns_and_rest namespace_etc;
+	char *sidecar;
+	FILE *f;
+
+	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
+	if (namespace_etc.namespace == NULL) {
+		return NULL;
+	}
+
+	sidecar = sidecar_filename( filename );
+	f = fopen(sidecar, "rb");
 	free(sidecar);
 
 	if ( f ) {
@@ -145,7 +157,9 @@ char* sidecar_xmp_read( const char* filename, const ll_uri_t predicate )
 			free(buffer);
 			uri_string = NULL;
 			license_uri = xmp_string_new();
-			if ( xmp_get_property(xmp, NS_CC, "license", license_uri, NULL) ) {
+			if ( xmp_get_property(xmp, namespace_etc.namespace,
+					      namespace_etc.rest,
+					      license_uri, NULL) ) {
 				uri_string = strdup(xmp_string_cstr(license_uri));
 			}
 
@@ -161,16 +175,23 @@ char* sidecar_xmp_read( const char* filename, const ll_uri_t predicate )
 int sidecar_xmp_write( const char* filename, const char* predicate,
 		       const char* uri )
 {
+	struct _ll_shared_xmp_ns_and_rest namespace_etc;
 	int success = true;
-
-	char *sidecar = sidecar_filename( filename );
-
+	char *sidecar;
 	XmpPtr xmp = NULL;
-	FILE *f = fopen(sidecar, "rb");
+	FILE *f;
 	XmpStringPtr xmp_string;
 	const char *xmp_cstr;
 
-	if ( !f && !uri ) { //no file to remove license info from
+	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
+	if (namespace_etc.namespace == NULL) {
+		return -1;
+	}
+
+	sidecar = sidecar_filename( filename );
+	f = fopen(sidecar, "rb");
+	
+	if ( !f && !uri ) { /* no file to remove license info from */
 		return 1;
 	}
 
@@ -213,7 +234,7 @@ int sidecar_xmp_write( const char* filename, const char* predicate,
 	return success;
 }
 
-const char* sidecar_xmp_supported_predicates[] = {NULL};
+const char* sidecar_xmp_supported_predicates[] = {LL_LICENSE, NULL};
 const char* sidecar_xmp_mime_types[] = {NULL};
 
 LL_MODULE_DEFINE("sidecar_xmp.so",
