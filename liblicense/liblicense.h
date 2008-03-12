@@ -1004,6 +1004,8 @@ unsigned int ll_modules_count_available();
 		       const ll_uri_t license_uri,
 		       ll_module_t module);
 
+extern const int LL_E_MODULE_WRITE_FAIL;
+
 /******************* license_chooser *******************/
 
 /**

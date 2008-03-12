@@ -185,7 +185,7 @@ int sidecar_xmp_write( const char* filename, const char* predicate,
 
 	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
 	if (namespace_etc.namespace == NULL) {
-		return -1;
+		return -LL_E_MODULE_WRITE_FAIL;
 	}
 
 	sidecar = sidecar_filename( filename );

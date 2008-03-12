@@ -102,17 +102,12 @@ int exempi_write( const char* filename, const char* predicate, const char* uri )
 
 	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
 	if (namespace_etc.namespace == NULL) {
-		return -1;
+		return -LL_E_MODULE_WRITE_FAIL;
 	}
 
 	f = xmp_files_open_new(filename, XMP_OPEN_FORUPDATE | XMP_OPEN_ONLYXMP);
 	if (f == NULL) {
-	  // Then we're doomed.
-	  // WTF is with the magic-number return codes?  Maybe it's 1,
-	  // maybe it's 0.  I don't remember.
-	  
-	  // FIXME!
-	  return 1;
+	  return -LL_E_MODULE_WRITE_FAIL;
 	}
 	xmp = xmp_files_get_new_xmp(f);
 

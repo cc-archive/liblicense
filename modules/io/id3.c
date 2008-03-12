@@ -32,7 +32,7 @@ static int id3_predicate2field(const char * predicate) {
 	} else if (strcmp(predicate, LL_WEBSTATEMENT) == 0) {
 		return ID3FID_WWWAUDIOFILE /* woaf */;
 	} else {
-		return -1;
+		return -LL_E_MODULE_WRITE_FAIL;
 	}
 }
 
@@ -78,7 +78,7 @@ int id3_write( const char* filename, const char * predicate, const char* uri )
 
 	woaf_or_wcop = id3_predicate2field(predicate);
 	if (woaf_or_wcop < 0) {
-		return -1;
+		return -LL_E_MODULE_WRITE_FAIL;
 	}
 
 	tag = ID3Tag_New();

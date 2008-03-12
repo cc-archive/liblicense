@@ -89,7 +89,7 @@ int vorbis_write( const char* filename, const char *predicate, const char* uri )
 	FILE *fh_in;
 
 	if (! vorbis_verify_predicate(predicate)) {
-		return -1;
+		return -LL_E_MODULE_WRITE_FAIL;
 	}
 
 	fh_in = fopen(filename,"rb");

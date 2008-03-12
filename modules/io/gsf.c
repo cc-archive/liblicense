@@ -185,7 +185,7 @@ clone_dir (GsfInfile *in, GsfOutfile *out, const char *uri)
 int gsf_write( const char* filename, const char * predicate, const char* uri )
 {
 	if (strcmp(predicate, LL_LICENSE) != 0) {
-		return -1; /* We only know License */
+		return -LL_E_MODULE_WRITE_FAIL; /* We only know License */
 	}
 	GsfInput   *input;
 	GsfInfile  *infile;

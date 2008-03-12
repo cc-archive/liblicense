@@ -255,7 +255,7 @@ int raptor_write( const char* filename, const char* predicate,
 	xmlNode *cur_node;
 
 	if (strcmp(predicate, LL_LICENSE) != 0) {
-		return -1; /* We only know License */
+		return -LL_E_MODULE_WRITE_FAIL; /* We only know License */
 	}
 
 	ret = 0;

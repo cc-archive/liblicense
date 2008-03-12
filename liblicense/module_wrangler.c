@@ -40,6 +40,7 @@
 
 #include "modules.h"
 
+const int LL_E_MODULE_WRITE_FAIL = 1;
 const char *liblicense_io_module_dir;
 const char *liblicense_config_module_dir;
 
