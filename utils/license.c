@@ -25,11 +25,6 @@
 #include <getopt.h>
 #include <assert.h>
 #include "liblicense.h"
-static int verbose_flag = 0;
-static int set_license_flag = 0;
-static int remove_license_flag = 0;
-static int set_webstatement_flag = 0;
-static int remove_webstatement_flag = 0;
 
 static const int E_NO_DEFAULT_LICENSE=1;
 static const int E_LICENSE_DOES_NOT_VERIFY=2;
@@ -110,6 +105,13 @@ list_juris (ll_juris_t j)
 int
 main (int argc, char **argv)
 {
+  int verbose_flag = 0;
+  int set_license_flag = 0;
+  int remove_license_flag = 0;
+  int set_webstatement_flag = 0;
+  int remove_webstatement_flag = 0;
+
+
   char * printable_thing_we_are_setting = NULL;
   char * uri_of_thing_we_are_setting = NULL;
   char * new_value = NULL;
