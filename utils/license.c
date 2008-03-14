@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <getopt.h>
+#include <assert.h>
 #include "liblicense.h"
 static int verbose_flag = 0;
 static int set_license_flag = 0;
@@ -109,6 +110,10 @@ list_juris (ll_juris_t j)
 int
 main (int argc, char **argv)
 {
+  char * printable_thing_we_are_setting = NULL;
+  char * uri_of_thing_we_are_setting = NULL;
+  char * new_value = NULL;
+  
   static struct option long_options[] =
   {
     {"verbose", no_argument, &verbose_flag, 1},
@@ -128,7 +133,7 @@ main (int argc, char **argv)
   int c = 0;
   int option_index = 0;
   ll_uri_t license = NULL;
-  ll_uri_t license_read_back = NULL;
+  ll_uri_t value_read_back = NULL;
   ll_module_t module = NULL;
   char * webstatement = NULL;
   char * filename = NULL;
@@ -242,52 +247,79 @@ main (int argc, char **argv)
   } else {
     /* We are supposed to operate on a file. */
 
-    /* First, handle license metadata. */
+    /* Turn removes into sets */
+    if (remove_webstatement_flag) {
+      webstatement = NULL;
+      set_webstatement_flag = 1;
+    }
     if (remove_license_flag) {
       license = NULL;
       set_license_flag = 1; /* A removal is a set to NULL */
     }
-    if (set_license_flag) {
-      printf ("Setting license to uri: %s\n", license);
+
+    /* Figure out which one we're going to set. */
+    if (set_webstatement_flag && set_license_flag) {
+      return die("Error: You asked to modify both the embedded license and the embedded web statement, but this program is unable to do that.  Run it twice to do each task separately.\n", NULL, E_COULD_NOT_WRITE);
+    }
+
+    if (set_webstatement_flag) {
+      uri_of_thing_we_are_setting = LL_WEBSTATEMENT;
+      printable_thing_we_are_setting = "web statement";
+      new_value = webstatement;
+    } else if (set_license_flag) {
+      uri_of_thing_we_are_setting = LL_LICENSE;
+      printable_thing_we_are_setting = "license";
+      new_value = license;
+    } else {
+      assert (0);
+    }
+      
+    /* First, handle license metadata. */
+    printf ("Setting %s to uri: %s\n", printable_thing_we_are_setting, license);
       if (module) {
-	write_status = ll_module_write (filename, LL_LICENSE, license, module);
+	write_status = ll_module_write (filename, uri_of_thing_we_are_setting,
+					new_value, module);
       } else {
-	write_status = ll_write (filename, LL_LICENSE, license);
+	write_status = ll_write (filename, uri_of_thing_we_are_setting,
+				 new_value);
       }
       if (write_status < 0) {
-	  printf ("Unable to write license to file\n");
-	  return E_COULD_NOT_WRITE;
+	return die ("Error: Unable to write %s to file\n", 
+		    printable_thing_we_are_setting, E_COULD_NOT_WRITE);
       }
 
       /* Even if we wrote a license, read it to make sure it worked */
       if (module) {
-	license_read_back = ll_module_read (argv[optind], LL_LICENSE, module);
+	value_read_back = ll_module_read (argv[optind], 
+					  uri_of_thing_we_are_setting, module);
       }
       else {
-	license_read_back = ll_read (argv[optind], LL_LICENSE);
+	value_read_back = ll_read (argv[optind], uri_of_thing_we_are_setting);
       }
       
       /* Print the license.  Note that printf will print NULL as
 	 (null), which is great if the user asked to remove a
 	 license. */
-      if (license_read_back == NULL) {
-	printf ("No license found for %s\n", filename);
+      if (value_read_back == NULL) {
+	printf ("No %s found for %s\n", printable_thing_we_are_setting, 
+		filename);
 
 	/* However, if the license is NULL but we tried
 	   to write a non-NULL license, then we're screwed. */
-	if ( (license != NULL) &&
-	     (license_read_back == NULL) ) {
-	  return die("Unable to write license to file\n", NULL, E_COULD_NOT_WRITE);
+	if ( (new_value != NULL) &&
+	     (value_read_back == NULL) ) {
+	  return die("Unable to write %s to file\n", 
+		     printable_thing_we_are_setting, E_COULD_NOT_WRITE);
 	}
 	
       } else { 
-	printf ("%s is licensed under %s\n", argv[optind], license);
+	printf ("%s has %s of %s\n", filename, printable_thing_we_are_setting,
+		value_read_back);
 	if (verbose_flag) {
 	  ll_license_print_info (license);
 	}
       }
     }
-  }
 
   ll_stop ();
   return 0;
