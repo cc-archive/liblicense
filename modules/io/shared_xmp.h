@@ -7,6 +7,8 @@ struct _ll_shared_xmp_ns_and_rest {
 };
 
 extern const char  _ll_shared_xmp_license[];
+extern const char  _ll_shared_xmp_webstatement[];
+const char  _ll_shared_xmp_morepermissions[];
 
 struct _ll_shared_xmp_ns_and_rest
 _ll_shared_xmp_uri2struct (const char * uri);

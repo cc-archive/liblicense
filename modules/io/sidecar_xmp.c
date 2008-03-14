@@ -234,7 +234,7 @@ int sidecar_xmp_write( const char* filename, const char* predicate,
 	return success;
 }
 
-const char* sidecar_xmp_supported_predicates[] = {LL_LICENSE, NULL};
+const char* sidecar_xmp_supported_predicates[] = {LL_LICENSE, LL_WEBSTATEMENT, LL_MORE_PERMISSIONS, NULL};
 const char* sidecar_xmp_mime_types[] = {NULL};
 
 LL_MODULE_DEFINE("sidecar_xmp.so",
