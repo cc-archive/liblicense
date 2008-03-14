@@ -52,14 +52,15 @@ void triple_handler(void* user_data, const raptor_statement* triple) {
 
 char* raptor_read( const char* filename , const ll_uri_t predicate)
 {
-	if (strcmp(predicate, LL_LICENSE) != 0) {
-		return NULL; /* We only know License */
-	}
 	char *license;
 	raptor_parser* rdf_parser;
 	unsigned char* fnu;
 	raptor_uri* fn_uri;
 	match_t match;
+
+	if (strcmp(predicate, LL_LICENSE) != 0) {
+		return NULL; /* We only know License */
+	}
 
 	license = NULL;
 	rdf_parser = raptor_new_parser("rdfxml");
