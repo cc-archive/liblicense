@@ -24,9 +24,11 @@
 #include <string.h>
 #include <getopt.h>
 #include "liblicense.h"
-static int verbose_flag;
-static int set_flag;
-static int remove_flag;
+static int verbose_flag = 0;
+static int set_license_flag = 0;
+static int remove_license_flag = 0;
+static int set_webstatement_flag = 0;
+static int remove_webstatement_flag = 0;
 
 static const int E_NO_DEFAULT_LICENSE=1;
 static const int E_LICENSE_DOES_NOT_VERIFY=2;
@@ -55,6 +57,15 @@ help ()
     ("       --remove-license                Removes any existing licenses from the file.\n");
   printf
     ("   -l, --license=URI           Uses the license with URI instead of default.\n");
+  printf
+    ("       --set-web-statement     Sets the web statement URI.\n");
+  printf
+    ("       --get-web-statement     Gets (and prints) the web statement URI.\n");
+  printf
+    ("       --remove-web-statement  Removes any web statement URI from the file.\n");
+  printf
+    ("   -w, --web-statement=URI     Use this web statement URI when setting (NOTE: You must also pass --set-web-statement the license with URI instead of default.\n");
+  printf
     ("   -m                          Lists all available modules and their capabilities\n");
   printf
     ("                                 for reading and writing licenses in files\n");
@@ -92,9 +103,12 @@ main (int argc, char **argv)
   {
     {"verbose", no_argument, &verbose_flag, 1},
     {"quiet", no_argument, &verbose_flag, 0},
-    {"set-license", no_argument, &set_flag, 1},
-    {"remove-license", no_argument, &remove_flag, 1},
+    {"set-license", no_argument, &set_license_flag, 1},
+    {"remove-license", no_argument, &remove_license_flag, 1},
+    {"set-web-statement", no_argument, &set_webstatement_flag, 1},
+    {"get-web-statement", no_argument, &remove_webstatement_flag, 1},
     {"license", required_argument, 0, 'l'},
+    {"web-statement", required_argument, 0, 'w'},
     {"use", required_argument, 0, 'u'},
     {"help", no_argument, 0, 'h'},
     {"list-all", optional_argument, 0, 'a'},
@@ -104,10 +118,11 @@ main (int argc, char **argv)
   int option_index;
   ll_uri_t license = NULL;
   ll_module_t module = NULL;
+  char * webstatement = NULL;
   ll_init ();
   while (
          (c =
-          getopt_long (argc, argv, "vqhmu:l:a::", long_options,
+          getopt_long (argc, argv, "vqhmu:l:w:a::", long_options,
                        &option_index)) != -1)
     {
       switch (c)
@@ -126,6 +141,12 @@ main (int argc, char **argv)
               module = optarg;
             }
           break;
+	case 'w':
+	  if (optarg != NULL) 
+	    {
+	      webstatement = optarg;
+	    }
+	  continue;
         case 'l':
           if (optarg != NULL)
             {
@@ -157,7 +178,7 @@ main (int argc, char **argv)
           abort ();
         }
     }
-  if (set_flag)
+  if (set_license_flag)
     {
       if (license == NULL)
         {
@@ -193,7 +214,7 @@ main (int argc, char **argv)
   else
     {
       /* Next argument is file, use it. */
-      if (remove_flag)
+      if (remove_license_flag)
         {
           license = NULL;
         }
