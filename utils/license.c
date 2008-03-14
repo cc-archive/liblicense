@@ -26,6 +26,13 @@
 #include <assert.h>
 #include "liblicense.h"
 
+static int verbose_flag = 0;
+static int set_license_flag = 0;
+static int remove_license_flag = 0;
+static int set_webstatement_flag = 0;
+static int remove_webstatement_flag = 0;
+static int get_webstatement_flag = 0;
+
 static const int E_NO_DEFAULT_LICENSE=1;
 static const int E_LICENSE_DOES_NOT_VERIFY=2;
 static const int E_COULD_NOT_WRITE=3;
@@ -105,13 +112,6 @@ list_juris (ll_juris_t j)
 int
 main (int argc, char **argv)
 {
-  int verbose_flag = 0;
-  int set_license_flag = 0;
-  int remove_license_flag = 0;
-  int set_webstatement_flag = 0;
-  int remove_webstatement_flag = 0;
-
-
   char * printable_thing_we_are_setting = NULL;
   char * uri_of_thing_we_are_setting = NULL;
   char * new_value = NULL;
@@ -123,7 +123,7 @@ main (int argc, char **argv)
     {"set-license", no_argument, &set_license_flag, 1},
     {"remove-license", no_argument, &remove_license_flag, 1},
     {"set-web-statement", no_argument, &set_webstatement_flag, 1},
-    {"get-web-statement", no_argument, &remove_webstatement_flag, 1},
+    {"get-web-statement", no_argument, &get_webstatement_flag, 1},
     {"license", required_argument, 0, 'l'},
     {"web-statement", required_argument, 0, 'w'},
     {"use", required_argument, 0, 'u'},
@@ -139,6 +139,7 @@ main (int argc, char **argv)
   ll_module_t module = NULL;
   char * webstatement = NULL;
   char * filename = NULL;
+  int setting = 0;
 
   ll_init ();
   while (
@@ -268,16 +269,27 @@ main (int argc, char **argv)
       uri_of_thing_we_are_setting = LL_WEBSTATEMENT;
       printable_thing_we_are_setting = "web statement";
       new_value = webstatement;
+      setting = 1;
     } else if (set_license_flag) {
       uri_of_thing_we_are_setting = LL_LICENSE;
       printable_thing_we_are_setting = "license";
       new_value = license;
+      setting = 1;
+    } else if (get_webstatement_flag) {
+      uri_of_thing_we_are_setting = LL_WEBSTATEMENT;
+      printable_thing_we_are_setting = "web statement";
+      new_value = webstatement;
+      setting = 0;
     } else {
       assert (0);
     }
+
+
+    
       
-    /* First, handle license metadata. */
-    printf ("Setting %s to uri: %s\n", printable_thing_we_are_setting, license);
+    if (setting) {
+      /* First, handle license metadata. */
+      printf ("Setting %s to uri: %s\n", printable_thing_we_are_setting, license);
       if (module) {
 	write_status = ll_module_write (filename, uri_of_thing_we_are_setting,
 					new_value, module);
@@ -289,40 +301,42 @@ main (int argc, char **argv)
 	return die ("Error: Unable to write %s to file\n", 
 		    printable_thing_we_are_setting, E_COULD_NOT_WRITE);
       }
-
-      /* Even if we wrote a license, read it to make sure it worked */
-      if (module) {
-	value_read_back = ll_module_read (argv[optind], 
-					  uri_of_thing_we_are_setting, module);
-      }
-      else {
-	value_read_back = ll_read (argv[optind], uri_of_thing_we_are_setting);
+    }
+    
+    /* Even if we wrote a license, read it to make sure it worked */
+    if (module) {
+      value_read_back = ll_module_read (argv[optind], 
+					uri_of_thing_we_are_setting, module);
+    }
+    else {
+      value_read_back = ll_read (argv[optind], uri_of_thing_we_are_setting);
+    }
+    
+    /* Print the license.  Note that printf will print NULL as
+       (null), which is great if the user asked to remove a
+       license. */
+    if (value_read_back == NULL) {
+      printf ("No %s found for %s\n", printable_thing_we_are_setting, 
+	      filename);
+      
+      /* However, if the license is NULL but we tried
+	 to write a non-NULL license, then we're screwed. */
+      if ( setting && 
+	   (new_value != NULL) &&
+	   (value_read_back == NULL) ) {
+	return die("Unable to write %s to file\n", 
+		   printable_thing_we_are_setting, E_COULD_NOT_WRITE);
       }
       
-      /* Print the license.  Note that printf will print NULL as
-	 (null), which is great if the user asked to remove a
-	 license. */
-      if (value_read_back == NULL) {
-	printf ("No %s found for %s\n", printable_thing_we_are_setting, 
-		filename);
-
-	/* However, if the license is NULL but we tried
-	   to write a non-NULL license, then we're screwed. */
-	if ( (new_value != NULL) &&
-	     (value_read_back == NULL) ) {
-	  return die("Unable to write %s to file\n", 
-		     printable_thing_we_are_setting, E_COULD_NOT_WRITE);
-	}
-	
-      } else { 
-	printf ("%s has %s of %s\n", filename, printable_thing_we_are_setting,
-		value_read_back);
-	if (verbose_flag) {
-	  ll_license_print_info (license);
-	}
+    } else { 
+      printf ("%s has %s of %s\n", filename, printable_thing_we_are_setting,
+	      value_read_back);
+      if (verbose_flag) {
+	ll_license_print_info (license);
       }
     }
-
+  }
+  
   ll_stop ();
   return 0;
 }
