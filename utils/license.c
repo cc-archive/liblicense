@@ -45,9 +45,9 @@ help ()
   printf
     ("                                 or unported licenses by default.\n");
   printf
-    ("       --set                   Sets the license instead of reading it.\n");
+    ("       --set-license                   Sets the license instead of reading it.\n");
   printf
-    ("       --remove                Removes any existing licenses from the file.\n");
+    ("       --remove-license                Removes any existing licenses from the file.\n");
   printf
     ("   -l, --license=URI           Uses the license with URI instead of default.\n");
   printf
@@ -59,8 +59,8 @@ help ()
   printf ("   -h, --help                  Output this help text and quit.\n");
   printf ("\n");
   printf
-    ("Exit status is 0 if OK, 1 if no default license is set and 2 if the given\n");
-  printf ("license does not exist.\n");
+    ("Exit status is 0 if OK, 1 if no default license is set but the default was");
+  printf ("necessary to proceed and 2 if the given license does not exist.\n");
 }
 
 int
@@ -88,8 +88,8 @@ main (int argc, char **argv)
   {
     {"verbose", no_argument, &verbose_flag, 1},
     {"quiet", no_argument, &verbose_flag, 0},
-    {"set", no_argument, &set_flag, 1},
-    {"remove", no_argument, &remove_flag, 1},
+    {"set-license", no_argument, &set_flag, 1},
+    {"remove-license", no_argument, &remove_flag, 1},
     {"license", required_argument, 0, 'l'},
     {"use", required_argument, 0, 'u'},
     {"help", no_argument, 0, 'h'},
