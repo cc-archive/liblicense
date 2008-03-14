@@ -139,7 +139,7 @@ int main(int argc, char *argv[])
 
 	/* returns by-nc-nd */
 	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags), empty) ; /* FIXME: Should return ncnd); */
+	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags), ncnd) ;
 
 	ll_free_license_chooser(license_chooser);
 
