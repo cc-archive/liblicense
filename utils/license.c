@@ -33,9 +33,9 @@ help ()
 {
   printf ("Usage: license [OPTION] [FILE]\n");
   printf
-    ("Reads and writes license information for a given file or the system default.\n");
-  printf ("If options are omitted, assume default license.\n");
-  printf ("If file is omitted, assumes system default.\n");
+    ("Reads and writes license information (and other related metadata) for a given file or the system default.\n");
+  printf ("If options are omitted, uses the default license.\n");
+  printf ("If file is omitted, reads and writes the system default license.\n");
   printf ("\n");
   printf
     ("   -v, --verbose               Outputs more license information.\n");
