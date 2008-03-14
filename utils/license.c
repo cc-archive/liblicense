@@ -28,6 +28,11 @@ static int verbose_flag;
 static int set_flag;
 static int remove_flag;
 
+static const int E_NO_DEFAULT_LICENSE=1;
+static const int E_LICENSE_DOES_NOT_VERIFY=2;
+static const int E_COULD_NOT_WRITE=3;
+
+
 void
 help ()
 {
@@ -50,7 +55,6 @@ help ()
     ("       --remove-license                Removes any existing licenses from the file.\n");
   printf
     ("   -l, --license=URI           Uses the license with URI instead of default.\n");
-  printf
     ("   -m                          Lists all available modules and their capabilities\n");
   printf
     ("                                 for reading and writing licenses in files\n");
@@ -60,7 +64,7 @@ help ()
   printf ("\n");
   printf
     ("Exit status is 0 if OK, 1 if no default license is set but the default was");
-  printf ("necessary to proceed and 2 if the given license does not exist.\n");
+  printf ("necessary to proceed, 2 if the given license does not exist, and 3 if there was an error writing a license to a file.\n");
 }
 
 int
@@ -131,7 +135,7 @@ main (int argc, char **argv)
                 {
                   fprintf (stderr, "Error: License '%s' does not exist.\n",
                            optarg);
-                  return 2;
+                  return E_LICENSE_DOES_NOT_VERIFY;
                 }
             }
           break;
@@ -162,7 +166,7 @@ main (int argc, char **argv)
             {
               fprintf (stderr, "Error: No default license set.\n");
               ll_stop ();
-              return 1;
+              return E_NO_DEFAULT_LICENSE;
             }
         }
     }
@@ -208,7 +212,7 @@ main (int argc, char **argv)
           if (!ret)
             {
               printf ("Unable to write license to file\n");
-              return 2;
+	      return E_COULD_NOT_WRITE;
             }
         }
       /* Even if we wrote a license, read it to make sure it worked */
@@ -234,7 +238,7 @@ main (int argc, char **argv)
           if (set_flag)
             {
               printf ("Unable to write license to file\n");
-              return 2;
+              return E_COULD_NOT_WRITE;
             }
           else
             {
