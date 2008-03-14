@@ -1,6 +1,5 @@
 == Release goals ==
 
-* Support storing and retrieving web statement (xmpRights:WebStatement)
 * Create a tool to generate the actual web statement pages
 
 
