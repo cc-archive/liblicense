@@ -92,7 +92,8 @@ int main(int argc, char *argv[])
 
 	static const char *attributes[] = {
                         LL_DISTRIBUTION,
-                        LL_COMMERCIAL_USE,
+			LL_COMMERCIAL_USE,
+			LL_SOURCE_CODE,
                         LL_DERIVATIVE_WORKS,
                         LL_SHARE_ALIKE,
                         LL_ATTRIBUTION,
@@ -118,8 +119,9 @@ int main(int argc, char *argv[])
 	permits_flags = ll_attribute_flag(license_chooser,
 					  LL_DISTRIBUTION) |
 		ll_attribute_flag(license_chooser, LL_DERIVATIVE_WORKS);
-	requires_flags = ll_attribute_flag(license_chooser,
-                                           LL_SHARE_ALIKE);
+	requires_flags = ll_attribute_flag(license_chooser, LL_SHARE_ALIKE) |
+	  ll_attribute_flag(license_chooser, LL_SOURCE_CODE);
+
 	prohibits_flags = LL_UNSPECIFIED;
 
 	/*
@@ -144,7 +146,7 @@ int main(int argc, char *argv[])
 	ll_free_license_chooser(license_chooser);
 
 	print_attributes(attributes2);
-	license_chooser = ll_new_license_chooser("us",attributes2);
+	license_chooser = ll_new_license_chooser("http://creativecommons.org/international/us",attributes2);
 
 	/* returns all the licenses that don't specify DerivativeWorks */
 	permits_flags = LL_UNSPECIFIED;
