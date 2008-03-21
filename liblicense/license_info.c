@@ -80,8 +80,8 @@ const char LL_REPLACED_BY[] =
  *     the first element of a list,
  *     or NULL if the was null or empty.
  */
-char *
-ll_get_first (char **list)
+const char *
+ll_get_first (const char **list)
 {
   char *result;
 
@@ -291,7 +291,7 @@ struct ll_attribute_search_t
   char *predicate;
   char *locale;
   int type;
-  char **values;
+  const char **values;
   char **locales;
   int num_values;
 };
@@ -539,11 +539,11 @@ _ll_free_attribute_search_t (ll_attribute_search_t *ast)
  *     data structure in dynamic memory,
  *     use #_ll_free_attribute_search_t when you are done with it.
  */
-static char **
+static const char **
 _ll_build_list (ll_attribute_search_t *ast, char **fsi)
 {
   int i;
-  char **result;
+  const char **result;
 
   /*
    * check for generics
@@ -596,12 +596,12 @@ _ll_build_list (ll_attribute_search_t *ast, char **fsi)
   return result;
 }
 
-char **
+const char **
 ll_get_attribute (ll_uri_t u, const char *a, int locale)
 {
   ll_attribute_search_t *helper;
   char *further_search;
-  char **result;
+  const char **result;
 
   if (memcmp (u, "http://", 7) != 0)
     return NULL;

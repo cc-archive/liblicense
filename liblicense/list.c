@@ -26,13 +26,14 @@
 #include <stdio.h>
 #include <assert.h>
 
-char** ll_new_list(int length) {
-        if (length < 0)
-            length = 0;
-	return (char**) calloc(length+1,sizeof(char*));
+char** ll_new_list(const int length) {
+  int l = length;
+        if (l < 0)
+            l = 0;
+	return (char**) calloc(l+1,sizeof(char*));
 }
 
-void ll_free_list(char** list) {
+void ll_free_list(const char** list) {
         int i;
 
 	if (list==NULL)
@@ -45,7 +46,7 @@ void ll_free_list(char** list) {
 	free(list);
 }
 
-int ll_list_contains(char** list, char* needle) {
+int ll_list_contains(const char** list, const char* needle) {
         int i;
 
 	if (list==NULL || needle==NULL)
@@ -59,7 +60,7 @@ int ll_list_contains(char** list, char* needle) {
 	return false;
 }
 
-int ll_list_index(char** list, char* needle) {
+int ll_list_index(const char** list, const char* needle) {
 	int i=0;
 	while(list[i]!=NULL) {
 		if (strcmp(list[i],needle)==0)
@@ -69,14 +70,14 @@ int ll_list_index(char** list, char* needle) {
 	return -1;
 }
 
-int ll_list_length(char** list) {
+int ll_list_length(const char** list) {
 	int i=0;
 	while(list[i]!=NULL)
 		i++;
 	return i;
 }
 
-char* ll_list_mode(char** list, char* ignore) {
+char* ll_list_mode(const char** list, const char* ignore) {
 	char** values;
 	int* counts;
         int i;
@@ -113,7 +114,7 @@ char* ll_list_mode(char** list, char* ignore) {
 	return max_value;
 }
 
-void ll_list_print(char** list) {
+void ll_list_print(const char** list) {
 	if (list==NULL) {
 		printf("(null)\n");
 		return;
@@ -130,7 +131,7 @@ void ll_list_print(char** list) {
 	printf(" ]\n");
 }
 
-int ll_int_arrays_equal(int* ra1, int* ra2) {
+int ll_int_arrays_equal(const int* ra1, const int* ra2) {
   /* Assumes the first element is the number
    * of elements. */
   int compare1;
@@ -153,8 +154,8 @@ int ll_int_arrays_equal(int* ra1, int* ra2) {
   return 1; /* true, if we get here! */
 }
 
-int ll_lists_equal(char **list_one,
-		   char **list_two) {
+int ll_lists_equal(const char **list_one,
+		   const char **list_two) {
   
   int i;
   for (i=0 ; list_one[i] != NULL && list_two[i] != NULL; i++) {

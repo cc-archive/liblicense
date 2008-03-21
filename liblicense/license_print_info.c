@@ -31,7 +31,7 @@
 void
 ll_license_print_info (ll_uri_t uri)
 {
-  char **attrs;
+  const char **attrs;
   char **attr;
   char *string;
   ll_version_t version;

@@ -231,13 +231,13 @@ int ll_stop(void) {
 }
 
 // returns a null-terminated list of all general licenses available.
-ll_uri_t* ll_get_all_licenses(void) {
-  ll_uri_t* result = _ll_query("SELECT uri FROM licenses LIMIT 500;",500);
+const ll_uri_t* ll_get_all_licenses(void) {
+  const ll_uri_t* result = _ll_query("SELECT uri FROM licenses LIMIT 500;",500);
   return result;
 }
 
 // returns a null-terminated list of all general licenses in a family.
-ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
+const ll_uri_t* ll_get_licenses(const ll_juris_t _j) {
 	ll_juris_t j = _j;
 	ll_uri_t* result;
 	char* query;

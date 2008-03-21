@@ -514,8 +514,8 @@ extern const char LL_REQUIRES[];
  *     a NULL terminated list of strings,
  *     use #ll_free_list when you are done with it.
  */
-char **ll_get_attribute (ll_uri_t license_uri, const char *attribute_uri,
-                         int locale);
+const char **ll_get_attribute (ll_uri_t license_uri, const char *attribute_uri,
+			       int locale);
 
 /**
  * The ll_filename_to_uri function is used to convert a filename string
@@ -552,7 +552,7 @@ ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
 ll_filename_t ll_uri_to_filename (const ll_uri_t uri);
 
 
-  char * ll_get_first(char** list);
+ const char * ll_get_first(const char** list);
 
 /**
  * The ll_jurisdiction_name functions is used to map a jusrisdiction
@@ -613,7 +613,7 @@ int ll_verify_uri (const ll_uri_t license_uri);
  *     a NULL terminated list of strings.
  *     Use #ll_free_list when you are done with it.
  */
-ll_uri_t *ll_get_all_licenses (void);
+const ll_uri_t *ll_get_all_licenses (void);
 
 /**
  * The ll_get_licenses function is used to obtain a list of all general
@@ -625,7 +625,7 @@ ll_uri_t *ll_get_all_licenses (void);
  *     a NULL terminated list of strings containing URIs of licenses.
  *     Use #ll_free_list when you are done with it.
  */
-ll_uri_t *ll_get_licenses (const ll_juris_t justrisdiction);
+const ll_uri_t *ll_get_licenses (const ll_juris_t justrisdiction);
 
 /**
  * The ll_get_jurisdictions function is used to obtain a list of all
@@ -1079,7 +1079,7 @@ const ll_license_list_t *ll_get_licenses_from_flags (ll_license_chooser_t *choo,
  * @returns
  *     integer with single bit set
  */
-int ll_attribute_flag (ll_license_chooser_t * choo, const char *attr);
+int ll_attribute_flag (const ll_license_chooser_t * choo, const char *attr);
 
 /************************* list ************************/
 
@@ -1098,7 +1098,7 @@ int ll_attribute_flag (ll_license_chooser_t * choo, const char *attr);
  *     a ponter to the new list.  Use #ll_free_list when you are done
  *     with it.
  */
-char **ll_new_list (int length);
+char **ll_new_list (const int length);
 
 /**
  * The ll_free_list function is used to release memory used by a string
@@ -1109,7 +1109,7 @@ char **ll_new_list (int length);
  *     NULL.  Very bad things happen if you call it too many time for
  *     the same list.
  */
-void ll_free_list (char **list);
+void ll_free_list (const char **list);
 
 /**
  * The ll_list_contains function is used to examine a list of strings to
@@ -1125,7 +1125,7 @@ void ll_free_list (char **list);
  *     false if the needle is not present in the haystack,
  *     true only if the needle <b>is</b> present in the haystack,
  */
-int ll_list_contains (char **haystack, char *needle);
+int ll_list_contains (const char **haystack, const char *needle);
 
 /**
  * The ll_list_index function is used to determine the index of a string
@@ -1141,7 +1141,7 @@ int ll_list_contains (char **haystack, char *needle);
  *     the index of the needle within the haystack, or
  *     -1 if not present at all
  */
-int ll_list_index (char **haystack, char *needle);
+int ll_list_index (const char **haystack, const char *needle);
 
 /**
  * The ll_list_length function is used to
@@ -1153,7 +1153,7 @@ int ll_list_index (char **haystack, char *needle);
  * @returns
  *     The number of strings in the list.
  */
-int ll_list_length (char **list);
+int ll_list_length (const char **list);
 
 /**
  * The ll_list_mode function is used to determine the string which
@@ -1169,7 +1169,7 @@ int ll_list_length (char **list);
  *     The commonest string (one of the instances).  It has <i>not</i>
  *     been copied, so do not free() it.
  */
-char *ll_list_mode (char **list, char *ignore);
+char *ll_list_mode (const char **list, const char *ignore);
 
 /**
  * The ll_list_print function is used to print a list of strings to
@@ -1180,7 +1180,7 @@ char *ll_list_mode (char **list, char *ignore);
  * @param lptr
  *     pointer to the list to be printed
  */
-void ll_list_print (char **lptr);
+void ll_list_print (const char **lptr);
 
 /**
  * The ll_int_arrays_equal function is used to check if two arrays of
@@ -1195,7 +1195,7 @@ void ll_list_print (char **lptr);
  * @param ra2
  *     Pointer to the second thing to compare
  */
-int ll_int_arrays_equal (int* ra1, int* ra2);
+int ll_int_arrays_equal (const int* ra1, const int* ra2);
 
 /**
  * The ll_lists_equal function is used to check if two arrays of
@@ -1209,7 +1209,7 @@ int ll_int_arrays_equal (int* ra1, int* ra2);
  * @param list_two
  *     Pointer to the second thing to compare
  */
-int ll_lists_equal(char **list_one, char **list_two);
+int ll_lists_equal(const char **list_one, const char **list_two);
 
 #ifdef __cplusplus
 }
