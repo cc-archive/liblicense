@@ -73,6 +73,55 @@ void print_flags(const char **attributes, int p, int r, int pr )
 	printf("\n");
 }
 
+char ** check(const char * jurisdiction,
+	      const char ** attributes,
+	      const char ** permits_strings,
+	      const char ** requires_strings,
+	      const char ** prohibits_strings) {
+  
+  ll_license_chooser_t * license_chooser;
+  char ** results;
+  char * permits;
+  char * requires;
+  char * prohibits;
+
+  int permits_flags = 0;
+  int requires_flags = 0;
+  int prohibits_flags = 0;
+  
+  print_attributes(attributes);
+  license_chooser = ll_new_license_chooser(jurisdiction, attributes);
+  
+  /* For each of permits, requires, prohibits
+   * generate the flag ints.
+   */
+
+  permits = permits_strings[0];
+  while(permits != NULL) {
+    permits_flags = permits_flags |
+      ll_attribute_flag(license_chooser, permits);
+  }
+
+  requires = requires_strings[0];
+  while(requires != NULL) {
+    requires_flags = requires_flags |
+      ll_attribute_flag(license_chooser, requires);
+  }
+
+  prohibits = prohibits_strings[0];
+  while(prohibits != NULL) {
+    prohibits_flags = prohibits_flags |
+      ll_attribute_flag(license_chooser, prohibits);
+  }
+
+
+  /* Okay, the ints are prepared. */
+  /* Print the flags just so the user sees what we're about to try. */
+  print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
+  results = ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags);
+  return results;
+}
+
 int main(int argc, char *argv[])
 {
 	char ** results;
