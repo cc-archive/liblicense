@@ -1,0 +1,6 @@
+[submodule "license.rdf"]
+	path = license.rdf
+	url = git://code.creativecommons.org/license.rdf.git
+[submodule "i18n.upstream"]
+	path = i18n.upstream
+	url = git://code.creativecommons.org/i18n.git
