@@ -367,7 +367,7 @@ AC_CONFIG_FILES([
 	liblicense.pc
 	Makefile
 	liblicense/Makefile
-	licenses/Makefile
+	license.rdf/license_rdf/Makefile
 	modules/Makefile
 	modules/io/Makefile
 	modules/config/Makefile
