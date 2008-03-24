@@ -17,6 +17,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+#include <string.h>
 #include <stdio.h>
 #include <assert.h>
 #include <liblicense.h>
