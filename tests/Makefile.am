@@ -33,7 +33,7 @@ TESTS = test test_list test_default test_mw test_read test_info test_write test_
 all-local:
 	mkdir -p _prefix
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
-	(cd $(top_builddir)/licenses ; DESTDIR=$(THISDIR)/_prefix make install)
+	(cd $(top_builddir)/license.rdf/license_rdf ; DESTDIR=$(THISDIR)/_prefix make install)
 
 clean-local:
 	rm -fr _prefix
