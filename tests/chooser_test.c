@@ -225,19 +225,22 @@ int main(int argc, char *argv[])
 			     ncnd_prohibits);
 	/* print_licenses(ncnd_results, ncnd); */
 
-	print_attributes(attributes2);
-	license_chooser = ll_new_license_chooser("http://creativecommons.org/international/us",attributes2);
-
-	/* returns all the licenses that don't specify DerivativeWorks */
-	permits_flags = LL_UNSPECIFIED;
-	requires_flags = LL_UNSPECIFIED;
-	prohibits_flags = LL_UNSPECIFIED;
-
-	print_flags(attributes2,permits_flags,requires_flags,prohibits_flags);
-	results = ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(results, nc_and_ncnd);
 	
-	ll_free_license_chooser(license_chooser);
+	static const char *nc_and_ncnd_attributes[] = {
+                        LL_DERIVATIVE_WORKS,
+			NULL
+	};
+	const char * nc_and_ncnd_permits[] = {NULL};
+	const char * nc_and_ncnd_prohibits[] = {NULL};
+	const char * nc_and_ncnd_requires[] = {NULL};
+	const char ** nc_and_ncnd_results = 
+	  check("us", /* "http://creativecommons.org/international/us", */
+		nc_and_ncnd_attributes,
+		nc_and_ncnd_permits,
+		nc_and_ncnd_requires,
+		nc_and_ncnd_prohibits);
+
+	print_licenses(nc_and_ncnd_results, nc_and_ncnd);
 
 	ll_stop();
 
