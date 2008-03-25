@@ -90,6 +90,7 @@ const char ** check(const char * jurisdiction,
 	      const char ** prohibits_strings) {
   
   ll_license_chooser_t * license_chooser;
+  int i = 0;
   char ** results;
   char * permits;
   char * requires;
@@ -106,22 +107,28 @@ const char ** check(const char * jurisdiction,
    * generate the flag ints.
    */
 
-  permits = permits_strings[0];
-  while(permits != NULL) {
+  i = 0;
+  while(permits_strings[i] != NULL) {
+    permits = permits_strings[i];
     permits_flags = permits_flags |
       ll_attribute_flag(license_chooser, permits);
+    i += 1;
   }
 
-  requires = requires_strings[0];
-  while(requires != NULL) {
+  i = 0;
+  while(requires_strings[i] != NULL) {
+    requires = requires_strings[i];
     requires_flags = requires_flags |
       ll_attribute_flag(license_chooser, requires);
+    i += 1;
   }
 
-  prohibits = prohibits_strings[0];
-  while(prohibits != NULL) {
+  i = 0;
+  while(prohibits_strings[i] != NULL) {
+    prohibits = prohibits_strings[i];
     prohibits_flags = prohibits_flags |
       ll_attribute_flag(license_chooser, prohibits);
+    i += 1;
   }
 
 
