@@ -214,16 +214,17 @@ int main(int argc, char *argv[])
 	 * If you don't want this to be the case, leave these two attributes out of the list that is
 	 * passed to ll_new_license_chooser()
          */
+	const char * ncnd_permits[] = {LL_DISTRIBUTION, NULL};
+	const char * ncnd_requires[] = {LL_ATTRIBUTION, NULL};
+	const char * ncnd_prohibits[] = {LL_COMMERCIAL_USE, NULL};
+	const char ** ncnd_results;
 
-	permits_flags = ll_attribute_flag(license_chooser, LL_DISTRIBUTION);
-	requires_flags = ll_attribute_flag(license_chooser, LL_ATTRIBUTION);
-	prohibits_flags = ll_attribute_flag(license_chooser, LL_COMMERCIAL_USE);
-
-	/* returns by-nc-nd */
-	print_flags(gpl_attributes,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags), ncnd) ;
-
-	ll_free_license_chooser(license_chooser);
+	ncnd_results = check(NULL,
+			     gpl_attributes,
+			     ncnd_permits,
+			     ncnd_requires,
+			     ncnd_prohibits);
+	//print_licenses(ncnd_results, ncnd);
 
 	print_attributes(attributes2);
 	license_chooser = ll_new_license_chooser("http://creativecommons.org/international/us",attributes2);
@@ -236,7 +237,7 @@ int main(int argc, char *argv[])
 	print_flags(attributes2,permits_flags,requires_flags,prohibits_flags);
 	results = ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(results, nc_and_ncnd);
-
+	
 	ll_free_license_chooser(license_chooser);
 
 	ll_stop();
