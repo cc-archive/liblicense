@@ -74,7 +74,16 @@ void print_flags(const char **attributes, int p, int r, int pr )
 	printf("\n");
 }
 
-char ** check(const char * jurisdiction,
+/**
+ * Input: 
+ * @param jurisdiction A jurisdiction; NULL is okay (means all)
+ * @param attributes a NULL-terminated list of attributes to consider
+ * @param permits_strings A list of attributes the license must permit
+ * @param requires_strings A list of attributes the license must require (?)
+ * @param prohibits_strings A list of attributes the license must prohibit
+ * @return A list of strings which are license URIs that match
+ */
+const char ** check(const char * jurisdiction,
 	      const char ** attributes,
 	      const char ** permits_strings,
 	      const char ** requires_strings,
@@ -140,7 +149,7 @@ int main(int argc, char *argv[])
 		"http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
 		NULL};
 
-	static const char *attributes[] = {
+	static const char *gpl_attributes[] = {
                         LL_DISTRIBUTION,
 			LL_COMMERCIAL_USE,
 			LL_SOURCE_CODE,
@@ -153,26 +162,33 @@ int main(int argc, char *argv[])
                         LL_DERIVATIVE_WORKS,
 			NULL
 	};
+        (void)argc;
+        (void)argv;
+	ll_init();
+
+	const char ** gpl_permits = {LL_DISTRIBUTION,
+				     LL_DERIVATIVE_WORKS,
+				     NULL};
+	const char ** gpl_requires= {LL_SHARE_ALIKE,
+				     NULL};
+	const char ** gpl_prohibits = {LL_UNSPECIFIED,
+				       NULL};
+	const char ** gpl_results;
+
 	ll_license_chooser_t *license_chooser;
 	int permits_flags;
         int requires_flags;
         int prohibits_flags;
 
-        (void)argc;
-        (void)argv;
-	ll_init();
 
-	print_attributes(attributes);
+	gpl_results = check(NULL,
+			    gpl_attributes,
+			    gpl_permits,
+			    gpl_requires,
+			    gpl_prohibits);
+	
+	print_licenses(gpl_results, gpl_and_lgpl);
 
-	license_chooser = ll_new_license_chooser(NULL,attributes);
-
-	permits_flags = ll_attribute_flag(license_chooser,
-					  LL_DISTRIBUTION) |
-		ll_attribute_flag(license_chooser, LL_DERIVATIVE_WORKS);
-	requires_flags = ll_attribute_flag(license_chooser, LL_SHARE_ALIKE) |
-	  ll_attribute_flag(license_chooser, LL_SOURCE_CODE);
-
-	prohibits_flags = LL_UNSPECIFIED;
 
 	/*
          * Attribution and CommercialUse must be unspecified in the license RDF.
@@ -180,17 +196,12 @@ int main(int argc, char *argv[])
 	 * passed to ll_new_license_chooser()
          */
 
-	/* returns GPL and LGPL */
-	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
-	results = ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags);
-	print_licenses(results, gpl_and_lgpl);
-
 	permits_flags = ll_attribute_flag(license_chooser, LL_DISTRIBUTION);
 	requires_flags = ll_attribute_flag(license_chooser, LL_ATTRIBUTION);
 	prohibits_flags = ll_attribute_flag(license_chooser, LL_COMMERCIAL_USE);
 
 	/* returns by-nc-nd */
-	print_flags(attributes,permits_flags,requires_flags,prohibits_flags);
+	print_flags(gpl_attributes,permits_flags,requires_flags,prohibits_flags);
 	print_licenses(ll_get_licenses_from_flags(license_chooser,permits_flags,requires_flags,prohibits_flags), ncnd) ;
 
 	ll_free_license_chooser(license_chooser);
