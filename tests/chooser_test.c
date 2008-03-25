@@ -149,8 +149,6 @@ int main(int argc, char *argv[])
 	char * ncnd[] = {
 		"http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
 		NULL};
-	char * empty[] = {NULL};
-
 	char * nc_and_ncnd[] = {
 		"http://creativecommons.org/licenses/by-nd/3.0/us/",
 		"http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
@@ -165,10 +163,7 @@ int main(int argc, char *argv[])
                         LL_ATTRIBUTION,
 			NULL
 	};
-	static const char *attributes2[] = {
-                        LL_DERIVATIVE_WORKS,
-			NULL
-	};
+
         (void)argc;
         (void)argv;
 	ll_init();
@@ -181,12 +176,6 @@ int main(int argc, char *argv[])
 				       NULL};
 	const char * gpl_prohibits[]  = {NULL};
 	const char ** gpl_results;
-
-	ll_license_chooser_t *license_chooser;
-	int permits_flags;
-        int requires_flags;
-        int prohibits_flags;
-
 
 	gpl_results = check(NULL,
 			    gpl_attributes,
