@@ -174,12 +174,13 @@ int main(int argc, char *argv[])
 	ll_init();
 
 	const char * gpl_permits[] = {LL_DISTRIBUTION,
-				     LL_DERIVATIVE_WORKS,
-				     NULL};
+				      LL_DERIVATIVE_WORKS,
+				      NULL};
 	const char * gpl_requires[] = {LL_SHARE_ALIKE,
-				     NULL};
-	const char * gpl_prohibits[]  = {LL_UNSPECIFIED,
+				       LL_SOURCE_CODE,
 				       NULL};
+	const char * gpl_prohibits[]  = {LL_UNSPECIFIED,
+					 NULL};
 	const char ** gpl_results;
 
 	ll_license_chooser_t *license_chooser;
