@@ -197,6 +197,17 @@ int main(int argc, char *argv[])
 	
 	print_licenses(gpl_results, gpl_and_lgpl);
 
+	/* Do it again, just to ensure sanity
+	   of check function. */
+
+	gpl_results = check(NULL,
+			    gpl_attributes,
+			    gpl_permits,
+			    gpl_requires,
+			    gpl_prohibits);
+	
+	print_licenses(gpl_results, gpl_and_lgpl);
+
 
 	/*
          * Attribution and CommercialUse must be unspecified in the license RDF.
