@@ -223,7 +223,7 @@ int main(int argc, char *argv[])
 			     ncnd_permits,
 			     ncnd_requires,
 			     ncnd_prohibits);
-	//print_licenses(ncnd_results, ncnd);
+	/* print_licenses(ncnd_results, ncnd); */
 
 	print_attributes(attributes2);
 	license_chooser = ll_new_license_chooser("http://creativecommons.org/international/us",attributes2);
