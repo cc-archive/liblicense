@@ -17,6 +17,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+#include <assert.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -133,6 +134,10 @@ static int attribute_index( const char **attributes, char *attr, int num_attribu
 int ll_attribute_flag( ll_license_chooser_t *license_chooser, const char *attr )
 {
 	int i;
+
+	assert (license_chooser != NULL);
+	printf ("num attributes is %d\n", license_chooser->num_attributes);
+
 	for (i=0; i<license_chooser->num_attributes; ++i) {
 		if (strcmp(attr,license_chooser->attributes[i])==0) {
 			return (1<<i);
