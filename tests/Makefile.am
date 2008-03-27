@@ -28,20 +28,19 @@ TESTS_ENVIRONMENT = HOME=$(THISDIR)/test_home/ LL_IO_MODULE_DIR=$(DEBUG_LL_MODUL
 	LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ \
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	@VALGRIND@
-TESTS = clean_home test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection
-
-clean_home:
-	rm -rf test_home
-	mkdir -p test_home/.license
+TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection
 
 all-local:
 	mkdir -p _prefix
+	mkdir -p test_home/.license
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
 	(cd $(top_builddir)/license.rdf/license_rdf ; DESTDIR=$(THISDIR)/_prefix make install)
 
 clean-local:
 	rm -fr _prefix
 	rm -f license_me.xmp
+	rm -rf test_home
+	mkdir -p test_home/.license
 
 check_PROGRAMS = $(TESTS)
 
