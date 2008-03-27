@@ -24,11 +24,15 @@ THISDIR = $(PWD)
 
 DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
 
-TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
+TESTS_ENVIRONMENT = HOME=$(THISDIR)/test_home/ LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
 	LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ \
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	@VALGRIND@
-TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection
+TESTS = clean_home test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection
+
+clean_home:
+	rm -rf test_home
+	mkdir -p test_home/.license
 
 all-local:
 	mkdir -p _prefix
