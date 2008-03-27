@@ -155,6 +155,10 @@ int main(int argc, char *argv[])
 	  "http://creativecommons.org/licenses/by-nd/3.0/",
 	  "http://creativecommons.org/licenses/by-nc-nd/3.0/",
 	  NULL};
+	char * nc_and_ncnd_us[] = {
+	  "http://creativecommons.org/licenses/by-nd/3.0/us/",
+	  "http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
+	  NULL};
 
 	static const char *gpl_attributes[] = {
                         LL_DISTRIBUTION,
@@ -261,7 +265,14 @@ int main(int argc, char *argv[])
 
 	print_licenses(nc_and_ncnd_results, nc_and_ncnd);
 
-	/* FIXME: We do not check jurisdiction anything */
+	const char ** nc_and_ncnd_us_results = 
+	  check("http://creativecommons.org/international/us/",
+		nc_and_ncnd_attributes,
+		nc_and_ncnd_permits,
+		nc_and_ncnd_requires,
+		nc_and_ncnd_prohibits);
+
+	print_licenses(nc_and_ncnd_us_results, nc_and_ncnd_us);
 
 	ll_stop();
 
