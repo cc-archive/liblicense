@@ -202,17 +202,25 @@ int main(int argc, char *argv[])
 	 * If you don't want this to be the case, leave these two attributes out of the list that is
 	 * passed to ll_new_license_chooser()
          */
+	
+	static const char *ncnd_attributes[] = {
+                        LL_DISTRIBUTION,
+			LL_COMMERCIAL_USE,
+                        LL_ATTRIBUTION,
+			NULL
+	};
+
 	const char * ncnd_permits[] = {LL_DISTRIBUTION, NULL};
 	const char * ncnd_requires[] = {LL_ATTRIBUTION, NULL};
 	const char * ncnd_prohibits[] = {LL_COMMERCIAL_USE, NULL};
 	const char ** ncnd_results;
 
 	ncnd_results = check(NULL,
-			     gpl_attributes,
+			     ncnd_attributes,
 			     ncnd_permits,
 			     ncnd_requires,
 			     ncnd_prohibits);
-	/* print_licenses(ncnd_results, ncnd); */
+	print_licenses(ncnd_results, ncnd);
 
 	
 	static const char *nc_and_ncnd_attributes[] = {
