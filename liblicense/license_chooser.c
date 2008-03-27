@@ -17,6 +17,7 @@
  * Copyright (C) 2007 Peter Miller
  */
 
+#include <assert.h>
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
@@ -133,6 +134,10 @@ static int attribute_index( const char **attributes, const char *attr, int num_a
 int ll_attribute_flag( const ll_license_chooser_t *license_chooser, const char *attr )
 {
 	int i;
+
+	assert (license_chooser != NULL);
+	printf ("num attributes is %d\n", license_chooser->num_attributes);
+
 	for (i=0; i<license_chooser->num_attributes; ++i) {
 		if (strcmp(attr,license_chooser->attributes[i])==0) {
 			return (1<<i);
@@ -168,12 +173,51 @@ const ll_license_list_t* ll_get_licenses_from_flags( ll_license_chooser_t *licen
 	return license_chooser->license_list[arrayIndex]->next;
 }
 
-void ll_get_license_flags( ll_license_chooser_t *license_chooser, int *permits, int *requires, int *prohibits )
+void ll_get_license_flags( ll_license_chooser_t *chooser, const char *license, int *permits, int *requires, int *prohibits )
 {
-    (void)license_chooser;
-    (void)permits;
-    (void)requires;
-    (void)prohibits;
+	int index, heapIndex, treeDepth, state, flag;
+
+	/* Iterate through all the licenses and get the index of it in the heap */
+	int num_nodes = 1 << (chooser->num_attributes * 2);
+	int i;
+	ll_license_list_t *curr;
+	for (i=0; i<num_nodes; ++i) {
+		curr = chooser->license_list[i];
+		while (curr) {
+			if ( curr->license && strcmp(curr->license,license) == 0 ) {
+			  treeDepth = chooser->num_attributes;
+			  index = i;
+			  heapIndex = index+indexAt(treeDepth);
+		  
+			  *permits = LL_UNSPECIFIED;
+			  *requires = LL_UNSPECIFIED;
+			  *prohibits = LL_UNSPECIFIED;
+		  
+			  while (treeDepth > 0) {
+				state = index % N_STATES;
+				flag = 1 << (treeDepth-1); /* this is what ll_attribute_flag does */
+				switch (state) {
+				case LL_ATTR_PERMITS: *permits |= flag; break;
+				case LL_ATTR_REQUIRES: *requires |= flag; break;
+				case LL_ATTR_PROHIBITS: *prohibits |= flag; break;
+				default: break;
+				}
+
+				/* go up a level in the tree */
+				treeDepth--;
+				heapIndex = heapIndex/N_STATES + N_STATES-2;
+				index = heapIndex - indexAt(treeDepth);
+			  }
+			  return;
+			}
+			curr = curr->next;
+		}
+	}
+
+	/* no such license */
+	*permits = -1;
+	*requires = -1;
+	*prohibits = -1;
 }
 
 ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, const char **attributes )
@@ -237,7 +281,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 		}
 		ll_free_list(attrs);
 
-		attrs = ll_get_attribute(*license, LL_PERMITS, false);
+		attrs = ll_get_attribute(*license, LL_PROHIBITS, false);
 		for (attr=attrs; *attr; ++attr) {
 			int attr_index = attribute_index(attributes,*attr,num_attributes);
 			if (attr_index == -1) continue;

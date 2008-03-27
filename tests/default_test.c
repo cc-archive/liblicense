@@ -51,12 +51,13 @@ main (int argc, char **argv)
   (void) argc;
   (void) argv;
   printf
-    ("Warning: this test will overwrite system-wide defaults if run."
-     "To stop hit control-C (Control-Break on Windows).  You have 3 seconds."
+    ("The test harness ensures that this test operates in a special, temporary"
+     "home directory, so it will not will overwrite system-wide defaults."
+     "\n\n"
+     "Note that if you run it outside the test harness, that will NOT be true!"
      "\n\n");
   fflush (stdout);
   /* BREAKS_WINDOWS */
-  sleep (3);
 
   set_and_check(license, license);
   set_and_check("", NULL);
