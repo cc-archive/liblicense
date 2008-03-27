@@ -215,6 +215,24 @@ int main(int argc, char *argv[])
 	const char * ncnd_permits[] = {LL_DISTRIBUTION, NULL};
 	const char * ncnd_requires[] = {LL_ATTRIBUTION, NULL};
 	const char * ncnd_prohibits[] = {LL_COMMERCIAL_USE, NULL};
+
+	/* For one thing, assert that by-nc-nd 3.0 US has the fields
+	 * we'd expect */
+	int i_ncnd_permits, i_ncnd_requires, i_ncnd_prohibits = 0;
+	ll_license_chooser_t * chooser = ll_new_license_chooser(NULL,
+							ncnd_attributes);
+	ll_get_license_flags(chooser,
+			     ncnd[0],
+			     &i_ncnd_permits, &i_ncnd_requires, &i_ncnd_prohibits);
+	printf("%d, %d, %d for license\n", i_ncnd_permits, i_ncnd_requires, i_ncnd_prohibits);
+	/* No matter what these values are set to,
+	   they must be something.
+	   Not -1 (which means no license found) 
+	   and not 0 (which means LL_UNSPECIFIED) */
+	assert (i_ncnd_permits > 0);
+	assert (i_ncnd_prohibits > 0);
+	assert (i_ncnd_requires > 0);
+
 	const char ** ncnd_results;
 
 	ncnd_results = check(NULL,
