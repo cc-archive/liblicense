@@ -1067,6 +1067,15 @@ const ll_license_list_t *ll_get_licenses_from_flags (ll_license_chooser_t *choo,
                                                      int permits, int requires,
                                                      int prohibits);
 
+/*  Sets the permits, requires, and prohibits flags required to match the given license.
+ *  If the license doesn't exist, sets the flags to -1
+ *  TODO: document me correctly.
+ */
+void ll_get_license_flags (ll_license_chooser_t *choo, const char *license,
+                                                     int *permits, int *requires,
+                                                     int *prohibits);
+
+
 /**
  * The ll_attribute_flag function is used to obtain the bit map bit
  * corresponding to the named attribute in the #ll_free_license_chooser
