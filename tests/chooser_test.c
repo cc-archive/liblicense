@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
 		"http://creativecommons.org/licenses/GPL/2.0/",
 		NULL};
 	char * ncnd[] = {
-		"http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
+		"http://creativecommons.org/licenses/by-nc-nd/3.0/",
 		NULL};
 	char * nc_and_ncnd[] = {
 		"http://creativecommons.org/licenses/by-nd/3.0/us/",
@@ -206,6 +206,8 @@ int main(int argc, char *argv[])
 	static const char *ncnd_attributes[] = {
                         LL_DISTRIBUTION,
 			LL_COMMERCIAL_USE,
+                        LL_DERIVATIVE_WORKS,
+                        LL_SHARE_ALIKE,
                         LL_ATTRIBUTION,
 			NULL
 	};
