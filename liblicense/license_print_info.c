@@ -33,7 +33,7 @@ ll_license_print_info (ll_uri_t uri)
 {
   const char **attrs;
   char **attr;
-  char *string;
+  const char *string;
   ll_version_t version;
   ll_juris_t juris;
   int i;
@@ -44,7 +44,7 @@ ll_license_print_info (ll_uri_t uri)
   if (string)
     {
       printf ("Name: %s\n", string);
-      free (string);
+      free ((char *) string);
     }
 
   version = ll_parse_version(ll_get_first (ll_get_attribute (uri, LL_VERSION, false)));

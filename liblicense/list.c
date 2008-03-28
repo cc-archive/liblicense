@@ -33,7 +33,7 @@ char** ll_new_list(const int length) {
 	return (char**) calloc(l+1,sizeof(char*));
 }
 
-void ll_free_list(const char** list) {
+void ll_free_list(const char ** list) {
         int i;
 
 	if (list==NULL)

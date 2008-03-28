@@ -241,8 +241,8 @@ ll_filename_to_uri (const ll_filename_t f)
   len = len < 4  ? 0 : len - 4;
   result = (ll_uri_t) malloc (7 + len + 1);
 
-  memcpy (result, "http://", 7);
-  memcpy (result + 7, f, len);
+  memcpy ((char *) result, "http://", 7);
+  memcpy ((char *) result + 7, f, len);
   result[7 + len] = '\0';
 
   i = 0;
@@ -292,7 +292,7 @@ struct ll_attribute_search_t
   char *locale;
   int type;
   const char **values;
-  char **locales;
+  const char **locales;
   int num_values;
 };
 
@@ -325,11 +325,11 @@ _ll_triple_handler (void *user_data, const raptor_statement *triple)
            search_data->num_values < MAX_TRIPLES
           && (
             /* Any type or the given. */
-	      /* XXX: This comparison, if typecasted away, truncates
+	      /* XXX: This comparison, when typecasted away, truncates
 		 the range of triple->object_type from a uint to an
 		 int, losing one bit of range. */
             search_data->type == -1
-            || search_data->type == triple->object_type)
+            || search_data->type == (int) triple->object_type)
           && (
             /* locale stuff */
             search_data->locale == NULL
@@ -339,6 +339,10 @@ _ll_triple_handler (void *user_data, const raptor_statement *triple)
             || strcmp ((char *) triple->object_literal_language,
                        search_data->locale) == 0))
         {
+	  assert (((int) triple->object_type) > -1); /* If this assert fails,
+							then the typecast
+							above was invalid. */
+	  
           search_data->values[search_data->num_values] =
             strdup ((char *) triple->object);
           if (triple->object_literal_language != NULL)
@@ -520,8 +524,8 @@ _ll_free_attribute_search_t (ll_attribute_search_t *ast)
     free (ast->predicate);
   if (ast->locale != NULL)
     free (ast->locale);
-  ll_free_list (ast->locales);
-  ll_free_list (ast->values);
+  ll_free_list ((const char **) ast->locales);
+  ll_free_list ((const char **) ast->values);
   free (ast);
 }
 
@@ -581,13 +585,13 @@ _ll_build_list (ll_attribute_search_t *ast, char **fsi)
           if (!match && strcmp (ast->locales[i], "x-default") == 0)
             {
               if (result[0] != NULL)
-                free (result[0]);
+                free ((char *) result[0]);
               result[0] = strdup (ast->values[i]);
             }
           else if (strcmp (ast->locales[i], ast->locale) == 0)
             {
               if (result[0] != NULL)
-                free (result[0]);
+                free ((char *) result[0]);
               result[0] = strdup (ast->values[i]);
               match = true;
             }
@@ -597,7 +601,7 @@ _ll_build_list (ll_attribute_search_t *ast, char **fsi)
 }
 
 const char **
-ll_get_attribute (ll_uri_t u, const char *a, int locale)
+ll_get_attribute (const ll_uri_t u, const char *a, int locale)
 {
   ll_attribute_search_t *helper;
   char *further_search;

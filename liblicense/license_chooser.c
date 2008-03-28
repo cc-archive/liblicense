@@ -50,7 +50,7 @@ struct _ll_license_chooser_t {
 	 */
 	ll_license_list_t **license_list;
 
-	const char* *all_licenses; 	/* to avoid copying each license, store the license entire license list
+	const ll_uri_t *all_licenses; 	/* to avoid copying each license, store the license entire license list
 												 * and free them all in one go when we destroy the license_chooser
 												 */
 };
@@ -220,10 +220,10 @@ void ll_get_license_flags( ll_license_chooser_t *chooser, const char *license, i
 	*prohibits = -1;
 }
 
-ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, const char **attributes )
+ll_license_chooser_t* ll_new_license_chooser( ll_juris_t jurisdiction, const char **attributes )
 {
 	ll_license_chooser_t *chooser;
-	const char **licenses;
+	ll_uri_t *licenses;
 	int num_attributes;
         int num_nodes;
         int *license_hits;
@@ -233,7 +233,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 	int used_attrs;
 	const char **attr;
 	const char **attrs;
-	const char **license;
+	int licenses_index = 0;
 
 	chooser = (ll_license_chooser_t*)malloc(sizeof(ll_license_chooser_t));
 	licenses = ll_get_licenses(jurisdiction);
@@ -251,10 +251,10 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 
 	size = heap_size(num_attributes);
 
-	for ( license = licenses; license && *license; ++license ) {
+	for (licenses_index = 0 ; licenses[licenses_index] != NULL; licenses_index++ ) {
 		used_attrs = 0x0000;
 
-		attrs = ll_get_attribute(*license, LL_PERMITS, false);
+		attrs = ll_get_attribute(licenses[licenses_index], LL_PERMITS, false);
 		for (attr=attrs; *attr; ++attr) {
 			int attr_index = attribute_index(attributes,*attr,num_attributes);
 			if (attr_index == -1)
@@ -266,9 +266,9 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 				iterate_children( license_hits, indexAt(attr_index)+i*N_STATES+LL_ATTR_PERMITS, attr_index, size );
 			}
 		}
-		ll_free_list(attrs);
+		ll_free_list((const char **) attrs);
 
-		attrs = ll_get_attribute(*license, LL_REQUIRES, false);
+		attrs = ll_get_attribute(licenses[licenses_index], LL_REQUIRES, false);
 		for (attr=attrs; *attr; ++attr) {
 			int attr_index = attribute_index(attributes,*attr,num_attributes);
 			if (attr_index == -1) continue;
@@ -281,7 +281,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 		}
 		ll_free_list(attrs);
 
-		attrs = ll_get_attribute(*license, LL_PROHIBITS, false);
+		attrs = ll_get_attribute(licenses[licenses_index], LL_PROHIBITS, false);
 		for (attr=attrs; *attr; ++attr) {
 			int attr_index = attribute_index(attributes,*attr,num_attributes);
 			if (attr_index == -1) continue;
@@ -309,7 +309,7 @@ ll_license_chooser_t* ll_new_license_chooser( const ll_juris_t jurisdiction, con
 				ll_license_list_t *tmp;
 
 				ll_license_list_t *new_license_list = (ll_license_list_t*)malloc(sizeof(ll_license_list_t));
-				new_license_list->license = *license;
+				new_license_list->license = licenses[licenses_index];
 
 				tmp = license_heap[i]->next;
 				license_heap[i]->next = new_license_list;
@@ -352,6 +352,6 @@ void ll_free_license_chooser(ll_license_chooser_t *chooser)
 	free(chooser->attributes);
 
 	free(chooser->license_list);
-	ll_free_list(chooser->all_licenses);
+	ll_free_list((const char **) chooser->all_licenses);
 	free(chooser);
 }

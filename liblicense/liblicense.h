@@ -529,7 +529,7 @@ const char **ll_get_attribute (ll_uri_t license_uri, const char *attribute_uri,
  * @returns
  *     a new string.  use free() when you are done with it.
  */
-ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
+ll_uri_t ll_filename_to_uri (ll_filename_t filename);
 
 /**
  * The ll_uri_to_filename function is used to convert a URI string to
@@ -549,7 +549,7 @@ ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
  *     and do not expect
  *         strcmp(ll_filename_to_uri(ll_uri_to_filename(x)), x) == 0
  */
-ll_filename_t ll_uri_to_filename (const ll_uri_t uri);
+ll_filename_t ll_uri_to_filename (ll_uri_t uri);
 
 
  const char * ll_get_first(const char** list);
@@ -603,7 +603,7 @@ int ll_stop (void);
  *     1 if recognized,
  *     0 if not
  */
-int ll_verify_uri (const ll_uri_t license_uri);
+int ll_verify_uri (ll_uri_t license_uri);
 
 /**
  * The ll_get_all_licenses function is used to obtain a list of all
@@ -613,7 +613,7 @@ int ll_verify_uri (const ll_uri_t license_uri);
  *     a NULL terminated list of strings.
  *     Use #ll_free_list when you are done with it.
  */
-const ll_uri_t *ll_get_all_licenses (void);
+ll_uri_t *ll_get_all_licenses (void);
 
 /**
  * The ll_get_licenses function is used to obtain a list of all general
@@ -625,7 +625,7 @@ const ll_uri_t *ll_get_all_licenses (void);
  *     a NULL terminated list of strings containing URIs of licenses.
  *     Use #ll_free_list when you are done with it.
  */
-const ll_uri_t *ll_get_licenses (const ll_juris_t justrisdiction);
+ll_uri_t *ll_get_licenses (ll_juris_t justrisdiction);
 
 /**
  * The ll_get_jurisdictions function is used to obtain a list of all
@@ -866,7 +866,7 @@ shutdown ,                                              \
  *     1 on succes, or
  *     0 on failure
  */
-int ll_license_default_set (const ll_uri_t license_uri);
+int ll_license_default_set (ll_uri_t license_uri);
 
 /**
  * The ll_license_default_get function is used to obtain the URI of the
@@ -899,7 +899,7 @@ ll_uri_t ll_license_default_get (void);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-  ll_uri_t ll_read (ll_filename_t filename, const ll_uri_t predicate);
+  ll_uri_t ll_read (ll_filename_t filename, ll_uri_t predicate);
 
 /**
  * The ll_module_read function may be used to obtain the URI of the
@@ -920,7 +920,7 @@ ll_uri_t ll_license_default_get (void);
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-ll_uri_t ll_module_read (ll_filename_t filename, const ll_uri_t predicate, ll_module_t module);
+ll_uri_t ll_module_read (ll_filename_t filename, ll_uri_t predicate, ll_module_t module);
 
 typedef struct _LLModuleDesc_and_index {
 	LLModuleDesc __desc;
@@ -979,7 +979,7 @@ unsigned int ll_modules_count_available();
  * @note
  *     The #ll_init_modules function shall be called before this function.
  */
-  int ll_write (ll_filename_t filename, const ll_uri_t predicate, ll_uri_t value);
+  int ll_write (ll_filename_t filename, ll_uri_t predicate, ll_uri_t value);
 
 /**
  * The ll_module write function is used to write the given license to
@@ -1001,7 +1001,7 @@ unsigned int ll_modules_count_available();
  *     The #ll_init_modules function shall be called before this function.
  */
   int ll_module_write (ll_filename_t filename, ll_uri_t predicate,
-		       const ll_uri_t license_uri,
+		       ll_uri_t license_uri,
 		       ll_module_t module);
 
 extern const int LL_E_MODULE_WRITE_FAIL;
@@ -1017,7 +1017,7 @@ typedef struct ll_license_list_t ll_license_list_t;
 struct ll_license_list_t
 {
   struct ll_license_list_t *next;
-  const char *license;
+  ll_uri_t license;
 };
 
 #define LL_UNSPECIFIED 0
@@ -1034,7 +1034,7 @@ struct ll_license_list_t
  *     an opaque pointer to a result.
  *     Free with #ll_free_license_chooser when you are done with it.
  */
-ll_license_chooser_t *ll_new_license_chooser (const ll_juris_t jurisdiction,
+ll_license_chooser_t *ll_new_license_chooser (ll_juris_t jurisdiction,
                                               const char **attributes);
 
 /**
@@ -1107,7 +1107,7 @@ int ll_attribute_flag (const ll_license_chooser_t * choo, const char *attr);
  *     a ponter to the new list.  Use #ll_free_list when you are done
  *     with it.
  */
-char **ll_new_list (const int length);
+const char **ll_new_list (const int length);
 
 /**
  * The ll_free_list function is used to release memory used by a string
@@ -1118,7 +1118,7 @@ char **ll_new_list (const int length);
  *     NULL.  Very bad things happen if you call it too many time for
  *     the same list.
  */
-void ll_free_list (const char **list);
+void ll_free_list (const char ** list);
 
 /**
  * The ll_list_contains function is used to examine a list of strings to
