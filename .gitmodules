@@ -7,3 +7,6 @@
 [submodule "icons/jurisdictions"]
 	path = icons/jurisdictions
 	url = git://code.creativecommons.org/jurisdiction-icons.git
+[submodule "licenses"]
+	path = licenses
+	url = git://code.creativecommons.org/just_license_rdf
