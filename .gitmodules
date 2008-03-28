@@ -4,3 +4,6 @@
 [submodule "i18n.upstream"]
 	path = i18n.upstream
 	url = git://code.creativecommons.org/i18n.git
+[submodule "icons/jurisdictions"]
+	path = icons/jurisdictions
+	url = git://code.creativecommons.org/jurisdiction-icons.git
