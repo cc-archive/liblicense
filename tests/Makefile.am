@@ -34,7 +34,7 @@ all-local:
 	mkdir -p _prefix
 	mkdir -p test_home/.license
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
-	(cd $(top_builddir)/license.rdf/license_rdf ; DESTDIR=$(THISDIR)/_prefix make install)
+	(cd $(top_builddir)/licenses ; DESTDIR=$(THISDIR)/_prefix make install)
 
 clean-local:
 	rm -fr _prefix
