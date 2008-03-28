@@ -94,7 +94,7 @@ int main(int argc,char** argv) {
 	assert (ll_list_contains(p, license));
 	ll_free_list(p);
 
-	p = ll_get_licenses("de");
+	p = ll_get_licenses("http://creativecommons.org/international/de/");
 	printf("get_licenses: ");
 	ll_list_print(p);
 	assert (ll_list_contains(p, license));
