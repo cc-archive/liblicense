@@ -32,7 +32,7 @@ int main() {
 	 LLModuleDesc * module;
 	 LLModuleSearchState state;
 	 
-	 file = "data_empty.pdf";
+	 file = "../tests/data_empty.pdf";
 	 memset(&state, 0, sizeof(LLModuleSearchState));
 
 	 ll_init();

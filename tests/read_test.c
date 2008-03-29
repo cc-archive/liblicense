@@ -25,7 +25,7 @@
 #include <assert.h>
 
 void do_test() {
-	char *file="data_licensed.mp3";
+	char *file="../tests/data_licensed.mp3";
 	ll_uri_t license;
 	license = ll_read(file, LL_LICENSE);
 	printf("File license: %s\n",license);

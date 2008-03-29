@@ -43,8 +43,8 @@ static void search(const char * filename,
 }
 
 int main() {
-	const char * mp3 = "data_empty.mp3";
-	const char * pdf = "data_empty.pdf";
+	const char * mp3 = "../tests/data_empty.mp3";
+	const char * pdf = "../tests/data_empty.pdf";
 	
 	ll_init();
 
