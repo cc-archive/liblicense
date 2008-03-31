@@ -265,7 +265,7 @@ extern "C" {
  *     ll_uri_t uri;
  *
  *     ll_init ();
- *     uri = ll_read (argv[1]);
+ *     uri = ll_read (argv[1], LL_LICENSE);
  *     if (uri == 0)
  *       printf ("No license found\n");
  *     else
