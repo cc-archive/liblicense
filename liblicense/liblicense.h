@@ -1160,7 +1160,7 @@ char **ll_new_list (int length);
  *
  * @param list
  *     The list of strings to be free()ed.  Nothing bad happens if it is
- *     NULL.  Very bad things happen if you call it too many time for
+ *     NULL.  Very bad things happen if you call it too many times for
  *     the same list.
  */
 void ll_free_list (char **list);
