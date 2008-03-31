@@ -573,6 +573,12 @@ ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
 ll_filename_t ll_uri_to_filename (const ll_uri_t uri);
 
 
+  /**
+   * Simple function to get the first element of a list
+   * FIXME: Using this directly may lead to memory leaks!
+   * @param list
+   * @returns The first element of the list passed in, a char *.
+   */
   char * ll_get_first(char** list);
 
 /**
