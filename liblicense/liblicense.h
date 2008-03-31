@@ -278,6 +278,20 @@ extern "C" {
  * smaller, as well.
  *
  *
+ * @section N05 Examining other properties of a file
+ *
+ * Despite its name, liblicense supports reading and writing other
+ * properties to a file.  For example, you may want to store a link to a
+ * "web statement" that has more information on the file.
+ *
+ * We have already seen the LL_LICENSE property you can pass to have ll_read().
+ * The other supported properties are:
+ * - LL_WEBSTATEMENT - see http://wiki.creativecommons.org/WebStatement
+ * - LL_MORE_PERMISSIONS - see http://wiki.creativecommons.org/CCPlus
+ *
+ * To use them, just pass them to ll_read() like you did with LL_LICENSE.
+ * Note that ll_write() also accepts these arguments in a similar way.
+ *
  * @section N99 Discovering Supported Formats
  *
  * The easiest way to see a list of supported formats is to use the
