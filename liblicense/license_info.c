@@ -43,7 +43,7 @@ const char LL_PREDICATE_ANY[] =
 const char LL_WEBSTATEMENT[] =
   "http://ns.adobe.com/xap/1.0/rights/WebStatement";
 const char LL_LICENSE[] =
-  "http://creativecommons.org/ns#License FIXME";
+  "http://creativecommons.org/ns#License";
 const char LL_MORE_PERMISSIONS[] =
   "http://creativecommons.org/ns#morePermissions";
 const char LL_ATTRIBUTION[] =
