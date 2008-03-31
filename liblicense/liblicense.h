@@ -1097,10 +1097,25 @@ const ll_license_list_t *ll_get_licenses_from_flags (ll_license_chooser_t *choo,
                                                      int permits, int requires,
                                                      int prohibits);
 
-/*  Sets the permits, requires, and prohibits flags required to match the given license.
- *  If the license doesn't exist, sets the flags to -1
- *  TODO: document me correctly.
- */
+  /** Given a license chooser object and a license,
+   * this function determines what "permits", "requires", and "prohibits"
+   * arguments to the chooser would be necessary to find the license.
+   *
+   * If the license cannot be found by the chooser, the flags are set to -1.
+   * 
+   * Only useful for debugging, as far as I know.
+   * @param choo
+   *       A chooser created by #ll_new_license_chooser.
+   * @param license
+   *       The license to explain how to find.
+   * @param permits
+   *       (modified) set to the permits value necessary to find this license
+   * @param requires
+   *       (modified) set to the requires value necessary to find this license
+   * @param prohibits
+   *       (modified) set to the prohibits value necessary to find this license
+   *
+   */
 void ll_get_license_flags (ll_license_chooser_t *choo, const char *license,
                                                      int *permits, int *requires,
                                                      int *prohibits);
