@@ -538,6 +538,9 @@ char **ll_get_attribute (ll_uri_t license_uri, const char *attribute_uri,
  * are mapped to slash (/).  It is happed to a http:// style URI, it is
  * <b>not</b> mapped into a file:/// style URI.
  *
+ * Given a license RDF file found on disk, this is used to repopulate
+ * what URI the RDF refers to.
+ *
  * @param filename
  *     The file name to be converted to a URI.
  * @returns
@@ -550,6 +553,10 @@ ll_uri_t ll_filename_to_uri (const ll_filename_t filename);
  * a filename.  The http:// prefix is removed, and a ".rdf" extension
  * is added.  The slash (/) characters are mapped to underscore (_)
  * characters.
+ *
+ * Given a license URI we need to store or read on disk, this is used
+ * to determine what filename to save the RDF as or where to read it
+ * from.
  *
  * @param uri
  *     The uri to be converted
