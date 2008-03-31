@@ -213,7 +213,7 @@ extern "C" {
  *
  *     printf ("Rights:\n");
  *
- *     attrs = ll_get_attribute(uri, LL_REQUIRES, false);
+ *     attrs = ll_get_attribute(uri, LL_PERMITS, false);
  *     if (*attrs)
  *       {
  *         printf ("   Permits:\n");
