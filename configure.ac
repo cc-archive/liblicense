@@ -20,7 +20,7 @@
 # This file is part of Liblicense.
 
 AC_PREREQ(2.57)
-AC_INIT([liblicense],[0.6],[cc-devel@lists.ibiblio.org])
+AC_INIT([liblicense],[0.6.1],[cc-devel@lists.ibiblio.org])
 AM_INIT_AUTOMAKE([dist-bzip2])
 
 dnl
@@ -51,7 +51,7 @@ dnl  change does not break upward compatibility (ie it is an addition),
 dnl  increment AGE, Otherwise AGE is reset to 0. If CURRENT has changed,
 dnl  REVISION is set to 0, otherwise REVISION is incremented.
 dnl ---------------------------------------------------------------------------
-dnl 0.6 is the revision 1.0.0
+dnl 0.6.1 is the revision 1.0.0
 AC_SUBST([LIBLICENSE_REVISION], [0])
 AC_SUBST([LIBLICENSE_AGE],      [0])
 AC_SUBST([LIBLICENSE_CURRENT],  [1])
@@ -196,7 +196,7 @@ test "$have_libxml2" = "yes" && AC_DEFINE(HAVE_LIBXML2, [], [Define if we have l
 # check for exempi
 ##################################################################
 
-EXEMPI_REQUIRED=1.99.5
+EXEMPI_REQUIRED=1.99.9
 
 AC_ARG_ENABLE(xmp, AC_HELP_STRING([--disable-xmp], [Disable XMP extraction]),,[enable_xmp=yes])
 if test "x$enable_xmp" = "xyes"; then
