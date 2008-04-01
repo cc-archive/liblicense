@@ -281,7 +281,10 @@ main (int argc, char **argv)
       new_value = webstatement;
       setting = 0;
     } else {
-      assert (0);
+      uri_of_thing_we_are_setting = LL_LICENSE;
+      printable_thing_we_are_setting = "license";
+      new_value = license;
+      setting = 0;
     }
 
 
