@@ -42,6 +42,9 @@ main (int argc, char **argv)
 
   (void) argc;
   (void) argv;
+  printf("Printing LL_LICENSE as dug out of liblicense: ");
+  printf("%s\n", LL_LICENSE);
+
   printf ("Starting ll:\n");
   ll_init ();
   printf ("Test system_licenses:\n");
