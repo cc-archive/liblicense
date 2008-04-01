@@ -1,3 +1,16 @@
+liblicense 0.6.1:
+
+* Finally fix SONAME to be 1
+* Filter symbols by regex
+* Remove spurious bad "FIXME" string in supposedly the license URI
+
+liblicense 0.6:
+
+* verification link support
+* morePermission support
+* Tests actually assert; all tests pass
+* ensure all functions, etc are documented w/Doxygen
+
 liblicense 0.5.1:
 
 * fix Ruby bindings to compile - add stdbool.h include (hub)
