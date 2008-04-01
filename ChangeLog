@@ -1,3 +1,8 @@
+liblicense 0.6.2:
+
+* Fix /usr/bin/license so that it can read license information out of files
+  (rather than assert(0)ing!).
+
 liblicense 0.6.1:
 
 * Finally fix SONAME to be 1
