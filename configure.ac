@@ -23,6 +23,12 @@ AC_PREREQ(2.57)
 AC_INIT([liblicense],[0.6],[cc-devel@lists.ibiblio.org])
 AM_INIT_AUTOMAKE([dist-bzip2])
 
+dnl
+dnl Libtool options
+dnl
+LIBTOOL_EXPORT_OPTIONS="-export-symbols-regex '^(ll|LL)_.*'"
+AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
+
 dnl ---------------------------------------------------------------------------
 dnl Advanced information about versioning:
 dnl   * "Writing shared libraries" by Mike Hearn
