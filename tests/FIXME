@@ -1,0 +1,5 @@
+* test Python bindings
+* test exempi
+* test sidecar
+* test localization (right now in printing license info we pick a random
+  language from the RDF, it seems)
