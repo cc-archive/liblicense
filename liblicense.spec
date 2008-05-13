@@ -6,7 +6,7 @@ Summary: Content License Library
 Group: Development/Libraries
 Source: %{name}-%{version}.tar.bz2
 Patch0: %{name}-%{version}-gmsgfmt.patch
-BuildRequires: exempi >= 1.99.3
+BuildRequires: exempi >= 1.99.9
 BuildRequires: raptor-devel >= 1.4.14
 BuildRequires: gnome-common
 BuildRequires: sqlite-devel
