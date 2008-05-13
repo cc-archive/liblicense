@@ -33,7 +33,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 The liblicense package contains the library, bindings, CLI utilities and license files.
 
 %prep
-%setup -n liblicense-0.6
+%setup -n liblicense-0.6.2
 %patch -p1
 ./configure --prefix=/usr
 
