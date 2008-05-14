@@ -56,6 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 /usr/include
 
 %changelog
+* Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.6.2-1
+- liblicense 0.6.2
+- Create separate package for plugins
 * Wed Aug 22 2007 Scott Shawcroft <scott.shawcroft@gmail.com> - 0.4-1
 - liblicense 0.4
 * Mon Jul 30 2007 Scott Shawcroft <scott.shawcroft@gmail.com> - 0.3-1
