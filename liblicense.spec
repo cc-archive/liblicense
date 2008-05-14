@@ -4,7 +4,7 @@ Release: 1
 License: LGPL
 Summary: Content License Library
 Group: Development/Libraries
-Source: %{name}-%{version}.tar.bz2
+Source: %{name}-%{version}.tar.gz
 Patch0: %{name}-%{version}-gmsgfmt.patch
 BuildRequires: exempi-devel >= 1.99.9
 BuildRequires: raptor-devel >= 1.4.14
