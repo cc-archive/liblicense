@@ -12,6 +12,7 @@ BuildRequires: sqlite-devel
 BuildRequires: taglib-devel
 BuildRequires: libgsf-devel
 BuildRequires: id3lib-devel
+BuildRequires: libvorbis-devel
 Buildrequires: flac-devel
 BuildRequires: ruby-devel
 BuildRequires: gettext
