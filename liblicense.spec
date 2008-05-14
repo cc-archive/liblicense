@@ -16,15 +16,6 @@ BuildRequires: id3lib-devel
 Buildrequires: flac-devel
 BuildRequires: ruby-devel
 BuildRequires: gettext
-Requires: ruby
-Requires: python
-Requires: exempi
-Requires: raptor
-Requires: sqlite
-Requires: taglib
-Requires: libgsf
-Requires: id3lib
-Requires: flac
 Url: http://www.creativecommons.org/project/Liblicense
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
