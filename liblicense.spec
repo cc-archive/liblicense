@@ -5,7 +5,6 @@ License: LGPL
 Summary: Content License Library
 Group: Development/Libraries
 Source: %{name}-%{version}.tar.gz
-Patch0: %{name}-%{version}-gmsgfmt.patch
 BuildRequires: exempi-devel >= 1.99.9
 BuildRequires: raptor-devel >= 1.4.14
 BuildRequires: gnome-common
@@ -25,7 +24,6 @@ The liblicense package contains the library, bindings, CLI utilities and license
 
 %prep
 %setup -n liblicense-0.6.2
-%patch -p1
 ./configure --prefix=/usr
 
 %build
