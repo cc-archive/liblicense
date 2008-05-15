@@ -43,7 +43,8 @@ Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 
 %description devel
-Required headers and libraries for building software that uses liblicense
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 %package debug
 Summary: Debug files for attaching to liblicense with gdb
