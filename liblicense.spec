@@ -23,6 +23,18 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %description
 The liblicense package contains the library, bindings, CLI utilities and license files.
 
+%package modules
+Summary: Input/output modules for accessing license metadata in various file foramts.
+
+%package cli
+Summary: Simple command-line utility for examining the license in a file or setting a user preference for a default license
+
+%package devel
+Summary: Required headers and libraries for building software that uses liblicense
+
+%package debug
+Summary: Debug files for attaching to liblicense with gdb
+
 %prep
 %setup -n liblicense-0.6.2
 ./configure --prefix=/usr
