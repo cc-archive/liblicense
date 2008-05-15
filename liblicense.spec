@@ -51,7 +51,7 @@ developing applications that use %{name}.
 
 %build
 %configure --disable-static
-make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" %{?_smp_mflags}
+make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
