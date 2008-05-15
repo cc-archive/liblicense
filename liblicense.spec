@@ -57,6 +57,7 @@ make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" %{?_smp_mflags}
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -65,14 +66,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun -p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/liblicense.so*
 %{_libdir}/liblicense/*/config/flat_file.so
 %{_datadir}/liblicense/icons
 %{_datadir}/liblicense/licenses
-%{_datadir}/locale/*/LC_MESSAGES/liblicense.mo
 %{_datadir}/pixmaps/scales.svg
 
 %files modules
