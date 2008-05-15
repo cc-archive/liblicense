@@ -91,7 +91,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 /usr/include/liblicense-2.0
-/usr/lib/liblicense*.*a
 /usr/lib/pkgconfig/liblicense.pc
 
 %files debug
