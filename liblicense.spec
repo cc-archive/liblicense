@@ -1,7 +1,7 @@
 Name: liblicense
 Version: 0.6.2
 Release: 1
-License: LGPL
+License: LGPL v2.1
 Summary: Content License Library
 Group: Development/Libraries
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
