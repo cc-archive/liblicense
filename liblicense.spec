@@ -4,7 +4,6 @@ Release: 1
 License: LGPL
 Summary: Content License Library
 Group: Development/Libraries
-Source: %{name}-%{version}.tar.gz
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 BuildRequires: exempi-devel >= 1.99.9
 BuildRequires: raptor-devel >= 1.4.14
