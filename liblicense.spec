@@ -38,8 +38,9 @@ Group: Yourmom
 Simple command-line utility for examining the license in a file or setting a user preference for a default license
 
 %package devel
-Summary: Required headers and libraries for building software that uses liblicense
-Group: Yourmom
+Summary: Development files for ${name}
+Group: Development/Libraries
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 Required headers and libraries for building software that uses liblicense
