@@ -40,10 +40,26 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc COPYING
+/usr/lib/liblicense.so*
+/usr/lib/liblicense/*/config/flat_file.so
+/usr/share/liblicense/icons
+/usr/share/liblicense/licenses
+/usr/share/locale/*/LC_MESSAGES/liblicense.mo
+/usr/share/pixmaps/scales.svg
+
+%files modules
+/usr/lib/liblicense/*/io/*.so
+
+%files cli
 /usr/bin
-/usr/share
-/usr/lib
-/usr/include
+
+%files devel
+/usr/include/liblicense-2.0
+/usr/lib/liblicense*.*a
+/usr/lib/pkgconfig/liblicense.pc
+
+%files debug
+/usr/lib/debug
 
 %changelog
 * Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.6.2-1
