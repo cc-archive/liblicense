@@ -70,13 +70,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/liblicense.so*
-%{_libdir}/liblicense/*/config/flat_file.so
+%{_libdir}/liblicense/%{version}
+%{_libdir}/liblicense/%{version}/config/
 %{_datadir}/liblicense/icons
 %{_datadir}/liblicense/licenses
 %{_datadir}/pixmaps/scales.svg
 
 %files modules
-%{_libdir}/liblicense/*/io/*.so
+%{_libdir}/liblicense/%{version}/io/
 
 %files cli
 %{_bindir}
