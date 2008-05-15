@@ -68,22 +68,22 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %doc COPYING
-/usr/lib/liblicense.so*
-/usr/lib/liblicense/*/config/flat_file.so
-/usr/share/liblicense/icons
-/usr/share/liblicense/licenses
-/usr/share/locale/*/LC_MESSAGES/liblicense.mo
-/usr/share/pixmaps/scales.svg
+%{_libdir}/liblicense.so*
+%{_libdir}/liblicense/*/config/flat_file.so
+%{_datadir}/liblicense/icons
+%{_datadir}/liblicense/licenses
+%{_datadir}/locale/*/LC_MESSAGES/liblicense.mo
+%{_datadir}/pixmaps/scales.svg
 
 %files modules
-/usr/lib/liblicense/*/io/*.so
+%{_libdir}/liblicense/*/io/*.so
 
 %files cli
-/usr/bin
+%{_bindir}
 
 %files devel
-/usr/include/liblicense-2.0
-/usr/lib/pkgconfig/liblicense.pc
+%{_includedir}/liblicense-2.0
+%{_libdir}/pkgconfig/liblicense.pc
 
 %changelog
 * Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.6.2-1
