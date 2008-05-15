@@ -46,13 +46,6 @@ Requires: %{name} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
-%package debug
-Summary: Debug files for attaching to liblicense with gdb
-Group: Development/Libraries
-
-%description debug
-Debug files for attaching to liblicense with gdb
-
 %prep
 %setup -q
 
@@ -91,9 +84,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 /usr/include/liblicense-2.0
 /usr/lib/pkgconfig/liblicense.pc
-
-%files debug
-/usr/lib/debug
 
 %changelog
 * Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.6.2-1
