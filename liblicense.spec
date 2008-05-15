@@ -58,7 +58,7 @@ Debug files for attaching to liblicense with gdb
 %setup -q
 
 %build
-%./configure --disable-static --prefix=/usr
+%configure --disable-static --prefix=/usr
 make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" %{?_smp_mflags}
 
 %install
