@@ -38,7 +38,7 @@ Group: Applications/File
 Simple command-line utility for examining the license in a file or setting a user preference for a default license
 
 %package devel
-Summary: Development files for ${name}
+Summary: Development files for %{name}
 Group: Development/Libraries
 Requires: %{name} = %{version}-%{release}
 
