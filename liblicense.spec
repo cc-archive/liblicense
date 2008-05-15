@@ -54,18 +54,23 @@ Group: Yourmom
 Debug files for attaching to liblicense with gdb
 
 %prep
-%setup -n liblicense-0.6.2
-./configure --prefix=/usr
+%setup -q
 
 %build
-make RPM_OPT_FLAGS="$RPM_OPT_FLAGS"
+%./configure --disable-static --prefix=/usr
+make RPM_OPT_FLAGS="$RPM_OPT_FLAGS" %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make DESTDIR=$RPM_BUILD_ROOT install
+make install DESTDIR=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root)
