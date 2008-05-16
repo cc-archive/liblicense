@@ -1,5 +1,5 @@
 Name: liblicense
-Version: 0.6.2
+Version: 0.7.0
 Release: 1
 License: LGPL v2.1
 Summary: Content License Library
@@ -105,9 +105,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
-* Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.6.2-1
-- liblicense 0.6.2
-- Create separate package for plugins
+* Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-1
+- liblicense 0.7.0
+- Create separate packages for plugins, Python modules
 * Wed Aug 22 2007 Scott Shawcroft <scott.shawcroft@gmail.com> - 0.4-1
 - liblicense 0.4
 * Mon Jul 30 2007 Scott Shawcroft <scott.shawcroft@gmail.com> - 0.3-1
