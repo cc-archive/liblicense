@@ -1,3 +1,8 @@
+liblicense 0.7.0:
+
+* Change LL_* constants into #defines to avoid problems with Python modules
+* SONAME -> 2.0.0
+
 liblicense 0.6.2:
 
 * Fix /usr/bin/license so that it can read license information out of files
