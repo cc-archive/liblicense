@@ -15,10 +15,14 @@ BuildRequires: id3lib-devel
 BuildRequires: libvorbis-devel
 Buildrequires: flac-devel
 BuildRequires: ruby-devel
+BuildRequires: python-devel
 BuildRequires: gettext
 Url: http://www.creativecommons.org/project/Liblicense
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 %description
 The liblicense package contains the library, bindings, CLI utilities and license files.
@@ -29,6 +33,14 @@ Group: Development/Libraries
 
 %description modules
 Input/output modules for accessing license metadata in various file foramts.
+
+%package python
+Summary: Python bindings for liblicense, a library to handle media license metadata
+Group: Development/Libraries
+Provides: python-liblicense
+
+%description python
+Python bindings for liblicense, a library to handle media license metadata.
 
 %package cli
 Summary: Simple command-line utility for examining the license in a file or setting a user preference for a default license
@@ -85,6 +97,13 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %{_includedir}/liblicense-2.0
 %{_libdir}/pkgconfig/liblicense.pc
+
+%files python
+%dir %{python_sitelib}/liblicense
+%{python_sitearch}/liblicense/liblicense.so
+%{python_sitelib}/liblicense/__init__.py
+%{python_sitelib}/liblicense/__init__.pyc
+%{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
 * Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.6.2-1
