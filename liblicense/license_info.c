@@ -38,38 +38,6 @@
 
 #include "modules.h"
 
-const char LL_PREDICATE_ANY[] = 
-   "?predicate";
-const char LL_WEBSTATEMENT[] =
-  "http://ns.adobe.com/xap/1.0/rights/WebStatement";
-const char LL_LICENSE[] =
-  "http://creativecommons.org/ns#License";
-const char LL_MORE_PERMISSIONS[] =
-  "http://creativecommons.org/ns#morePermissions";
-const char LL_ATTRIBUTION[] =
-  "http://creativecommons.org/ns#Attribution";
-const char LL_REPRODUCTION[] =
-  "http://creativecommons.org/ns#Reproduction";
-const char LL_DISTRIBUTION[] =
-  "http://creativecommons.org/ns#Distribution";
-const char LL_DERIVATIVE_WORKS[] =
-  "http://creativecommons.org/ns#DerivativeWorks";
-const char LL_HIGH_INCOME_NATION_USE[] =
-  "http://creativecommons.org/ns#HighIncomeNationUse";
-const char LL_SHARING[] =
-  "http://creativecommons.org/ns#Sharing";
-const char LL_NOTICE[] =
-  "http://creativecommons.org/ns#Notice";
-const char LL_SHARE_ALIKE[] =
-  "http://creativecommons.org/ns#ShareAlike";
-const char LL_SOURCE_CODE[] =
-  "http://creativecommons.org/ns#SourceCode";
-const char LL_COMMERCIAL_USE[] =
-  "http://creativecommons.org/ns#CommercialUse";
-
-const char LL_REPLACED_BY[] =
-  "http://purl.org/dc/terms/isReplacedBy";
-
 /**
  * The _ll_get_first function is used to extract the first elment of a
  * list and the free the list.
@@ -166,15 +134,6 @@ ll_jurisdiction_name (const char * juris)
   return strdup (juris);
 }
 
-const char LL_JURISDICTION[] =
-  "http://creativecommons.org/ns#jurisdiction";
-
-const char LL_NAME[] =
-  "http://purl.org/dc/elements/1.1/title";
-
-const char LL_VERSION[] =
-  "http://purl.org/dc/terms/hasVersion";
-
 ll_version_t
 ll_parse_version (const char * version)
 {
@@ -217,18 +176,6 @@ ll_parse_version (const char * version)
     }
   return NULL;
 }
-
-const char LL_PROHIBITS[] =
-  "http://creativecommons.org/ns#prohibits";
-
-const char  LL_PERMITS[] =
-  "http://creativecommons.org/ns#permits";
-
-const char LL_CREATOR[] =
-  "http://purl.org/dc/elements/1.1/creator";
-
-const char  LL_REQUIRES[] =
-  "http://creativecommons.org/ns#requires";
 
 ll_uri_t
 ll_filename_to_uri (const ll_filename_t f)

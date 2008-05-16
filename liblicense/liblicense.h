@@ -338,21 +338,19 @@ typedef char *ll_filename_t;
  * a document.  See http://wiki.creativecommons.org/Embedded_Metadata
  * for a comic!
  */
-extern const char LL_WEBSTATEMENT[];
+#define LL_WEBSTATEMENT "http://ns.adobe.com/xap/1.0/rights/WebStatement"
 
   /**
    * The LL_LICENSE attribute is the URI of a license
    * that permits some sharing of this work.
    */
-  extern const char LL_LICENSE[];
+#define LL_LICENSE "http://creativecommons.org/ns#License"
 
   /**
    * The LL_MORE_PERMISSIONS attribute is the URI of a web page
    * indicating how to get more permissions than the embedded license.
    */
-  extern const char LL_MORE_PERMISSIONS[];
-
-
+#define LL_MORE_PERMISSIONS "http://creativecommons.org/ns#morePermissions"
 
 /**
  * The LL_ATTRIBUTION string may be returned by the
@@ -360,7 +358,7 @@ extern const char LL_WEBSTATEMENT[];
  *
  * credit be given to copyright holder and/or author
  */
-extern const char LL_ATTRIBUTION[];
+#define LL_ATTRIBUTION "http://creativecommons.org/ns#Attribution"
 
 /**
  * The LL_COMMERCIAL_USE string may be returned by the
@@ -368,7 +366,7 @@ extern const char LL_ATTRIBUTION[];
  *
  * exercising rights for commercial purposes
  */
-extern const char LL_COMMERCIAL_USE[];
+#define LL_COMMERCIAL_USE "http://creativecommons.org/ns#CommercialUse"
 
 /**
  * The LL_DERIVATIVE_WORKS string may be returned by the
@@ -376,7 +374,7 @@ extern const char LL_COMMERCIAL_USE[];
  *
  * creation and distribution of derivative works
  */
-extern const char LL_DERIVATIVE_WORKS[];
+#define LL_DERIVATIVE_WORKS "http://creativecommons.org/ns#DerivativeWorks"
 
 /**
  * The LL_DISTRIBUTION string may be returned by the
@@ -384,7 +382,7 @@ extern const char LL_DERIVATIVE_WORKS[];
  *
  * distribution, public display, and publicly performance
  */
-extern const char LL_DISTRIBUTION[];
+#define LL_DISTRIBUTION "http://creativecommons.org/ns#Distribution"
 
 /**
  * The LL_HIGH_INCOME_NATION_USE string may be returned
@@ -393,7 +391,7 @@ extern const char LL_DISTRIBUTION[];
  *
  * use in a non-developing country
  */
-extern const char LL_HIGH_INCOME_NATION_USE[];
+#define LL_HIGH_INCOME_NATION_USE "http://creativecommons.org/ns#HighIncomeNationUse"
 
 /**
  * The LL_NOTICE string may be returned by the
@@ -401,7 +399,7 @@ extern const char LL_HIGH_INCOME_NATION_USE[];
  *
  * copyright and license notices be kept intact
  */
-extern const char LL_NOTICE[];
+#define LL_NOTICE "http://creativecommons.org/ns#Notice"
 
 /**
  * The LL_REPRODUCTION string may be returned by the
@@ -409,7 +407,7 @@ extern const char LL_NOTICE[];
  *
  * making multiple copies
  */
-extern const char LL_REPRODUCTION[];
+#define LL_REPRODUCTION "http://creativecommons.org/ns#Reproduction"
 
 /**
  * The LL_SHARE_ALIKE string may be returned by the
@@ -417,7 +415,7 @@ extern const char LL_REPRODUCTION[];
  *
  * derivative works be licensed under the same terms as the original work
  */
-extern const char LL_SHARE_ALIKE[];
+#define LL_SHARE_ALIKE "http://creativecommons.org/ns#ShareAlike"
 
 /**
  * The LL_SHARING string may be returned by the
@@ -426,7 +424,7 @@ extern const char LL_SHARE_ALIKE[];
  * noncommercial distribution, permits commercial derivatives, but only
  * non-commercial distribution
  */
-extern const char LL_SHARING[];
+#define LL_SHARING "http://creativecommons.org/ns#Sharing"
 
 /**
  * The LL_SOURCE_CODE string may be returned by the
@@ -435,34 +433,34 @@ extern const char LL_SHARING[];
  * source code (the preferred form for making modifications) must be
  * provided for all derivative works
  */
-extern const char LL_SOURCE_CODE[];
+#define LL_SOURCE_CODE "http://creativecommons.org/ns#SourceCode"
 
 /**
  * The LL_REPLACED_BY string can be passed to the
  * #ll_get_attribute function to obtain a license's successor.
  */
-extern const char LL_REPLACED_BY[];
+#define LL_REPLACED_BY "http://purl.org/dc/terms/isReplacedBy"
 
 /**
  * The LL_JURISDICTION string can be passed to the
  * #ll_get_attribute function to obtain a license's jurisdiction.  The
  * #ll_get_jurisdiction function does this very thing.
  */
-extern const char LL_JURISDICTION[];
+#define LL_JURISDICTION "http://creativecommons.org/ns#jurisdiction"
 
 /**
  * The LL_NAME string can be passed to the
  * #ll_get_attribute function to obtain a license's name.
  * Example: "Creative Commons Attribution 3.0 Unported"
  */
-extern const char LL_NAME[];
+#define LL_NAME "http://purl.org/dc/elements/1.1/title"
 
 /**
  * The LL_VERSION string can be passed to the
  * #ll_get_attribute function to obtain a license's version.  The
  * LL_VERSION function does this very thing.
  */
-extern const char LL_VERSION[];
+#define LL_VERSION "http://purl.org/dc/terms/hasVersion"
 
 /**
  * The ll_parse_version function is used to parse a version string
@@ -487,7 +485,7 @@ ll_version_t ll_parse_version (const char * version);
  *
  * Example: "Creative Commons"
  */
-extern const char LL_CREATOR[];
+#define LL_CREATOR "http://purl.org/dc/elements/1.1/creator"
 
 /**
  * The LL_PROHIBITS string can be passed to the
@@ -495,7 +493,7 @@ extern const char LL_CREATOR[];
  * by a license.  The LL_PROHIBITS function does this very
  * thing.
  */
-extern const char LL_PROHIBITS[];
+#define LL_PROHIBITS "http://creativecommons.org/ns#prohibits"
 
 /**
  * The LL_PERMITS string can be passed to the
@@ -503,7 +501,7 @@ extern const char LL_PROHIBITS[];
  * by a license.  The LL_PERMITS function does this very
  * thing.
  */
-extern const char LL_PERMITS[];
+#define LL_PERMITS "http://creativecommons.org/ns#permits"
 
 /**
  * The LL_REQUIRES string can be passed to the
@@ -511,7 +509,7 @@ extern const char LL_PERMITS[];
  * by a license.  The LL_REQUIRES function does this very
  * thing.
  */
-extern const char LL_REQUIRES[];
+#define LL_REQUIRES "http://creativecommons.org/ns#requires"
 
 /**
  * The ll_get_attribute function is used to obtain the names of all
@@ -680,7 +678,7 @@ void ll_license_print_info (ll_uri_t license_uri);
    * LL_PREDICATE_ANY is a string meaning that a module can store
    * any URI as a predicate.
    */
-extern const char LL_PREDICATE_ANY[];
+#define LL_PREDICATE_ANY "?predicate"
 
 typedef char *ll_module_t;
 typedef char *ll_symbol_t;
@@ -1034,7 +1032,7 @@ unsigned int ll_modules_count_available();
 /**
  * A constant indicating that module writing failed.
  */
-extern const int LL_E_MODULE_WRITE_FAIL;
+#define LL_E_MODULE_WRITE_FAIL 1
 
 /******************* license_chooser *******************/
 
