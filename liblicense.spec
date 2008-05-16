@@ -82,7 +82,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/liblicense.so*
-%{_libdir}/liblicense/%{version}
 %{_libdir}/liblicense/%{version}/config/
 %{_datadir}/liblicense/icons
 %{_datadir}/liblicense/licenses
