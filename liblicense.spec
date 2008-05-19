@@ -36,18 +36,19 @@ Group: Development/Libraries
 Input/output modules for accessing license metadata in various file foramts.
 
 %package python
-Summary: Python bindings for liblicense, a library to handle media license metadata
+Summary: Python bindings for liblicense, a library to handle license metadata
 Group: Development/Libraries
 
 %description python
 Python bindings for liblicense, a library to handle media license metadata.
 
 %package cli
-Summary: Simple command-line utility for examining the license in a file or setting a user preference for a default license
+Summary: CLI tool for choosing a user default license or the license of a file
 Group: Applications/File
 
 %description cli
-Simple command-line utility for examining the license in a file or setting a user preference for a default license
+Simple command-line utility for examining the license in a file or setting a
+user preference for a default license
 
 %package devel
 Summary: Development files for %{name}
