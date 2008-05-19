@@ -29,7 +29,7 @@ The liblicense package contains the library, bindings, CLI utilities and
 license files.
 
 %package modules
-Summary: Input/output modules for accessing license metadata in various file foramts.
+Summary: Input/output modules for accessing license metadata in various file formats
 Group: Development/Libraries
 
 %description modules
