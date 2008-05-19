@@ -38,7 +38,6 @@ Input/output modules for accessing license metadata in various file foramts.
 %package python
 Summary: Python bindings for liblicense, a library to handle media license metadata
 Group: Development/Libraries
-Provides: python-liblicense
 
 %description python
 Python bindings for liblicense, a library to handle media license metadata.
