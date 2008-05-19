@@ -25,7 +25,8 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 %description
-The liblicense package contains the library, bindings, CLI utilities and license files.
+The liblicense package contains the library, bindings, CLI utilities and
+license files.
 
 %package modules
 Summary: Input/output modules for accessing license metadata in various file foramts.
