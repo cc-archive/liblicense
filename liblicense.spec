@@ -82,7 +82,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc COPYING
-%{_libdir}/liblicense.so*
+%{_libdir}/liblicense.so.*
 %{_libdir}/liblicense/%{version}/config/
 %{_datadir}/liblicense/icons
 %{_datadir}/liblicense/licenses
@@ -92,11 +92,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/liblicense/%{version}/io/
 
 %files cli
-%{_bindir}
+%{_bindir}/license
 
 %files devel
 %{_includedir}/liblicense-2.0
 %{_libdir}/pkgconfig/liblicense.pc
+%{_libdir}/liblicense.so
 
 %files python
 %dir %{python_sitelib}/liblicense
