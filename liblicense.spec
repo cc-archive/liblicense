@@ -1,6 +1,6 @@
 Name: liblicense
 Version: 0.7.0
-Release: 1
+Release: 2
 License: LGPLv2
 Summary: Content License Library
 Group: Development/Libraries
@@ -107,6 +107,12 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
+* Thu May 29 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-2
+- Put liblicense.so in -devel package
+- Fix really long (>80 chars) descriptions
+- Stop trying to own /usr/bin
+- Remove trailing dot from package summary; fixed typo (misspelled "formats")
+- LGPLv2 is license
 * Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-1
 - liblicense 0.7.0
 - Create separate packages for plugins, Python modules
