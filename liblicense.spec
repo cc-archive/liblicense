@@ -1,6 +1,6 @@
 Name: liblicense
 Version: 0.7.0
-Release: 2
+Release: 3
 License: LGPLv2
 Summary: Content License Library
 Group: Development/Libraries
@@ -63,7 +63,9 @@ developing applications that use %{name}.
 %setup -q
 
 %build
-%configure --disable-static
+%configure --disable-static --disable-rpath
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 make %{?_smp_mflags}
 
 %install
@@ -107,6 +109,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
+* Mon Jun 16 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-3
+- Pass --disable-rpath to ./configure.
+- Modify bundled libtool with sed expressions from Fedora Packaging Guidelines
 * Thu May 29 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-2
 - Put liblicense.so in -devel package
 - Fix really long (>80 chars) descriptions
