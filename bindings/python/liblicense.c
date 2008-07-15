@@ -597,7 +597,12 @@ initliblicense (void)
 
   ll_init ();
   m = Py_InitModule ("liblicense", LicenseMethods);
-  PyModule_AddIntConstant (m, "UNSPECIFIED", LL_UNSPECIFIED);
+  PyModule_AddIntConstant (m, "LL_UNSPECIFIED", LL_UNSPECIFIED);
+  PyModule_AddStringConstant (m, "LL_LICENSE", LL_LICENSE);
+  PyModule_AddStringConstant (m, "LL_WEBSTATEMENT", LL_WEBSTATEMENT);
+  PyModule_AddStringConstant (m, "LL_MORE_PERMISSIONS", LL_MORE_PERMISSIONS);
+  PyModule_AddStringConstant (m, "LL_WEB_STATEMENT", LL_WEBSTATEMENT);
+  
 
   LicenseChooserType.tp_new = PyType_GenericNew;
   if (PyType_Ready (&LicenseChooserType) < 0)
