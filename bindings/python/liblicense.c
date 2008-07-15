@@ -607,7 +607,7 @@ initliblicense (void)
   PyModule_AddStringConstant (m, "LL_LICENSE", LL_LICENSE);
   PyModule_AddStringConstant (m, "LL_WEBSTATEMENT", LL_WEBSTATEMENT);
   PyModule_AddStringConstant (m, "LL_MORE_PERMISSIONS", LL_MORE_PERMISSIONS);
-  PyModule_AddStringConstant (m, "LL_WEB_STATEMENT", LL_WEBSTATEMENT);
+  PyModule_AddStringConstant (m, "LL_CREATOR", LL_CREATOR);
   
 
   LicenseChooserType.tp_new = PyType_GenericNew;
