@@ -289,16 +289,22 @@ py_read (PyObject *self, PyObject *args)
 {
   /* ll_filename_t[,ll_module_t] */
   const ll_filename_t filename;
+  const char * predicate = NULL;
   const ll_module_t io_module = NULL;
   ll_juris_t jurisdiction;
   PyObject *result;
 
   (void) self;
-  if (PyArg_ParseTuple (args, "s|s", &filename, &io_module))
-    if (io_module != NULL)
-      jurisdiction = ll_module_read (filename, LL_LICENSE, io_module);
-    else
-      jurisdiction = ll_read (filename, LL_LICENSE);
+  if (PyArg_ParseTuple (args, "s|ss", &filename, &predicate, &io_module))
+    {
+      if (predicate == NULL) {
+	predicate = LL_LICENSE;
+      }
+      if (io_module != NULL)
+	jurisdiction = ll_module_read (filename, predicate, io_module);
+      else
+	jurisdiction = ll_read (filename, predicate);
+    }
   else
     return NULL;
   result = Py_BuildValue ("s", jurisdiction);
