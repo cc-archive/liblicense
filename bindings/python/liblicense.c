@@ -288,21 +288,21 @@ static PyObject *
 py_read (PyObject *self, PyObject *args)
 {
   /* ll_filename_t[,ll_module_t] */
-  const ll_filename_t f;
-  const ll_module_t m = NULL;
-  ll_juris_t j;
+  const ll_filename_t filename;
+  const ll_module_t io_module = NULL;
+  ll_juris_t jurisdiction;
   PyObject *result;
 
   (void) self;
-  if (PyArg_ParseTuple (args, "s|s", &f, &m))
-    if (m != NULL)
-      j = ll_module_read (f, LL_LICENSE, m);
+  if (PyArg_ParseTuple (args, "s|s", &filename, &io_module))
+    if (io_module != NULL)
+      jurisdiction = ll_module_read (filename, LL_LICENSE, io_module);
     else
-      j = ll_read (f, LL_LICENSE);
+      jurisdiction = ll_read (filename, LL_LICENSE);
   else
     return NULL;
-  result = Py_BuildValue ("s", j);
-  free (j);
+  result = Py_BuildValue ("s", jurisdiction);
+  free (jurisdiction);
   return result;
 }
 
