@@ -36,6 +36,7 @@ int ll_write(ll_filename_t outfile, const ll_uri_t predicate, ll_uri_t value) {
 }
 
 static int _ll_module_write(ll_filename_t outfile, 
+			    const ll_uri_t predicate,
 			    ll_uri_t value,
 			    ll_module_t requested_module_name,
 			    int embed_or_not) {
@@ -61,7 +62,7 @@ static int _ll_module_write(ll_filename_t outfile,
 				LL_FEATURES_EMBED;
 			if (this_one_supports_embed == embed_or_not) {
 				/* Do the write! */
-				last_result = (module->write)(outfile, LL_LICENSE, value);
+				last_result = (module->write)(outfile, predicate, value);
 				if ((last_result > -1) &&
 				    (all_results_fused < 0) ) {
 					all_results_fused = last_result;
@@ -85,9 +86,9 @@ int ll_module_write(ll_filename_t outfile,
 		    ll_module_t requested_module_name) {
 	int result = 0;
 	int managed_to_embed = 0;
-	result = managed_to_embed = _ll_module_write(outfile, value, requested_module_name, 1);
+	result = managed_to_embed = _ll_module_write(outfile, predicate, value, requested_module_name, 1);
 	if (managed_to_embed < 1) {
-		result = _ll_module_write(outfile, value, requested_module_name, 0);
+		result = _ll_module_write(outfile, predicate, value, requested_module_name, 0);
 	}
 	return result;
 }

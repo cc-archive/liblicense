@@ -31,11 +31,16 @@ static void get(const char * filename,
 		const char * expected_result) {
 
 	char * got_result = ll_read(filename, predicate);
-	if (got_result == expected_result == NULL) {
-		return; /* success */
+	if (expected_result == NULL) { // expected empty
+		assert(got_result == NULL);
+		/* success */
 	}
-	/* otherwise, check the strings */
-	assert (strcmp(got_result, expected_result) == 0);
+	else {
+		assert (got_result != NULL);
+		/* otherwise, check the strings */
+		assert (strcmp(got_result, expected_result) == 0);
+		/* success */
+	}
 }
 	
 static void set_then_get(const char * filename,
@@ -71,9 +76,16 @@ int main() {
 		num_write_bytes = fwrite(buf, 1, num_read_bytes, tempfile_fd);
 		assert(num_read_bytes == num_write_bytes);
 	}
-	
-	set_then_get(tempfile, LL_LICENSE, 'license_test');
-	set_then_get(tempfile, LL_MORE_PERMISSIONS, NULL);
+
+	/* Then rename it so that it ends in .mp3 */
+	fclose(tempfile_fd);
+	rename(tempfile, "/tmp/wtf.mp3"); /* FIXME this sucks */
+	strcpy(tempfile, "/tmp/wtf.mp3");
+
+
+	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
+	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
 	unlink(tempfile);
+
 	return 0;
 }
