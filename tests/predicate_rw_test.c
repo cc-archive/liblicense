@@ -85,6 +85,7 @@ int main() {
 
 	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
 	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
+	set_then_get(tempfile, LL_MORE_PERMISSIONS, NULL);
 	unlink(tempfile);
 
 	return 0;
