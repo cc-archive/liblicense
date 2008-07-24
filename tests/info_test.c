@@ -35,6 +35,16 @@ void test_get_attribute_jurisdiction() {
 	free(j);
 }
 
+void test_get_attribute_jurisdiction_localized() {
+	char * license;
+	char * j;
+	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
+	j = ll_get_first(ll_get_attribute(license, LL_JURISDICTION, true));
+	printf("get_jurisdiction: '%s'\n",j);
+	assert (strcmp(j, "http://creativecommons.org/international/de/") == 0);
+	free(j);
+}
+
 void test_get_attribute_name_whatever_lang() {
 	const char * license;
 	char * name;
@@ -97,6 +107,7 @@ int main(int argc,char** argv) {
 	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
 
 	test_get_attribute_jurisdiction();
+	test_get_attribute_jurisdiction_localized();
 	test_get_attribute_name_system_lang();
 	test_get_attribute_name_whatever_lang();
 	test_get_version();
