@@ -88,5 +88,37 @@ int main() {
 	set_then_get(tempfile, LL_MORE_PERMISSIONS, NULL);
 	unlink(tempfile);
 
+	/* Copy pasta for PDF :-( */
+
+	tempfile = malloc(4096);
+	strcpy(tempfile, "/tmp/liblicense_test.XXXXXX");
+	assert(mkstemp(tempfile) > -1);
+
+	/* First, copy in the PDF to the temp file */
+	FILE * pdf_fd = fopen(pdf, "r");
+	tempfile_fd = fopen(tempfile, "w");
+
+	bufsize = 4096;
+	buf = malloc(bufsize);
+	num_read_bytes = 0;
+	num_write_bytes = 0;
+
+	while (! feof(pdf_fd)) {
+		num_read_bytes = fread(buf, 1, bufsize, pdf_fd);
+		num_write_bytes = fwrite(buf, 1, num_read_bytes, tempfile_fd);
+		assert(num_read_bytes == num_write_bytes);
+	}
+
+	/* Then rename it so that it ends in .pdf */
+	fclose(tempfile_fd);
+	rename(tempfile, "/tmp/wtf.pdf"); /* FIXME this sucks */
+	strcpy(tempfile, "/tmp/wtf.pdf");
+
+
+	set_then_get("/tmp/omg.pdf", LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
+	set_then_get("/tmp/omg.pdf", LL_WEBSTATEMENT, "http://example.com/statement/");
+	set_then_get("/tmp/omg.pdf", LL_MORE_PERMISSIONS, NULL);
+	unlink(tempfile);
+
 	return 0;
 }
