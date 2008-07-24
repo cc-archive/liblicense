@@ -33,7 +33,7 @@ py_get_jurisdiction (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  j = ll_get_first(ll_get_attribute(u, LL_JURISDICTION, false));
+  j = ll_get_first(ll_get_attribute(u, LL_JURISDICTION, true));
   result = Py_BuildValue ("s", j);
   free (j);
   return result;
@@ -50,7 +50,7 @@ py_get_name (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  name = ll_get_first(ll_get_attribute(u, LL_NAME, false));
+  name = ll_get_first(ll_get_attribute(u, LL_NAME, true));
   result = Py_BuildValue ("s", name);
   free (name);
   return result;
@@ -68,7 +68,7 @@ py_get_version (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, false)));
+  v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, true)));
   i = 1;
   list = PyList_New (0);
   while (v != NULL && i <= v[0])
@@ -92,7 +92,7 @@ py_get_permits (PyObject *self, PyObject *args)
   (void) self;
   if (!PyArg_ParseTuple (args, "s", &u))
     return NULL;
-  l = ll_get_attribute(u, LL_PERMITS, false);
+  l = ll_get_attribute(u, LL_PERMITS, true);
   i = 0;
   list = PyList_New (0);
   while (l != NULL && l[i] != NULL)
