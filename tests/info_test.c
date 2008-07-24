@@ -35,13 +35,23 @@ void test_get_attribute_jurisdiction() {
 	free(j);
 }
 
-void test_get_attribute_name_default_lang() {
+void test_get_attribute_name_whatever_lang() {
 	const char * license;
 	char * name;
 	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
 	name = ll_get_first(ll_get_attribute(license, LL_NAME, false));
 	printf("get_name: '%s'\n",name);
 	assert (strcmp(name, "Recoñecemento-SenObraDerivada") == 0); /* UTF-8 */
+	free(name);
+}
+
+void test_get_attribute_name_system_lang() {
+	const char * license;
+	char * name;
+	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
+	name = ll_get_first(ll_get_attribute(license, LL_NAME, true));
+	printf("get_name: '%s'\n",name);
+	assert (strcmp(name, "Attribution-NoDerivs") == 0); /* UTF-8 */
 	free(name);
 }
 
@@ -86,8 +96,9 @@ int main(int argc,char** argv) {
 
 	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
 
-	test_get_attribute_jurisdiction(license);
-	test_get_attribute_name_default_lang(license);
+	test_get_attribute_jurisdiction();
+	test_get_attribute_name_system_lang();
+	test_get_attribute_name_whatever_lang();
 	test_get_version();
 
 	p = ll_get_attribute(license, LL_PROHIBITS, false);
