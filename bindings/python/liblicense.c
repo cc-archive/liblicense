@@ -268,14 +268,19 @@ py_write (PyObject *self, PyObject *args)
   /* ll_filename_t, ll_uri_t[,ll_module_t] */
   const ll_filename_t f;
   const ll_uri_t u;
+  const ll_uri_t predicate;
   const ll_module_t m = NULL;
   int result;
   (void) self;
-  if (PyArg_ParseTuple (args, "sz|s", &f, &u, &m))
-    if (m != NULL)
-      result = ll_module_write (f, LL_LICENSE, u, m);
-    else
-      result = ll_write (f, LL_LICENSE, u);
+  if (PyArg_ParseTuple (args, "ssz|s", &f, &predicate, &u, &m))
+    if (m != NULL) {
+      printf("long predicate: %s\n", predicate);
+      result = ll_module_write (f, predicate, u, m);
+    }
+    else {
+      printf("short predicate: %s\n", predicate);
+      result = ll_write (f, predicate, u);
+    }
   else
     return NULL;
   /* just in case PyBool_FromLong thinks its true */

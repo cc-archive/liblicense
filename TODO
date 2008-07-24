@@ -10,4 +10,3 @@
     v = ll_parse_version(ll_get_first (ll_get_attribute (u, LL_VERSION, false)));
 
 * (does the return value of ll_get_attribute get freed?)
-* How should py_write handle LL_LICENSE etc. arguments?  In what order?
