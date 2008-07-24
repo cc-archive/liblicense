@@ -1,6 +1,6 @@
 Name: liblicense
-Version: 0.7.0
-Release: 3
+Version: 0.7.1
+Release: 1
 License: LGPLv2
 Summary: Content License Library
 Group: Development/Libraries
