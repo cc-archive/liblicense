@@ -20,7 +20,7 @@
 # This file is part of Liblicense.
 
 AC_PREREQ(2.57)
-AC_INIT([liblicense],[0.7.1],[cc-devel@lists.ibiblio.org])
+AC_INIT([liblicense],[0.8],[cc-devel@lists.ibiblio.org])
 AM_INIT_AUTOMAKE([dist-bzip2])
 
 dnl
@@ -53,16 +53,17 @@ dnl  REVISION is set to 0, otherwise REVISION is incremented.
 dnl ---------------------------------------------------------------------------
 dnl 0.6.1 is the revision 1.0.0
 dnl 0.7.0 is the revision 2.0.0
+dnl 0.8 is the revision 3.0.0
 AC_SUBST([LIBLICENSE_REVISION], [0])
 AC_SUBST([LIBLICENSE_AGE],      [0])
-AC_SUBST([LIBLICENSE_CURRENT],  [2])
+AC_SUBST([LIBLICENSE_CURRENT],  [3])
 AC_SUBST([LIBLICENSE_CURRENT_MIN],
          [`expr $LIBLICENSE_CURRENT - $LIBLICENSE_AGE`])
 AC_SUBST([LIBLICENSE_VERSION_INFO],
          [$LIBLICENSE_CURRENT:$LIBLICENSE_REVISION:$LIBLICENSE_AGE])
 
 dnl the major version. used for package names, etc
-LIBLICENSE_MAJOR_VERSION=2.0
+LIBLICENSE_MAJOR_VERSION=3.0
 AC_SUBST(LIBLICENSE_MAJOR_VERSION)
 LIBLICENSE_INCLUDE_BASE=liblicense-$LIBLICENSE_MAJOR_VERSION
 AC_SUBST(LIBLICENSE_INCLUDE_BASE)
