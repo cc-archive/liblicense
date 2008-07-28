@@ -1,4 +1,4 @@
-liblicense 0.8.
+liblicense 0.8 (2008-07-28):
 * Fixed LL_LICENSE to be ns#license, not ns#License
 * Therefore, bumped ABI and SONAME.
 * Removed NULLs possibly meaning LL_LICENSE from ll_read() and ll_write()

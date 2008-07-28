@@ -1,5 +1,5 @@
 Name: liblicense
-Version: 0.7.1
+Version: 0.8
 Release: 1
 License: LGPLv2
 Summary: Content License Library
@@ -109,6 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
+* Mon Jul 28 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.8-1
+- liblicense 0.8 upstream
 * Mon Jun 16 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-3
 - Pass --disable-rpath to ./configure.
 - Modify bundled libtool with sed expressions from Fedora Packaging Guidelines
