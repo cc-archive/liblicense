@@ -993,7 +993,7 @@ unsigned int ll_modules_count_available();
  * @param filename
  *     The name of the file the license is about
  * @param predicate
- *     The exact predicate being stored (NULL is okay if the predicate is license)
+ *     The exact predicate being stored (NULL is not okay)
  * @param value
  *     The value to store (typically a URL/URI for a license)
  * @returns
@@ -1012,7 +1012,7 @@ unsigned int ll_modules_count_available();
  * @param filename
  *     The name of the file the license is about
  * @param predicate
- *     The exact predicate being stored (NULL is okay if the predicate is license)
+ *     The exact predicate being stored (NULL is not okay)
  * @param value
  *     The value to store (typically a URL/URI for a license)
  * @param module
