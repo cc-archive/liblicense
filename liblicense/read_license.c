@@ -29,11 +29,7 @@
 #endif
 
 ll_uri_t ll_read(ll_filename_t infile, const ll_uri_t predicate) {
-	ll_uri_t new_predicate = predicate;
-	if (predicate == NULL) {
-		new_predicate = LL_LICENSE;
-	}
-	return ll_module_read(infile, new_predicate, NULL);
+	return ll_module_read(infile, predicate, NULL);
 }
 
 ll_uri_t ll_module_read(ll_filename_t infile, const ll_uri_t predicate, ll_module_t requested_module_name) {

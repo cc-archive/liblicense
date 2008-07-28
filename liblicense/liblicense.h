@@ -914,9 +914,8 @@ ll_uri_t ll_license_default_get (void);
  *     The name of the file for which the license is desired.
  * @param predicate 
  *         Read this predicate from the file.
- *         NULL is accepted for simplicity;
- *         it is equivalent to asking for the license of the file.
- *         Equivalently, you can ask for the LL_LICENSE predicate.
+ *         NULL is NOT accepted.
+ *         If you are unsure, you should ask for the LL_LICENSE predicate.
  * @returns
  *     NULL if the file cannot be read, or no license can be found; otherwise
  *     a string containing the URI of the license corresponding to the file.
@@ -934,9 +933,9 @@ ll_uri_t ll_license_default_get (void);
  *     The name of the file for which the license is desired
  * @param predicate 
  *         Read this predicate from the file.
- *         NULL is accepted for simplicity;
- *         it is equivalent to asking for the license of the file.
- *         Equivalently, you can ask for the LL_LICENSE predicate.
+ *         NULL is NOT accepted.
+ *         If you are unsure, you should ask for the license of the file
+ *         with the LL_LICENSE predicate.
  * @param module
  *     The name of the module to scan the file with
  * @returns
