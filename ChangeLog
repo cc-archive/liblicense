@@ -1,6 +1,7 @@
 liblicense 0.8.
 * Fixed LL_LICENSE to be ns#license, not ns#License
 * Therefore, bumped ABI and SONAME.
+* Removed NULLs possibly meaning LL_LICENSE from ll_read() and ll_write()
 
 liblicense 0.7.1 (2008-07-23):
 
