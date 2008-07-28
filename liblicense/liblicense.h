@@ -344,7 +344,7 @@ typedef char *ll_filename_t;
    * The LL_LICENSE attribute is the URI of a license
    * that permits some sharing of this work.
    */
-#define LL_LICENSE "http://creativecommons.org/ns#License"
+#define LL_LICENSE "http://creativecommons.org/ns#license"
 
   /**
    * The LL_MORE_PERMISSIONS attribute is the URI of a web page
