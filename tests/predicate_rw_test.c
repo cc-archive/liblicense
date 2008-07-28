@@ -26,12 +26,14 @@
 #include <string.h>
 #include <unistd.h>
 
+static const int _LL_PATH_MAX = 4096;
+
 static void get(const char * filename,
 		const char * predicate,
 		const char * expected_result) {
 
 	char * got_result = ll_read(filename, predicate);
-	if (expected_result == NULL) { // expected empty
+	if (expected_result == NULL) { /* expected empty */
 		assert(got_result == NULL);
 		/* success */
 	}
@@ -52,17 +54,35 @@ static void set_then_get(const char * filename,
 	get(filename, predicate, expected_result);
 }
 
+void path_join(char * buffer, int buffer_size, char * dirname, char * basename) {
+	/* Honestly, is this what C programmers do? */
+	int remaining = buffer_size - 1; /* Zero padded */
+
+	/* Zero that buffer */
+	memset(buffer, 0, buffer_size);
+
+	/* Jam the dirname in */
+	strncat(buffer, dirname, remaining);
+	remaining -= strlen(dirname);
+	assert (remaining > 0);
+
+	/* Slide the basename on */
+	strncat(buffer, basename, remaining);
+}
+
 int main() {
 	const char * mp3 = "../tests/data_empty.mp3";
 	const char * pdf = "../tests/data_empty.pdf";
 	
 	ll_init();
 
-	char * tempfile = malloc(4096);
-	strcpy(tempfile, "/tmp/liblicense_test.XXXXXX");
-	assert(mkstemp(tempfile) > -1);
+	char * tempfile = malloc(_LL_PATH_MAX);
+	char * tempdir = malloc(_LL_PATH_MAX);
+	strcpy(tempdir, "/tmp/liblicense_test_dir.XXXXXX");
+	assert(mkdtemp(tempdir) > -1);
 
 	/* First, copy in the MP3 to the temp file */
+	path_join(tempfile, _LL_PATH_MAX, tempdir, "data_empty.mp3");
 	FILE * mp3_fd = fopen(mp3, "r");
 	FILE * tempfile_fd = fopen(tempfile, "w");
 
@@ -77,12 +97,6 @@ int main() {
 		assert(num_read_bytes == num_write_bytes);
 	}
 
-	/* Then rename it so that it ends in .mp3 */
-	fclose(tempfile_fd);
-	rename(tempfile, "/tmp/wtf.mp3"); /* FIXME this sucks */
-	strcpy(tempfile, "/tmp/wtf.mp3");
-
-
 	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
 	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
 	set_then_get(tempfile, LL_MORE_PERMISSIONS, NULL);
@@ -90,10 +104,7 @@ int main() {
 
 	/* Copy pasta for PDF :-( */
 
-	tempfile = malloc(4096);
-	strcpy(tempfile, "/tmp/liblicense_test.XXXXXX");
-	assert(mkstemp(tempfile) > -1);
-
+	path_join(tempfile, _LL_PATH_MAX, tempdir, "data_empty.pdf");
 	/* First, copy in the PDF to the temp file */
 	FILE * pdf_fd = fopen(pdf, "r");
 	tempfile_fd = fopen(tempfile, "w");
@@ -109,15 +120,9 @@ int main() {
 		assert(num_read_bytes == num_write_bytes);
 	}
 
-	/* Then rename it so that it ends in .pdf */
-	fclose(tempfile_fd);
-	rename(tempfile, "/tmp/wtf.pdf"); /* FIXME this sucks */
-	strcpy(tempfile, "/tmp/wtf.pdf");
-
-
-	set_then_get("/tmp/omg.pdf", LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
-	set_then_get("/tmp/omg.pdf", LL_WEBSTATEMENT, "http://example.com/statement/");
-	set_then_get("/tmp/omg.pdf", LL_MORE_PERMISSIONS, NULL);
+	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
+	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
+	set_then_get(tempfile, LL_MORE_PERMISSIONS, NULL);
 	unlink(tempfile);
 
 	return 0;
