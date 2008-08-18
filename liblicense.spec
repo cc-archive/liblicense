@@ -97,7 +97,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/license
 
 %files devel
-%{_includedir}/liblicense-2.0
+%{_includedir}/liblicense-3.0
 %{_libdir}/pkgconfig/liblicense.pc
 %{_libdir}/liblicense.so
 
