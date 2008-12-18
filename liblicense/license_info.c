@@ -520,22 +520,22 @@ _ll_build_list (ll_attribute_search_t *ast, char **fsi)
     {
       int match;
 
-      result = ll_new_list (1);
+      result = ll_new_list (ast->num_values);
       i = 0;
       match = false;
       for (i = 0; i < ast->num_values; ++i)
         {
           if (!match && strcmp (ast->locales[i], "x-default") == 0)
             {
-              if (result[0] != NULL)
-                free (result[0]);
-              result[0] = strdup (ast->values[i]);
+              if (result[i] != NULL)
+                free (result[i]);
+              result[i] = strdup (ast->values[i]);
             }
           else if (strcmp (ast->locales[i], ast->locale) == 0)
             {
-              if (result[0] != NULL)
-                free (result[0]);
-              result[0] = strdup (ast->values[i]);
+              if (result[i] != NULL)
+                free (result[i]);
+              result[i] = strdup (ast->values[i]);
               match = true;
             }
         }
