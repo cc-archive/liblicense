@@ -93,8 +93,11 @@ int main(int argc,char** argv) {
 	char * known_good_prohibits[] = {NULL};
 	char * known_good_permits[] = {LL_DISTRIBUTION, LL_REPRODUCTION, NULL};
 	char * known_good_requires[] = {LL_NOTICE, LL_ATTRIBUTION, NULL};
+	char * known_good_bync_permits[] = {
+	  LL_DISTRIBUTION, LL_REPRODUCTION, LL_DERIVATIVE_WORKS, NULL};
 	
 	ll_uri_t license;
+	ll_uri_t other_license;
 	ll_juris_t j;
 	char* name;
 	ll_uri_t* p;
@@ -129,6 +132,11 @@ int main(int argc,char** argv) {
 	assert (ll_lists_equal(p, known_good_requires));
 	ll_list_print(p);
 	ll_free_list(p);
+
+	/* Adding a test for http://code.creativecommons.org/issues/issue78 */
+	other_license = "http://creativecommons.org/licenses/by-nc/3.0/";
+	p = ll_get_attribute(other_license, LL_PERMITS, false);
+	assert (ll_lists_equal(p, known_good_bync_permits));
 
 	b = ll_verify_uri(license);
 	printf("verify_uri: %d\n",b);
