@@ -138,6 +138,13 @@ int main(int argc,char** argv) {
 	p = ll_get_attribute(other_license, LL_PERMITS, false);
 	assert (ll_lists_equal(p, known_good_bync_permits));
 
+	/* Adding a test for http://code.creativecommons.org/issues/issue78
+	 as seen by the Python bindings, which always set the locale
+	 parameter to true. */
+	other_license = "http://creativecommons.org/licenses/by-nc/3.0/";
+	p = ll_get_attribute(other_license, LL_PERMITS, true);
+	assert (ll_lists_equal(p, known_good_bync_permits));
+
 	b = ll_verify_uri(license);
 	printf("verify_uri: %d\n",b);
 	assert (b == 1);
