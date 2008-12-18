@@ -26,6 +26,27 @@
 #include <string.h>
 #include <unistd.h>
 
+#define COPY_FILE_BUFSIZE 4096
+
+static void copy_file(const char * infile, const char * outfile) {
+	FILE * in_fd = fopen(infile, "r");
+	FILE * out_fd = fopen(outfile, "w");
+	
+	int num_read_bytes = 0;
+	int num_write_bytes = 0;
+
+	char buf[COPY_FILE_BUFSIZE];
+	
+	while (! feof(in_fd)) {
+		num_read_bytes = fread(buf, 1, COPY_FILE_BUFSIZE, in_fd);
+		num_write_bytes = fwrite(buf, 1, num_read_bytes, out_fd);
+		assert(num_read_bytes == num_write_bytes);
+	}
+
+	fclose(in_fd);
+	fclose(out_fd);
+}
+
 static const int _LL_PATH_MAX = 4096;
 
 static void get(const char * filename,
@@ -83,19 +104,7 @@ int main() {
 
 	/* First, copy in the MP3 to the temp file */
 	path_join(tempfile, _LL_PATH_MAX, tempdir, "data_empty.mp3");
-	FILE * mp3_fd = fopen(mp3, "r");
-	FILE * tempfile_fd = fopen(tempfile, "w");
-
-	int bufsize = 4096;
-	char * buf = malloc(bufsize);
-	int num_read_bytes = 0;
-	int num_write_bytes = 0;
-
-	while (! feof(mp3_fd)) {
-		num_read_bytes = fread(buf, 1, bufsize, mp3_fd);
-		num_write_bytes = fwrite(buf, 1, num_read_bytes, tempfile_fd);
-		assert(num_read_bytes == num_write_bytes);
-	}
+	copy_file(mp3, tempfile);
 
 	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
 	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
@@ -106,19 +115,7 @@ int main() {
 
 	path_join(tempfile, _LL_PATH_MAX, tempdir, "data_empty.pdf");
 	/* First, copy in the PDF to the temp file */
-	FILE * pdf_fd = fopen(pdf, "r");
-	tempfile_fd = fopen(tempfile, "w");
-
-	bufsize = 4096;
-	buf = malloc(bufsize);
-	num_read_bytes = 0;
-	num_write_bytes = 0;
-
-	while (! feof(pdf_fd)) {
-		num_read_bytes = fread(buf, 1, bufsize, pdf_fd);
-		num_write_bytes = fwrite(buf, 1, num_read_bytes, tempfile_fd);
-		assert(num_read_bytes == num_write_bytes);
-	}
+	copy_file(pdf, tempfile);
 
 	/* TEMPORARY FIXME:
 	 * Comment out PDF tests due to them failing.
