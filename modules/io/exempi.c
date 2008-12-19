@@ -139,7 +139,7 @@ int exempi_write( const char* filename, const char* predicate, const char* uri )
 	return success;
 }
 
-const char *exempi_supported_predicates[] = {LL_LICENSE, LL_WEBSTATEMENT, LL_MORE_PERMISSIONS, NULL};
+const char *exempi_supported_predicates[] = {LL_LICENSE, LL_WEBSTATEMENT, LL_MORE_PERMISSIONS, LL_CREATOR, NULL};
 const char *exempi_mime_types[] = {"image/jpeg",
 				   "image/png",
 				   "image/tiff",
