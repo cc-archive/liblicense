@@ -47,9 +47,10 @@ void test_license_readwrite(ll_uri_t license, const char * filename) {
 	int result;
 
 	result = ll_write(filename,LL_LICENSE, license);
+	assert(result);
 	
 	license_read_back = ll_read(filename, LL_LICENSE);
-	printf("Write result: %d\n",result);
+	assert(result);
 	printf("License read bacK: %s\n", license_read_back);
 	
 	assert (result > -1);
