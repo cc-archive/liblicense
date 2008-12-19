@@ -64,7 +64,7 @@ char* exempi_read( const char* filename, const ll_uri_t predicate )
 	if (f == NULL) {
 	  // Golly gee whiz, you can't open that file.  xmp_err() or
 	  // something like it could tell us why, if only we wanted to
-	  // now.  We'll return NULL as allowed in liblicense.h's
+	  // know.  We'll return NULL as allowed in liblicense.h's
 	  // doxygen for ll_read().
 
 	  return NULL; // again, magic return value.  Sucks.  FIXME.
