@@ -56,6 +56,10 @@ char* exempi_read( const char* filename, const ll_uri_t predicate )
 	struct _ll_shared_xmp_ns_and_rest namespace_etc;
 
 	namespace_etc = _ll_shared_xmp_uri2struct(predicate);
+
+	printf("at start, namespace was: %s\n", namespace_etc.namespace);
+	printf("at start, rest was: %s\n", namespace_etc.rest);
+
 	if (namespace_etc.namespace == NULL) {
 		return NULL;
 	}
@@ -82,6 +86,10 @@ char* exempi_read( const char* filename, const ll_uri_t predicate )
 				      namespace_etc.rest, license_uri, NULL) ) {
 			uri_string = strdup(xmp_string_cstr(license_uri));
 		}
+
+		printf("namespace was: %s\n", namespace_etc.namespace);
+		printf("rest was: %s\n", namespace_etc.rest);
+		printf("result was %d\n", strlen(xmp_string_cstr(license_uri)));
 
 		xmp_string_free(license_uri);
 
@@ -139,7 +147,7 @@ int exempi_write( const char* filename, const char* predicate, const char* uri )
 	return success;
 }
 
-const char *exempi_supported_predicates[] = {LL_LICENSE, LL_WEBSTATEMENT, LL_MORE_PERMISSIONS, LL_CREATOR, NULL};
+const char *exempi_supported_predicates[] = {LL_LICENSE, LL_WEBSTATEMENT, LL_MORE_PERMISSIONS, LL_CREATOR, LL_PREDICATE_ANY, NULL};
 const char *exempi_mime_types[] = {"image/jpeg",
 				   "image/png",
 				   "image/tiff",

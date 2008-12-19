@@ -44,6 +44,23 @@ int main() {
 	 module = ll_module_search(file, LL_LICENSE, &state);
 	 assert (module == NULL); /* Only Exempi */
 
+	 /* Test that PNG (via exempi) wants to accept some random
+	  * predicate. */
+	 file = "../tests/data_empty.png";
+	 memset(&state, 0, sizeof(LLModuleSearchState));
+	 
+	 module = ll_module_search(file,
+				   "http://purl.org/dc/elements/1.1/title",
+				   &state);
+	 assert(strcmp("exempi.so", module->name) == 0); /* Exempi
+							    should be
+							    able to
+							    handle
+							    this
+							    random
+							    predicate. */
+	   
+
 	 ll_stop();
 	 
 	 return 0;
