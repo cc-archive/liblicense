@@ -133,6 +133,7 @@ int main() {
 	copy_file(png, tempfile);
 	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
 	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
+	set_then_get(tempfile, LL_CREATOR, "http://example.com/asqueesh-laroia");
 	set_then_get(tempfile, LL_MORE_PERMISSIONS,
 		     "http://example.com/give-us-all-all-your-money/");
 	unlink(tempfile);
