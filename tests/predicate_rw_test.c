@@ -94,6 +94,7 @@ void path_join(char * buffer, int buffer_size, char * dirname, char * basename) 
 int main() {
 	const char * mp3 = "../tests/data_empty.mp3";
 	const char * pdf = "../tests/data_empty.pdf";
+	const char * png = "../tests/data_empty.png";
 	
 	ll_init();
 
@@ -125,6 +126,15 @@ int main() {
 	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
 	set_then_get(tempfile, LL_MORE_PERMISSIONS, NULL);
 
+	unlink(tempfile);
+
+	/* Copy pasta for PNG */
+	path_join(tempfile, _LL_PATH_MAX, tempdir, "sample.png");
+	copy_file(png, tempfile);
+	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
+	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
+	set_then_get(tempfile, LL_MORE_PERMISSIONS,
+		     "http://example.com/give-us-all-all-your-money/");
 	unlink(tempfile);
 
 	return 0;
