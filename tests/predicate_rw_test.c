@@ -134,6 +134,9 @@ int main() {
 	set_then_get(tempfile, LL_LICENSE, "http://creativecommons.org/licenses/by/2.0/");
 	set_then_get(tempfile, LL_WEBSTATEMENT, "http://example.com/statement/");
 	set_then_get(tempfile, LL_CREATOR, "http://example.com/asqueesh-laroia");
+	/* Steren wants to be able to set the title. Can we manage that? */
+	set_then_get(tempfile, "http://purl.org/dc/elements/1.1/title", "The Answer Landed On My Rooftop");
+
 	set_then_get(tempfile, LL_MORE_PERMISSIONS,
 		     "http://example.com/give-us-all-all-your-money/");
 	unlink(tempfile);
