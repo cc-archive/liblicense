@@ -27,6 +27,13 @@ void print_licenses( const ll_license_list_t *got, const char ** hoped_for )
 	int i = 0;
 	const ll_license_list_t *curr;
 
+	/* FIXME: 
+	 * This unduly makes assumptions about the order in which
+	 * the "got" licenses are received.  Fix that so that it 
+	 * creates an internal copy of hoped_for and removes 
+	 * items from it in order, checking at the end that all
+	 * have been removed. */
+
 	printf("Matching licenses:\n");
 	curr = got;
 	if (curr == NULL) {
