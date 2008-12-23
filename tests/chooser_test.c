@@ -22,23 +22,23 @@
 #include <assert.h>
 #include <liblicense.h>
 
-void print_licenses( const ll_license_list_t *list, const char ** assert_equiv )
+void print_licenses( const ll_license_list_t *got, const char ** hoped_for )
 {
 	int i = 0;
 	const ll_license_list_t *curr;
 
 	printf("Matching licenses:\n");
-	curr = list;
+	curr = got;
 	if (curr == NULL) {
 		printf("\tNone.");
-		if (ll_list_length(assert_equiv) != 0) {
+		if (ll_list_length(hoped_for) != 0) {
 			assert("The lists are not of" == "length.");
 		}
 	}
 	while (curr) {
-		printf("bbq %d = %s\n", i, assert_equiv[i]);
-		assert (strcmp(assert_equiv[i], curr->license) == 0);
-		printf("\t%s\n",curr->license);
+		printf("hoped for %d = %s\n", i, hoped_for[i]);
+		printf("got %d = %s\n", i, curr->license);
+		assert (strcmp(hoped_for[i], curr->license) == 0);
 		curr = curr->next;
 		i++;
 	}
