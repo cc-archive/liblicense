@@ -40,8 +40,10 @@ ll_uri_t ll_module_read(ll_filename_t infile, const ll_uri_t predicate, ll_modul
 	char * one_result;
 	char ** all_results;
 
-	all_results = malloc(sizeof(char) * _ll_modules_count_available());
-	memset(all_results, 0, sizeof(char) * _ll_modules_count_available());
+	int array_size = 0;
+	array_size = _ll_modules_count_available() + 1;
+
+	all_results = calloc(sizeof(char), array_size);
 	memset(&state, 0, sizeof(LLModuleSearchState));
 
 	module = ll_module_search(infile, NULL, &state);
@@ -64,6 +66,8 @@ ll_uri_t ll_module_read(ll_filename_t infile, const ll_uri_t predicate, ll_modul
 		module = ll_module_search(infile, NULL, &state);
 
 	}
+
+	assert(all_results[result_index] == NULL);
 		
 	license = ll_list_mode(all_results,"");
 	if (license) {
@@ -71,6 +75,7 @@ ll_uri_t ll_module_read(ll_filename_t infile, const ll_uri_t predicate, ll_modul
 	}
 	
 	ll_free_list(all_results);
+	all_results = NULL; /* Since it's already been freed. */
 	
 	return license;
 }
