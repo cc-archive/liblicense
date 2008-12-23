@@ -21,18 +21,71 @@
 #include <stdio.h>
 #include <assert.h>
 #include <liblicense.h>
+#include <stdbool.h>
 
-void print_licenses( const ll_license_list_t *got, const char ** hoped_for )
+static int destructively_find_and_remove(const char * needle,
+					 char ** haystack) {
+  int i = 0;
+
+  int haystack_length = 0;
+
+  /* Look through the haystack for this needle.
+   * If we find it, great; swap this value and the bottom of the
+   * the haystack for each other, and then NULL out the bottom.
+
+   * The result is that we shrink the haystack by one and remove
+   * needle if we find it.
+   */
+
+  /* First let's see how long haystack is. */
+  while(haystack[haystack_length] != NULL) {
+    haystack_length += 1;
+  }
+
+  for (i = 0; i < haystack_length; i++) {
+    if (strcmp(haystack[i], needle) == 0) {
+      /* Great, we found it.  Do the fiddly copying thing,
+       * and at the end of that return true. */
+      haystack[i] = haystack[haystack_length - 1]; /* Grab last element. */
+      haystack[haystack_length - 1] = NULL; /* Clear last element now. */
+      return true;
+    }
+    /* else, keep looping. */
+  }
+
+  return false;
+}
+
+void print_licenses( const ll_license_list_t *got, const char ** _hoped_for )
 {
 	int i = 0;
+	bool found_it = false;
 	const ll_license_list_t *curr;
 
-	/* FIXME: 
-	 * This unduly makes assumptions about the order in which
-	 * the "got" licenses are received.  Fix that so that it 
-	 * creates an internal copy of hoped_for and removes 
-	 * items from it in order, checking at the end that all
-	 * have been removed. */
+	/* Now this makes no assumptions about the order in which the
+	 * "got" licenses are received.  It wastes space and time by
+	 * creating an internal copy of hoped_for and removing items
+	 * from it in order, checking at the end that all have been
+	 * removed. */
+
+	char ** hoped_for; /* This will store a mutable copy of _hoped_for. */
+	int hoped_for_len = 0;
+
+	/* Calculate length of hoped_for */
+	while(_hoped_for[hoped_for_len] != NULL) {
+	  hoped_for_len += 1;
+	}
+
+	/* make hoped_for that big plus one. */
+	hoped_for = calloc(sizeof(char *), hoped_for_len);
+
+	/* Copy each item from _hoped_for into hoped_for. */
+	for (i = 0; i < hoped_for_len ; i++) {
+	  hoped_for[i] = strdup(_hoped_for[i]);
+	}
+
+	/* Be sure to free() this at the end.  Or not, it's just the setup
+	 * for a silly unit test. */
 
 	printf("Matching licenses:\n");
 	curr = got;
@@ -43,9 +96,14 @@ void print_licenses( const ll_license_list_t *got, const char ** hoped_for )
 		}
 	}
 	while (curr) {
-		printf("hoped for %d = %s\n", i, hoped_for[i]);
 		printf("got %d = %s\n", i, curr->license);
-		assert (strcmp(hoped_for[i], curr->license) == 0);
+		found_it = destructively_find_and_remove(curr->license,
+							 hoped_for);
+		assert(found_it);
+		
+		/* Since we found in the list of things we wanted, we
+		 * move on to the next license returned by the
+		 * search. */
 		curr = curr->next;
 		i++;
 	}
