@@ -351,6 +351,26 @@ _ll_lowercase (const char *string)
 static char *
 _ll_normalize_locale (char *string)
 {
+  /* TESTME
+   * My god, this horrifying beast should be unit-tested. */
+
+  /* Add this monstrosity.
+   * The lack of this is the cause of many tests case failures on
+   * emulated or generally "small" setups.
+   *
+   * The problem is that on systems that don't have a default
+   * locale set, we are asked to canonicalize the locale named
+   * "C".  Because our RDF files contain no information for this
+   * locale, all localized lookups fail.
+   * 
+   * I'm up for considering doing this fix in the actual search
+   * function, having it retry if it finds no matches. Is that
+   * preferable?
+   */
+  if (strcmp(string, "C") == 0) {
+    return strdup("en");
+  }
+
   char *new_string;
   char *codeset;
   char *territory;
