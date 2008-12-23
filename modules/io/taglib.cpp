@@ -122,7 +122,7 @@ int taglib_write( const char* filename, const char * predicate, const char* uri 
 	return 0;
 }
 
-const char * taglib_supported_predicates[] = {LL_LICENSE,
+const char * taglib_supported_predicates[] = {LL_LICENSE, NULL
 };
 const char * taglib_mime_types[] = {"audio/x-musepack",
 				    "audio/x-vorbis+ogg",
