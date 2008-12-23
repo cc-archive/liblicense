@@ -127,7 +127,7 @@ const char * taglib_supported_predicates[] = {LL_LICENSE,
 const char * taglib_mime_types[] = {"audio/x-musepack",
 				    "audio/x-vorbis+ogg",
 				    "application/ogg",
-				    "audio/x-flac"};
+				    "audio/x-flac", NULL};
 
 void taglib_shutdown()
 {
