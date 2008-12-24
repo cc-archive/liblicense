@@ -20,7 +20,7 @@
 AM_CFLAGS = -I$(top_srcdir)/liblicense
 AM_LDFLAGS=-static -rdynamic
 
-EXTRA_DIST = data_empty.flac  data_empty.mp3  data_empty.pdf  data_licensed.mp3
+EXTRA_DIST = data_empty.flac  data_empty.mp3  data_empty.pdf  data_licensed.mp3 data_empty.png
 
 THISDIR = $(PWD)
 
