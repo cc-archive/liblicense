@@ -30,8 +30,10 @@
 void exempi_init()
 {
 	xmp_init();
-	/* FIXME: This should check return value, etc. */
-	xmp_register_namespace(NS_CC, "cc", NULL);
+	/* We assert these to verify that the namespaces get bound
+	 * by exempi. */
+	assert(xmp_register_namespace(NS_CC, "cc", NULL));
+	assert(xmp_register_namespace(LL_NS_PURL_DC_ELEMENTS_11, "dc", NULL));
 }
 
 
