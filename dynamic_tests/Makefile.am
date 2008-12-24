@@ -24,7 +24,7 @@ THISDIR = $(PWD)
 
 DEBUG_LL_MODULES_PATH=$(THISDIR)/_prefix/$(prefix)
 
-TESTS_ENVIRONMENT = LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
+TESTS_ENVIRONMENT = HOME=$(THISDIR)/../tests/test_home/ LL_IO_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/io/ \
 	LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ \
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	LD_LIBRARY_PATH=../liblicense/.libs/ \
