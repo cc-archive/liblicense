@@ -1,4 +1,7 @@
-liblicense 0.8.1 (2008-12-23):
+liblicense 0.8.1 (2008-12-24):
+* Cleanups in the test suite: test_predicate_rw's path joiner finally works
+* Tarball now includes data_empty.png
+* Dynamic tests and static tests treat $HOME the same way
 * Fix a major issue with requesting localized informational strings, namely that the first
   match would be returned rather than all matches (e.g., only the first license of a number
   of matching licenses). This fixes the Python bindings, which use localized strings.
