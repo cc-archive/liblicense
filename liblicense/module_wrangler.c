@@ -323,7 +323,7 @@ LLModuleDesc * ll_module_search(ll_filename_t filename,
 		/* If we detect application/octet-stream, this is hopeless.
 		 * At least warn the user that it happened; hopefully
 		 * he can report it to me. */
-		if (strcmp(state->__mime_type, "application/octet-stream" == 0)) {
+		if (strcmp(state->__mime_type, "application/octet-stream") == 0) {
 		  fprintf(stderr, "liblicense: xdg_mime: Found no matching MIME type, using application/octet-stream\n");
 		  fprintf(stderr, "liblicense: xdg_mime: License reading and writing are unlikely to work for this file; if you expect otherwise, contact the liblicense developers.\n");
 		}
