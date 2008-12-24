@@ -30,7 +30,9 @@
 
 static void copy_file(const char * infile, const char * outfile) {
 	FILE * in_fd = fopen(infile, "r");
+	assert(in_fd != NULL);
 	FILE * out_fd = fopen(outfile, "w");
+	assert(out_fd != NULL);
 	
 	int num_read_bytes = 0;
 	int num_write_bytes = 0;
@@ -86,6 +88,11 @@ void path_join(char * buffer, int buffer_size, char * dirname, char * basename) 
 	strncat(buffer, dirname, remaining);
 	remaining -= strlen(dirname);
 	assert (remaining > 0);
+
+	/* Add the slash... */
+	strncat(buffer, "/", remaining);
+	remaining -= strlen("/");
+	assert(remaining > 0);
 
 	/* Slide the basename on */
 	strncat(buffer, basename, remaining);
