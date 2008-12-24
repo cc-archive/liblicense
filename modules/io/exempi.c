@@ -21,7 +21,7 @@
 #include <string.h>
 
 #include <liblicense.h>
-
+#include <assert.h>
 #include <exempi/xmp.h>
 #include <exempi/xmpconsts.h>
 
@@ -33,7 +33,7 @@ void exempi_init()
 	/* We assert these to verify that the namespaces get bound
 	 * by exempi. */
 	assert(xmp_register_namespace(NS_CC, "cc", NULL));
-	assert(xmp_register_namespace(LL_NS_PURL_DC_ELEMENTS_11, "dc", NULL));
+	assert(xmp_register_namespace(NS_DC, "dc", NULL));
 }
 
 
