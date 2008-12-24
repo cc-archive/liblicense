@@ -1,6 +1,6 @@
 Name: liblicense
-Version: 0.8
-Release: 3
+Version: 0.8.1
+Release: 1
 License: LGPLv2
 Summary: Content License Library
 Group: Development/Libraries
@@ -116,6 +116,9 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
+* Tue Dec 23 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.8.1-1
+- liblicense 0.8.1 upstream
+
 * Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.8-3
 - Rebuild for Python 2.6
 
