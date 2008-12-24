@@ -34,7 +34,7 @@ TESTS = test test_list test_default test_mw test_read test_info test_write test_
 
 all-local:
 	mkdir -p _prefix
-	mkdir -p test_home/.license
+	mkdir -p test_home
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
 	(cd $(top_builddir)/licenses ; DESTDIR=$(THISDIR)/_prefix make install)
 
@@ -42,7 +42,6 @@ clean-local:
 	rm -fr _prefix
 	rm -f license_me.xmp
 	rm -rf test_home
-	mkdir -p test_home/.license
 
 check_PROGRAMS = $(TESTS)
 
