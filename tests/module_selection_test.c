@@ -44,6 +44,12 @@ int main() {
 	 module = ll_module_search(file, LL_LICENSE, &state);
 	 assert (module == NULL); /* Only Exempi */
 
+	 /* Assert that a .UNKNOWN file gets back NULL */
+	 file = "../tests/nonexistent.unknown";
+	 memset(&state, 0, sizeof(LLModuleSearchState));
+	 module = ll_module_search(file, LL_LICENSE, &state);
+	 assert(module==NULL);
+
 	 ll_stop();
 	 
 	 return 0;
