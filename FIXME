@@ -1,1 +1,2 @@
 * Make e.g. flac.so not have a SONAME
+* Use smarter compiler options, as per http://blogs.gnome.org/otte/2008/12/22/warning-options/
