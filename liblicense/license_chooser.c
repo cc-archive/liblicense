@@ -136,7 +136,6 @@ int ll_attribute_flag( ll_license_chooser_t *license_chooser, const char *attr )
 	int i;
 
 	assert (license_chooser != NULL);
-	printf ("num attributes is %d\n", license_chooser->num_attributes);
 
 	for (i=0; i<license_chooser->num_attributes; ++i) {
 		if (strcmp(attr,license_chooser->attributes[i])==0) {

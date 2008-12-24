@@ -59,7 +59,7 @@ static ll_uri_t* _ll_query(char* query, int max) {
 	ll_uri_t* values = ll_new_list(max);
 	int rc = sqlite3_exec(db, query, _ll_sql_callback, values, &zErrMsg);
 	if (rc!=SQLITE_OK) {
-		printf("Query \"%s\" failed: %s\n",query,zErrMsg);
+		fprintf(stderr, "Query \"%s\" failed: %s\n",query,zErrMsg);
 		ll_free_list(values);
 		return NULL;
 	}
@@ -133,7 +133,7 @@ int ll_update_cache(void) {
 	char *zErrMsg = NULL;
 	int rc = sqlite3_exec(db, "CREATE TABLE IF NOT EXISTS licenses( uri TEXT UNIQUE ON CONFLICT IGNORE, jurisdiction TEXT, obsolete INTEGER);" , _ll_sql_callback, 0, &zErrMsg);
 	if (rc!=SQLITE_OK) {
-		printf("Table creation failed: %s\n",zErrMsg);
+		fprintf(stderr, "Table creation failed: %s\n",zErrMsg);
 		return false;
 	}
 	/* insert newly modified files */
@@ -144,7 +144,7 @@ int ll_update_cache(void) {
 		ll_filename_t fn = ll_uri_to_filename(u);
 		struct stat fileinfo;
 		if (stat(fn,&fileinfo)==-1) {
-			printf("error failed to stat %s, skipping\n",fn);
+			fprintf(stderr, "error failed to stat %s, skipping\n",fn);
 			free(u);
 			free(fn);
 			free(namelist[i]);
@@ -216,7 +216,7 @@ int ll_init(void) {
 
     sqlite3_open(path, &db);
 	if (!ll_update_cache())
-	    printf("Failed to update cache.");
+	  fprintf(stderr, "Failed to update cache.");
 	ll_init_modules();
 	free(path);
 	return 0;

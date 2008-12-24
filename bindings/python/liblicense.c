@@ -274,11 +274,9 @@ py_write (PyObject *self, PyObject *args)
   (void) self;
   if (PyArg_ParseTuple (args, "ssz|s", &f, &predicate, &u, &m))
     if (m != NULL) {
-      printf("long predicate: %s\n", predicate);
       result = ll_module_write (f, predicate, u, m);
     }
     else {
-      printf("short predicate: %s\n", predicate);
       result = ll_write (f, predicate, u);
     }
   else
