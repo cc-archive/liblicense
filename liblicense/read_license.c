@@ -43,7 +43,7 @@ ll_uri_t ll_module_read(ll_filename_t infile, const ll_uri_t predicate, ll_modul
 	int array_size = 0;
 	array_size = _ll_modules_count_available() + 1;
 
-	all_results = calloc(sizeof(char), array_size);
+	all_results = calloc(sizeof(char *), array_size);
 	memset(&state, 0, sizeof(LLModuleSearchState));
 
 	module = ll_module_search(infile, NULL, &state);
