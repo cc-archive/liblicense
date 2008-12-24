@@ -1,6 +1,6 @@
 Name: liblicense
 Version: 0.8
-Release: 1
+Release: 3
 License: LGPLv2
 Summary: Content License Library
 Group: Development/Libraries
@@ -85,23 +85,30 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc COPYING
 %{_libdir}/liblicense.so.*
+%dir %{_libdir}/liblicense
+%dir %{_libdir}/liblicense/%{version}
 %{_libdir}/liblicense/%{version}/config/
+%dir %{_datadir}/liblicense
 %{_datadir}/liblicense/icons
 %{_datadir}/liblicense/licenses
 %{_datadir}/pixmaps/scales.svg
 
 %files modules
+%defattr(-,root,root)
 %{_libdir}/liblicense/%{version}/io/
 
 %files cli
+%defattr(-,root,root)
 %{_bindir}/license
 
 %files devel
+%defattr(-,root,root)
 %{_includedir}/liblicense-3.0
 %{_libdir}/pkgconfig/liblicense.pc
 %{_libdir}/liblicense.so
 
 %files python
+%defattr(-,root,root)
 %dir %{python_sitelib}/liblicense
 %{python_sitearch}/liblicense/liblicense.so
 %{python_sitelib}/liblicense/__init__.py
@@ -109,21 +116,33 @@ rm -rf $RPM_BUILD_ROOT
 %{python_sitelib}/liblicense/__init__.pyo
 
 %changelog
+* Sat Nov 29 2008 Ignacio Vazquez-Abrams <ivazqueznet+rpm@gmail.com> - 0.8-3
+- Rebuild for Python 2.6
+
+* Fri Aug 29 2008 Michael Schwendt <mschwendt@fedoraproject.org> - 0.8-2
+- Include unowned directories
+- Add missing defattr to sub-packages
+
 * Mon Jul 28 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.8-1
 - liblicense 0.8 upstream
+
 * Mon Jun 16 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-3
 - Pass --disable-rpath to ./configure.
 - Modify bundled libtool with sed expressions from Fedora Packaging Guidelines
+
 * Thu May 29 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-2
 - Put liblicense.so in -devel package
 - Fix really long (>80 chars) descriptions
 - Stop trying to own /usr/bin
 - Remove trailing dot from package summary; fixed typo (misspelled "formats")
 - LGPLv2 is license
+
 * Tue May 13 2008 Asheesh Laroia <asheesh@creativecommons.org> - 0.7.0-1
 - liblicense 0.7.0
 - Create separate packages for plugins, Python modules
+
 * Wed Aug 22 2007 Scott Shawcroft <scott.shawcroft@gmail.com> - 0.4-1
 - liblicense 0.4
+
 * Mon Jul 30 2007 Scott Shawcroft <scott.shawcroft@gmail.com> - 0.3-1
 - initial liblicense rpm
