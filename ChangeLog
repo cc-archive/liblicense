@@ -15,6 +15,8 @@ liblicense 0.8.1 (2008-12-23):
   so long as they are the right licenses.
 * To help diagnose possible xdg_mime errors, if we detect the hopeless
   application/octet-stream MIME type, fprintf a warning to stderr.
+* Test that searching for unknown file types returns a NULL result
+  rather than a segfault.
 
 liblicense 0.8 (2008-07-28):
 * Fixed LL_LICENSE to be ns#license, not ns#License
