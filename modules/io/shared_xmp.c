@@ -29,7 +29,7 @@ _ll_shared_xmp_uri2struct (const char * uri) {
     ret.rest = _ll_shared_xmp_morepermissions;
   } else if (strcmp(LL_CREATOR, uri) == 0) {
     ret.namespace = LL_NS_PURL_DC_ELEMENTS_11;
-    ret.rest = _ll_shared_xmp_morepermissions;
+    ret.rest = _ll_shared_xmp_creator_rest;
   }
   return ret;
 }
