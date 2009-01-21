@@ -103,6 +103,10 @@ void print_licenses( const ll_license_list_t *got, const char ** _hoped_for )
 		/* Assert that we found it. */
 		assert(found_it);
 		
+		/* Also assert that liblicense believes this URI
+		   refers to a real license. */
+		ll_verify_uri(curr->license);
+							 
 		/* Since we found in the list of things we wanted, we
 		 * move on to the next license returned by the
 		 * search. */
