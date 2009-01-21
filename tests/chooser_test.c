@@ -99,6 +99,8 @@ void print_licenses( const ll_license_list_t *got, const char ** _hoped_for )
 		printf("got %d = %s\n", i, curr->license);
 		found_it = destructively_find_and_remove(curr->license,
 							 hoped_for);
+
+		/* Assert that we found it. */
 		assert(found_it);
 		
 		/* Since we found in the list of things we wanted, we
@@ -225,6 +227,11 @@ int main(int argc, char *argv[])
 	  "http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
 	  NULL};
 
+	char * nc_and_ncnd_de[] = {
+	  "http://creativecommons.org/licenses/by-nd/3.0/us/",
+	  "http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
+	  NULL};
+
 	static const char *gpl_attributes[] = {
                         LL_DISTRIBUTION,
 			LL_COMMERCIAL_USE,
@@ -338,6 +345,16 @@ int main(int argc, char *argv[])
 		nc_and_ncnd_prohibits);
 
 	print_licenses(nc_and_ncnd_us_results, nc_and_ncnd_us);
+
+
+	const char ** nc_and_ncnd_de_results = 
+	  check("http://creativecommons.org/international/de/",
+		nc_and_ncnd_attributes,
+		nc_and_ncnd_permits,
+		nc_and_ncnd_requires,
+		nc_and_ncnd_prohibits);
+
+	print_licenses(nc_and_ncnd_de_results, nc_and_ncnd_de);
 
 	ll_stop();
 
