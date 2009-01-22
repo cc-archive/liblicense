@@ -228,8 +228,8 @@ int main(int argc, char *argv[])
 	  NULL};
 
 	char * nc_and_ncnd_de[] = {
-	  "http://creativecommons.org/licenses/by-nd/3.0/us/",
-	  "http://creativecommons.org/licenses/by-nc-nd/3.0/us/",
+	  "http://creativecommons.org/licenses/by-nd/3.0/de/",
+	  "http://creativecommons.org/licenses/by-nc-nd/3.0/de/",
 	  NULL};
 
 	static const char *gpl_attributes[] = {
