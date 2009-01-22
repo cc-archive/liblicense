@@ -55,7 +55,7 @@ main (int argc, char **argv)
   free (result);
   result = ll_get_first(ll_get_attribute(u, LL_NAME, false));
   printf ("\tget_name: %s\n", result);
-  assert(strcmp(result, "Nevezd meg! - Ne változtasd!") == 0);
+  assert(strcmp(result, "Attribution-NoDerivs") == 0);
   /* FIXME
    * get_name returns Hungarian.
    * why? 

@@ -51,7 +51,7 @@ void test_get_attribute_name_whatever_lang() {
 	license = "http://creativecommons.org/licenses/by-nd/2.0/de/";
 	name = ll_get_first(ll_get_attribute(license, LL_NAME, false));
 	printf("get_name: '%s'\n",name);
-	assert (strcmp(name, "Recoñecemento-SenObraDerivada") == 0); /* UTF-8 */
+	assert (strcmp(name, "Attribution-NoDerivs") == 0); /* UTF-8 */
 	free(name);
 }
 
