@@ -74,13 +74,14 @@ class Tests(unittest.TestCase):
         assert set_default(license)
         assert get_default() == license
 
+    def test_module_wrangler(self):
+        'flat_file.so' in get_config_modules()
+        'stub.so' in get_io_modules()
+        print "\tget_module_symbol: not bound"
+
 if __name__ == '__main__':
     unittest.main()
 
-print "Test module_wrangler:"
-print "\tget_config_modules:",get_config_modules()
-print "\tget_io_modules:",get_io_modules()
-print "\tget_module_symbol: not bound"
 
 print "Module information and capabilities:"
 print_module_info();
