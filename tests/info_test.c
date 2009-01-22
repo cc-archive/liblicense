@@ -25,6 +25,34 @@
 #include <stdio.h>
 #include <assert.h>
 
+/* Verify that the two lists are equal, treated as sets.
+ * FIXME: At the next ABI bump, toss this into the core.
+ */
+static int ll_sets_equal(char **list_one,
+			 char **list_two) {
+
+  /* We ignore frequency here. We also possibly waste time being
+   * O(n^2).
+   */
+
+  int i = 0;
+  char * needle = NULL;
+
+  /* For everything in list_one, check that list_two contains it. */
+  for (i = 0 ; list_one[i] != NULL ; i++) {
+    needle = list_one[i];
+    if (ll_list_contains(list_two, needle)) {
+	/* Great! Keep looping. */
+    } else {
+      /* No match, return false. */
+      return 0;
+    }
+  }
+
+  /* If you checked everything in list_one, then declare victory! */
+  return 1;
+}
+
 void test_get_attribute_jurisdiction() {
 	char * license;
 	char * j;
@@ -117,33 +145,33 @@ int main(int argc,char** argv) {
 
 	p = ll_get_attribute(license, LL_PROHIBITS, false);
 	printf("get_prohibits: ");
-	assert (ll_lists_equal(p, known_good_prohibits));
+	assert (ll_sets_equal(p, known_good_prohibits));
 	ll_list_print(p);
 	ll_free_list(p);
 
 	p = ll_get_attribute(license, LL_PERMITS, false);
 	printf("get_permits: ");
-	assert (ll_lists_equal(p, known_good_permits));
+	assert (ll_sets_equal(p, known_good_permits));
 	ll_list_print(p);
 	ll_free_list(p);
 
 	p = ll_get_attribute(license, LL_REQUIRES, false);
 	printf("get_requires: ");
-	assert (ll_lists_equal(p, known_good_requires));
+	assert (ll_sets_equal(p, known_good_requires));
 	ll_list_print(p);
 	ll_free_list(p);
 
 	/* Adding a test for http://code.creativecommons.org/issues/issue78 */
 	other_license = "http://creativecommons.org/licenses/by-nc/3.0/";
 	p = ll_get_attribute(other_license, LL_PERMITS, false);
-	assert (ll_lists_equal(p, known_good_bync_permits));
+	assert (ll_sets_equal(p, known_good_bync_permits));
 
 	/* Adding a test for http://code.creativecommons.org/issues/issue78
 	 as seen by the Python bindings, which always set the locale
 	 parameter to true. */
 	other_license = "http://creativecommons.org/licenses/by-nc/3.0/";
 	p = ll_get_attribute(other_license, LL_PERMITS, true);
-	assert (ll_lists_equal(p, known_good_bync_permits));
+	assert (ll_sets_equal(p, known_good_bync_permits));
 
 	b = ll_verify_uri(license);
 	printf("verify_uri: %d\n",b);
