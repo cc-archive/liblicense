@@ -433,7 +433,8 @@ _ll_get_triple (const ll_uri_t u, const char *subject, const char *predicate,
   if (locale)
     helper->locale = _ll_normalize_locale (setlocale (LC_ALL, NULL));
   else
-    helper->locale = NULL;
+    helper->locale = strdup("en"); /* In the case of an un-set locale,
+			      choose English. */
   if (predicate != NULL)
     helper->predicate = strdup (predicate);
   else
