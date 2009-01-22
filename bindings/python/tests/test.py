@@ -69,13 +69,13 @@ class Tests(unittest.TestCase):
         # print "\tmodule_read:",read("license_me.txt","exempi.o")
         os.unlink('write_test.mp3')
 
+    def test_system_default(self):
+        license = "http://creativecommons.org/licenses/by/2.5/au/"
+        assert set_default(license)
+        assert get_default() == license
 
 if __name__ == '__main__':
     unittest.main()
-
-print "Test system_default:"
-print "\tset_default:",set_default("creativecommons.org/licenses/by/2.5/au/")
-print "\tget_default:",get_default()
 
 print "Test module_wrangler:"
 print "\tget_config_modules:",get_config_modules()
