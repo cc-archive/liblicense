@@ -20,13 +20,22 @@ import os, sys
 print "Test system_license python bindings:"
 
 # Add the build directory to the import path.
-#base_path = "bindings/python/build"
-#sys.path += (map(lambda path: os.getcwd()+"/"+base_path+"/"+path,filter(lambda path: path.startswith('tmp')==False, os.listdir(base_path))))
-
+my_path = os.path.abspath(__file__)
+os.stat(my_path) # Assert that we found something.
+sys.path.insert(0, os.path.join(my_path, '..', '.libs'))
 from liblicense import *
-license="http://creativecommons.org/licenses/by-nd/2.0/"
-print "\tget_jurisdiction:",get_jurisdiction(license)
-print "\tget_name:", get_name(license)
+
+import unittest
+import StringIO
+class Tests(unittest.TestCase):
+    def test_juri_none(self):
+        license="http://creativecommons.org/licenses/by-nd/2.0/"
+        assert get_jurisdiction(license) is None
+        assert get_name(license) == 'Attribution-NoDerivs'
+
+if __name__ == '__main__':
+    unittest.main()
+
 v = get_version(license)
 print "\tget_version: "+".".join(map(str,v))
 print "\tget_permits:", get_permits(license)
