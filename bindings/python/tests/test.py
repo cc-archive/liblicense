@@ -79,12 +79,18 @@ class Tests(unittest.TestCase):
         'stub.so' in get_io_modules()
         print "\tget_module_symbol: not bound"
 
+    def test_module_info(self):
+        print "Module information and capabilities:"
+        info = print_module_info()
+        # assert 'stub.so' in info
+        # FIXME: Make assertions about this output
+        # for line in info.split('\n'):
+        #     if 'Supported predicates' in line:
+        #         assert 'http://creativecommons.org/ns#license' in line
+
 if __name__ == '__main__':
     unittest.main()
 
-
-print "Module information and capabilities:"
-print_module_info();
 
 print "What license(s) permit Distribution and DerivativeWorks without Attribution or Notice?"
 attributes = ["http://creativecommons.org/ns#Distribution",
