@@ -60,12 +60,18 @@ class Tests(unittest.TestCase):
         assert (write('write_test.mp3', 'http://creativecommons.org/licenses/by/2.5/au/', 'stub.so') == 0)
         os.unlink('write_test.mp3')
 
+    def test_read_license_python_bindings(self):
+        # Find us an MP3, first with no module specified
+        shutil.copyfile(os.path.join(my_dir, '../../../tests/write_test.mp3'), 'write_test.mp3')
+        assert (write('write_test.mp3', 'http://creativecommons.org/licenses/by/2.5/au/', None)  == 0)
+
+        assert read("write_test.mp3") == 'http://creativecommons.org/licenses/by/2.5/au/'
+        # print "\tmodule_read:",read("license_me.txt","exempi.o")
+        os.unlink('write_test.mp3')
+
+
 if __name__ == '__main__':
     unittest.main()
-
-print "Test read_license python bindings:"
-print "\tread:",read("license_me.txt")
-#print "\tmodule_read:",read("license_me.txt","exempi.o")
 
 print "Test system_default:"
 print "\tset_default:",set_default("creativecommons.org/licenses/by/2.5/au/")
