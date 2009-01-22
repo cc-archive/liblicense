@@ -56,10 +56,6 @@ main (int argc, char **argv)
   result = ll_get_first(ll_get_attribute(u, LL_NAME, false));
   printf ("\tget_name: %s\n", result);
   assert(strcmp(result, "Attribution-NoDerivs") == 0);
-  /* FIXME
-   * get_name returns Hungarian.
-   * why? 
-   */
   free (result);
 
   printf ("\tget_version: ");
