@@ -74,5 +74,6 @@ test_module_selection_SOURCES = module_selection_test.c
 
 test_license_cli:
 	cp -a license_test test_license_cli
+	chmod a+x test_license_cli
 
 test_license_cli_SOURCES = license_test
