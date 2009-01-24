@@ -40,6 +40,18 @@ ll_license_print_info (ll_uri_t uri)
 
   printf ("License URI: %s\n", uri);
 
+  /* If the URI is null, we can't do anything. */
+  if (uri == NULL) {
+    return;
+  }
+
+  /* If it doesn't validate as a real license, then this will all be
+   * useless. */
+  if (! ll_verify_uri(uri)) {
+    printf("License URI does not validate as a license we know about.\n");
+    return;
+  }
+
   string = ll_get_first(ll_get_attribute(uri, LL_NAME, false));
   if (string)
     {

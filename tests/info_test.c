@@ -189,6 +189,13 @@ int main(int argc,char** argv) {
 	assert (ll_list_contains(p, license));
 	ll_free_list(p);
 
+	/* Check that printing a license's info at least does something. */
+	ll_license_print_info ("http://creativecommons.org/licenses/by/3.0/us");
+
+	/* Check that printing a license's info when passed NULL
+	   doesn't explode. */
+	ll_license_print_info(NULL);
+
 	ll_stop();
 	return 0;
 }
