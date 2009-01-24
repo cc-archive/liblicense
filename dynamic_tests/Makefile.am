@@ -29,7 +29,7 @@ TESTS_ENVIRONMENT = HOME=$(THISDIR)/test_home/ LL_IO_MODULE_DIR=$(DEBUG_LL_MODUL
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	LD_LIBRARY_PATH=../liblicense/.libs/ \
 	@VALGRIND@
-TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection test_predicate_rw
+TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection test_predicate_rw license_test
 
 all-local:
 	mkdir -p _prefix
@@ -67,3 +67,5 @@ test_predicate_SOURCES = predicate_test.c
 test_predicate_rw_SOURCES = predicate_rw_test.c
 
 test_module_selection_SOURCES = module_selection_test.c
+
+license_test_SOURCES = 

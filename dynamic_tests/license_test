@@ -1,0 +1,4 @@
+#!/bin/sh -e
+PATH=../utils:$PATH
+license --help
+license --version
