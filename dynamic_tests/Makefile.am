@@ -31,11 +31,14 @@ TESTS_ENVIRONMENT = HOME=$(THISDIR)/test_home/ LL_IO_MODULE_DIR=$(DEBUG_LL_MODUL
 	@VALGRIND@
 TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection test_predicate_rw license_test
 
-all-local:
+all-local: licenses-stamp
 	mkdir -p _prefix
 	mkdir -p test_home
 	(cd $(top_builddir)/modules ; DESTDIR=$(THISDIR)/_prefix make install)
+
+licenses-stamp: ../licenses
 	(cd $(top_builddir)/licenses ; DESTDIR=$(THISDIR)/_prefix make install)
+	touch licenses-stamp
 
 clean-local:
 	rm -fr _prefix
