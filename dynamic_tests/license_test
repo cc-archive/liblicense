@@ -2,4 +2,4 @@
 PATH=../utils:$PATH
 license --help
 license --version
-license -l
+license -l http://creativecommons.org/licenses/by/3.0/de/
