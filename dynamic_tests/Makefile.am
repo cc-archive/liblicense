@@ -44,6 +44,7 @@ clean-local:
 	rm -fr _prefix
 	rm -f license_me.xmp
 	rm -rf test_home
+	rm -f licenses-stamp
 
 check_PROGRAMS = $(TESTS)
 
