@@ -2,3 +2,4 @@
 PATH=../utils:$PATH
 license --help
 license --version
+license -l

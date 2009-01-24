@@ -91,15 +91,15 @@ ll_license_print_info (ll_uri_t uri)
   free (string);
   free (juris);
 
-  attrs = ll_get_first(ll_get_attribute(uri, LL_CREATOR, false));
+  attrs = ll_get_attribute(uri, LL_CREATOR, false);
+  string = ll_get_first(attrs);
  /** HORRIBLE FIXME:
    * Compare type of attrs and ll_get_first.
    */
-  if (*attrs)
+  if (string)
     {
-      printf ("Creator: %s\n", *attrs);
+      printf ("Creator: %s\n", string);
     }
-  ll_free_list (attrs);
 
   printf ("Rights:\n");
 
