@@ -27,6 +27,3 @@ AM_LDFLAGS = -module -avoid-version \
 liblicense_la_SOURCES = liblicense.c
 
 EXTRA_DIST = tests/test.py
-
-check:
-	python tests/test.py

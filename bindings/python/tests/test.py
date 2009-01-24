@@ -96,7 +96,7 @@ class Tests(unittest.TestCase):
         chooser = LicenseChooser(None,attributes)
 
         permits = chooser.attribute_flag("http://creativecommons.org/ns#Distribution") |  chooser.attribute_flag("http://creativecommons.org/ns#DerivativeWorks")
-        print "\t",chooser.get_licenses(permits=permits,requires=liblicense.LL_UNSPECIFIED,prohibits=liblicense.LL_UNSPECIFIED)
+        print "\t",chooser.get_licenses(permits=permits,requires=LL_UNSPECIFIED,prohibits=LL_UNSPECIFIED)
 
 
 if __name__ == '__main__':

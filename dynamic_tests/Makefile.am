@@ -28,8 +28,9 @@ TESTS_ENVIRONMENT = HOME=$(THISDIR)/test_home/ LL_IO_MODULE_DIR=$(DEBUG_LL_MODUL
 	LL_CONFIG_MODULE_DIR=$(DEBUG_LL_MODULES_PATH)/lib/liblicense/@VERSION@/config/ \
 	LL_LICENSE_DIR=$(DEBUG_LL_MODULES_PATH)/share/liblicense/licenses/ \
 	LD_LIBRARY_PATH=../liblicense/.libs/ \
+	PYTHONPATH=$(THISDIR)/../bindings/python/.libs/
 	@VALGRIND@
-TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection test_predicate_rw test_license_cli
+TESTS = test test_list test_default test_mw test_read test_info test_write test_chooser test_predicate test_module_selection test_predicate_rw test_license_cli test_python_bindings
 
 all-local: licenses-stamp
 	mkdir -p _prefix
@@ -77,3 +78,9 @@ test_license_cli:
 	chmod a+x test_license_cli
 
 test_license_cli_SOURCES = license_test
+
+test_python_bindings:
+	cp -a python_test test_python_bindings
+	chmod a+x test_python_bindings
+
+test_python_bindings_SOURCES = python_test
