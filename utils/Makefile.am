@@ -27,6 +27,3 @@ license_SOURCES = \
 	license.c
 
 license_LDADD = $(top_builddir)/liblicense/liblicense.la $(top_builddir)/xdgmime/libxdgmime.la
-
-check:
-	./license_test
