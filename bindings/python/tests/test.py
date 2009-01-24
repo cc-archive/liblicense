@@ -88,18 +88,17 @@ class Tests(unittest.TestCase):
         #     if 'Supported predicates' in line:
         #         assert 'http://creativecommons.org/ns#license' in line
 
+    def test_chooser(self):
+        attributes = ["http://creativecommons.org/ns#Distribution",
+                      "http://creativecommons.org/ns#DerivativeWorks",
+                      "http://creativecommons.org/ns#Attribution",
+                      "http://creativecommons.org/ns#Notice"]
+        chooser = LicenseChooser(None,attributes)
+
+        permits = chooser.attribute_flag("http://creativecommons.org/ns#Distribution") |  chooser.attribute_flag("http://creativecommons.org/ns#DerivativeWorks")
+        print "\t",chooser.get_licenses(permits=permits,requires=liblicense.LL_UNSPECIFIED,prohibits=liblicense.LL_UNSPECIFIED)
+
+
 if __name__ == '__main__':
     unittest.main()
 
-
-print "What license(s) permit Distribution and DerivativeWorks without Attribution or Notice?"
-attributes = ["http://creativecommons.org/ns#Distribution",
-		"http://creativecommons.org/ns#DerivativeWorks",
-		"http://creativecommons.org/ns#Attribution",
-		"http://creativecommons.org/ns#Notice"]
-chooser = LicenseChooser(None,attributes)
-
-permits = chooser.attribute_flag("http://creativecommons.org/ns#Distribution") |  chooser.attribute_flag("http://creativecommons.org/ns#DerivativeWorks")
-print "\t",chooser.get_licenses(permits=permits,requires=liblicense.UNSPECIFIED,prohibits=liblicense.UNSPECIFIED)
-
-sys.exit(0)
