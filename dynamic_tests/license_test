@@ -3,3 +3,9 @@ PATH=../utils:$PATH
 license --help
 license --version
 license -l http://creativecommons.org/licenses/by/3.0/de/ | grep Attribution
+
+# A test:
+# Set the default
+license -l http://creativecommons.org/licenses/by-sa/3.0/ --set-license
+# Verify it
+license | grep by-sa/3.0
