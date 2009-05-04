@@ -39,6 +39,7 @@ Optional for embedding and extracting licenses:
  * TagLib
  * libgsf
 
+
 == Included software ==
 
 liblicense bundles a copy of xdgmime, a module for MIME parsing.  More 
